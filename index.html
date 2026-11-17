@@ -18,7 +18,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css?v=20261117ultra">
+    <link rel="stylesheet" href="css/styles.css?v=20261117blog">
 </head>
 <body>
 
@@ -29,7 +29,7 @@
             <a href="#sec-ofertas">Ofertas</a>
             <a href="#sec-agencias">Directorio</a>
             <a href="#sec-mapa">Mapa</a>
-            <a href="#sec-opiniones">Opiniones</a>
+            <a href="#sec-guias">Guías</a>`r`n            <a href="#sec-opiniones">Opiniones</a>
 
             <div class="theme-controls" title="Personalizar colores y modo">
                 <button type="button" class="color-dot dot-caribe" onclick="cambiarPaleta('caribe')" aria-label="Color Azul Caribe"></button>
@@ -217,7 +217,21 @@
             <div class="reviews-grid" id="reviewsGrid"></div>
         </section>
 
-                <!-- Bloque: Preguntas Frecuentes (FAQ) -->
+                        <!-- Bloque: Guias y Consejos (Blog SEO) -->
+        <section class="guides-section" id="sec-guias">
+            <div class="section-move-controls">
+                <button type="button" class="btn-action btn-outline" onclick="moverBloqueVisual('guias', -1)">▲ Subir bloque</button>
+                <button type="button" class="btn-action btn-outline" onclick="moverBloqueVisual('guias', 1)">▼ Bajar bloque</button>
+            </div>
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">📖 Guías y Consejos para tu Próximo Plan</h2>
+                    <p class="section-subtitle">Recomendaciones prácticas para contratar con seguridad y ahorrar</p>
+                </div>
+            </div>
+            <div class="guides-grid" id="guidesGrid"></div>
+        </section>
+        <!-- Bloque: Preguntas Frecuentes (FAQ) -->
         <section class="faq-section" id="sec-faq">
             <div class="section-move-controls">
                 <button type="button" class="btn-action btn-outline" onclick="moverBloqueVisual('faq', -1)">▲ Subir bloque</button>
@@ -272,6 +286,13 @@
             <div id="wizardBody"></div>
         </div>
     </div>
+        <!-- Modal Lectura de Guia SEO -->
+    <div id="guideModal" class="modal-backdrop" onclick="cerrarModalGuia(event)">
+        <div class="modal-card" style="max-width: 660px;">
+            <button type="button" class="modal-close" onclick="cerrarModalGuia()">✕</button>
+            <div id="guideModalBody"></div>
+        </div>
+    </div>
     <footer>
         <p><strong>Directorio Viajero</strong> &copy; 2026. Todos los derechos reservados.</p>
         <div class="footer-links">
@@ -283,6 +304,6 @@
         </p>
     </footer>
 
-    <script src="js/app.js?v=20261117ultra"></script>
+    <script src="js/app.js?v=20261117blog"></script>
 </body>
 </html>

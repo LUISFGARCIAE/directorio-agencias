@@ -387,5 +387,37 @@
                     "respuesta":  "Haz clic en el botón superior \u0027Anúnciate Aquí\u0027, completa tu ficha con vista previa en vivo y envíala. Durante la etapa de lanzamiento contamos con lugares destacados sin costo por 3 meses.",
                     "pregunta":  "¿Cómo registro mi agencia, jardín de bodas o servicio?"
                 }
-            ]
+            ],
+    "guias":  [
+                  {
+                      "tiempoLectura":  "3 min de lectura",
+                      "resumen":  "Aprende a validar en segundos si una agencia está registrada formalmente ante SECTUR y evita fraudes en paquetes vacacionales.",
+                      "categoriaLabel":  "✈️ Seguridad al Viajar",
+                      "imagen":  "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                      "categoria":  "viajes",
+                      "id":  "verificar-rnt-mexico",
+                      "contenido":  "Antes de realizar cualquier anticipo para tus vacaciones, solicita a la agencia su constancia del Registro Nacional de Turismo (RNT). Este folio oficial emitido por la Secretaría de Turismo acredita que el prestador cuenta con domicilio fiscal comprobable y operación formal en México. Además, verifica que el nombre comercial coincida con la razón social de la cuenta bancaria y desconfía de descuentos extremos que exigen pago inmediato sin contrato de adhesión.",
+                      "titulo":  "Cómo verificar el folio RNT de una agencia de viajes en México antes de transferir"
+                  },
+                  {
+                      "tiempoLectura":  "4 min de lectura",
+                      "resumen":  "Desde horas extra de música hasta planta de luz y descorche: lo que debes confirmar por escrito en tu contrato.",
+                      "categoriaLabel":  "💍 Bodas y Eventos",
+                      "imagen":  "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                      "categoria":  "bodas",
+                      "id":  "checklist-jardin-bodas",
+                      "contenido":  "Al visitar haciendas o jardines para eventos en destinos como Morelos, Querétaro o playa, pregunta siempre por: 1) Horario límite de sonido permitido por el municipio, 2) Si incluye planta de emergencia eléctrica, 3) Costo por hora adicional de renta, 4) Políticas de lluvia o carpa de respaldo, 5) Si permiten proveedores externos de banquete o fotografía sin penalización, 6) Estacionamiento o valet parking y 7) Hospedaje incluido para los novios.",
+                      "titulo":  "7 puntos clave que debes revisar antes de apartar un jardín o hacienda para boda"
+                  },
+                  {
+                      "tiempoLectura":  "3 min de lectura",
+                      "resumen":  "Conoce las ventanas de temporada baja donde los vuelos charter y resorts ofrecen hasta 35% de ahorro.",
+                      "categoriaLabel":  "🌴 Consejos de Destino",
+                      "imagen":  "https://images.unsplash.com/photo-1510097467424-192d713fd8b2?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                      "categoria":  "viajes",
+                      "id":  "temporadas-baratas-caribe",
+                      "contenido":  "Si tienes flexibilidad de fechas, las mejores tarifas en playas mexicanas suelen encontrarse entre mayo y mediados de junio, así como de septiembre a noviembre (evitando puentes festivos). Durante estas semanas las aerolíneas y agencias mayoristas lanzan bloqueos charter con menores incluidos gratis o meses sin intereses. Compara al menos 3 agencias en nuestro directorio para cotizar el mismo hotel y fecha.",
+                      "titulo":  "Mejores meses para encontrar paquetes todo incluido económicos en Cancún y Los Cabos"
+                  }
+              ]
 }

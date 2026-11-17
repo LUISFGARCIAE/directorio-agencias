@@ -3,6 +3,7 @@ let AGENCIAS_DATA = [];
 let OFERTAS_TEMPORADA = [];
 let OPINIONES_DATA = [];
 let FAQ_DATA = [];
+let GUIAS_DATA = [];
 
 let heroSlideIdx = 0;
 let heroIntervalId = null;
@@ -129,6 +130,7 @@ async function cargarDatosRemotos() {
             OFERTAS_TEMPORADA = Array.isArray(dataJson.ofertas) ? dataJson.ofertas : [];
             OPINIONES_DATA = Array.isArray(dataJson.opiniones) ? dataJson.opiniones : [];
             FAQ_DATA = Array.isArray(dataJson.faq) ? dataJson.faq : [];
+            GUIAS_DATA = Array.isArray(dataJson.guias) ? dataJson.guias : [];
         }
     } catch (error) {
         console.error('Error cargando datos:', error);
@@ -719,6 +721,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         renderizarMapaLocaciones();
         renderizarOpiniones();
         renderizarFAQ();
+        renderizarGuias();
         inicializarBarraEdicionVisual();
         verificarDeepLinkAgencia();
     } else {
@@ -1029,4 +1032,69 @@ function aplicarResultadoWizard(soloWa) {
 
     const target = document.getElementById('sec-agencias');
     if (target) target.scrollIntoView({ behavior: 'smooth' });
+}
+
+function renderizarGuias() {
+    const grid = document.getElementById('guidesGrid');
+    if (!grid) return;
+    grid.innerHTML = '';
+
+    const visibles = GUIAS_DATA.filter(g => {
+        if (!esModoMultisector()) return g.categoria === 'viajes';
+        return estadoFiltros.categoria === 'todos' || g.categoria === estadoFiltros.categoria;
+    });
+
+    visibles.forEach(guia => {
+        const card = document.createElement('article');
+        card.className = 'guide-card';
+        const imgSegura = validarUrlSegura(guia.imagen);
+
+        card.innerHTML = `
+            <img class="guide-img" src="${escaparHTML(imgSegura)}" alt="${escaparHTML(guia.titulo)}">
+            <div class="guide-body">
+                <div>
+                    <div class="guide-meta">
+                        <span>${escaparHTML(guia.categoriaLabel || 'Guía')}</span>
+                        <span style="color: var(--text-soft);">${escaparHTML(guia.tiempoLectura || '3 min')}</span>
+                    </div>
+                    <h3 class="guide-title">${escaparHTML(guia.titulo)}</h3>
+                    <p class="guide-excerpt">${escaparHTML(guia.resumen)}</p>
+                </div>
+                <button type="button" class="btn-action btn-outline btn-leer-guia">Leer Guía Completa →</button>
+            </div>
+        `;
+
+        card.querySelector('.btn-leer-guia').addEventListener('click', () => abrirModalGuia(guia.id));
+        grid.appendChild(card);
+    });
+}
+
+function abrirModalGuia(id) {
+    const guia = GUIAS_DATA.find(g => g.id === id);
+    if (!guia) return;
+
+    const modal = document.getElementById('guideModal');
+    const body = document.getElementById('guideModalBody');
+    const imgSegura = validarUrlSegura(guia.imagen);
+
+    body.innerHTML = `
+        <span class="category-chip">${escaparHTML(guia.categoriaLabel || 'Guía')} &bull; ${escaparHTML(guia.tiempoLectura || '')}</span>
+        <h3 style="font-size: 1.4rem; color: var(--secondary); margin: 0.4rem 0 0.85rem 0; line-height: 1.3;">${escaparHTML(guia.titulo)}</h3>
+        ${imgSegura ? `<img src="${escaparHTML(imgSegura)}" alt="${escaparHTML(guia.titulo)}" style="width:100%; height:210px; object-fit:cover; border-radius:0.75rem; margin-bottom:1rem;">` : ''}
+        <p style="color: var(--text-main); font-size: 0.96rem; line-height: 1.7; white-space: pre-line;">${escaparHTML(guia.contenido)}</p>
+        <div style="margin-top: 1.35rem; padding-top: 1rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
+            <span style="font-size: 0.82rem; color: var(--text-soft);">¿Buscas especialistas verificados?</span>
+            <button type="button" onclick="cerrarModalGuia(); document.getElementById('sec-agencias').scrollIntoView({behavior:'smooth'});" class="btn-action btn-primary" style="flex: 0 0 auto; padding: 0.55rem 1.15rem;">
+                Ver Directorio →
+            </button>
+        </div>
+    `;
+
+    modal.classList.add('open');
+}
+
+function cerrarModalGuia(event) {
+    if (!event || event.target.id === 'guideModal' || event.target.classList.contains('modal-close')) {
+        document.getElementById('guideModal').classList.remove('open');
+    }
 }

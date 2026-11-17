@@ -1440,3 +1440,68 @@ footer a:hover { text-decoration: underline; }
 @media (max-width: 600px) {
     .wizard-options-grid { grid-template-columns: 1fr; }
 }
+
+/* Seccion Guias y Blog SEO */
+.guides-section {
+    margin-top: 4.5rem;
+}
+
+.guides-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.guide-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.guide-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.guide-img {
+    width: 100%;
+    height: 175px;
+    object-fit: cover;
+}
+
+.guide-body {
+    padding: 1.35rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: space-between;
+}
+
+.guide-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0.45rem;
+}
+
+.guide-title {
+    font-size: 1.06rem;
+    font-weight: 800;
+    color: var(--secondary);
+    margin-bottom: 0.5rem;
+    line-height: 1.35;
+}
+
+.guide-excerpt {
+    font-size: 0.86rem;
+    color: var(--text-soft);
+    margin-bottom: 1.1rem;
+}

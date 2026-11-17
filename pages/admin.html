@@ -65,6 +65,7 @@
                 <button type="button" class="cms-tab active" onclick="cambiarTab('tab-diseno', this)">🎨 Modo Edición y Diseño</button>
                 <button type="button" class="cms-tab" onclick="cambiarTab('tab-anunciantes', this)">🏢 Anunciantes (<span id="badgeCountAnun">0</span>)</button>
                 <button type="button" class="cms-tab" onclick="cambiarTab('tab-ofertas', this)">🔥 Ofertas y Banners</button>
+                <button type="button" class="cms-tab" onclick="cambiarTab('tab-guias', this)">📖 Guías SEO</button>
                 <button type="button" class="cms-tab" onclick="cambiarTab('tab-opiniones', this)">💬 Opiniones y Respaldo</button>
             </div>
 
@@ -303,6 +304,51 @@
                 </div>
             </div>
 
+                        <!-- PESTAÑA EXTRA: GUIAS Y BLOG SEO -->
+            <div id="tab-guias" class="cms-panel">
+                <div class="admin-grid">
+                    <div class="admin-card">
+                        <h3 style="font-size: 1.08rem; margin-bottom: 1rem;">✍️ Publicar Nueva Guía / Artículo SEO</h3>
+                        <form onsubmit="agregarGuiaForm(event)">
+                            <div class="form-group">
+                                <label>Sector Relacionado</label>
+                                <select id="guiaCat">
+                                    <option value="viajes|✈️ Seguridad y Viajes">✈️ Seguridad y Viajes</option>
+                                    <option value="bodas|💍 Bodas y Eventos">💍 Bodas y Eventos</option>
+                                    <option value="hospedaje|🏡 Quintas y Estancias">🏡 Quintas y Estancias</option>
+                                    <option value="servicios|📸 Fotografía y Experiencias">📸 Fotografía y Experiencias</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Título del Artículo *</label>
+                                <input type="text" id="guiaTitulo" required placeholder="Ej. Cómo elegir el mejor paquete todo incluido">
+                            </div>
+                            <div class="form-group">
+                                <label>Tiempo de Lectura</label>
+                                <input type="text" id="guiaTiempo" value="3 min de lectura">
+                            </div>
+                            <div class="form-group">
+                                <label>URL de Imagen de Portada</label>
+                                <input type="url" id="guiaImg" value="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Resumen corto para la tarjeta *</label>
+                                <textarea id="guiaResumen" rows="2" maxlength="160" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Contenido completo del artículo *</label>
+                                <textarea id="guiaContenido" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn-action btn-whatsapp" style="width: 100%;">➕ Añadir Guía al Blog</button>
+                        </form>
+                    </div>
+
+                    <div class="admin-card">
+                        <h3 style="font-size: 1.1rem; margin-bottom: 1rem;">Guías Publicadas (<span id="countGuias">0</span>)</h3>
+                        <div id="listaGuiasAdmin"></div>
+                    </div>
+                </div>
+            </div>
             <!-- PESTAÑA 4: OPINIONES Y RESPALDO -->
             <div id="tab-opiniones" class="cms-panel">
                 <div class="admin-grid">
@@ -350,7 +396,7 @@
         </div>
     </main>
 
-    <script src="../js/app.js?v=20261117ultra"></script>
+    <script src="../js/app.js?v=20261117blog"></script>
     <script>
         const REPO_OWNER = "LUISFGARCIAE";
         const REPO_NAME = "directorio-agencias";
@@ -362,6 +408,7 @@
             agencias: "🏢 Directorio Principal de Anunciantes",
             mapa: "📍 Mapa de Sedes y Locaciones",
             opiniones: "💬 Opiniones de Usuarios",
+            guias: "📖 Guías y Consejos (Blog SEO)",
             faq: "❓ Preguntas Frecuentes (FAQ)",
             b2b: "🚀 Llamado de Registro para Negocios"
         };
@@ -443,6 +490,7 @@
                 renderizarOrdenSecciones();
                 renderizarListaAdmin();
                 renderizarOfertasAdmin();
+                renderizarGuiasAdmin();
                 renderizarOpinionesAdmin();
 
                 document.getElementById("workspace").style.display = "block";
@@ -687,6 +735,51 @@
             renderizarOfertasAdmin();
         }
 
+                function renderizarGuiasAdmin() {
+            const cont = document.getElementById("listaGuiasAdmin");
+            if (!cont) return;
+            if (!Array.isArray(catalogoActual.guias)) catalogoActual.guias = [];
+            document.getElementById("countGuias").textContent = catalogoActual.guias.length;
+            cont.innerHTML = "";
+
+            catalogoActual.guias.forEach((g, idx) => {
+                const row = document.createElement("div");
+                row.className = "item-row";
+                row.innerHTML = `
+                    <div>
+                        <strong>${escaparHTML(g.titulo)}</strong>
+                        <div style="font-size:0.78rem; color:var(--text-soft);">${escaparHTML(g.categoriaLabel || g.categoria)} &bull; ${escaparHTML(g.tiempoLectura || '')}</div>
+                    </div>
+                    <button type="button" class="btn-mini btn-del" onclick="eliminarGuia(${idx})">🗑️</button>
+                `;
+                cont.appendChild(row);
+            });
+        }
+
+        function agregarGuiaForm(e) {
+            e.preventDefault();
+            const [catId, catLabel] = document.getElementById("guiaCat").value.split("|");
+            const titulo = document.getElementById("guiaTitulo").value.trim();
+            if (!Array.isArray(catalogoActual.guias)) catalogoActual.guias = [];
+
+            catalogoActual.guias.unshift({
+                id: titulo.toLowerCase().replace(/[^a-z0-9]+/g, "-") + "-" + Date.now().toString().slice(-3),
+                categoria: catId,
+                categoriaLabel: catLabel,
+                tiempoLectura: document.getElementById("guiaTiempo").value.trim() || "3 min de lectura",
+                titulo: titulo,
+                resumen: document.getElementById("guiaResumen").value.trim(),
+                imagen: validarUrlSegura(document.getElementById("guiaImg").value),
+                contenido: document.getElementById("guiaContenido").value.trim()
+            });
+            e.target.reset();
+            renderizarGuiasAdmin();
+        }
+
+        function eliminarGuia(idx) {
+            catalogoActual.guias.splice(idx, 1);
+            renderizarGuiasAdmin();
+        }
         // Opiniones
         function renderizarOpinionesAdmin() {
             const cont = document.getElementById("listaOpinionesAdmin");
@@ -717,12 +810,14 @@
                 texto: document.getElementById("opTexto").value.trim()
             });
             e.target.reset();
-            renderizarOpinionesAdmin();
+            renderizarGuiasAdmin();
+                renderizarOpinionesAdmin();
         }
 
         function eliminarOpinion(idx) {
             catalogoActual.opiniones.splice(idx, 1);
-            renderizarOpinionesAdmin();
+            renderizarGuiasAdmin();
+                renderizarOpinionesAdmin();
         }
 
         function descargarRespaldo() {
