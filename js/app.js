@@ -1,12 +1,51 @@
 ﻿let estadoFiltros = {
     destino: 'todos',
     texto: '',
-    rapido: 'todas' // 'todas' | 'destacadas' | 'whatsapp'
+    rapido: 'todas'
 };
+
+let favoritos = JSON.parse(localStorage.getItem('dv_favoritos') || '[]');
+
+// Aplicar preferencias visuales guardadas
+function inicializarApariencia() {
+    const paletaGuardada = localStorage.getItem('dv_paleta') || 'caribe';
+    const temaGuardado = localStorage.getItem('dv_tema') || 'light';
+    document.documentElement.setAttribute('data-palette', paletaGuardada);
+    document.documentElement.setAttribute('data-theme', temaGuardado);
+    actualizarIconoTema(temaGuardado);
+}
+
+function cambiarPaleta(nombrePaleta) {
+    document.documentElement.setAttribute('data-palette', nombrePaleta);
+    localStorage.setItem('dv_paleta', nombrePaleta);
+}
+
+function alternarModoOscuro() {
+    const actual = document.documentElement.getAttribute('data-theme');
+    const nuevo = actual === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', nuevo);
+    localStorage.setItem('dv_tema', nuevo);
+    actualizarIconoTema(nuevo);
+}
+
+function actualizarIconoTema(tema) {
+    const btn = document.getElementById('darkToggleBtn');
+    if (btn) btn.textContent = tema === 'dark' ? '☀️' : '🌙';
+}
+
+function toggleFavorito(id) {
+    if (favoritos.includes(id)) {
+        favoritos = favoritos.filter(item => item !== id);
+    } else {
+        favoritos.push(id);
+    }
+    localStorage.setItem('dv_favoritos', JSON.stringify(favoritos));
+    renderizarAgencias();
+}
 
 function generarUrlWhatsApp(agencia) {
     if (!agencia.whatsappNumero) return '';
-    const texto = `Hola ${agencia.nombre}, encontré su agencia en *Directorio Viajero* y me gustaría solicitar información para un viaje.`;
+    const texto = `Hola ${agencia.nombre}, encontré su agencia en *Directorio Viajero* y me gustaría cotizar un viaje.`;
     return `https://wa.me/${agencia.whatsappNumero}?text=${encodeURIComponent(texto)}`;
 }
 
@@ -17,7 +56,6 @@ function renderizarAgencias() {
 
     grid.innerHTML = '';
 
-    // Siempre priorizar agencias destacadas
     const ordenadas = [...AGENCIAS_DATA].sort((a, b) => (b.destacada === true) - (a.destacada === true));
 
     const filtradas = ordenadas.filter(agencia => {
@@ -33,6 +71,7 @@ function renderizarAgencias() {
         let cumpleRapido = true;
         if (estadoFiltros.rapido === 'destacadas') cumpleRapido = agencia.destacada === true;
         if (estadoFiltros.rapido === 'whatsapp') cumpleRapido = Boolean(agencia.whatsappNumero);
+        if (estadoFiltros.rapido === 'favoritas') cumpleRapido = favoritos.includes(agencia.id);
 
         return cumpleDestino && cumpleTexto && cumpleRapido;
     });
@@ -43,10 +82,10 @@ function renderizarAgencias() {
 
     if (filtradas.length === 0) {
         grid.innerHTML = `
-            <div style="grid-column: 1/-1; text-align: center; padding: 3rem 1rem; background: white; border-radius: 1rem; border: 1px solid #e2e8f0;">
-                <p style="color: #475569; font-weight: 700; margin-bottom: 0.5rem;">No encontramos agencias con esos filtros</p>
-                <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 1rem;">Intenta con otro destino o limpia tu búsqueda.</p>
-                <button onclick="reiniciarFiltros()" class="btn-action btn-primary" style="display: inline-block; width: auto; padding: 0.6rem 1.25rem;">Mostrar todas las agencias</button>
+            <div style="grid-column: 1/-1; text-align: center; padding: 3rem 1rem; background: var(--bg-card); border-radius: 1rem; border: 1px solid var(--border);">
+                <p style="color: var(--secondary); font-weight: 700; margin-bottom: 0.5rem;">No encontramos agencias con estos filtros</p>
+                <p style="color: var(--text-soft); font-size: 0.9rem; margin-bottom: 1rem;">Prueba cambiando el destino o limpia los filtros activos.</p>
+                <button onclick="reiniciarFiltros()" class="btn-action btn-primary" style="display: inline-block; width: auto; padding: 0.6rem 1.25rem;">Ver todas las agencias</button>
             </div>`;
         return;
     }
@@ -55,6 +94,7 @@ function renderizarAgencias() {
         const card = document.createElement('article');
         card.className = `agency-card ${agencia.destacada ? 'featured' : ''}`;
 
+        const esFav = favoritos.includes(agencia.id);
         const badgeHtml = agencia.destacada ? '<span class="badge-featured">⭐ Destacada</span>' : '';
         const tagsHtml = agencia.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
         const waUrl = generarUrlWhatsApp(agencia);
@@ -66,7 +106,7 @@ function renderizarAgencias() {
         if (waUrl) {
             botonesHtml += `<a href="${waUrl}" target="_blank" rel="noopener noreferrer" class="btn-action btn-whatsapp">${agencia.web ? 'WhatsApp' : 'Cotizar WhatsApp'}</a>`;
         }
-        botonesHtml += `<button type="button" onclick="abrirModalAgencia('${agencia.id}')" class="btn-action btn-outline" title="Ver ficha completa">+ Info</button>`;
+        botonesHtml += `<button type="button" onclick="abrirModalAgencia('${agencia.id}')" class="btn-action btn-outline" title="Ver detalles">+ Info</button>`;
 
         card.innerHTML = `
             ${badgeHtml}
@@ -77,9 +117,13 @@ function renderizarAgencias() {
                         <h3 class="agency-title">${agencia.nombre}</h3>
                         <span class="verified-tag">${agencia.etiquetaEstado}</span>
                     </div>
+                    <button type="button" onclick="toggleFavorito('${agencia.id}')" class="fav-btn ${esFav ? 'saved' : ''}" title="Guardar en favoritos">
+                        ${esFav ? '❤️' : '🤍'}
+                    </button>
                 </div>
                 <div class="agency-meta">
                     <span>📍 ${agencia.salidaDesde}</span>
+                    <span>⭐ ${agencia.rating}</span>
                 </div>
                 <p class="agency-desc">${agencia.descripcion}</p>
                 <div class="tags">${tagsHtml}</div>
@@ -137,7 +181,7 @@ function abrirModalAgencia(id) {
 
     let accionesModal = '';
     if (agencia.web) {
-        accionesModal += `<a href="${agencia.web}" target="_blank" rel="noopener noreferrer" class="btn-action btn-primary">Ir a su Sitio Web Oficial</a>`;
+        accionesModal += `<a href="${agencia.web}" target="_blank" rel="noopener noreferrer" class="btn-action btn-primary">Ir al Sitio Web Oficial</a>`;
     }
     if (waUrl) {
         accionesModal += `<a href="${waUrl}" target="_blank" rel="noopener noreferrer" class="btn-action btn-whatsapp">Cotizar por WhatsApp</a>`;
@@ -148,10 +192,10 @@ function abrirModalAgencia(id) {
             <div class="agency-logo" style="color: ${agencia.colorTexto}; background: ${agencia.colorFondo};">${agencia.iniciales}</div>
             <div>
                 <h3 style="font-size: 1.35rem; color: var(--secondary);">${agencia.nombre}</h3>
-                <span class="verified-tag">${agencia.etiquetaEstado}</span>
+                <span class="verified-tag">${agencia.etiquetaEstado} • ⭐ ${agencia.rating}</span>
             </div>
         </div>
-        <p style="color: var(--text-dark); font-size: 0.95rem; margin-top: 0.75rem;">${agencia.descripcion}</p>
+        <p style="color: var(--text-main); font-size: 0.95rem; margin-top: 0.75rem;">${agencia.descripcion}</p>
         <div class="modal-details-grid">
             <div><span>Salidas desde</span><strong>${agencia.salidaDesde}</strong></div>
             <div><span>Rango orientativo</span><strong>${agencia.rangoPrecio}</strong></div>
@@ -159,8 +203,8 @@ function abrirModalAgencia(id) {
         </div>
         <div class="tags">${agencia.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
         <div class="card-actions">${accionesModal}</div>
-        <p style="font-size: 0.75rem; color: #64748b; margin-top: 1rem; text-align: center;">
-            Serás redirigido directamente al canal oficial de la agencia. Directorio Viajero no cobra comisiones.
+        <p style="font-size: 0.75rem; color: var(--text-soft); margin-top: 1rem; text-align: center;">
+            Contacto directo con la agencia sin cargos extra ni intermediarios.
         </p>
     `;
 
@@ -174,6 +218,7 @@ function cerrarModalAgencia(event) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    inicializarApariencia();
     renderizarAgencias();
     const input = document.getElementById('searchInput');
     if (input) {
