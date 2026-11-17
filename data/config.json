@@ -25,10 +25,25 @@
         "b2b"
     ],
     "categorias": [
-        { "id": "todos", "label": "🌐 Todos los giros" },
-        { "id": "viajes", "label": "✈️ Viajes y Turismo" },
-        { "id": "bodas", "label": "💍 Bodas y Eventos" },
-        { "id": "hospedaje", "label": "🏡 Quintas y Estancias" },
-        { "id": "servicios", "label": "📸 Fotografía y Experiencias" }
+        {
+            "id": "todos",
+            "label": "🌐 Todos los giros"
+        },
+        {
+            "id": "viajes",
+            "label": "✈️ Viajes y Turismo"
+        },
+        {
+            "id": "bodas",
+            "label": "💍 Bodas y Eventos"
+        },
+        {
+            "id": "hospedaje",
+            "label": "🏡 Quintas y Estancias"
+        },
+        {
+            "id": "servicios",
+            "label": "📸 Fotografía y Experiencias"
+        }
     ]
 }
