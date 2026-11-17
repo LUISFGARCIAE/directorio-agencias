@@ -1,5 +1,5 @@
 {
-    "MODO_MULTISECTOR": true,
+    "MODO_MULTISECTOR": false,
     "apariencia": {
         "paletaDefault": "caribe",
         "temaDefault": "light"
