@@ -1,0 +1,327 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.github.com; object-src 'none'; base-uri 'self';">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Panel Maestro | Directorio Viajero</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        .admin-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 2rem; align-items: start; }
+        .admin-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 1rem; padding: 1.75rem; box-shadow: var(--shadow-sm); margin-bottom: 1.5rem; }
+        .switch-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1rem; background: var(--bg-muted); border-radius: 0.75rem; }
+        .item-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 0.85rem 1rem; border: 1px solid var(--border); border-radius: 0.65rem; margin-bottom: 0.65rem; background: var(--bg-body); }
+        .item-actions { display: flex; gap: 0.4rem; }
+        .btn-mini { padding: 0.35rem 0.65rem; border-radius: 0.4rem; border: none; font-size: 0.78rem; font-weight: 700; cursor: pointer; }
+        .btn-star { background: #fef3c7; color: #b45309; }
+        .btn-star.active { background: #f59e0b; color: white; }
+        .btn-del { background: #fee2e2; color: #b91c1c; }
+        @media (max-width: 900px) { .admin-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="../index.html" class="logo">⚙️ Panel<span>Maestro</span></a>
+        <nav>
+            <a href="../index.html" target="_blank">Ver Sitio Público ↗</a>
+            <button type="button" id="darkToggleBtn" class="dark-toggle" onclick="alternarModoOscuro()">🌙</button>
+        </nav>
+    </header>
+
+    <section class="page-banner" style="padding: 2.5rem 1.5rem;">
+        <h1>Control Central de la Plataforma</h1>
+        <p>Administra el modo multisectorial, altas de anunciantes y publica cambios en tiempo real.</p>
+    </section>
+
+    <main class="container">
+        <!-- Conexion con GitHub -->
+        <div class="admin-card" id="authBox">
+            <h2 style="font-size: 1.2rem; margin-bottom: 0.5rem;">1. Conexión Segura con Repositorio</h2>
+            <p style="font-size: 0.88rem; color: var(--text-soft); margin-bottom: 1rem;">
+                Ingresa tu Personal Access Token de GitHub para leer y publicar cambios directo en <strong>LUISFGARCIAE/directorio-agencias</strong>. El token solo se guarda en tu sesión actual del navegador.
+            </p>
+            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                <input type="password" id="ghTokenInput" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" style="flex: 1; min-width: 240px; padding: 0.7rem 1rem; border-radius: 0.5rem; border: 1px solid var(--border); background: var(--bg-body); color: var(--text-main);">
+                <button type="button" onclick="conectarGitHub()" class="btn-action btn-primary" style="flex: 0 0 auto; padding: 0.7rem 1.5rem;">Conectar y Cargar Datos</button>
+            </div>
+            <p id="statusMsg" style="margin-top: 0.85rem; font-size: 0.88rem; font-weight: 600;"></p>
+        </div>
+
+        <!-- Panel Operativo (oculto hasta conectar) -->
+        <div id="workspace" style="display: none;">
+            <div class="admin-grid">
+                <!-- Columna Izquierda: Configuracion y Alta -->
+                <div>
+                    <div class="admin-card">
+                        <h3 style="font-size: 1.1rem; margin-bottom: 1rem;">Interruptor de Arquitectura</h3>
+                        <div class="switch-row">
+                            <div>
+                                <strong>Modo Multisectorial</strong>
+                                <p style="font-size: 0.8rem; color: var(--text-soft);">Activa pestañas de Bodas, Estancias y Servicios además de Viajes.</p>
+                            </div>
+                            <input type="checkbox" id="toggleMultisector" style="width: 22px; height: 22px; cursor: pointer;">
+                        </div>
+                        <button type="button" onclick="guardarConfiguracion()" class="btn-action btn-primary" style="width: 100%; margin-top: 1rem;">
+                            💾 Aplicar Interruptor en Sitio Público
+                        </button>
+                    </div>
+
+                    <div class="admin-card">
+                        <h3 style="font-size: 1.1rem; margin-bottom: 1rem;">Agregar Nuevo Anunciante</h3>
+                        <form onsubmit="agregarAnunciante(event)">
+                            <div class="form-group">
+                                <label>Giro / Categoría</label>
+                                <select id="newCat" required>
+                                    <option value="viajes|Viajes y Turismo">✈️ Viajes y Turismo</option>
+                                    <option value="bodas|Bodas y Eventos">💍 Bodas y Eventos</option>
+                                    <option value="hospedaje|Quintas y Estancias">🏡 Quintas y Estancias</option>
+                                    <option value="servicios|Fotografía y Experiencias">📸 Fotografía y Experiencias</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Nombre Comercial *</label>
+                                <input type="text" id="newNombre" required placeholder="Ej. Viajes Estrella">
+                            </div>
+                            <div class="form-group">
+                                <label>Cobertura / Ciudad de Salida *</label>
+                                <input type="text" id="newSalida" required placeholder="Ej. CDMX y Puebla">
+                            </div>
+                            <div class="form-group">
+                                <label>WhatsApp (10-15 dígitos)</label>
+                                <input type="tel" id="newWa" placeholder="525512345678">
+                            </div>
+                            <div class="form-group">
+                                <label>Sitio Web (https://...)</label>
+                                <input type="url" id="newWeb" placeholder="https://...">
+                            </div>
+                            <div class="form-group">
+                                <label>Etiquetas (separadas por coma)</label>
+                                <input type="text" id="newTags" placeholder="Cancún, TodoIncluido">
+                            </div>
+                            <div class="form-group">
+                                <label>Descripción corta (máx. 140) *</label>
+                                <textarea id="newDesc" rows="2" maxlength="140" required></textarea>
+                            </div>
+                            <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem;">
+                                <input type="checkbox" id="newDestacada" style="width: auto;">
+                                <label for="newDestacada" style="margin: 0;">Marcar como ⭐ Destacada</label>
+                            </div>
+                            <button type="submit" class="btn-action btn-whatsapp" style="width: 100%;">➕ Añadir a la Lista</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Columna Derecha: Listado Activo y Publicacion -->
+                <div class="admin-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+                        <h3 style="font-size: 1.15rem;">Anunciantes en Catálogo (<span id="countAnunciantes">0</span>)</h3>
+                        <button type="button" onclick="publicarCatalogo()" class="btn-action btn-primary" style="flex: 0 0 auto; padding: 0.65rem 1.25rem;">
+                            🚀 Publicar Cambios en Vivo
+                        </button>
+                    </div>
+                    <div id="listaAnunciantesAdmin"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/app.js"></script>
+    <script>
+        const REPO_OWNER = "LUISFGARCIAE";
+        const REPO_NAME = "directorio-agencias";
+
+        let configActual = null;
+        let configSha = "";
+        let catalogoActual = null;
+        let catalogoSha = "";
+
+        function utf8ToBase64(str) {
+            return btoa(unescape(encodeURIComponent(str)));
+        }
+
+        function base64ToUtf8(str) {
+            return decodeURIComponent(escape(atob(str)));
+        }
+
+        function setStatus(texto, color = "var(--text-main)") {
+            const el = document.getElementById("statusMsg");
+            el.style.color = color;
+            el.textContent = texto;
+        }
+
+        async function githubApi(path, method = "GET", body = null) {
+            const token = sessionStorage.getItem("dv_gh_token");
+            const headers = {
+                "Authorization": "Bearer " + token,
+                "Accept": "application/vnd.github+json",
+                "X-GitHub-Api-Version": "2022-11-28"
+            };
+            if (body) headers["Content-Type"] = "application/json";
+
+            const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`, {
+                method,
+                headers,
+                body: body ? JSON.stringify(body) : null
+            });
+
+            if (!res.ok) {
+                const err = await res.json().catch(() => ({}));
+                throw new Error(err.message || "Error de conexión con GitHub");
+            }
+            return res.json();
+        }
+
+        async function conectarGitHub() {
+            const inputToken = document.getElementById("ghTokenInput").value.trim();
+            if (inputToken) {
+                sessionStorage.setItem("dv_gh_token", inputToken);
+            }
+            if (!sessionStorage.getItem("dv_gh_token")) {
+                setStatus("⚠️ Ingresa un token válido.", "#dc2626");
+                return;
+            }
+
+            setStatus("Conectando con GitHub y descargando JSON...", "#0284c7");
+
+            try {
+                const [resConf, resCat] = await Promise.all([
+                    githubApi("data/config.json"),
+                    githubApi("data/agencias.json")
+                ]);
+
+                configSha = resConf.sha;
+                configActual = JSON.parse(base64ToUtf8(resConf.content));
+
+                catalogoSha = resCat.sha;
+                catalogoActual = JSON.parse(base64ToUtf8(resCat.content));
+
+                document.getElementById("toggleMultisector").checked = Boolean(configActual.MODO_MULTISECTOR);
+                document.getElementById("workspace").style.display = "block";
+                renderizarListaAdmin();
+                setStatus("✅ Conectado correctamente. Los cambios que publiques se reflejarán en ~40 segundos.", "#16a34a");
+            } catch (e) {
+                setStatus("❌ Error: " + e.message, "#dc2626");
+            }
+        }
+
+        function renderizarListaAdmin() {
+            const cont = document.getElementById("listaAnunciantesAdmin");
+            const lista = catalogoActual.anunciantes || [];
+            document.getElementById("countAnunciantes").textContent = lista.length;
+            cont.innerHTML = "";
+
+            lista.forEach((item, index) => {
+                const row = document.createElement("div");
+                row.className = "item-row";
+                row.innerHTML = `
+                    <div>
+                        <strong>${escaparHTML(item.nombre)}</strong>
+                        <div style="font-size: 0.78rem; color: var(--text-soft);">
+                            ${escaparHTML(item.categoriaNombre || item.categoria)} • 📍 ${escaparHTML(item.salidaDesde)}
+                        </div>
+                    </div>
+                    <div class="item-actions">
+                        <button type="button" class="btn-mini btn-star ${item.destacada ? 'active' : ''}" onclick="alternarDestacada(${index})" title="Destacar">⭐</button>
+                        <button type="button" class="btn-mini btn-del" onclick="eliminarAnunciante(${index})" title="Eliminar">🗑️</button>
+                    </div>
+                `;
+                cont.appendChild(row);
+            });
+        }
+
+        function alternarDestacada(idx) {
+            catalogoActual.anunciantes[idx].destacada = !catalogoActual.anunciantes[idx].destacada;
+            renderizarListaAdmin();
+        }
+
+        function eliminarAnunciante(idx) {
+            const nombre = catalogoActual.anunciantes[idx].nombre;
+            if (confirm(`¿Eliminar a "${nombre}" del catálogo?`)) {
+                catalogoActual.anunciantes.splice(idx, 1);
+                renderizarListaAdmin();
+            }
+        }
+
+        function agregarAnunciante(e) {
+            e.preventDefault();
+            const [catId, catNombre] = document.getElementById("newCat").value.split("|");
+            const nombre = document.getElementById("newNombre").value.trim();
+            const salida = document.getElementById("newSalida").value.trim();
+            const wa = document.getElementById("newWa").value.replace(/\D/g, "");
+            const web = validarUrlSegura(document.getElementById("newWeb").value);
+            const desc = document.getElementById("newDesc").value.trim();
+            const destacada = document.getElementById("newDestacada").checked;
+            const tags = document.getElementById("newTags").value
+                .split(",")
+                .map(t => t.trim().replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]/g, ""))
+                .filter(Boolean)
+                .slice(0, 3)
+                .map(t => "#" + t);
+
+            const nuevo = {
+                id: nombre.toLowerCase().replace(/[^a-z0-9]+/g, "-") + "-" + Date.now().toString().slice(-3),
+                categoria: catId,
+                categoriaNombre: catNombre,
+                nombre: nombre,
+                iniciales: nombre.substring(0, 2).toUpperCase(),
+                colorTexto: "#0284c7",
+                colorFondo: "#e0f2fe",
+                destacada: destacada,
+                rnt: "",
+                rating: "5.0",
+                etiquetaEstado: "✔ Verificado",
+                salidaDesde: salida,
+                estadosSalida: ["cdmx", "monterrey", "guadalajara", "puebla", "bajio"],
+                rangoPrecio: "$$ • Consultar",
+                especialidad: catNombre,
+                descripcion: desc,
+                destinos: ["cancun", "acapulco", "loscabos", "pueblos-magicos"],
+                tags: tags.length ? tags : ["#" + catNombre.replace(/\s+/g, "")],
+                web: web,
+                whatsappNumero: wa
+            };
+
+            catalogoActual.anunciantes.unshift(nuevo);
+            renderizarListaAdmin();
+            e.target.reset();
+            setStatus("ℹ️ Anunciante añadido a la lista local. Presiona 'Publicar Cambios en Vivo' para subirlo.", "#0284c7");
+        }
+
+        async function guardarConfiguracion() {
+            configActual.MODO_MULTISECTOR = document.getElementById("toggleMultisector").checked;
+            setStatus("Publicando interruptor en GitHub...", "#0284c7");
+            try {
+                const res = await githubApi("data/config.json", "PUT", {
+                    message: "Actualizar modo multisectorial desde Panel Maestro",
+                    content: utf8ToBase64(JSON.stringify(configActual, null, 4)),
+                    sha: configSha
+                });
+                configSha = res.content.sha;
+                setStatus("✅ Modo actualizado en vivo. Recarga la página pública en ~40 segundos.", "#16a34a");
+            } catch (e) {
+                setStatus("❌ Error al guardar configuración: " + e.message, "#dc2626");
+            }
+        }
+
+        async function publicarCatalogo() {
+            setStatus("Publicando catálogo actualizado en GitHub...", "#0284c7");
+            try {
+                const res = await githubApi("data/agencias.json", "PUT", {
+                    message: "Actualizar catálogo de anunciantes desde Panel Maestro",
+                    content: utf8ToBase64(JSON.stringify(catalogoActual, null, 4)),
+                    sha: catalogoSha
+                });
+                catalogoSha = res.content.sha;
+                setStatus("✅ Catálogo publicado en vivo. Los cambios ya están subiendo a GitHub Pages.", "#16a34a");
+            } catch (e) {
+                setStatus("❌ Error al publicar catálogo: " + e.message, "#dc2626");
+            }
+        }
+    </script>
+</body>
+</html>

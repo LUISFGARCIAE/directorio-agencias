@@ -1,4 +1,8 @@
-﻿let estadoFiltros = {
+﻿let PLATAFORMA_CONFIG = { MODO_MULTISECTOR: false, categorias: [] };
+let AGENCIAS_DATA = [];
+let OFERTAS_TEMPORADA = [];
+
+let estadoFiltros = {
     categoria: 'todos',
     destino: 'todos',
     origen: 'todos',
@@ -17,7 +21,7 @@ try {
 }
 
 function esModoMultisector() {
-    return typeof PLATAFORMA_CONFIG !== 'undefined' && PLATAFORMA_CONFIG.MODO_MULTISECTOR === true;
+    return PLATAFORMA_CONFIG && PLATAFORMA_CONFIG.MODO_MULTISECTOR === true;
 }
 
 function escaparHTML(texto) {
@@ -89,6 +93,27 @@ function actualizarIconoTema(tema) {
     if (btn) btn.textContent = tema === 'dark' ? '☀️' : '🌙';
 }
 
+async function cargarDatosRemotos() {
+    const cacheBuster = '?v=' + Date.now();
+    try {
+        const [resConfig, resAgencias] = await Promise.all([
+            fetch('data/config.json' + cacheBuster),
+            fetch('data/agencias.json' + cacheBuster)
+        ]);
+
+        if (resConfig.ok) {
+            PLATAFORMA_CONFIG = await resConfig.json();
+        }
+        if (resAgencias.ok) {
+            const dataJson = await resAgencias.json();
+            AGENCIAS_DATA = Array.isArray(dataJson.anunciantes) ? dataJson.anunciantes : [];
+            OFERTAS_TEMPORADA = Array.isArray(dataJson.ofertas) ? dataJson.ofertas : [];
+        }
+    } catch (error) {
+        console.error('No se pudo cargar la configuración del catálogo:', error);
+    }
+}
+
 function inicializarModoPlataforma() {
     const barraSectores = document.getElementById('sectorTabsBar');
     const heroTitle = document.getElementById('heroTitle');
@@ -156,7 +181,7 @@ function generarUrlWhatsApp(nombreDestino, numero, asuntoExtra = '') {
 
 function renderizarOfertas() {
     const grid = document.getElementById('dealsGrid');
-    if (!grid || typeof OFERTAS_TEMPORADA === 'undefined') return;
+    if (!grid) return;
     grid.innerHTML = '';
 
     const ofertasFiltradas = OFERTAS_TEMPORADA.filter(oferta => {
@@ -232,6 +257,7 @@ function renderizarAgencias() {
         let cumpleRapido = true;
         if (estadoFiltros.rapido === 'destacadas') cumpleRapido = agencia.destacada === true;
         if (estadoFiltros.rapido === 'whatsapp') cumpleRapido = Boolean(agencia.whatsappNumero);
+        if (estadoFiltros.rapido === 'rnt') cumpleRapido = Boolean(agencia.rnt);
         if (estadoFiltros.rapido === 'favoritas') cumpleRapido = favoritos.includes(agencia.id);
 
         return cumpleCategoria && cumpleDestino && cumpleOrigen && cumpleTexto && cumpleRapido;
@@ -259,6 +285,7 @@ function renderizarAgencias() {
 
         const esFav = favoritos.includes(agencia.id);
         const badgeHtml = agencia.destacada ? '<span class="badge-featured">⭐ Destacada</span>' : '';
+        const rntHtml = agencia.rnt ? `<span class="rnt-badge" title="Folio RNT: ${escaparHTML(agencia.rnt)}">🛡️ RNT</span>` : '';
         const catChipHtml = (esModoMultisector() && agencia.categoriaNombre)
             ? `<span class="category-chip">${escaparHTML(agencia.categoriaNombre)}</span>`
             : '';
@@ -283,7 +310,10 @@ function renderizarAgencias() {
                     <div class="agency-logo" style="color: ${escaparHTML(agencia.colorTexto)}; background: ${escaparHTML(agencia.colorFondo)};">${escaparHTML(agencia.iniciales)}</div>
                     <div>
                         <h3 class="agency-title">${escaparHTML(agencia.nombre)}</h3>
-                        <span class="verified-tag">${escaparHTML(agencia.etiquetaEstado)}</span>
+                        <div>
+                            <span class="verified-tag">${escaparHTML(agencia.etiquetaEstado)}</span>
+                            ${rntHtml}
+                        </div>
                     </div>
                     <button type="button" class="fav-btn ${esFav ? 'saved' : ''}" title="Guardar en favoritos">
                         ${esFav ? '❤️' : '🤍'}
@@ -405,11 +435,14 @@ function cerrarModalAgencia(event) {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     inicializarApariencia();
-    inicializarModoPlataforma();
-    renderizarOfertas();
-    renderizarAgencias();
+    if (document.getElementById('agencyGrid')) {
+        await cargarDatosRemotos();
+        inicializarModoPlataforma();
+        renderizarOfertas();
+        renderizarAgencias();
+    }
     const input = document.getElementById('searchInput');
     if (input) {
         input.addEventListener('input', (e) => {
