@@ -58,11 +58,13 @@
     "whatsappConcierge":  "525500000000",
     "comercialB2B":  {
                          "planEstandarNota":  "/ lanzamiento",
+                         "ofertaTemporadaPrecio":  " MXN / mes",
+                         "tituloB2BPortada":  "¿Tienes una Agencia, Jardín de Bodas, Quinta o Servicio?",
                          "bannerPatrocinadoPrecio":  " MXN / mes",
                          "planDestacadoNota":  "/ primeros 50 registros",
                          "planEstandarPrecio":  " MXN",
                          "planDestacadoPrecio":  "Gratis 3 meses",
-                         "ofertaTemporadaPrecio":  " MXN / mes",
+                         "subtituloB2BPortada":  "Recibe clientes listos para reservar directo en tu WhatsApp, sin comisiones por venta. Plan Destacado:",
                          "planDestacadoPost":  "Después  MXN/mes",
                          "correoAdmin":  "tu-correo@gmail.com",
                          "whatsappAdmin":  "525500000000"

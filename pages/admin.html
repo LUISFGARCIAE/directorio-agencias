@@ -375,6 +375,14 @@
                             <label>Correo Electrónico Comercial (donde llegan los registros)</label>
                             <input type="email" id="cfgCorreoAdmin" placeholder="tu-correo@gmail.com">
                         </div>
+                        <div class="form-group">
+                            <label>Título del Llamado Comercial en Portada</label>
+                            <input type="text" id="cfgB2BTitulo" placeholder="¿Tienes una Agencia, Jardín de Bodas, Quinta o Servicio?">
+                        </div>
+                        <div class="form-group">
+                            <label>Subtítulo Comercial en Portada</label>
+                            <input type="text" id="cfgB2BSubtitulo" placeholder="Recibe clientes listos para reservar directo en tu WhatsApp...">
+                        </div>
                     </div>
 
                     <div class="admin-card">
@@ -464,7 +472,7 @@
         </div>
     </main>
 
-    <script src="../js/app.js?v=20261117b2b"></script>
+    <script src="../js/app.js?v=20261117cmsfull"></script>
     <script>
         const REPO_OWNER = "LUISFGARCIAE";
         const REPO_NAME = "directorio-agencias";
@@ -561,6 +569,8 @@
                                 const b2b = configActual.comercialB2B || {};
                 document.getElementById("cfgWaAdmin").value = b2b.whatsappAdmin || "";
                 document.getElementById("cfgCorreoAdmin").value = b2b.correoAdmin || "";
+                document.getElementById("cfgB2BTitulo").value = b2b.tituloB2BPortada || "";
+                document.getElementById("cfgB2BSubtitulo").value = b2b.subtituloB2BPortada || "";
                 document.getElementById("cfgPlanEstPrecio").value = b2b.planEstandarPrecio || "renderizarGuiasAdmin(); MXN";
                 document.getElementById("cfgPlanEstNota").value = b2b.planEstandarNota || "/ lanzamiento";
                 document.getElementById("cfgPlanDestPrecio").value = b2b.planDestacadoPrecio || "Gratis 3 meses";
@@ -858,6 +868,8 @@
                             const b2b = configActual.comercialB2B || {};
                 document.getElementById("cfgWaAdmin").value = b2b.whatsappAdmin || "";
                 document.getElementById("cfgCorreoAdmin").value = b2b.correoAdmin || "";
+                document.getElementById("cfgB2BTitulo").value = b2b.tituloB2BPortada || "";
+                document.getElementById("cfgB2BSubtitulo").value = b2b.subtituloB2BPortada || "";
                 document.getElementById("cfgPlanEstPrecio").value = b2b.planEstandarPrecio || "renderizarGuiasAdmin(); MXN";
                 document.getElementById("cfgPlanEstNota").value = b2b.planEstandarNota || "/ lanzamiento";
                 document.getElementById("cfgPlanDestPrecio").value = b2b.planDestacadoPrecio || "Gratis 3 meses";
@@ -873,6 +885,8 @@
                             const b2b = configActual.comercialB2B || {};
                 document.getElementById("cfgWaAdmin").value = b2b.whatsappAdmin || "";
                 document.getElementById("cfgCorreoAdmin").value = b2b.correoAdmin || "";
+                document.getElementById("cfgB2BTitulo").value = b2b.tituloB2BPortada || "";
+                document.getElementById("cfgB2BSubtitulo").value = b2b.subtituloB2BPortada || "";
                 document.getElementById("cfgPlanEstPrecio").value = b2b.planEstandarPrecio || "renderizarGuiasAdmin(); MXN";
                 document.getElementById("cfgPlanEstNota").value = b2b.planEstandarNota || "/ lanzamiento";
                 document.getElementById("cfgPlanDestPrecio").value = b2b.planDestacadoPrecio || "Gratis 3 meses";
@@ -915,6 +929,8 @@
                             const b2b = configActual.comercialB2B || {};
                 document.getElementById("cfgWaAdmin").value = b2b.whatsappAdmin || "";
                 document.getElementById("cfgCorreoAdmin").value = b2b.correoAdmin || "";
+                document.getElementById("cfgB2BTitulo").value = b2b.tituloB2BPortada || "";
+                document.getElementById("cfgB2BSubtitulo").value = b2b.subtituloB2BPortada || "";
                 document.getElementById("cfgPlanEstPrecio").value = b2b.planEstandarPrecio || "renderizarGuiasAdmin(); MXN";
                 document.getElementById("cfgPlanEstNota").value = b2b.planEstandarNota || "/ lanzamiento";
                 document.getElementById("cfgPlanDestPrecio").value = b2b.planDestacadoPrecio || "Gratis 3 meses";
@@ -931,6 +947,8 @@
                             const b2b = configActual.comercialB2B || {};
                 document.getElementById("cfgWaAdmin").value = b2b.whatsappAdmin || "";
                 document.getElementById("cfgCorreoAdmin").value = b2b.correoAdmin || "";
+                document.getElementById("cfgB2BTitulo").value = b2b.tituloB2BPortada || "";
+                document.getElementById("cfgB2BSubtitulo").value = b2b.subtituloB2BPortada || "";
                 document.getElementById("cfgPlanEstPrecio").value = b2b.planEstandarPrecio || "renderizarGuiasAdmin(); MXN";
                 document.getElementById("cfgPlanEstNota").value = b2b.planEstandarNota || "/ lanzamiento";
                 document.getElementById("cfgPlanDestPrecio").value = b2b.planDestacadoPrecio || "Gratis 3 meses";

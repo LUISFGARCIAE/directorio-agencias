@@ -197,6 +197,15 @@ function cambiarSlideHero(nuevoIdx) {
 }
 
 function aplicarLayoutYContenidos() {
+    const b2bCfg = PLATAFORMA_CONFIG.comercialB2B || {};
+    const elB2BTit = document.getElementById('b2bPortadaTitulo');
+    const elB2BSub = document.getElementById('b2bPortadaSubtitulo');
+    const elB2BBadge = document.getElementById('b2bPortadaPrecioBadge');
+    if (elB2BTit && b2bCfg.tituloB2BPortada) elB2BTit.textContent = b2bCfg.tituloB2BPortada;
+    if (elB2BSub && b2bCfg.subtituloB2BPortada) elB2BSub.textContent = b2bCfg.subtituloB2BPortada;
+    if (elB2BBadge && b2bCfg.planDestacadoPrecio) {
+        elB2BBadge.textContent = `⭐ Plan Destacado: ${b2bCfg.planDestacadoPrecio} ${b2bCfg.planDestacadoNota || ''}`.trim();
+    }
     const topBarEl = document.getElementById('promoTopBar');
     if (topBarEl && PLATAFORMA_CONFIG.topBar) {
         const tb = PLATAFORMA_CONFIG.topBar;
@@ -1206,4 +1215,11 @@ function filtrarPorResultadoCalc() {
     renderizarAgencias();
     const target = document.getElementById('sec-agencias');
     if (target) target.scrollIntoView({ behavior: 'smooth' });
+}
+
+function contactarVentasB2B() {
+    const b2b = PLATAFORMA_CONFIG.comercialB2B || {};
+    const num = String(b2b.whatsappAdmin || PLATAFORMA_CONFIG.whatsappConcierge || '525500000000').replace(/\D/g, '');
+    const msg = 'Hola, vi *Directorio Viajero* y me interesa conocer los beneficios y planes para anunciar mi negocio en la plataforma.';
+    window.open(`https://wa.me/${num}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
 }
