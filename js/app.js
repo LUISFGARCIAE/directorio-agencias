@@ -717,6 +717,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         renderizarMapaLocaciones();
         renderizarOpiniones();
         inicializarBarraEdicionVisual();
+        verificarDeepLinkAgencia();
     } else {
         inicializarApariencia();
     }
@@ -728,3 +729,135 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 });
+
+// ==============================================================================
+// FUNCIONES PRO: DEEP LINKING, COMPARTIR FICHA, COMPARADOR Y COTIZADOR PRE-WA
+// ==============================================================================
+let listaComparar = [];
+
+function toggleComparar(id) {
+    if (listaComparar.includes(id)) {
+        listaComparar = listaComparar.filter(item => item !== id);
+    } else {
+        if (listaComparar.length >= 3) {
+            alert('Puedes comparar hasta 3 opciones al mismo tiempo.');
+            return;
+        }
+        listaComparar.push(id);
+    }
+    actualizarDockComparador();
+    renderizarAgencias();
+}
+
+function limpiarComparador() {
+    listaComparar = [];
+    actualizarDockComparador();
+    renderizarAgencias();
+}
+
+function actualizarDockComparador() {
+    const dock = document.getElementById('compareDock');
+    const label = document.getElementById('compareCountLabel');
+    if (!dock || !label) return;
+
+    if (listaComparar.length > 0) {
+        dock.classList.add('visible');
+        label.textContent = `${listaComparar.length} de 3 seleccionados`;
+    } else {
+        dock.classList.remove('visible');
+    }
+}
+
+function abrirModalComparador() {
+    if (listaComparar.length < 2) {
+        alert('Selecciona al menos 2 opciones para compararlas lado a lado.');
+        return;
+    }
+
+    const items = listaComparar.map(id => AGENCIAS_DATA.find(a => a.id === id)).filter(Boolean);
+    const cont = document.getElementById('compareTableContainer');
+    const modal = document.getElementById('compareModal');
+
+    let headersHtml = '<th>Característica</th>';
+    items.forEach(a => {
+        headersHtml += `<td><strong style="font-size:1rem; color:var(--secondary);">${escaparHTML(a.nombre)}</strong><br><span style="font-size:0.75rem; color:var(--primary);">${escaparHTML(a.categoriaNombre || '')}</span></td>`;
+    });
+
+    const filas = [
+        { titulo: 'Cobertura / Salidas', fn: a => escaparHTML(a.salidaDesde) },
+        { titulo: 'Rango de Precio', fn: a => escaparHTML(a.rangoPrecio) },
+        { titulo: 'Especialidad', fn: a => escaparHTML(a.especialidad) },
+        { titulo: 'Registro RNT', fn: a => a.rnt ? `🛡️ Folio ${escaparHTML(a.rnt)}` : 'No especificado' },
+        { titulo: 'Calificación', fn: a => `⭐ ${escaparHTML(a.rating)}` },
+        {
+            titulo: 'Contacto Directo',
+            fn: a => {
+                const wa = generarUrlWhatsApp(a.nombre, a.whatsappNumero);
+                const web = validarUrlSegura(a.web);
+                let btns = '';
+                if (wa) btns += `<a href="${escaparHTML(wa)}" target="_blank" rel="noopener noreferrer" class="btn-action btn-whatsapp" style="margin-bottom:0.4rem;">WhatsApp</a>`;
+                if (web) btns += `<a href="${escaparHTML(web)}" target="_blank" rel="noopener noreferrer" class="btn-action btn-primary">Sitio Web</a>`;
+                return btns || '-';
+            }
+        }
+    ];
+
+    let bodyRows = '';
+    filas.forEach(f => {
+        bodyRows += `<tr><th>${f.titulo}</th>` + items.map(a => `<td>${f.fn(a)}</td>`).join('') + `</tr>`;
+    });
+
+    cont.innerHTML = `<table class="compare-table"><thead><tr>${headersHtml}</tr></thead><tbody>${bodyRows}</tbody></table>`;
+    modal.classList.add('open');
+}
+
+function cerrarModalComparador(event) {
+    if (!event || event.target.id === 'compareModal' || event.target.classList.contains('modal-close')) {
+        document.getElementById('compareModal').classList.remove('open');
+    }
+}
+
+function compartirFicha(id) {
+    const agencia = AGENCIAS_DATA.find(a => a.id === id);
+    if (!agencia) return;
+
+    const baseUrl = window.location.origin + window.location.pathname;
+    const shareUrl = `${baseUrl}?agencia=${encodeURIComponent(agencia.id)}`;
+    const texto = `Mira esta opción que encontré en Directorio Viajero: *${agencia.nombre}* (${agencia.salidaDesde}) 👉 ${shareUrl}`;
+
+    if (navigator.share) {
+        navigator.share({ title: agencia.nombre, text: texto, url: shareUrl }).catch(() => {});
+    } else if (navigator.clipboard) {
+        navigator.clipboard.writeText(shareUrl).then(() => {
+            alert(`✅ Enlace directo copiado al portapapeles:\n${shareUrl}\n\nYa puedes pegarlo en WhatsApp para compartirlo.`);
+        });
+    } else {
+        window.open(`https://wa.me/?text=${encodeURIComponent(texto)}`, '_blank', 'noopener,noreferrer');
+    }
+}
+
+function enviarCotizacionEstructurada(id) {
+    const agencia = AGENCIAS_DATA.find(a => a.id === id);
+    if (!agencia || !agencia.whatsappNumero) return;
+
+    const soloDigitos = String(agencia.whatsappNumero).replace(/\D/g, '');
+    const fecha = document.getElementById('qqFecha').value || 'Por definir';
+    const personas = document.getElementById('qqPersonas').value || '2 personas';
+    const detalle = document.getElementById('qqDetalle').value.trim();
+
+    const msg = `Hola *${agencia.nombre}*, los encontré en *Directorio Viajero* y me gustaría cotizar:\n` +
+                `• *Fecha tentativa:* ${fecha}\n` +
+                `• *Personas / Invitados:* ${personas}\n` +
+                (detalle ? `• *Comentarios:* ${detalle}` : '');
+
+    registrarEventoClic(agencia.nombre, 'cotizador_inteligente_wa');
+    window.open(`https://wa.me/${soloDigitos}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
+}
+
+function verificarDeepLinkAgencia() {
+    const params = new URLSearchParams(window.location.search);
+    const idAgencia = params.get('agencia');
+    if (idAgencia && AGENCIAS_DATA.some(a => a.id === idAgencia)) {
+        abrirModalAgencia(idAgencia);
+    }
+}
