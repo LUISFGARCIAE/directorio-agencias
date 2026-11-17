@@ -117,9 +117,12 @@ function renderizarOfertas() {
 
         const imgSegura = validarUrlSegura(oferta.imagen);
         const waUrl = generarUrlWhatsApp(oferta.agencia, oferta.whatsappNumero, oferta.titulo);
-        const webSegura = validarUrlSegura(oferta.web);
+        const esEnlaceInterno = oferta.web && oferta.web.startsWith('pages/');
+        const webSegura = esEnlaceInterno ? oferta.web : validarUrlSegura(oferta.web);
         const destinoUrl = waUrl || webSegura || 'pages/anunciate.html';
-        const textoBoton = waUrl ? '💬 Cotizar Oferta por WhatsApp' : 'Ver Paquete en Sitio Oficial';
+        const textoBoton = oferta.textoBoton || (waUrl ? '💬 Cotizar Oferta por WhatsApp' : 'Ver Detalles');
+        const targetAttr = esEnlaceInterno ? '' : 'target="_blank" rel="noopener noreferrer nofollow"';
+        const claseBoton = oferta.esReferenciaReal ? 'btn-primary' : 'btn-whatsapp';
 
         card.innerHTML = `
             <div class="deal-img-wrap">
@@ -133,8 +136,8 @@ function renderizarOfertas() {
                     <h3 class="deal-title">${escaparHTML(oferta.titulo)}</h3>
                     <p class="deal-info">${escaparHTML(oferta.detalle)}</p>
                 </div>
-                <a href="${escaparHTML(destinoUrl)}" target="_blank" rel="noopener noreferrer nofollow" class="btn-action ${waUrl ? 'btn-whatsapp' : 'btn-primary'} deal-cta">
-                    ${textoBoton}
+                <a href="${escaparHTML(destinoUrl)}" ${targetAttr} class="btn-action ${claseBoton} deal-cta">
+                    ${escaparHTML(textoBoton)}
                 </a>
             </div>
         `;
@@ -354,3 +357,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
