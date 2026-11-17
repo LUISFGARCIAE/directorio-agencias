@@ -55,5 +55,16 @@
                    "visible":  true,
                    "textoBoton":  "Ver Ofertas"
                },
-    "whatsappConcierge":  "525500000000"
+    "whatsappConcierge":  "525500000000",
+    "comercialB2B":  {
+                         "planEstandarNota":  "/ lanzamiento",
+                         "bannerPatrocinadoPrecio":  " MXN / mes",
+                         "planDestacadoNota":  "/ primeros 50 registros",
+                         "planEstandarPrecio":  " MXN",
+                         "planDestacadoPrecio":  "Gratis 3 meses",
+                         "ofertaTemporadaPrecio":  " MXN / mes",
+                         "planDestacadoPost":  "Después  MXN/mes",
+                         "correoAdmin":  "tu-correo@gmail.com",
+                         "whatsappAdmin":  "525500000000"
+                     }
 }

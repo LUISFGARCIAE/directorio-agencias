@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; object-src 'none'; base-uri 'self';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; object-src 'none'; base-uri 'self';">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>Media Kit Comercial 2026 | Directorio Viajero</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -445,13 +445,36 @@
                         🌐 https://luisfgarciae.github.io/directorio-agencias/pages/anunciate.html
                     </p>
                 </div>
-                <div class="contact-pill">
-                    <div>💬 WhatsApp: +525500000000</div>
-                    <div>✉️ tu-correo@gmail.com</div>
-                </div>
+                <div class="contact-pill" id="mkContactoPill"><div>💬 WhatsApp: +525500000000</div><div>✉️ tu-correo@gmail.com</div></div>
             </div>
         </div>
     </article>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const res = await fetch('../data/config.json?t=' + Date.now());
+                if (!res.ok) return;
+                const cfg = await res.json();
+                const b2b = cfg.comercialB2B || {};
+
+                if (b2b.planEstandarPrecio) {
+                    document.getElementById('mkPrecioEstandar').innerHTML = `${b2b.planEstandarPrecio}<div><span class="promo-tag">${b2b.planEstandarNota || 'Acceso Base'}</span></div>`;
+                }
+                if (b2b.planDestacadoPrecio) {
+                    document.getElementById('mkPrecioDestacado').innerHTML = `${b2b.planDestacadoPrecio}<div><span class="promo-tag">${b2b.planDestacadoNota || ''}</span></div><div style="font-size:0.74rem; color:#64748b; font-weight:500; margin-top:0.2rem;">${b2b.planDestacadoPost || ''}</div>`;
+                }
+                if (b2b.ofertaTemporadaPrecio) {
+                    document.getElementById('mkPrecioOferta').innerHTML = `${b2b.ofertaTemporadaPrecio}<div style="font-size:0.74rem; color:#64748b; font-weight:500; margin-top:0.2rem;">Vigencia 30 días</div>`;
+                }
+                if (b2b.bannerPatrocinadoPrecio) {
+                    document.getElementById('mkPrecioBanner').innerHTML = `${b2b.bannerPatrocinadoPrecio}<div style="font-size:0.74rem; color:#64748b; font-weight:500; margin-top:0.2rem;">Espacio único</div>`;
+                }
+                if (b2b.whatsappAdmin || b2b.correoAdmin) {
+                    document.getElementById('mkContactoPill').innerHTML = `<div>💬 WhatsApp: +${b2b.whatsappAdmin || ''}</div><div>✉️ ${b2b.correoAdmin || ''}</div>`;
+                }
+            } catch (e) {}
+        });
+    </script>
 </body>
 </html>

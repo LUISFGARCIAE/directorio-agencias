@@ -67,6 +67,7 @@
                 <button type="button" class="cms-tab" onclick="cambiarTab('tab-anunciantes', this)">🏢 Anunciantes (<span id="badgeCountAnun">0</span>)</button>
                 <button type="button" class="cms-tab" onclick="cambiarTab('tab-ofertas', this)">🔥 Ofertas y Banners</button>
                 <button type="button" class="cms-tab" onclick="cambiarTab('tab-guias', this)">📖 Guías SEO</button>
+                <button type="button" class="cms-tab" onclick="cambiarTab('tab-comercial', this)">💼 Tarifas y Contacto</button>
                 <button type="button" class="cms-tab" onclick="cambiarTab('tab-opiniones', this)">💬 Opiniones y Respaldo</button>
             </div>
 
@@ -360,6 +361,62 @@
                     </div>
                 </div>
             </div>
+                        <!-- PESTAÑA COMERCIAL: CONTACTO Y TARIFAS B2B -->
+            <div id="tab-comercial" class="cms-panel">
+                <div class="admin-grid">
+                    <div class="admin-card">
+                        <h3 style="font-size: 1.08rem; margin-bottom: 0.4rem;">📞 Contacto Comercial y Concierge</h3>
+                        <p style="font-size: 0.84rem; color: var(--text-soft); margin-bottom: 1.1rem;">Se actualiza al instante en el botón flotante, el formulario de registro y el Media Kit PDF.</p>
+                        <div class="form-group">
+                            <label>WhatsApp Administrativo / Concierge (con lada, ej. 525512345678)</label>
+                            <input type="tel" id="cfgWaAdmin" placeholder="525500000000">
+                        </div>
+                        <div class="form-group">
+                            <label>Correo Electrónico Comercial (donde llegan los registros)</label>
+                            <input type="email" id="cfgCorreoAdmin" placeholder="tu-correo@gmail.com">
+                        </div>
+                    </div>
+
+                    <div class="admin-card">
+                        <h3 style="font-size: 1.08rem; margin-bottom: 0.4rem;">💰 Tarifas de Contratación y Planes B2B</h3>
+                        <p style="font-size: 0.84rem; color: var(--text-soft); margin-bottom: 1.1rem;">Cambia entre etapa gratuita de lanzamiento y tarifas comerciales cuando quieras.</p>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                            <div class="form-group">
+                                <label>Plan Estándar (Precio)</label>
+                                <input type="text" id="cfgPlanEstPrecio" placeholder="<!-- PESTAÑA 4: OPINIONES Y RESPALDO --> MXN">
+                            </div>
+                            <div class="form-group">
+                                <label>Plan Estándar (Nota)</label>
+                                <input type="text" id="cfgPlanEstNota" placeholder="/ lanzamiento">
+                            </div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                            <div class="form-group">
+                                <label>Plan Destacado (Precio / Promo)</label>
+                                <input type="text" id="cfgPlanDestPrecio" placeholder="Gratis 3 meses">
+                            </div>
+                            <div class="form-group">
+                                <label>Plan Destacado (Etiqueta)</label>
+                                <input type="text" id="cfgPlanDestNota" placeholder="/ primeros 50 registros">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Plan Destacado (Nota precio regular posterior)</label>
+                            <input type="text" id="cfgPlanDestPost" placeholder="Después $399 MXN/mes">
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                            <div class="form-group">
+                                <label>Oferta de Temporada (Media Kit)</label>
+                                <input type="text" id="cfgOfertaPrecio" placeholder="$499 MXN / mes">
+                            </div>
+                            <div class="form-group">
+                                <label>Banner Patrocinado (Media Kit)</label>
+                                <input type="text" id="cfgBannerPrecio" placeholder="$899 MXN / mes">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- PESTAÑA 4: OPINIONES Y RESPALDO -->
             <div id="tab-opiniones" class="cms-panel">
                 <div class="admin-grid">
@@ -407,7 +464,7 @@
         </div>
     </main>
 
-    <script src="../js/app.js?v=20261117mega"></script>
+    <script src="../js/app.js?v=20261117b2b"></script>
     <script>
         const REPO_OWNER = "LUISFGARCIAE";
         const REPO_NAME = "directorio-agencias";
@@ -501,6 +558,16 @@
                 renderizarOrdenSecciones();
                 renderizarListaAdmin();
                 renderizarOfertasAdmin();
+                                const b2b = configActual.comercialB2B || {};
+                document.getElementById("cfgWaAdmin").value = b2b.whatsappAdmin || "";
+                document.getElementById("cfgCorreoAdmin").value = b2b.correoAdmin || "";
+                document.getElementById("cfgPlanEstPrecio").value = b2b.planEstandarPrecio || "renderizarGuiasAdmin(); MXN";
+                document.getElementById("cfgPlanEstNota").value = b2b.planEstandarNota || "/ lanzamiento";
+                document.getElementById("cfgPlanDestPrecio").value = b2b.planDestacadoPrecio || "Gratis 3 meses";
+                document.getElementById("cfgPlanDestNota").value = b2b.planDestacadoNota || "/ primeros 50 registros";
+                document.getElementById("cfgPlanDestPost").value = b2b.planDestacadoPost || "Después $399 MXN/mes";
+                document.getElementById("cfgOfertaPrecio").value = b2b.ofertaTemporadaPrecio || "$499 MXN / mes";
+                document.getElementById("cfgBannerPrecio").value = b2b.bannerPatrocinadoPrecio || "$899 MXN / mes";
                 renderizarGuiasAdmin();
                 renderizarOpinionesAdmin();
 
@@ -788,12 +855,32 @@
                 contenido: document.getElementById("guiaContenido").value.trim()
             });
             e.target.reset();
-            renderizarGuiasAdmin();
+                            const b2b = configActual.comercialB2B || {};
+                document.getElementById("cfgWaAdmin").value = b2b.whatsappAdmin || "";
+                document.getElementById("cfgCorreoAdmin").value = b2b.correoAdmin || "";
+                document.getElementById("cfgPlanEstPrecio").value = b2b.planEstandarPrecio || "renderizarGuiasAdmin(); MXN";
+                document.getElementById("cfgPlanEstNota").value = b2b.planEstandarNota || "/ lanzamiento";
+                document.getElementById("cfgPlanDestPrecio").value = b2b.planDestacadoPrecio || "Gratis 3 meses";
+                document.getElementById("cfgPlanDestNota").value = b2b.planDestacadoNota || "/ primeros 50 registros";
+                document.getElementById("cfgPlanDestPost").value = b2b.planDestacadoPost || "Después $399 MXN/mes";
+                document.getElementById("cfgOfertaPrecio").value = b2b.ofertaTemporadaPrecio || "$499 MXN / mes";
+                document.getElementById("cfgBannerPrecio").value = b2b.bannerPatrocinadoPrecio || "$899 MXN / mes";
+                renderizarGuiasAdmin();
         }
 
         function eliminarGuia(idx) {
             catalogoActual.guias.splice(idx, 1);
-            renderizarGuiasAdmin();
+                            const b2b = configActual.comercialB2B || {};
+                document.getElementById("cfgWaAdmin").value = b2b.whatsappAdmin || "";
+                document.getElementById("cfgCorreoAdmin").value = b2b.correoAdmin || "";
+                document.getElementById("cfgPlanEstPrecio").value = b2b.planEstandarPrecio || "renderizarGuiasAdmin(); MXN";
+                document.getElementById("cfgPlanEstNota").value = b2b.planEstandarNota || "/ lanzamiento";
+                document.getElementById("cfgPlanDestPrecio").value = b2b.planDestacadoPrecio || "Gratis 3 meses";
+                document.getElementById("cfgPlanDestNota").value = b2b.planDestacadoNota || "/ primeros 50 registros";
+                document.getElementById("cfgPlanDestPost").value = b2b.planDestacadoPost || "Después $399 MXN/mes";
+                document.getElementById("cfgOfertaPrecio").value = b2b.ofertaTemporadaPrecio || "$499 MXN / mes";
+                document.getElementById("cfgBannerPrecio").value = b2b.bannerPatrocinadoPrecio || "$899 MXN / mes";
+                renderizarGuiasAdmin();
         }
         // Opiniones
         function renderizarOpinionesAdmin() {
@@ -825,13 +912,33 @@
                 texto: document.getElementById("opTexto").value.trim()
             });
             e.target.reset();
-            renderizarGuiasAdmin();
+                            const b2b = configActual.comercialB2B || {};
+                document.getElementById("cfgWaAdmin").value = b2b.whatsappAdmin || "";
+                document.getElementById("cfgCorreoAdmin").value = b2b.correoAdmin || "";
+                document.getElementById("cfgPlanEstPrecio").value = b2b.planEstandarPrecio || "renderizarGuiasAdmin(); MXN";
+                document.getElementById("cfgPlanEstNota").value = b2b.planEstandarNota || "/ lanzamiento";
+                document.getElementById("cfgPlanDestPrecio").value = b2b.planDestacadoPrecio || "Gratis 3 meses";
+                document.getElementById("cfgPlanDestNota").value = b2b.planDestacadoNota || "/ primeros 50 registros";
+                document.getElementById("cfgPlanDestPost").value = b2b.planDestacadoPost || "Después $399 MXN/mes";
+                document.getElementById("cfgOfertaPrecio").value = b2b.ofertaTemporadaPrecio || "$499 MXN / mes";
+                document.getElementById("cfgBannerPrecio").value = b2b.bannerPatrocinadoPrecio || "$899 MXN / mes";
+                renderizarGuiasAdmin();
                 renderizarOpinionesAdmin();
         }
 
         function eliminarOpinion(idx) {
             catalogoActual.opiniones.splice(idx, 1);
-            renderizarGuiasAdmin();
+                            const b2b = configActual.comercialB2B || {};
+                document.getElementById("cfgWaAdmin").value = b2b.whatsappAdmin || "";
+                document.getElementById("cfgCorreoAdmin").value = b2b.correoAdmin || "";
+                document.getElementById("cfgPlanEstPrecio").value = b2b.planEstandarPrecio || "renderizarGuiasAdmin(); MXN";
+                document.getElementById("cfgPlanEstNota").value = b2b.planEstandarNota || "/ lanzamiento";
+                document.getElementById("cfgPlanDestPrecio").value = b2b.planDestacadoPrecio || "Gratis 3 meses";
+                document.getElementById("cfgPlanDestNota").value = b2b.planDestacadoNota || "/ primeros 50 registros";
+                document.getElementById("cfgPlanDestPost").value = b2b.planDestacadoPost || "Después $399 MXN/mes";
+                document.getElementById("cfgOfertaPrecio").value = b2b.ofertaTemporadaPrecio || "$499 MXN / mes";
+                document.getElementById("cfgBannerPrecio").value = b2b.bannerPatrocinadoPrecio || "$899 MXN / mes";
+                renderizarGuiasAdmin();
                 renderizarOpinionesAdmin();
         }
 

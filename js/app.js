@@ -1140,7 +1140,8 @@ function copiarCupon(codigo) {
 }
 
 function abrirConciergeWhatsApp() {
-    const num = String(PLATAFORMA_CONFIG.whatsappConcierge || '525500000000').replace(/\D/g, '');
+    const b2b = PLATAFORMA_CONFIG.comercialB2B || {};
+    const num = String(b2b.whatsappAdmin || PLATAFORMA_CONFIG.whatsappConcierge || '525500000000').replace(/\D/g, '');
     const msg = 'Hola, vengo de *Directorio Viajero* y me gustaría que me recomienden opciones según lo que busco.';
     window.open(`https://wa.me/${num}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
 }

@@ -39,7 +39,7 @@
             <div class="plan-card">
                 <div>
                     <h3>Plan Estándar</h3>
-                    <div class="plan-price">$0 MXN <span>/ lanzamiento</span></div>
+                    <div class="plan-price" id="precioEstandarCard"><div class="plan-price">$0 MXN <span>/ lanzamiento</span></div> MXN <span>/ lanzamiento</span></div>
                     <ul class="plan-features">
                         <li>✔ Tarjeta en el directorio general</li>
                         <li>✔ Logotipo y descripción breve (140 caracteres)</li>
@@ -54,7 +54,7 @@
                 <div>
                     <span style="background: var(--primary-soft); color: var(--primary-dark); font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.65rem; border-radius: 9999px;">MÁS POPULAR</span>
                     <h3 style="margin-top: 0.5rem;">Plan Destacado</h3>
-                    <div class="plan-price">Gratis 3 meses <span>/ primeros 50 registros</span></div>
+                    <div class="plan-price" id="precioDestacadoCard">Gratis 3 meses <span>/ primeros 50 registros</span></div>
                     <ul class="plan-features">
                         <li>✔ Posición prioritaria en los primeros lugares</li>
                         <li>✔ Insignia visual "⭐ Destacada"</li>
@@ -173,10 +173,36 @@
         </div>
     </footer>
 
-    <script src="../js/app.js?v=20261117"></script>
+    <script src="../js/app.js?v=20261117b2b"></script>
     <script>
-        const CORREO_DESTINO = "tu-correo@gmail.com";
-        const WHATSAPP_ADMIN = "525500000000";
+                let CORREO_DESTINO = "tu-correo@gmail.com";
+        let WHATSAPP_ADMIN = "525500000000";
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const res = await fetch('../data/config.json?t=' + Date.now());
+                if (res.ok) {
+                    const cfg = await res.json();
+                    const b2b = cfg.comercialB2B || {};
+                    if (b2b.correoAdmin) CORREO_DESTINO = b2b.correoAdmin;
+                    if (b2b.whatsappAdmin) WHATSAPP_ADMIN = String(b2b.whatsappAdmin).replace(/\D/g, '');
+
+                    const elEst = document.getElementById('precioEstandarCard');
+                    if (elEst && b2b.planEstandarPrecio) {
+                        elEst.innerHTML = `${b2b.planEstandarPrecio} <span>${b2b.planEstandarNota || ''}</span>`;
+                    }
+
+                    const elDest = document.getElementById('precioDestacadoCard');
+                    const optDest = document.querySelector('#planAgencia option[value="Plan Destacado"]');
+                    if (elDest && b2b.planDestacadoPrecio) {
+                        elDest.innerHTML = `${b2b.planDestacadoPrecio} <span>${b2b.planDestacadoNota || ''}</span>`;
+                    }
+                    if (optDest && b2b.planDestacadoPrecio) {
+                        optDest.textContent = `⭐ Plan Destacado (${b2b.planDestacadoPrecio} ${b2b.planDestacadoNota || ''})`;
+                    }
+                }
+            } catch (e) {}
+        });
         let ultimoEnvio = 0;
 
         function limpiarEntrada(str) {
