@@ -1,332 +1,304 @@
 {
-    "opiniones": [
-        {
-            "iniciales": "MR",
-            "detalle": "Viajó a Cancún • CDMX",
-            "nombre": "Mariana Ríos",
-            "texto": "Me gustó que te manda directo al WhatsApp de la agencia sin pedirte tarjeta ni cobrarte comisiones raras. Cotizamos un paquete a Cancún en 10 minutos."
-        },
-        {
-            "iniciales": "CG",
-            "detalle": "Viajó a Acapulco • Estado de México",
-            "nombre": "Carlos Gómez",
-            "texto": "Estábamos buscando salidas grupales de fin de semana para Acapulco y aquí pudimos comparar tres opciones rápido y guardar nuestras favoritas."
-        },
-        {
-            "iniciales": "AL",
-            "detalle": "Tour Pueblos Mágicos • Puebla",
-            "nombre": "Andrea López",
-            "texto": "Muy práctico tener todas las agencias ordenadas por destino. Encontramos un tour a Pueblos Mágicos con salida desde Puebla."
-        }
-    ],
-    "anunciantes": [
-        {
-            "id": "el-mundo-de-robaaaa-203",
-            "categoria": "viajes",
-            "categoriaNombre": "Viajes y Turismo",
-            "nombre": "El mundo de Robaaaa",
-            "iniciales": "EL",
-            "colorTexto": "#0284c7",
-            "colorFondo": "#e0f2fe",
-            "destacada": false,
-            "rnt": "",
-            "rating": "5.0",
-            "etiquetaEstado": "✔ Verificado",
-            "salidaDesde": "MEXICO",
-            "estadosSalida": [
-                "cdmx",
-                "monterrey",
-                "guadalajara",
-                "puebla",
-                "bajio"
-            ],
-            "rangoPrecio": "$$ • Consultar",
-            "especialidad": "Viajes y Turismo",
-            "descripcion": "AAAA",
-            "destinos": [
-                "cancun",
-                "acapulco",
-                "loscabos",
-                "pueblos-magicos"
-            ],
-            "tags": [
-                "#ViajesyTurismo"
-            ],
-            "web": "",
-            "whatsappNumero": ""
-        },
-        {
-            "id": "caribe-tours",
-            "categoria": "viajes",
-            "categoriaNombre": "Viajes y Turismo",
-            "nombre": "Caribe Tours & Travel",
-            "iniciales": "CT",
-            "colorTexto": "#0284c7",
-            "colorFondo": "#e0f2fe",
-            "destacada": true,
-            "rnt": "",
-            "rating": "4.9",
-            "etiquetaEstado": "✔ Anunciante Demo",
-            "salidaDesde": "CDMX y Área Metropolitana",
-            "estadosSalida": [
-                "cdmx"
-            ],
-            "rangoPrecio": "$$ • Paquetes Todo Incluido",
-            "especialidad": "Vuelos charter y resorts familiares",
-            "descripcion": "Especialistas en paquetes todo incluido hacia el Caribe Mexicano, Los Cabos y vuelos charter desde CDMX.",
-            "destinos": [
-                "cancun",
-                "loscabos"
-            ],
-            "tags": [
-                "#Cancún",
-                "#RivieraMaya",
-                "#LosCabos"
-            ],
-            "web": "https://example.com",
-            "whatsappNumero": "525500000000"
-        },
-        {
-            "id": "best-day",
-            "categoria": "viajes",
-            "categoriaNombre": "Viajes y Turismo",
-            "nombre": "Best Day",
-            "iniciales": "BD",
-            "colorTexto": "#0284c7",
-            "colorFondo": "#e0f2fe",
-            "destacada": true,
-            "rnt": "",
-            "rating": "4.8",
-            "etiquetaEstado": "✔ Sitio Oficial (Referencia)",
-            "salidaDesde": "Todo México (CDMX, MTY, GDL)",
-            "estadosSalida": [
-                "cdmx",
-                "monterrey",
-                "guadalajara",
-                "puebla",
-                "bajio"
-            ],
-            "rangoPrecio": "$$ - $$$ • Flexible",
-            "especialidad": "Hoteles, vuelos y paquetes nacionales",
-            "descripcion": "Agencia líder en México para reservar hoteles, vuelos, tours y paquetes todo incluido en playas nacionales.",
-            "destinos": [
-                "cancun",
-                "acapulco",
-                "loscabos"
-            ],
-            "tags": [
-                "#Cancún",
-                "#Acapulco",
-                "#LosCabos"
-            ],
-            "web": "https://www.bestday.com.mx/",
-            "whatsappNumero": ""
-        },
-        {
-            "id": "mundo-joven",
-            "categoria": "viajes",
-            "categoriaNombre": "Viajes y Turismo",
-            "nombre": "Mundo Joven",
-            "iniciales": "MJ",
-            "colorTexto": "#dc2626",
-            "colorFondo": "#fee2e2",
-            "destacada": true,
-            "rnt": "",
-            "rating": "4.8",
-            "etiquetaEstado": "✔ Sitio Oficial (Referencia)",
-            "salidaDesde": "Todo México (CDMX, GDL, MTY, Puebla)",
-            "estadosSalida": [
-                "cdmx",
-                "guadalajara",
-                "monterrey",
-                "puebla"
-            ],
-            "rangoPrecio": "$$ • Experiencias y Circuitos",
-            "especialidad": "Tours culturales y viajes a la medida",
-            "descripcion": "Expertos en experiencias de viaje, tours guiados por México, circuitos culturales y paquetes a la medida.",
-            "destinos": [
-                "cancun",
-                "pueblos-magicos"
-            ],
-            "tags": [
-                "#PueblosMágicos",
-                "#Cancún",
-                "#Tours"
-            ],
-            "web": "https://mundojoven.com/",
-            "whatsappNumero": "525554828282"
-        },
-        {
-            "id": "hacienda-los-arcos",
-            "categoria": "bodas",
-            "categoriaNombre": "Bodas y Eventos",
-            "nombre": "Hacienda & Jardín Los Arcos",
-            "iniciales": "HA",
-            "colorTexto": "#be123c",
-            "colorFondo": "#ffe4e6",
-            "destacada": true,
-            "rnt": "",
-            "rating": "4.9",
-            "etiquetaEstado": "✔ Anunciante Demo",
-            "salidaDesde": "Morelos, CDMX y Puebla",
-            "estadosSalida": [
-                "cdmx",
-                "puebla"
-            ],
-            "rangoPrecio": "$$$ • Bodas Destino y Banquetes",
-            "especialidad": "Bodas en jardín, coordinación integral y hospedaje",
-            "descripcion": "Jardines coloniales para bodas de 80 a 350 invitados con banquete, pista iluminada y suite nupcial incluida.",
-            "destinos": [
-                "pueblos-magicos",
-                "acapulco"
-            ],
-            "tags": [
-                "#BodasDestino",
-                "#JardínDeEventos",
-                "#Banquetes"
-            ],
-            "web": "https://example.com",
-            "whatsappNumero": "525500000000"
-        },
-        {
-            "id": "quinta-valle-verde",
-            "categoria": "hospedaje",
-            "categoriaNombre": "Quintas y Estancias",
-            "nombre": "Quinta Valle Verde & Spa",
-            "iniciales": "QV",
-            "colorTexto": "#047857",
-            "colorFondo": "#d1fae5",
-            "destacada": false,
-            "rnt": "",
-            "rating": "4.8",
-            "etiquetaEstado": "✔ Anunciante Demo",
-            "salidaDesde": "Querétaro, Bajío y CDMX",
-            "estadosSalida": [
-                "cdmx",
-                "bajio"
-            ],
-            "rangoPrecio": "$$ • Escapadas de Fin de Semana",
-            "especialidad": "Cabañas privadas, temazcal y viñedos",
-            "descripcion": "Renta de villas completas y cabañas boutique para grupos familiares o parejas cerca de la ruta del queso y el vino.",
-            "destinos": [
-                "pueblos-magicos"
-            ],
-            "tags": [
-                "#Cabañas",
-                "#EscapadaRomántica",
-                "#Bajío"
-            ],
-            "web": "",
-            "whatsappNumero": "525500000000"
-        },
-        {
-            "id": "lumina-studio",
-            "categoria": "servicios",
-            "categoriaNombre": "Fotografía y Experiencias",
-            "nombre": "Lúmina Foto & Video Aéreo",
-            "iniciales": "LF",
-            "colorTexto": "#7c3aed",
-            "colorFondo": "#ede9fe",
-            "destacada": false,
-            "rnt": "",
-            "rating": "5.0",
-            "etiquetaEstado": "✔ Anunciante Demo",
-            "salidaDesde": "Todo México (Cobertura en Playa)",
-            "estadosSalida": [
-                "cdmx",
-                "monterrey",
-                "guadalajara",
-                "puebla",
-                "bajio"
-            ],
-            "rangoPrecio": "$$ • Cobertura por Evento",
-            "especialidad": "Sesiones en playa, bodas y dron 4K",
-            "descripcion": "Cobertura documental de bodas en playa, sesiones de pareja en Cancún y Los Cabos y producción con dron.",
-            "destinos": [
-                "cancun",
-                "loscabos",
-                "acapulco"
-            ],
-            "tags": [
-                "#FotografíaBodas",
-                "#Dron4K",
-                "#SesiónPlaya"
-            ],
-            "web": "https://example.com",
-            "whatsappNumero": "525500000000"
-        },
-        {
-            "id": "pacifico-escapes",
-            "categoria": "viajes",
-            "categoriaNombre": "Viajes y Turismo",
-            "nombre": "Pacífico Escapes",
-            "iniciales": "PE",
-            "colorTexto": "#ea580c",
-            "colorFondo": "#ffedd5",
-            "destacada": false,
-            "rnt": "",
-            "rating": "4.7",
-            "etiquetaEstado": "✔ Anunciante Demo",
-            "salidaDesde": "CDMX y Puebla",
-            "estadosSalida": [
-                "cdmx",
-                "puebla"
-            ],
-            "rangoPrecio": "$ • Económico / Grupal",
-            "especialidad": "Salidas en autobús y hotel",
-            "descripcion": "Salidas grupales y viajes familiares a Acapulco, Ixtapa y recorridos por Pueblos Mágicos del centro del país.",
-            "destinos": [
-                "acapulco",
-                "pueblos-magicos"
-            ],
-            "tags": [
-                "#Acapulco",
-                "#PueblosMágicos",
-                "#TodoPagado"
-            ],
-            "web": "https://example.com",
-            "whatsappNumero": "525500000000"
-        }
-    ],
-    "ofertas": [
-        {
-            "esReferenciaReal": true,
-            "categoria": "viajes",
-            "agencia": "Mundo Joven • Ejemplo Real",
-            "titulo": "Tours y Circuitos por México",
-            "detalle": "Consulta salidas vigentes, circuitos culturales y paquetes en su portal oficial.",
-            "precio": "Ver tarifas oficiales",
-            "etiqueta": "Sitio Oficial",
-            "imagen": "https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?auto=format&fit=crop&w=600&q=80",
-            "whatsappNumero": "",
-            "web": "https://mundojoven.com/",
-            "textoBoton": "Visitar Sitio Oficial"
-        },
-        {
-            "esReferenciaReal": false,
-            "categoria": "bodas",
-            "agencia": "Espacio Patrocinado • Bodas y Eventos",
-            "titulo": "Anuncia aquí tu Jardín, Banquete o Wedding Planner",
-            "detalle": "Conecta con parejas buscando locaciones en playa, haciendas y proveedores de eventos.",
-            "precio": "Disponible",
-            "etiqueta": "Nuevo Sector",
-            "imagen": "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80",
-            "whatsappNumero": "",
-            "web": "pages/anunciate.html",
-            "textoBoton": "Publicar mi Servicio"
-        },
-        {
-            "esReferenciaReal": false,
-            "categoria": "viajes",
-            "agencia": "Espacio Patrocinado • Viajes y Estancias",
-            "titulo": "Destaca tus paquetes de Playa o Cabañas",
-            "detalle": "Recibe solicitudes directas en tu WhatsApp de ventas sin pagar comisiones por reserva.",
-            "precio": "Disponible",
-            "etiqueta": "Espacio Publicitario",
-            "imagen": "https://images.unsplash.com/photo-1510097467424-192d713fd8b2?auto=format&fit=crop&w=600&q=80",
-            "whatsappNumero": "",
-            "web": "pages/anunciate.html",
-            "textoBoton": "Apartar este Espacio"
-        }
-    ]
+    "opiniones":  [
+                      {
+                          "iniciales":  "MR",
+                          "detalle":  "Viajó a Cancún • CDMX",
+                          "nombre":  "Mariana Ríos",
+                          "texto":  "Me gustó que te manda directo al WhatsApp de la agencia sin pedirte tarjeta ni cobrarte comisiones raras. Cotizamos un paquete a Cancún en 10 minutos."
+                      },
+                      {
+                          "iniciales":  "CG",
+                          "detalle":  "Viajó a Acapulco • Estado de México",
+                          "nombre":  "Carlos Gómez",
+                          "texto":  "Estábamos buscando salidas grupales de fin de semana para Acapulco y aquí pudimos comparar tres opciones rápido y guardar nuestras favoritas."
+                      },
+                      {
+                          "iniciales":  "AL",
+                          "detalle":  "Tour Pueblos Mágicos • Puebla",
+                          "nombre":  "Andrea López",
+                          "texto":  "Muy práctico tener todas las agencias ordenadas por destino. Encontramos un tour a Pueblos Mágicos con salida desde Puebla."
+                      }
+                  ],
+    "anunciantes":  [
+                        {
+                            "id":  "caribe-tours",
+                            "categoria":  "viajes",
+                            "categoriaNombre":  "Viajes y Turismo",
+                            "nombre":  "Caribe Tours \u0026 Travel",
+                            "iniciales":  "CT",
+                            "colorTexto":  "#0284c7",
+                            "colorFondo":  "#e0f2fe",
+                            "destacada":  true,
+                            "rnt":  "",
+                            "rating":  "4.9",
+                            "etiquetaEstado":  "✔ Anunciante Demo",
+                            "salidaDesde":  "CDMX y Área Metropolitana",
+                            "estadosSalida":  [
+                                                  "cdmx"
+                                              ],
+                            "rangoPrecio":  "$$ • Paquetes Todo Incluido",
+                            "especialidad":  "Vuelos charter y resorts familiares",
+                            "descripcion":  "Especialistas en paquetes todo incluido hacia el Caribe Mexicano, Los Cabos y vuelos charter desde CDMX.",
+                            "destinos":  [
+                                             "cancun",
+                                             "loscabos"
+                                         ],
+                            "tags":  [
+                                         "#Cancún",
+                                         "#RivieraMaya",
+                                         "#LosCabos"
+                                     ],
+                            "web":  "https://example.com",
+                            "whatsappNumero":  "525500000000",
+                            "ubicacionMaps":  "Polanco, Ciudad de Mexico"
+                        },
+                        {
+                            "id":  "best-day",
+                            "categoria":  "viajes",
+                            "categoriaNombre":  "Viajes y Turismo",
+                            "nombre":  "Best Day",
+                            "iniciales":  "BD",
+                            "colorTexto":  "#0284c7",
+                            "colorFondo":  "#e0f2fe",
+                            "destacada":  true,
+                            "rnt":  "",
+                            "rating":  "4.8",
+                            "etiquetaEstado":  "✔ Sitio Oficial (Referencia)",
+                            "salidaDesde":  "Todo México (CDMX, MTY, GDL)",
+                            "estadosSalida":  [
+                                                  "cdmx",
+                                                  "monterrey",
+                                                  "guadalajara",
+                                                  "puebla",
+                                                  "bajio"
+                                              ],
+                            "rangoPrecio":  "$$ - $$$ • Flexible",
+                            "especialidad":  "Hoteles, vuelos y paquetes nacionales",
+                            "descripcion":  "Agencia líder en México para reservar hoteles, vuelos, tours y paquetes todo incluido en playas nacionales.",
+                            "destinos":  [
+                                             "cancun",
+                                             "acapulco",
+                                             "loscabos"
+                                         ],
+                            "tags":  [
+                                         "#Cancún",
+                                         "#Acapulco",
+                                         "#LosCabos"
+                                     ],
+                            "web":  "https://www.bestday.com.mx/",
+                            "whatsappNumero":  "",
+                            "ubicacionMaps":  ""
+                        },
+                        {
+                            "id":  "mundo-joven",
+                            "categoria":  "viajes",
+                            "categoriaNombre":  "Viajes y Turismo",
+                            "nombre":  "Mundo Joven",
+                            "iniciales":  "MJ",
+                            "colorTexto":  "#dc2626",
+                            "colorFondo":  "#fee2e2",
+                            "destacada":  true,
+                            "rnt":  "",
+                            "rating":  "4.8",
+                            "etiquetaEstado":  "✔ Sitio Oficial (Referencia)",
+                            "salidaDesde":  "Todo México (CDMX, GDL, MTY, Puebla)",
+                            "estadosSalida":  [
+                                                  "cdmx",
+                                                  "guadalajara",
+                                                  "monterrey",
+                                                  "puebla"
+                                              ],
+                            "rangoPrecio":  "$$ • Experiencias y Circuitos",
+                            "especialidad":  "Tours culturales y viajes a la medida",
+                            "descripcion":  "Expertos en experiencias de viaje, tours guiados por México, circuitos culturales y paquetes a la medida.",
+                            "destinos":  [
+                                             "cancun",
+                                             "pueblos-magicos"
+                                         ],
+                            "tags":  [
+                                         "#PueblosMágicos",
+                                         "#Cancún",
+                                         "#Tours"
+                                     ],
+                            "web":  "https://mundojoven.com/",
+                            "whatsappNumero":  "525554828282",
+                            "ubicacionMaps":  "Ciudad de Mexico, CDMX"
+                        },
+                        {
+                            "id":  "hacienda-los-arcos",
+                            "categoria":  "bodas",
+                            "categoriaNombre":  "Bodas y Eventos",
+                            "nombre":  "Hacienda \u0026 Jardín Los Arcos",
+                            "iniciales":  "HA",
+                            "colorTexto":  "#be123c",
+                            "colorFondo":  "#ffe4e6",
+                            "destacada":  true,
+                            "rnt":  "",
+                            "rating":  "4.9",
+                            "etiquetaEstado":  "✔ Anunciante Demo",
+                            "salidaDesde":  "Morelos, CDMX y Puebla",
+                            "estadosSalida":  [
+                                                  "cdmx",
+                                                  "puebla"
+                                              ],
+                            "rangoPrecio":  "$$$ • Bodas Destino y Banquetes",
+                            "especialidad":  "Bodas en jardín, coordinación integral y hospedaje",
+                            "descripcion":  "Jardines coloniales para bodas de 80 a 350 invitados con banquete, pista iluminada y suite nupcial incluida.",
+                            "destinos":  [
+                                             "pueblos-magicos",
+                                             "acapulco"
+                                         ],
+                            "tags":  [
+                                         "#BodasDestino",
+                                         "#JardínDeEventos",
+                                         "#Banquetes"
+                                     ],
+                            "web":  "https://example.com",
+                            "whatsappNumero":  "525500000000",
+                            "ubicacionMaps":  "Cuernavaca, Morelos, Mexico"
+                        },
+                        {
+                            "id":  "quinta-valle-verde",
+                            "categoria":  "hospedaje",
+                            "categoriaNombre":  "Quintas y Estancias",
+                            "nombre":  "Quinta Valle Verde \u0026 Spa",
+                            "iniciales":  "QV",
+                            "colorTexto":  "#047857",
+                            "colorFondo":  "#d1fae5",
+                            "destacada":  false,
+                            "rnt":  "",
+                            "rating":  "4.8",
+                            "etiquetaEstado":  "✔ Anunciante Demo",
+                            "salidaDesde":  "Querétaro, Bajío y CDMX",
+                            "estadosSalida":  [
+                                                  "cdmx",
+                                                  "bajio"
+                                              ],
+                            "rangoPrecio":  "$$ • Escapadas de Fin de Semana",
+                            "especialidad":  "Cabañas privadas, temazcal y viñedos",
+                            "descripcion":  "Renta de villas completas y cabañas boutique para grupos familiares o parejas cerca de la ruta del queso y el vino.",
+                            "destinos":  [
+                                             "pueblos-magicos"
+                                         ],
+                            "tags":  [
+                                         "#Cabañas",
+                                         "#EscapadaRomántica",
+                                         "#Bajío"
+                                     ],
+                            "web":  "",
+                            "whatsappNumero":  "525500000000",
+                            "ubicacionMaps":  "Tequisquiapan, Queretaro, Mexico"
+                        },
+                        {
+                            "id":  "lumina-studio",
+                            "categoria":  "servicios",
+                            "categoriaNombre":  "Fotografía y Experiencias",
+                            "nombre":  "Lúmina Foto \u0026 Video Aéreo",
+                            "iniciales":  "LF",
+                            "colorTexto":  "#7c3aed",
+                            "colorFondo":  "#ede9fe",
+                            "destacada":  false,
+                            "rnt":  "",
+                            "rating":  "5.0",
+                            "etiquetaEstado":  "✔ Anunciante Demo",
+                            "salidaDesde":  "Todo México (Cobertura en Playa)",
+                            "estadosSalida":  [
+                                                  "cdmx",
+                                                  "monterrey",
+                                                  "guadalajara",
+                                                  "puebla",
+                                                  "bajio"
+                                              ],
+                            "rangoPrecio":  "$$ • Cobertura por Evento",
+                            "especialidad":  "Sesiones en playa, bodas y dron 4K",
+                            "descripcion":  "Cobertura documental de bodas en playa, sesiones de pareja en Cancún y Los Cabos y producción con dron.",
+                            "destinos":  [
+                                             "cancun",
+                                             "loscabos",
+                                             "acapulco"
+                                         ],
+                            "tags":  [
+                                         "#FotografíaBodas",
+                                         "#Dron4K",
+                                         "#SesiónPlaya"
+                                     ],
+                            "web":  "https://example.com",
+                            "whatsappNumero":  "525500000000",
+                            "ubicacionMaps":  ""
+                        },
+                        {
+                            "id":  "pacifico-escapes",
+                            "categoria":  "viajes",
+                            "categoriaNombre":  "Viajes y Turismo",
+                            "nombre":  "Pacífico Escapes",
+                            "iniciales":  "PE",
+                            "colorTexto":  "#ea580c",
+                            "colorFondo":  "#ffedd5",
+                            "destacada":  false,
+                            "rnt":  "",
+                            "rating":  "4.7",
+                            "etiquetaEstado":  "✔ Anunciante Demo",
+                            "salidaDesde":  "CDMX y Puebla",
+                            "estadosSalida":  [
+                                                  "cdmx",
+                                                  "puebla"
+                                              ],
+                            "rangoPrecio":  "$ • Económico / Grupal",
+                            "especialidad":  "Salidas en autobús y hotel",
+                            "descripcion":  "Salidas grupales y viajes familiares a Acapulco, Ixtapa y recorridos por Pueblos Mágicos del centro del país.",
+                            "destinos":  [
+                                             "acapulco",
+                                             "pueblos-magicos"
+                                         ],
+                            "tags":  [
+                                         "#Acapulco",
+                                         "#PueblosMágicos",
+                                         "#TodoPagado"
+                                     ],
+                            "web":  "https://example.com",
+                            "whatsappNumero":  "525500000000",
+                            "ubicacionMaps":  ""
+                        }
+                    ],
+    "ofertas":  [
+                    {
+                        "esReferenciaReal":  true,
+                        "categoria":  "viajes",
+                        "agencia":  "Mundo Joven • Ejemplo Real",
+                        "titulo":  "Tours y Circuitos por México",
+                        "detalle":  "Consulta salidas vigentes, circuitos culturales y paquetes en su portal oficial.",
+                        "precio":  "Ver tarifas oficiales",
+                        "etiqueta":  "Sitio Oficial",
+                        "imagen":  "https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?auto=format\u0026fit=crop\u0026w=600\u0026q=80",
+                        "whatsappNumero":  "",
+                        "web":  "https://mundojoven.com/",
+                        "textoBoton":  "Visitar Sitio Oficial"
+                    },
+                    {
+                        "esReferenciaReal":  false,
+                        "categoria":  "bodas",
+                        "agencia":  "Espacio Patrocinado • Bodas y Eventos",
+                        "titulo":  "Anuncia aquí tu Jardín, Banquete o Wedding Planner",
+                        "detalle":  "Conecta con parejas buscando locaciones en playa, haciendas y proveedores de eventos.",
+                        "precio":  "Disponible",
+                        "etiqueta":  "Nuevo Sector",
+                        "imagen":  "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format\u0026fit=crop\u0026w=600\u0026q=80",
+                        "whatsappNumero":  "",
+                        "web":  "pages/anunciate.html",
+                        "textoBoton":  "Publicar mi Servicio"
+                    },
+                    {
+                        "esReferenciaReal":  false,
+                        "categoria":  "viajes",
+                        "agencia":  "Espacio Patrocinado • Viajes y Estancias",
+                        "titulo":  "Destaca tus paquetes de Playa o Cabañas",
+                        "detalle":  "Recibe solicitudes directas en tu WhatsApp de ventas sin pagar comisiones por reserva.",
+                        "precio":  "Disponible",
+                        "etiqueta":  "Espacio Publicitario",
+                        "imagen":  "https://images.unsplash.com/photo-1510097467424-192d713fd8b2?auto=format\u0026fit=crop\u0026w=600\u0026q=80",
+                        "whatsappNumero":  "",
+                        "web":  "pages/anunciate.html",
+                        "textoBoton":  "Apartar este Espacio"
+                    }
+                ]
 }

@@ -3,6 +3,9 @@ let AGENCIAS_DATA = [];
 let OFERTAS_TEMPORADA = [];
 let OPINIONES_DATA = [];
 
+let heroSlideIdx = 0;
+let heroIntervalId = null;
+
 let estadoFiltros = {
     categoria: 'todos',
     destino: 'todos',
@@ -49,6 +52,16 @@ function validarUrlSegura(url) {
         return '';
     }
     return '';
+}
+
+function generarUrlGoogleMapsEmbed(consulta) {
+    const q = encodeURIComponent(String(consulta || 'Ciudad de Mexico').trim());
+    return `https://maps.google.com/maps?q=${q}&t=&z=13&ie=UTF8&iwloc=&output=embed`;
+}
+
+function generarUrlGoogleMapsExterna(consulta) {
+    const q = encodeURIComponent(String(consulta || 'Ciudad de Mexico').trim());
+    return `https://www.google.com/maps/search/?api=1&query=${q}`;
 }
 
 function registrarEventoClic(nombreAnunciante, canal) {
@@ -120,8 +133,64 @@ async function cargarDatosRemotos() {
     }
 }
 
+// Carrusel animado de 5 imagenes de fondo en portada
+function inicializarCarruselHero() {
+    const bgContainer = document.getElementById('heroBgContainer');
+    const dotsContainer = document.getElementById('heroDots');
+    if (!bgContainer || !dotsContainer) return;
+
+    const imagenesDefault = [
+        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80",
+        "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80",
+        "https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?auto=format&fit=crop&w=1600&q=80",
+        "https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=1600&q=80",
+        "https://images.unsplash.com/photo-1512813195386-6cf811ad3542?auto=format&fit=crop&w=1600&q=80"
+    ];
+
+    const listaImgs = (PLATAFORMA_CONFIG.hero && Array.isArray(PLATAFORMA_CONFIG.hero.imagenes) && PLATAFORMA_CONFIG.hero.imagenes.length)
+        ? PLATAFORMA_CONFIG.hero.imagenes
+        : imagenesDefault;
+
+    bgContainer.innerHTML = '';
+    dotsContainer.innerHTML = '';
+
+    listaImgs.forEach((url, idx) => {
+        const segura = validarUrlSegura(url);
+        if (!segura) return;
+
+        const layer = document.createElement('div');
+        layer.className = `hero-bg-layer ${idx === 0 ? 'active' : ''}`;
+        layer.style.backgroundImage = `url('${segura}')`;
+        bgContainer.appendChild(layer);
+
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = `hero-dot ${idx === 0 ? 'active' : ''}`;
+        dot.setAttribute('aria-label', `Fondo ${idx + 1}`);
+        dot.addEventListener('click', () => cambiarSlideHero(idx));
+        dotsContainer.appendChild(dot);
+    });
+
+    if (heroIntervalId) clearInterval(heroIntervalId);
+    heroIntervalId = setInterval(() => {
+        const total = bgContainer.children.length;
+        if (total > 1) {
+            cambiarSlideHero((heroSlideIdx + 1) % total);
+        }
+    }, 6000);
+}
+
+function cambiarSlideHero(nuevoIdx) {
+    const layers = document.querySelectorAll('.hero-bg-layer');
+    const dots = document.querySelectorAll('.hero-dot');
+    if (!layers.length) return;
+
+    layers.forEach((l, i) => l.classList.toggle('active', i === nuevoIdx));
+    dots.forEach((d, i) => d.classList.toggle('active', i === nuevoIdx));
+    heroSlideIdx = nuevoIdx;
+}
+
 function aplicarLayoutYContenidos() {
-    // 1. Textos del Hero
     if (PLATAFORMA_CONFIG.hero) {
         const badge = document.getElementById('heroBadge');
         const title = document.getElementById('heroTitle');
@@ -131,7 +200,6 @@ function aplicarLayoutYContenidos() {
         if (subtitle && PLATAFORMA_CONFIG.hero.subtitulo) subtitle.textContent = PLATAFORMA_CONFIG.hero.subtitulo;
     }
 
-    // 2. Banner patrocinado
     const bannerEl = document.getElementById('sec-banner');
     if (bannerEl && PLATAFORMA_CONFIG.bannerPatrocinado) {
         const bp = PLATAFORMA_CONFIG.bannerPatrocinado;
@@ -148,7 +216,6 @@ function aplicarLayoutYContenidos() {
         }
     }
 
-    // 3. Reordenar secciones dentro de <main>
     const mainCont = document.getElementById('mainContainer');
     if (mainCont && Array.isArray(PLATAFORMA_CONFIG.ordenSecciones)) {
         PLATAFORMA_CONFIG.ordenSecciones.forEach(secKey => {
@@ -188,6 +255,7 @@ function inicializarModoPlataforma() {
                 btn.classList.add('active');
                 renderizarOfertas();
                 renderizarAgencias();
+                renderizarMapaLocaciones();
                 const target = document.getElementById('sec-agencias');
                 if (target) target.scrollIntoView({ behavior: 'smooth' });
             });
@@ -264,6 +332,45 @@ function renderizarOfertas() {
 
         grid.appendChild(card);
     });
+}
+
+function renderizarMapaLocaciones() {
+    const listEl = document.getElementById('mapsPlacesList');
+    const frameEl = document.getElementById('mainGoogleMapFrame');
+    const secMapa = document.getElementById('sec-mapa');
+    if (!listEl || !frameEl || !secMapa) return;
+
+    const conUbicacion = AGENCIAS_DATA.filter(a => {
+        const tieneUbi = a.ubicacionMaps && a.ubicacionMaps.trim() !== '';
+        const cumpleCat = !esModoMultisector() || estadoFiltros.categoria === 'todos' || a.categoria === estadoFiltros.categoria;
+        return tieneUbi && cumpleCat;
+    });
+
+    if (conUbicacion.length === 0) {
+        secMapa.style.display = 'none';
+        return;
+    }
+
+    secMapa.style.display = 'block';
+    listEl.innerHTML = '';
+
+    conUbicacion.forEach((lugar, idx) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `map-place-btn ${idx === 0 ? 'active' : ''}`;
+        btn.innerHTML = `
+            <strong>${escaparHTML(lugar.nombre)}</strong>
+            <span>📍 ${escaparHTML(lugar.ubicacionMaps)} &bull; ${escaparHTML(lugar.categoriaNombre || '')}</span>
+        `;
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.map-place-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            frameEl.src = generarUrlGoogleMapsEmbed(lugar.ubicacionMaps);
+        });
+        listEl.appendChild(btn);
+    });
+
+    frameEl.src = generarUrlGoogleMapsEmbed(conUbicacion[0].ubicacionMaps);
 }
 
 function renderizarOpiniones() {
@@ -449,6 +556,7 @@ function reiniciarFiltros() {
     document.querySelectorAll('.sector-tab').forEach((btn, idx) => btn.classList.toggle('active', idx === 0));
     renderizarOfertas();
     renderizarAgencias();
+    renderizarMapaLocaciones();
 }
 
 function abrirModalAgencia(id) {
@@ -462,11 +570,19 @@ function abrirModalAgencia(id) {
 
     let accionesModal = '';
     if (webSegura) {
-        accionesModal += `<a href="${escaparHTML(webSegura)}" target="_blank" rel="noopener noreferrer nofollow" class="btn-action btn-primary">Ir al Sitio Web Oficial</a>`;
+        accionesModal += `<a href="${escaparHTML(webSegura)}" target="_blank" rel="noopener noreferrer nofollow" class="btn-action btn-primary">Sitio Web</a>`;
     }
     if (waUrl) {
-        accionesModal += `<a href="${escaparHTML(waUrl)}" target="_blank" rel="noopener noreferrer nofollow" class="btn-action btn-whatsapp">Cotizar por WhatsApp</a>`;
+        accionesModal += `<a href="${escaparHTML(waUrl)}" target="_blank" rel="noopener noreferrer nofollow" class="btn-action btn-whatsapp">WhatsApp</a>`;
     }
+    if (agencia.ubicacionMaps) {
+        const mapsExt = generarUrlGoogleMapsExterna(agencia.ubicacionMaps);
+        accionesModal += `<a href="${escaparHTML(mapsExt)}" target="_blank" rel="noopener noreferrer nofollow" class="btn-action btn-outline">📍 Google Maps</a>`;
+    }
+
+    const mapaEmbedHtml = agencia.ubicacionMaps
+        ? `<div class="modal-map-box"><iframe src="${escaparHTML(generarUrlGoogleMapsEmbed(agencia.ubicacionMaps))}" loading="lazy" title="Ubicación"></iframe></div>`
+        : '';
 
     body.innerHTML = `
         <div class="agency-header">
@@ -484,9 +600,7 @@ function abrirModalAgencia(id) {
         </div>
         <div class="tags">${(agencia.tags || []).map(t => `<span class="tag">${escaparHTML(t)}</span>`).join('')}</div>
         <div class="card-actions">${accionesModal}</div>
-        <p style="font-size: 0.75rem; color: var(--text-soft); margin-top: 1rem; text-align: center;">
-            Contacto directo con el anunciante sin cargos extra ni intermediarios.
-        </p>
+        ${mapaEmbedHtml}
     `;
 
     modal.classList.add('open');
@@ -498,15 +612,111 @@ function cerrarModalAgencia(event) {
     }
 }
 
+// Modo Edicion Visual en vivo directo en index.html (solo visible con token activo)
+let modoEdicionVisualActivo = false;
+
+function inicializarBarraEdicionVisual() {
+    const token = sessionStorage.getItem('dv_gh_token');
+    const urlParams = new URLSearchParams(window.location.search);
+    if (!token && urlParams.get('edit') !== '1') return;
+
+    const bar = document.createElement('div');
+    bar.className = 'live-edit-bar';
+    bar.innerHTML = `
+        <span style="font-size:0.82rem; font-weight:700;">✏️ Administrador</span>
+        <button type="button" id="btnToggleVisualEdit" class="live-edit-btn" style="background:#0284c7; color:white;">Activar Edición Visual</button>
+        <button type="button" id="btnSaveVisualEdit" class="live-edit-btn" style="background:#16a34a; color:white; display:none;">🚀 Publicar Cambios</button>
+        <a href="pages/admin.html" class="live-edit-btn" style="background:#334155; color:white; text-decoration:none;">Panel Completo</a>
+    `;
+    document.body.appendChild(bar);
+
+    document.getElementById('btnToggleVisualEdit').addEventListener('click', () => {
+        modoEdicionVisualActivo = !modoEdicionVisualActivo;
+        document.body.classList.toggle('editing-active', modoEdicionVisualActivo);
+        document.querySelectorAll('[data-editable="true"]').forEach(el => {
+            el.contentEditable = modoEdicionVisualActivo ? 'true' : 'false';
+        });
+        document.getElementById('btnToggleVisualEdit').textContent = modoEdicionVisualActivo ? 'Salir de Edición' : 'Activar Edición Visual';
+        document.getElementById('btnSaveVisualEdit').style.display = modoEdicionVisualActivo ? 'inline-block' : 'none';
+    });
+
+    document.getElementById('btnSaveVisualEdit').addEventListener('click', publicarEdicionVisualDirecta);
+}
+
+function moverBloqueVisual(secKey, dir) {
+    const arr = PLATAFORMA_CONFIG.ordenSecciones || [];
+    const idx = arr.indexOf(secKey);
+    const nuevoIdx = idx + dir;
+    if (idx < 0 || nuevoIdx < 0 || nuevoIdx >= arr.length) return;
+    [arr[idx], arr[nuevoIdx]] = [arr[nuevoIdx], arr[idx]];
+    aplicarLayoutYContenidos();
+}
+
+async function publicarEdicionVisualDirecta() {
+    let token = sessionStorage.getItem('dv_gh_token');
+    if (!token) {
+        token = prompt('Ingresa tu Personal Access Token de GitHub para guardar los cambios en vivo:');
+        if (!token) return;
+        sessionStorage.setItem('dv_gh_token', token.trim());
+    }
+
+    const btn = document.getElementById('btnSaveVisualEdit');
+    btn.disabled = true;
+    btn.textContent = 'Guardando...';
+
+    try {
+        // Leer SHA actual de data/config.json
+        const resGet = await fetch('https://api.github.com/repos/LUISFGARCIAE/directorio-agencias/contents/data/config.json', {
+            headers: { 'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.github+json' }
+        });
+        if (!resGet.ok) throw new Error('Token inválido o sin permisos');
+        const fileData = await resGet.json();
+
+        // Actualizar textos editados en pantalla
+        PLATAFORMA_CONFIG.hero.badge = document.getElementById('heroBadge').textContent.trim();
+        PLATAFORMA_CONFIG.hero.titulo = document.getElementById('heroTitle').textContent.trim();
+        PLATAFORMA_CONFIG.hero.subtitulo = document.getElementById('heroSubtitle').textContent.trim();
+        PLATAFORMA_CONFIG.bannerPatrocinado.titulo = document.getElementById('bannerTitle').textContent.trim();
+        PLATAFORMA_CONFIG.bannerPatrocinado.descripcion = document.getElementById('bannerDesc').textContent.trim();
+
+        const contenidoBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(PLATAFORMA_CONFIG, null, 4))));
+
+        const resPut = await fetch('https://api.github.com/repos/LUISFGARCIAE/directorio-agencias/contents/data/config.json', {
+            method: 'PUT',
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Accept': 'application/vnd.github+json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                message: 'Edición visual directa desde portada',
+                content: contenidoBase64,
+                sha: fileData.sha
+            })
+        });
+
+        if (!resPut.ok) throw new Error('No se pudo guardar en GitHub');
+        alert('✅ Cambios visuales publicados en vivo. Se reflejarán en ~40 segundos.');
+    } catch (e) {
+        alert('❌ Error: ' + e.message);
+    } finally {
+        btn.disabled = false;
+        btn.textContent = '🚀 Publicar Cambios';
+    }
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
     if (document.getElementById('agencyGrid')) {
         await cargarDatosRemotos();
         inicializarApariencia();
+        inicializarCarruselHero();
         aplicarLayoutYContenidos();
         inicializarModoPlataforma();
         renderizarOfertas();
         renderizarAgencias();
+        renderizarMapaLocaciones();
         renderizarOpiniones();
+        inicializarBarraEdicionVisual();
     } else {
         inicializarApariencia();
     }

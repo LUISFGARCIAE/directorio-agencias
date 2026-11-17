@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://images.unsplash.com data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://images.unsplash.com data:; frame-src 'self' https://maps.google.com https://www.google.com; connect-src 'self' https://api.github.com; object-src 'none'; base-uri 'self'; form-action 'self';">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="theme-color" content="#0284c7">
-    <meta name="description" content="Directorio publicitario de agencias de viajes verificadas en México con Registro Nacional de Turismo (RNT). Cotiza directo en WhatsApp.">
+    <meta name="description" content="Directorio publicitario de agencias de viajes, jardines para bodas y experiencias verificadas en México. Cotiza directo en WhatsApp.">
     
-    <meta property="og:title" content="Directorio Viajero | Agencias de Viajes Verificadas en México">
-    <meta property="og:description" content="Conecta directo con especialistas para Acapulco, Cancún, Los Cabos, Pueblos Mágicos y eventos sin intermediarios.">
+    <meta property="og:title" content="Directorio Viajero | Especialistas en Viajes, Bodas y Experiencias">
+    <meta property="og:description" content="Conecta directo con especialistas verificados en México sin intermediarios ni comisiones.">
     <meta property="og:image" content="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80">
     <meta property="og:type" content="website">
 
     <link rel="manifest" href="manifest.json">
-    <title>Directorio Viajero | Conecta con Agencias de Viajes en México</title>
+    <title>Directorio Viajero | Conecta con Especialistas en México</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -28,6 +28,7 @@
             <a href="index.html">Inicio</a>
             <a href="#sec-ofertas">Ofertas</a>
             <a href="#sec-agencias">Directorio</a>
+            <a href="#sec-mapa">Mapa</a>
             <a href="#sec-opiniones">Opiniones</a>
 
             <div class="theme-controls" title="Personalizar colores y modo">
@@ -42,41 +43,53 @@
     </header>
     <div id="sectorTabsBar" class="sector-tabs-wrap" style="display:none;"></div>
 
-    <section class="hero">
-        <span class="hero-badge" id="heroBadge">🇲🇽 El punto de encuentro turístico en México</span>
-        <h1 id="heroTitle">Conecta directo con Agencias de Viajes Verificadas</h1>
-        <p id="heroSubtitle">Filtra por destino o ciudad de salida y cotiza directamente con especialistas, sin intermediarios ni comisiones ocultas.</p>
-        
-        <div class="search-box" style="max-width: 900px;">
-            <input type="text" id="searchInput" maxlength="80" placeholder="Buscar negocio, servicio o destino..." aria-label="Buscar por palabra clave">
-            <select id="origenSelect" aria-label="Ciudad de salida" onchange="ejecutarBusqueda()" style="border-right: 1px solid var(--border);">
-                <option value="todos">📍 Cualquier cobertura</option>
-                <option value="cdmx">CDMX y Área Metro</option>
-                <option value="monterrey">Monterrey / Nuevo León</option>
-                <option value="guadalajara">Guadalajara / Jalisco</option>
-                <option value="puebla">Puebla</option>
-                <option value="bajio">Bajío (Querétaro / León)</option>
-            </select>
-            <select id="destinoSelect" aria-label="Seleccionar destino" onchange="ejecutarBusqueda()">
-                <option value="todos">🌴 Todos los destinos</option>
-                <option value="acapulco">Acapulco</option>
-                <option value="cancun">Cancún y Riviera Maya</option>
-                <option value="loscabos">Los Cabos</option>
-                <option value="pueblos-magicos">Pueblos Mágicos</option>
-            </select>
-            <button type="button" onclick="ejecutarBusqueda()">Buscar</button>
-        </div>
+    <!-- Portada con carrusel animado de 5 fondos -->
+    <section class="hero" id="heroSection">
+        <div id="heroBgContainer"></div>
+        <div class="hero-overlay-gradient"></div>
 
-        <div class="trust-strip">
-            <div><strong>100% Directo</strong> &bull; Trato sin intermediarios</div>
-            <div><strong>Cobertura Nacional</strong> &bull; Especialistas verificados</div>
-            <div><strong>Cero Comisiones</strong> &bull; Cotiza directo en WhatsApp</div>
+        <div class="hero-inner">
+            <span class="hero-badge" id="heroBadge" data-editable="true" data-key="hero.badge">🇲🇽 El punto de encuentro turístico en México</span>
+            <h1 id="heroTitle" data-editable="true" data-key="hero.titulo">Conecta directo con Agencias de Viajes Verificadas</h1>
+            <p id="heroSubtitle" data-editable="true" data-key="hero.subtitulo">Filtra por destino o ciudad de salida y cotiza directamente con especialistas, sin intermediarios ni comisiones ocultas.</p>
+            
+            <div class="search-box" style="max-width: 900px;">
+                <input type="text" id="searchInput" maxlength="80" placeholder="Buscar negocio, servicio o destino..." aria-label="Buscar por palabra clave">
+                <select id="origenSelect" aria-label="Ciudad de salida" onchange="ejecutarBusqueda()" style="border-right: 1px solid var(--border);">
+                    <option value="todos">📍 Cualquier cobertura</option>
+                    <option value="cdmx">CDMX y Área Metro</option>
+                    <option value="monterrey">Monterrey / Nuevo León</option>
+                    <option value="guadalajara">Guadalajara / Jalisco</option>
+                    <option value="puebla">Puebla</option>
+                    <option value="bajio">Bajío (Querétaro / León)</option>
+                </select>
+                <select id="destinoSelect" aria-label="Seleccionar destino" onchange="ejecutarBusqueda()">
+                    <option value="todos">🌴 Todos los destinos</option>
+                    <option value="acapulco">Acapulco</option>
+                    <option value="cancun">Cancún y Riviera Maya</option>
+                    <option value="loscabos">Los Cabos</option>
+                    <option value="pueblos-magicos">Pueblos Mágicos</option>
+                </select>
+                <button type="button" onclick="ejecutarBusqueda()">Buscar</button>
+            </div>
+
+            <div class="trust-strip">
+                <div><strong>100% Directo</strong> &bull; Trato sin intermediarios</div>
+                <div><strong>Cobertura Nacional</strong> &bull; Especialistas verificados</div>
+                <div><strong>Cero Comisiones</strong> &bull; Cotiza directo en WhatsApp</div>
+            </div>
+
+            <div class="hero-dots" id="heroDots"></div>
         </div>
     </section>
 
     <main class="container" id="mainContainer">
         <!-- Bloque: Destinos -->
         <section id="sec-destinos">
+            <div class="section-move-controls">
+                <button type="button" class="btn-action btn-outline" onclick="moverBloqueVisual('destinos', -1)">▲ Subir bloque</button>
+                <button type="button" class="btn-action btn-outline" onclick="moverBloqueVisual('destinos', 1)">▼ Bajar bloque</button>
+            </div>
             <div class="section-header">
                 <div>
                     <h2 class="section-title">Explora por Destino</h2>
@@ -118,6 +131,10 @@
 
         <!-- Bloque: Ofertas -->
         <section class="deals-section" id="sec-ofertas">
+            <div class="section-move-controls">
+                <button type="button" class="btn-action btn-outline" onclick="moverBloqueVisual('ofertas', -1)">▲ Subir bloque</button>
+                <button type="button" class="btn-action btn-outline" onclick="moverBloqueVisual('ofertas', 1)">▼ Bajar bloque</button>
+            </div>
             <div class="section-header">
                 <div>
                     <h2 class="section-title">🔥 Ofertas y Espacios Destacados</h2>
@@ -131,14 +148,18 @@
         <aside class="ad-banner-slot" id="sec-banner">
             <span class="ad-tag">Espacio Patrocinado</span>
             <div class="ad-banner-content">
-                <h4 id="bannerTitle">🚀 ¿Quieres que tu negocio aparezca en este banner principal?</h4>
-                <p id="bannerDesc">Destaca tus promociones de temporada frente a miles de clientes buscando opciones en México.</p>
+                <h4 id="bannerTitle" data-editable="true" data-key="bannerPatrocinado.titulo">🚀 ¿Quieres que tu negocio aparezca en este banner principal?</h4>
+                <p id="bannerDesc" data-editable="true" data-key="bannerPatrocinado.descripcion">Destaca tus promociones de temporada frente a miles de clientes buscando opciones en México.</p>
             </div>
             <a href="pages/anunciate.html" class="btn-banner" id="bannerBtn">Reservar Banner</a>
         </aside>
 
         <!-- Bloque: Directorio -->
         <section id="sec-agencias">
+            <div class="section-move-controls">
+                <button type="button" class="btn-action btn-outline" onclick="moverBloqueVisual('agencias', -1)">▲ Subir bloque</button>
+                <button type="button" class="btn-action btn-outline" onclick="moverBloqueVisual('agencias', 1)">▼ Bajar bloque</button>
+            </div>
             <div class="section-header">
                 <div>
                     <h2 class="section-title" id="directorySectionTitle">Agencias Anunciantes</h2>
@@ -160,8 +181,32 @@
             <div class="directory-grid" id="agencyGrid"></div>
         </section>
 
+        <!-- Bloque: Mapa Interactivo Google Maps -->
+        <section class="maps-section" id="sec-mapa">
+            <div class="section-move-controls">
+                <button type="button" class="btn-action btn-outline" onclick="moverBloqueVisual('mapa', -1)">▲ Subir bloque</button>
+                <button type="button" class="btn-action btn-outline" onclick="moverBloqueVisual('mapa', 1)">▼ Bajar bloque</button>
+            </div>
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">📍 Mapa de Sedes y Locaciones</h2>
+                    <p class="section-subtitle">Ubica jardines para bodas, cabañas y oficinas de atención física registradas</p>
+                </div>
+            </div>
+            <div class="maps-layout">
+                <div class="maps-list" id="mapsPlacesList"></div>
+                <div class="maps-frame-wrap">
+                    <iframe id="mainGoogleMapFrame" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mapa de ubicación"></iframe>
+                </div>
+            </div>
+        </section>
+
         <!-- Bloque: Opiniones -->
         <section class="reviews-section" id="sec-opiniones">
+            <div class="section-move-controls">
+                <button type="button" class="btn-action btn-outline" onclick="moverBloqueVisual('opiniones', -1)">▲ Subir bloque</button>
+                <button type="button" class="btn-action btn-outline" onclick="moverBloqueVisual('opiniones', 1)">▼ Bajar bloque</button>
+            </div>
             <div class="section-header">
                 <div>
                     <h2 class="section-title">Lo que dicen los usuarios</h2>

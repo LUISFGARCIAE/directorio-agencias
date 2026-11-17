@@ -187,6 +187,10 @@
                                         <input type="text" id="anunRnt" placeholder="Ej. 04090150001">
                                     </div>
                                 </div>
+                                                                <div class="form-group">
+                                    <label>Ubicación en Google Maps (Opcional, para mostrar mapa)</label>
+                                    <input type="text" id="anunMaps" placeholder="Ej. Cuernavaca, Morelos, Mexico">
+                                </div>
                                 <div class="form-group">
                                     <label>Cobertura / Ciudad de Salida *</label>
                                     <input type="text" id="anunSalida" required placeholder="Ej. CDMX y Puebla">
@@ -356,6 +360,7 @@
             ofertas: "🔥 Ofertas y Espacios Destacados",
             banner: "📢 Banner Publicitario Horizontal",
             agencias: "🏢 Directorio Principal de Anunciantes",
+            mapa: "📍 Mapa de Sedes y Locaciones",
             opiniones: "💬 Opiniones de Usuarios",
             b2b: "🚀 Llamado de Registro para Negocios"
         };
@@ -546,6 +551,7 @@
             document.getElementById("anunEstado").value = item.etiquetaEstado || "✔ Agencia Verificada";
             document.getElementById("anunRnt").value = item.rnt || "";
             document.getElementById("anunSalida").value = item.salidaDesde || "";
+            document.getElementById("anunMaps").value = item.ubicacionMaps || "";
             document.getElementById("anunWa").value = item.whatsappNumero || "";
             document.getElementById("anunWeb").value = item.web || "";
             document.getElementById("anunPrecio").value = item.rangoPrecio || "";
@@ -587,6 +593,7 @@
                 rating: idx >= 0 ? catalogoActual.anunciantes[idx].rating : "5.0",
                 etiquetaEstado: document.getElementById("anunEstado").value.trim() || "✔ Verificado",
                 salidaDesde: document.getElementById("anunSalida").value.trim(),
+                ubicacionMaps: document.getElementById("anunMaps").value.trim(),
                 estadosSalida: ["cdmx", "monterrey", "guadalajara", "puebla", "bajio"],
                 rangoPrecio: document.getElementById("anunPrecio").value.trim() || "$$ • Consultar",
                 especialidad: catNombre,
