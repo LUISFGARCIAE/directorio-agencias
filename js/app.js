@@ -197,6 +197,18 @@ function cambiarSlideHero(nuevoIdx) {
 }
 
 function aplicarLayoutYContenidos() {
+    const topBarEl = document.getElementById('promoTopBar');
+    if (topBarEl && PLATAFORMA_CONFIG.topBar) {
+        const tb = PLATAFORMA_CONFIG.topBar;
+        topBarEl.style.display = tb.visible === false ? 'none' : 'flex';
+        const tbText = document.getElementById('topBarText');
+        const tbBtn = document.getElementById('topBarBtn');
+        if (tbText) tbText.textContent = tb.texto || '';
+        if (tbBtn) {
+            tbBtn.textContent = tb.textoBoton || 'Ver más';
+            tbBtn.href = tb.urlBoton || '#sec-ofertas';
+        }
+    }
     if (PLATAFORMA_CONFIG.hero) {
         const badge = document.getElementById('heroBadge');
         const title = document.getElementById('heroTitle');
@@ -888,6 +900,7 @@ function enviarCotizacionEstructurada(id) {
     const msg = `Hola *${agencia.nombre}*, los encontré en *Directorio Viajero* y me gustaría cotizar:\n` +
                 `• *Fecha tentativa:* ${fecha}\n` +
                 `• *Personas / Invitados:* ${personas}\n` +
+                (agencia.cuponCodigo ? `• *Cupón aplicado:* ${agencia.cuponCodigo}\n` : '') +
                 (detalle ? `• *Comentarios:* ${detalle}` : '');
 
     registrarEventoClic(agencia.nombre, 'cotizador_inteligente_wa');
@@ -1116,4 +1129,80 @@ function aplicarFiltroPresupuesto(nivel, botonElement) {
     document.querySelectorAll('.budget-pill').forEach(btn => btn.classList.remove('active'));
     if (botonElement) botonElement.classList.add('active');
     renderizarAgencias();
+}
+
+function copiarCupon(codigo) {
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(codigo).then(() => {
+            alert(`✅ Código "${codigo}" copiado.\nSe incluirá automáticamente al enviar tu cotización por WhatsApp.`);
+        });
+    }
+}
+
+function abrirConciergeWhatsApp() {
+    const num = String(PLATAFORMA_CONFIG.whatsappConcierge || '525500000000').replace(/\D/g, '');
+    const msg = 'Hola, vengo de *Directorio Viajero* y me gustaría que me recomienden opciones según lo que busco.';
+    window.open(`https://wa.me/${num}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
+}
+
+// Calculadora de Presupuesto
+let modoCalcActual = 'viaje';
+let nivelCalcDetectado = '$$';
+
+function abrirCalculadoraPresupuesto() {
+    recalcularPresupuesto();
+    document.getElementById('calcModal').classList.add('open');
+}
+
+function cerrarModalCalc(event) {
+    if (!event || event.target.id === 'calcModal' || event.target.classList.contains('modal-close')) {
+        document.getElementById('calcModal').classList.remove('open');
+    }
+}
+
+function cambiarModoCalc(modo) {
+    modoCalcActual = modo;
+    document.getElementById('tabCalcViaje').classList.toggle('active', modo === 'viaje');
+    document.getElementById('tabCalcBoda').classList.toggle('active', modo === 'boda');
+    document.getElementById('calcFormViaje').style.display = modo === 'viaje' ? 'block' : 'none';
+    document.getElementById('calcFormBoda').style.display = modo === 'boda' ? 'block' : 'none';
+    recalcularPresupuesto();
+}
+
+function recalcularPresupuesto() {
+    const totalEl = document.getElementById('calcTotalMonto');
+    const detEl = document.getElementById('calcDetalleMonto');
+    if (!totalEl || !detEl) return;
+
+    if (modoCalcActual === 'viaje') {
+        const adultos = Math.max(1, parseInt(document.getElementById('calcAdultos').value || '2', 10));
+        const noches = Math.max(1, parseInt(document.getElementById('calcNoches').value || '4', 10));
+        const [tarifaStr, nivel] = document.getElementById('calcNivelViaje').value.split('|');
+        nivelCalcDetectado = nivel;
+        const total = adultos * noches * parseInt(tarifaStr, 10);
+        totalEl.textContent = `$${total.toLocaleString('es-MX')} MXN`;
+        detEl.textContent = `Estimado para ${adultos} adulto(s) durante ${noches} noche(s)`;
+    } else {
+        const invitados = Math.max(20, parseInt(document.getElementById('calcInvitados').value || '100', 10));
+        const [costoInvStr, nivel] = document.getElementById('calcNivelBoda').value.split('|');
+        nivelCalcDetectado = nivel;
+        const total = invitados * parseInt(costoInvStr, 10);
+        totalEl.textContent = `$${total.toLocaleString('es-MX')} MXN`;
+        detEl.textContent = `Estimado integral para ${invitados} invitados`;
+    }
+}
+
+function filtrarPorResultadoCalc() {
+    cerrarModalCalc();
+    estadoFiltros.categoria = esModoMultisector() ? (modoCalcActual === 'viaje' ? 'viajes' : 'bodas') : 'viajes';
+    estadoFiltros.presupuesto = nivelCalcDetectado;
+
+    document.querySelectorAll('.budget-pill').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.trim().startsWith(nivelCalcDetectado + ' '));
+    });
+
+    renderizarOfertas();
+    renderizarAgencias();
+    const target = document.getElementById('sec-agencias');
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
 }

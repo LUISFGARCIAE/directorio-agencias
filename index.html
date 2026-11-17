@@ -19,9 +19,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css?v=20261117blog">
+    <link rel="stylesheet" href="css/styles.css?v=20261117mega">
 </head>
 <body>
+    <div id="promoTopBar" class="promo-top-bar" style="display: none;">
+        <span id="topBarText">🔥 Especial de Lanzamiento: ¡Usa los cupones exclusivos en cada ficha!</span>
+        <a id="topBarBtn" href="#sec-ofertas" class="promo-top-btn">Ver Ofertas</a>
+    </div>
 
     <header>
         <a href="index.html" class="logo">✈️ Directorio<span>Viajero</span></a>
@@ -30,7 +34,7 @@
             <a href="#sec-ofertas">Ofertas</a>
             <a href="#sec-agencias">Directorio</a>
             <a href="#sec-mapa">Mapa</a>
-            <a href="#sec-guias">Guías</a>
+            <a href="#sec-guias">Guías</a>`r`n            <a href="javascript:void(0)" onclick="abrirCalculadoraPresupuesto()">🧮 Calculadora</a>
             <a href="#sec-opiniones">Opiniones</a>
 
             <div class="theme-controls" title="Personalizar colores y modo">
@@ -295,6 +299,71 @@
             <div id="guideModalBody"></div>
         </div>
     </div>
+        <!-- Boton Flotante Concierge WhatsApp -->
+    <button type="button" id="conciergeFloatBtn" class="concierge-float-btn" onclick="abrirConciergeWhatsApp()">
+        💬 ¿Te ayudamos a elegir?
+    </button>
+
+    <!-- Modal Calculadora de Presupuesto -->
+    <div id="calcModal" class="modal-backdrop" onclick="cerrarModalCalc(event)">
+        <div class="modal-card" style="max-width: 540px;">
+            <button type="button" class="modal-close" onclick="cerrarModalCalc()">✕</button>
+            <h3 style="font-size: 1.35rem; color: var(--secondary);">🧮 Calculadora de Presupuesto</h3>
+            <p style="font-size: 0.86rem; color: var(--text-soft);">Estima tu inversión aproximada y filtra opciones ideales.</p>
+
+            <div class="calc-tabs">
+                <button type="button" class="calc-tab-btn active" id="tabCalcViaje" onclick="cambiarModoCalc('viaje')">✈️ Viaje / Vacaciones</button>
+                <button type="button" class="calc-tab-btn" id="tabCalcBoda" onclick="cambiarModoCalc('boda')">💍 Boda / Evento</button>
+            </div>
+
+            <div id="calcFormViaje">
+                <div class="quick-quote-grid">
+                    <div>
+                        <label style="font-size:0.78rem; font-weight:700;">Adultos</label>
+                        <input type="number" id="calcAdultos" value="2" min="1" max="30" oninput="recalcularPresupuesto()">
+                    </div>
+                    <div>
+                        <label style="font-size:0.78rem; font-weight:700;">Noches</label>
+                        <input type="number" id="calcNoches" value="4" min="1" max="20" oninput="recalcularPresupuesto()">
+                    </div>
+                </div>
+                <div class="form-group" style="margin-bottom:0.5rem;">
+                    <label style="font-size:0.78rem; font-weight:700;">Nivel de Hospedaje y Plan</label>
+                    <select id="calcNivelViaje" onchange="recalcularPresupuesto()">
+                        <option value="1600|$">Plan Económico / Escapada ($)</option>
+                        <option value="3200|$" selected>Todo Incluido Estándar 4★ ($)</option>
+                        <option value="5800|$$">Resort Gran Turismo / Lujo 5★ ($$)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="calcFormBoda" style="display:none;">
+                <div class="quick-quote-grid">
+                    <div>
+                        <label style="font-size:0.78rem; font-weight:700;">Número de Invitados</label>
+                        <input type="number" id="calcInvitados" value="100" min="20" max="600" step="10" oninput="recalcularPresupuesto()">
+                    </div>
+                    <div>
+                        <label style="font-size:0.78rem; font-weight:700;">Estilo del Evento</label>
+                        <select id="calcNivelBoda" onchange="recalcularPresupuesto()">
+                            <option value="650|$">Íntimo / Jardín Básico ($)</option>
+                            <option value="1100|$" selected>Banquete Completo 3-4 Tiempos ($)</option>
+                            <option value="1950|$$">Hacienda de Lujo + Producción ($$)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="calc-result-card">
+                <span style="font-size:0.8rem; font-weight:700; color:var(--primary-dark);">INVERSIÓN ESTIMADA TOTAL</span>
+                <div id="calcTotalMonto" style="font-size:1.75rem; font-weight:800; color:var(--secondary); margin:0.2rem 0;">$25,600 MXN</div>
+                <p id="calcDetalleMonto" style="font-size:0.8rem; color:var(--text-soft); margin-bottom:0.85rem;">Basado en 2 adultos por 4 noches</p>
+                <button type="button" onclick="filtrarPorResultadoCalc()" class="btn-action btn-primary" style="width:100%;">
+                    Ver Opciones en este Presupuesto →
+                </button>
+            </div>
+        </div>
+    </div>
     <footer>
         <p><strong>Directorio Viajero</strong> &copy; 2026. Todos los derechos reservados.</p>
         <div class="footer-links">
@@ -307,6 +376,6 @@
         </p>
     </footer>
 
-    <script src="js/app.js?v=20261117budget"></script>
+    <script src="js/app.js?v=20261117mega"></script>
 </body>
 </html>

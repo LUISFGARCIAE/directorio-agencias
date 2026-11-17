@@ -72,7 +72,9 @@
                                                "💳 Meses sin Intereses",
                                                "🚐 Traslados Aeropuerto",
                                                "🛡️ Asistencia 24/7"
-                                           ]
+                                           ],
+                            "cuponCodigo":  "VIAJERO10",
+                            "cuponBeneficio":  "10% de descuento en paquetes todo incluido a Cancún"
                         },
                         {
                             "id":  "best-day",
@@ -119,7 +121,9 @@
                                                "💳 Meses sin Intereses",
                                                "🚐 Traslados Aeropuerto",
                                                "🛡️ Asistencia 24/7"
-                                           ]
+                                           ],
+                            "cuponCodigo":  "",
+                            "cuponBeneficio":  ""
                         },
                         {
                             "id":  "mundo-joven",
@@ -164,7 +168,9 @@
                                                "💳 Meses sin Intereses",
                                                "🚐 Traslados Aeropuerto",
                                                "🛡️ Asistencia 24/7"
-                                           ]
+                                           ],
+                            "cuponCodigo":  "MJDIRECTO",
+                            "cuponBeneficio":  "Traslado aeropuerto-hotel gratis en reservas de 4+ noches"
                         },
                         {
                             "id":  "hacienda-los-arcos",
@@ -207,7 +213,9 @@
                                                "🌿 Jardín Privado",
                                                "🍽️ Banquete Incluido",
                                                "🚗 Valet Parking"
-                                           ]
+                                           ],
+                            "cuponCodigo":  "BODAARCOS",
+                            "cuponBeneficio":  "Prueba de menú para 4 personas + noche de bodas sin costo"
                         },
                         {
                             "id":  "quinta-valle-verde",
@@ -249,7 +257,9 @@
                                                "🐾 Pet Friendly",
                                                "🔥 Fogatero y Asador",
                                                "📶 Wi-Fi Alta Velocidad"
-                                           ]
+                                           ],
+                            "cuponCodigo":  "",
+                            "cuponBeneficio":  ""
                         },
                         {
                             "id":  "lumina-studio",
@@ -295,7 +305,9 @@
                                                "🚁 Dron 4K Incluido",
                                                "📸 Entrega Digital",
                                                "🇲🇽 Cobertura Nacional"
-                                           ]
+                                           ],
+                            "cuponCodigo":  "",
+                            "cuponBeneficio":  ""
                         },
                         {
                             "id":  "pacifico-escapes",
@@ -338,7 +350,9 @@
                                                "💳 Meses sin Intereses",
                                                "🚐 Traslados Aeropuerto",
                                                "🛡️ Asistencia 24/7"
-                                           ]
+                                           ],
+                            "cuponCodigo":  "",
+                            "cuponBeneficio":  ""
                         },
                         {
                             "salidaDesde":  "CDMX, Morelos y Puebla",
@@ -381,7 +395,9 @@
                             "estadosSalida":  [
                                                   "cdmx",
                                                   "puebla"
-                                              ]
+                                              ],
+                            "cuponCodigo":  "IMPERIAL26",
+                            "cuponBeneficio":  "1 hora extra de pista iluminada y DJ de cortesía"
                         },
                         {
                             "salidaDesde":  "Cuernavaca, Tepoztlán y Acapulco",
@@ -424,7 +440,9 @@
                             "estadosSalida":  [
                                                   "cdmx",
                                                   "puebla"
-                                              ]
+                                              ],
+                            "cuponCodigo":  "",
+                            "cuponBeneficio":  ""
                         },
                         {
                             "salidaDesde":  "Guadalajara y Bajío",
@@ -465,7 +483,9 @@
                             "estadosSalida":  [
                                                   "guadalajara",
                                                   "bajio"
-                                              ]
+                                              ],
+                            "cuponCodigo":  "",
+                            "cuponBeneficio":  ""
                         },
                         {
                             "salidaDesde":  "Cobertura Nacional (CDMX, Cancún y Los Cabos)",
@@ -512,7 +532,9 @@
                                                   "guadalajara",
                                                   "puebla",
                                                   "bajio"
-                                              ]
+                                              ],
+                            "cuponCodigo":  "LENTE15",
+                            "cuponBeneficio":  "15% de descuento en cobertura completa + sesión Save the Date"
                         },
                         {
                             "salidaDesde":  "CDMX y Valle de Teotihuacán",
@@ -554,7 +576,9 @@
                                                   "cdmx",
                                                   "puebla",
                                                   "bajio"
-                                              ]
+                                              ],
+                            "cuponCodigo":  "SKYAMOR",
+                            "cuponBeneficio":  "Botella de vino espumoso extra y fotografías digitales"
                         },
                         {
                             "salidaDesde":  "Querétaro, Bajío y CDMX",
@@ -595,7 +619,9 @@
                             "estadosSalida":  [
                                                   "bajio",
                                                   "cdmx"
-                                              ]
+                                              ],
+                            "cuponCodigo":  "",
+                            "cuponBeneficio":  ""
                         }
                     ],
     "ofertas":  [

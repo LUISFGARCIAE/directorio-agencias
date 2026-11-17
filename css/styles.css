@@ -1505,3 +1505,135 @@ footer a:hover { text-decoration: underline; }
     color: var(--text-soft);
     margin-bottom: 1.1rem;
 }
+
+/* Barra superior promocional (Top Bar) */
+.promo-top-bar {
+    background: linear-gradient(90deg, var(--primary-dark), var(--primary));
+    color: #ffffff;
+    font-size: 0.84rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.85rem;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.promo-top-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    text-decoration: none;
+    padding: 0.2rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.promo-top-btn:hover {
+    background: #ffffff;
+    color: var(--primary-dark);
+}
+
+/* Caja de Cupon Exclusivo */
+.coupon-box {
+    background: #fefce8;
+    border: 2px dashed #eab308;
+    border-radius: 0.75rem;
+    padding: 0.85rem 1rem;
+    margin: 0.95rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+[data-theme="dark"] .coupon-box {
+    background: rgba(234, 179, 8, 0.12);
+    border-color: #ca8a04;
+}
+
+.coupon-code-pill {
+    background: #fef08a;
+    color: #854d0e;
+    font-family: monospace;
+    font-size: 0.95rem;
+    font-weight: 800;
+    padding: 0.3rem 0.75rem;
+    border-radius: 0.45rem;
+    border: 1px solid #eab308;
+    cursor: pointer;
+}
+
+.coupon-tag-card {
+    display: inline-block;
+    background: #fef9c3;
+    color: #854d0e;
+    border: 1px dashed #eab308;
+    font-size: 0.73rem;
+    font-weight: 700;
+    padding: 0.2rem 0.55rem;
+    border-radius: 0.4rem;
+    margin-bottom: 0.55rem;
+}
+
+/* Boton flotante de Concierge */
+.concierge-float-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: #16a34a;
+    color: #ffffff;
+    border: none;
+    padding: 0.75rem 1.15rem;
+    border-radius: 9999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 12px 28px rgba(22, 163, 74, 0.38);
+    z-index: 240;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    transition: transform 0.2s ease;
+}
+
+.concierge-float-btn:hover {
+    transform: translateY(-2px);
+}
+
+/* Calculadora de presupuesto */
+.calc-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin: 1rem 0;
+}
+
+.calc-tab-btn {
+    flex: 1;
+    padding: 0.6rem;
+    border-radius: 0.6rem;
+    border: 1px solid var(--border);
+    background: var(--bg-muted);
+    color: var(--text-main);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.calc-tab-btn.active {
+    background: var(--primary);
+    color: #ffffff;
+    border-color: var(--primary);
+}
+
+.calc-result-card {
+    background: var(--primary-soft);
+    border: 1px solid var(--primary);
+    border-radius: 0.85rem;
+    padding: 1.15rem;
+    text-align: center;
+    margin-top: 1rem;
+}

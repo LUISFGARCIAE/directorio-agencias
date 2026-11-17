@@ -48,5 +48,12 @@
                            "id":  "servicios",
                            "label":  "📸 Fotografía y Experiencias"
                        }
-                   ]
+                   ],
+    "topBar":  {
+                   "urlBoton":  "#sec-ofertas",
+                   "texto":  "🔥 Especial de Lanzamiento: ¡Usa los cupones exclusivos en cada ficha y ahorra en tu próximo viaje o evento!",
+                   "visible":  true,
+                   "textoBoton":  "Ver Ofertas"
+               },
+    "whatsappConcierge":  "525500000000"
 }
