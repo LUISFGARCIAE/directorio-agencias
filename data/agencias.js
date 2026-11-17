@@ -1,93 +1,121 @@
 ﻿const AGENCIAS_DATA = [
     {
+        id: "caribe-tours",
         nombre: "Caribe Tours & Travel",
         iniciales: "CT",
         colorTexto: "#0284c7",
         colorFondo: "#e0f2fe",
         destacada: true,
         etiquetaEstado: "✔ Agencia Verificada",
+        salidaDesde: "CDMX y Área Metropolitana",
+        rangoPrecio: "$$ • Paquetes Todo Incluido",
+        especialidad: "Vuelos charter y resorts familiares",
         descripcion: "Especialistas en paquetes todo incluido hacia el Caribe Mexicano, Los Cabos y vuelos charter desde CDMX.",
         destinos: ["cancun", "loscabos"],
         tags: ["#Cancún", "#RivieraMaya", "#LosCabos"],
         web: "https://example.com",
-        whatsapp: "https://wa.me/525500000000"
+        whatsappNumero: "525500000000"
     },
     {
+        id: "best-day",
         nombre: "Best Day",
         iniciales: "BD",
         colorTexto: "#0284c7",
         colorFondo: "#e0f2fe",
         destacada: true,
         etiquetaEstado: "✔ Sitio Oficial (Ejemplo)",
+        salidaDesde: "Todo México",
+        rangoPrecio: "$$ - $$$ • Flexible",
+        especialidad: "Hoteles, vuelos y paquetes nacionales",
         descripcion: "Agencia líder en México para reservar hoteles, vuelos, tours y paquetes todo incluido en playas nacionales.",
         destinos: ["cancun", "acapulco", "loscabos"],
         tags: ["#Cancún", "#Acapulco", "#LosCabos"],
         web: "https://www.bestday.com.mx/",
-        whatsapp: ""
+        whatsappNumero: ""
     },
     {
+        id: "mundo-joven",
         nombre: "Mundo Joven",
         iniciales: "MJ",
         colorTexto: "#dc2626",
         colorFondo: "#fee2e2",
         destacada: true,
         etiquetaEstado: "✔ Sitio Oficial (Ejemplo)",
+        salidaDesde: "Todo México",
+        rangoPrecio: "$$ • Experiencias y Circuitos",
+        especialidad: "Tours culturales y viajes a la medida",
         descripcion: "Expertos en experiencias de viaje, tours guiados por México, circuitos culturales y paquetes a la medida.",
         destinos: ["cancun", "pueblos-magicos"],
         tags: ["#PueblosMágicos", "#Cancún", "#Tours"],
         web: "https://mundojoven.com/",
-        whatsapp: "https://wa.me/525554828282"
+        whatsappNumero: "525554828282"
     },
     {
+        id: "pacifico-escapes",
         nombre: "Pacífico Escapes",
         iniciales: "PE",
         colorTexto: "#ea580c",
         colorFondo: "#ffedd5",
         destacada: true,
         etiquetaEstado: "✔ Agencia Verificada",
+        salidaDesde: "CDMX, Puebla y Toluca",
+        rangoPrecio: "$ • Económico / Grupal",
+        especialidad: "Salidas en autobús y hotel",
         descripcion: "Salidas grupales y viajes familiares a Acapulco, Ixtapa y recorridos por Pueblos Mágicos del centro del país.",
         destinos: ["acapulco", "pueblos-magicos"],
         tags: ["#Acapulco", "#PueblosMágicos", "#TodoPagado"],
         web: "https://example.com",
-        whatsapp: "https://wa.me/525500000000"
+        whatsappNumero: "525500000000"
     },
     {
+        id: "pricetravel",
         nombre: "PriceTravel",
         iniciales: "PT",
         colorTexto: "#1d4ed8",
         colorFondo: "#dbeafe",
         destacada: false,
         etiquetaEstado: "✔ Sitio Oficial (Ejemplo)",
+        salidaDesde: "Todo México",
+        rangoPrecio: "$$ • Ofertas de Temporada",
+        especialidad: "Reservación inmediata de hotel + avión",
         descripcion: "Buscador de hoteles, vuelos y paquetes vacacionales para temporadas altas y escapadas de fin de semana.",
         destinos: ["acapulco", "cancun", "loscabos"],
         tags: ["#Acapulco", "#Cancún", "#LosCabos"],
         web: "https://www.pricetravel.com.mx/",
-        whatsapp: ""
+        whatsappNumero: ""
     },
     {
+        id: "travel-viajes",
         nombre: "Travel Viajes",
         iniciales: "TV",
         colorTexto: "#7c3aed",
         colorFondo: "#ede9fe",
         destacada: false,
         etiquetaEstado: "✔ Sitio Oficial (Ejemplo)",
+        salidaDesde: "CDMX y Bajío",
+        rangoPrecio: "$$ • Paquetes Nacionales",
+        especialidad: "Circuitos y playas mexicanas",
         descripcion: "Paquetes y tours saliendo desde CDMX hacia playas mexicanas, circuitos nacionales y viajes a medida.",
         destinos: ["cancun", "loscabos", "pueblos-magicos"],
         tags: ["#Cancún", "#LosCabos", "#PueblosMágicos"],
         web: "https://travelviajes.com.mx/",
-        whatsapp: ""
+        whatsappNumero: ""
     },
     {
+        id: "rutas-mexico",
         nombre: "Rutas de México",
         iniciales: "RM",
         colorTexto: "#16a34a",
         colorFondo: "#dcfce7",
         destacada: false,
         etiquetaEstado: "✔ Agencia Verificada",
+        salidaDesde: "CDMX",
+        rangoPrecio: "$ • Escapadas Fin de Semana",
+        especialidad: "Ecoturismo y Pueblos Mágicos",
         descripcion: "Excursiones de fin de semana, ecoturismo y rutas gastronómicas por los mejores Pueblos Mágicos.",
         destinos: ["pueblos-magicos"],
         tags: ["#PueblosMágicos", "#Ecoturismo"],
         web: "",
-        whatsapp: "https://wa.me/525500000000"
+        whatsappNumero: "525500000000"
     }
 ];
