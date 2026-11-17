@@ -1,6 +1,7 @@
-﻿let PLATAFORMA_CONFIG = { MODO_MULTISECTOR: false, categorias: [] };
+let PLATAFORMA_CONFIG = { MODO_MULTISECTOR: false, categorias: [] };
 let AGENCIAS_DATA = [];
 let OFERTAS_TEMPORADA = [];
+let OPINIONES_DATA = [];
 
 let estadoFiltros = {
     categoria: 'todos',
@@ -38,6 +39,7 @@ function escaparHTML(texto) {
 function validarUrlSegura(url) {
     if (!url || typeof url !== 'string') return '';
     const limpia = url.trim();
+    if (limpia.startsWith('pages/')) return limpia;
     try {
         const parsed = new URL(limpia);
         if (parsed.protocol === 'https:' || parsed.protocol === 'http:') {
@@ -62,11 +64,14 @@ function inicializarApariencia() {
     const paletasValidas = ['caribe', 'coral', 'esmeralda'];
     const temasValidos = ['light', 'dark'];
 
+    const defaultPaleta = (PLATAFORMA_CONFIG.apariencia && PLATAFORMA_CONFIG.apariencia.paletaDefault) || 'caribe';
+    const defaultTema = (PLATAFORMA_CONFIG.apariencia && PLATAFORMA_CONFIG.apariencia.temaDefault) || 'light';
+
     const paletaGuardada = localStorage.getItem('dv_paleta');
     const temaGuardado = localStorage.getItem('dv_tema');
 
-    const paleta = paletasValidas.includes(paletaGuardada) ? paletaGuardada : 'caribe';
-    const tema = temasValidos.includes(temaGuardado) ? temaGuardado : 'light';
+    const paleta = paletasValidas.includes(paletaGuardada) ? paletaGuardada : defaultPaleta;
+    const tema = temasValidos.includes(temaGuardado) ? temaGuardado : defaultTema;
 
     document.documentElement.setAttribute('data-palette', paleta);
     document.documentElement.setAttribute('data-theme', tema);
@@ -108,30 +113,62 @@ async function cargarDatosRemotos() {
             const dataJson = await resAgencias.json();
             AGENCIAS_DATA = Array.isArray(dataJson.anunciantes) ? dataJson.anunciantes : [];
             OFERTAS_TEMPORADA = Array.isArray(dataJson.ofertas) ? dataJson.ofertas : [];
+            OPINIONES_DATA = Array.isArray(dataJson.opiniones) ? dataJson.opiniones : [];
         }
     } catch (error) {
-        console.error('No se pudo cargar la configuración del catálogo:', error);
+        console.error('Error cargando datos:', error);
+    }
+}
+
+function aplicarLayoutYContenidos() {
+    // 1. Textos del Hero
+    if (PLATAFORMA_CONFIG.hero) {
+        const badge = document.getElementById('heroBadge');
+        const title = document.getElementById('heroTitle');
+        const subtitle = document.getElementById('heroSubtitle');
+        if (badge && PLATAFORMA_CONFIG.hero.badge) badge.textContent = PLATAFORMA_CONFIG.hero.badge;
+        if (title && PLATAFORMA_CONFIG.hero.titulo) title.textContent = PLATAFORMA_CONFIG.hero.titulo;
+        if (subtitle && PLATAFORMA_CONFIG.hero.subtitulo) subtitle.textContent = PLATAFORMA_CONFIG.hero.subtitulo;
+    }
+
+    // 2. Banner patrocinado
+    const bannerEl = document.getElementById('sec-banner');
+    if (bannerEl && PLATAFORMA_CONFIG.bannerPatrocinado) {
+        const bp = PLATAFORMA_CONFIG.bannerPatrocinado;
+        bannerEl.style.display = bp.visible === false ? 'none' : 'flex';
+        const bTitle = document.getElementById('bannerTitle');
+        const bDesc = document.getElementById('bannerDesc');
+        const bBtn = document.getElementById('bannerBtn');
+        if (bTitle) bTitle.textContent = bp.titulo || '';
+        if (bDesc) bDesc.textContent = bp.descripcion || '';
+        if (bBtn) {
+            bBtn.textContent = bp.textoBoton || 'Ver más';
+            const urlSegura = validarUrlSegura(bp.urlBoton);
+            if (urlSegura) bBtn.href = urlSegura;
+        }
+    }
+
+    // 3. Reordenar secciones dentro de <main>
+    const mainCont = document.getElementById('mainContainer');
+    if (mainCont && Array.isArray(PLATAFORMA_CONFIG.ordenSecciones)) {
+        PLATAFORMA_CONFIG.ordenSecciones.forEach(secKey => {
+            const el = document.getElementById('sec-' + secKey);
+            if (el) mainCont.appendChild(el);
+        });
     }
 }
 
 function inicializarModoPlataforma() {
     const barraSectores = document.getElementById('sectorTabsBar');
-    const heroTitle = document.getElementById('heroTitle');
-    const heroSubtitle = document.getElementById('heroSubtitle');
     const sectionTitle = document.getElementById('directorySectionTitle');
 
     if (!esModoMultisector()) {
         if (barraSectores) barraSectores.style.display = 'none';
         estadoFiltros.categoria = 'viajes';
+        if (sectionTitle) sectionTitle.textContent = 'Agencias Anunciantes';
         return;
     }
 
-    if (heroTitle) {
-        heroTitle.textContent = 'Conecta directo con Especialistas en Viajes, Bodas y Experiencias';
-    }
-    if (heroSubtitle) {
-        heroSubtitle.textContent = 'Explora agencias de viajes, jardines para bodas, cabañas y servicios verificados en México sin intermediarios.';
-    }
     if (sectionTitle) {
         sectionTitle.textContent = 'Directorio de Anunciantes';
     }
@@ -151,7 +188,8 @@ function inicializarModoPlataforma() {
                 btn.classList.add('active');
                 renderizarOfertas();
                 renderizarAgencias();
-                document.getElementById('agencias').scrollIntoView({ behavior: 'smooth' });
+                const target = document.getElementById('sec-agencias');
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
             });
             barraSectores.appendChild(btn);
         });
@@ -228,6 +266,29 @@ function renderizarOfertas() {
     });
 }
 
+function renderizarOpiniones() {
+    const grid = document.getElementById('reviewsGrid');
+    if (!grid || !OPINIONES_DATA.length) return;
+    grid.innerHTML = '';
+
+    OPINIONES_DATA.forEach(op => {
+        const card = document.createElement('article');
+        card.className = 'review-card';
+        card.innerHTML = `
+            <div class="review-stars">★★★★★</div>
+            <p class="review-text">"${escaparHTML(op.texto)}"</p>
+            <div class="review-author">
+                <div class="author-avatar">${escaparHTML(op.iniciales)}</div>
+                <div class="author-info">
+                    <strong>${escaparHTML(op.nombre)}</strong>
+                    <span>${escaparHTML(op.detalle)}</span>
+                </div>
+            </div>
+        `;
+        grid.appendChild(card);
+    });
+}
+
 function renderizarAgencias() {
     const grid = document.getElementById('agencyGrid');
     const counter = document.getElementById('resultsCounter');
@@ -243,7 +304,7 @@ function renderizarAgencias() {
 
     const filtradas = ordenadas.filter(agencia => {
         const cumpleCategoria = !esModoMultisector() || estadoFiltros.categoria === 'todos' || agencia.categoria === estadoFiltros.categoria;
-        const cumpleDestino = estadoFiltros.destino === 'todos' || agencia.destinos.includes(estadoFiltros.destino);
+        const cumpleDestino = estadoFiltros.destino === 'todos' || (Array.isArray(agencia.destinos) && agencia.destinos.includes(estadoFiltros.destino));
         const cumpleOrigen = estadoFiltros.origen === 'todos' || (Array.isArray(agencia.estadosSalida) && agencia.estadosSalida.includes(estadoFiltros.origen));
 
         const q = estadoFiltros.texto.toLowerCase().trim();
@@ -252,7 +313,7 @@ function renderizarAgencias() {
             agencia.descripcion.toLowerCase().includes(q) ||
             agencia.salidaDesde.toLowerCase().includes(q) ||
             (agencia.categoriaNombre && agencia.categoriaNombre.toLowerCase().includes(q)) ||
-            agencia.tags.some(t => t.toLowerCase().includes(q));
+            (Array.isArray(agencia.tags) && agencia.tags.some(t => t.toLowerCase().includes(q)));
 
         let cumpleRapido = true;
         if (estadoFiltros.rapido === 'destacadas') cumpleRapido = agencia.destacada === true;
@@ -289,7 +350,7 @@ function renderizarAgencias() {
         const catChipHtml = (esModoMultisector() && agencia.categoriaNombre)
             ? `<span class="category-chip">${escaparHTML(agencia.categoriaNombre)}</span>`
             : '';
-        const tagsHtml = agencia.tags.map(tag => `<span class="tag">${escaparHTML(tag)}</span>`).join('');
+        const tagsHtml = (agencia.tags || []).map(tag => `<span class="tag">${escaparHTML(tag)}</span>`).join('');
         const webSegura = validarUrlSegura(agencia.web);
         const waUrl = generarUrlWhatsApp(agencia.nombre, agencia.whatsappNumero);
 
@@ -350,7 +411,8 @@ function ejecutarBusqueda() {
     estadoFiltros.origen = selectOrigen ? selectOrigen.value : 'todos';
 
     renderizarAgencias();
-    document.getElementById('agencias').scrollIntoView({ behavior: 'smooth' });
+    const target = document.getElementById('sec-agencias');
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
 }
 
 function seleccionarDestinoCard(destino) {
@@ -358,7 +420,8 @@ function seleccionarDestinoCard(destino) {
     if (selectDestino) selectDestino.value = destino;
     estadoFiltros.destino = destino;
     renderizarAgencias();
-    document.getElementById('agencias').scrollIntoView({ behavior: 'smooth' });
+    const target = document.getElementById('sec-agencias');
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
 }
 
 function aplicarFiltroRapido(tipo, botonElement) {
@@ -419,7 +482,7 @@ function abrirModalAgencia(id) {
             <div><span>Rango orientativo</span><strong>${escaparHTML(agencia.rangoPrecio)}</strong></div>
             <div style="grid-column: 1/-1;"><span>Especialidad</span><strong>${escaparHTML(agencia.especialidad)}</strong></div>
         </div>
-        <div class="tags">${agencia.tags.map(t => `<span class="tag">${escaparHTML(t)}</span>`).join('')}</div>
+        <div class="tags">${(agencia.tags || []).map(t => `<span class="tag">${escaparHTML(t)}</span>`).join('')}</div>
         <div class="card-actions">${accionesModal}</div>
         <p style="font-size: 0.75rem; color: var(--text-soft); margin-top: 1rem; text-align: center;">
             Contacto directo con el anunciante sin cargos extra ni intermediarios.
@@ -436,12 +499,16 @@ function cerrarModalAgencia(event) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-    inicializarApariencia();
     if (document.getElementById('agencyGrid')) {
         await cargarDatosRemotos();
+        inicializarApariencia();
+        aplicarLayoutYContenidos();
         inicializarModoPlataforma();
         renderizarOfertas();
         renderizarAgencias();
+        renderizarOpiniones();
+    } else {
+        inicializarApariencia();
     }
     const input = document.getElementById('searchInput');
     if (input) {
