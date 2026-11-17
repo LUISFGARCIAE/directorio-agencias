@@ -14,6 +14,7 @@ let estadoFiltros = {
     origen: 'todos',
     texto: '',
     rapido: 'todas',
+    presupuesto: 'todos',
     presupuesto: 'todos'
 };
 
@@ -557,6 +558,7 @@ function reiniciarFiltros() {
         origen: 'todos',
         texto: '',
         rapido: 'todas',
+    presupuesto: 'todos',
     presupuesto: 'todos'
     };
     const input = document.getElementById('searchInput');
