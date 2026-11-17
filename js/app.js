@@ -1,4 +1,5 @@
 ﻿let estadoFiltros = {
+    categoria: 'todos',
     destino: 'todos',
     origen: 'todos',
     texto: '',
@@ -13,6 +14,10 @@ try {
     }
 } catch (e) {
     favoritos = [];
+}
+
+function esModoMultisector() {
+    return typeof PLATAFORMA_CONFIG !== 'undefined' && PLATAFORMA_CONFIG.MODO_MULTISECTOR === true;
 }
 
 function escaparHTML(texto) {
@@ -40,11 +45,10 @@ function validarUrlSegura(url) {
     return '';
 }
 
-// Registro de eventos de conversion hacia Google Analytics (si esta configurado)
-function registrarEventoClic(nombreAgencia, canal) {
+function registrarEventoClic(nombreAnunciante, canal) {
     if (typeof window.gtag === 'function') {
-        window.gtag('event', 'clic_agencia', {
-            agencia_nombre: nombreAgencia,
+        window.gtag('event', 'clic_anunciante', {
+            anunciante_nombre: nombreAnunciante,
             canal_contacto: canal
         });
     }
@@ -85,6 +89,50 @@ function actualizarIconoTema(tema) {
     if (btn) btn.textContent = tema === 'dark' ? '☀️' : '🌙';
 }
 
+function inicializarModoPlataforma() {
+    const barraSectores = document.getElementById('sectorTabsBar');
+    const heroTitle = document.getElementById('heroTitle');
+    const heroSubtitle = document.getElementById('heroSubtitle');
+    const sectionTitle = document.getElementById('directorySectionTitle');
+
+    if (!esModoMultisector()) {
+        if (barraSectores) barraSectores.style.display = 'none';
+        estadoFiltros.categoria = 'viajes';
+        return;
+    }
+
+    if (heroTitle) {
+        heroTitle.textContent = 'Conecta directo con Especialistas en Viajes, Bodas y Experiencias';
+    }
+    if (heroSubtitle) {
+        heroSubtitle.textContent = 'Explora agencias de viajes, jardines para bodas, cabañas y servicios verificados en México sin intermediarios.';
+    }
+    if (sectionTitle) {
+        sectionTitle.textContent = 'Directorio de Anunciantes';
+    }
+
+    if (barraSectores && Array.isArray(PLATAFORMA_CONFIG.categorias)) {
+        barraSectores.style.display = 'flex';
+        barraSectores.innerHTML = '';
+
+        PLATAFORMA_CONFIG.categorias.forEach(cat => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = `sector-tab ${estadoFiltros.categoria === cat.id ? 'active' : ''}`;
+            btn.textContent = cat.label;
+            btn.addEventListener('click', () => {
+                estadoFiltros.categoria = cat.id;
+                document.querySelectorAll('.sector-tab').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderizarOfertas();
+                renderizarAgencias();
+                document.getElementById('agencias').scrollIntoView({ behavior: 'smooth' });
+            });
+            barraSectores.appendChild(btn);
+        });
+    }
+}
+
 function toggleFavorito(id) {
     if (typeof id !== 'string') return;
     if (favoritos.includes(id)) {
@@ -101,8 +149,8 @@ function generarUrlWhatsApp(nombreDestino, numero, asuntoExtra = '') {
     const soloDigitos = String(numero).replace(/\D/g, '');
     if (soloDigitos.length < 10 || soloDigitos.length > 15) return '';
     const texto = asuntoExtra
-        ? `Hola ${nombreDestino}, vi su oferta "${asuntoExtra}" en Directorio Viajero y me gustaría información.`
-        : `Hola ${nombreDestino}, encontré su agencia en Directorio Viajero y me gustaría cotizar un viaje.`;
+        ? `Hola ${nombreDestino}, vi su anuncio "${asuntoExtra}" en Directorio Viajero y me gustaría información.`
+        : `Hola ${nombreDestino}, encontré su perfil en Directorio Viajero y me gustaría solicitar una cotización.`;
     return `https://wa.me/${soloDigitos}?text=${encodeURIComponent(texto)}`;
 }
 
@@ -111,7 +159,12 @@ function renderizarOfertas() {
     if (!grid || typeof OFERTAS_TEMPORADA === 'undefined') return;
     grid.innerHTML = '';
 
-    OFERTAS_TEMPORADA.forEach(oferta => {
+    const ofertasFiltradas = OFERTAS_TEMPORADA.filter(oferta => {
+        if (!esModoMultisector()) return oferta.categoria === 'viajes';
+        return estadoFiltros.categoria === 'todos' || oferta.categoria === estadoFiltros.categoria;
+    });
+
+    ofertasFiltradas.forEach(oferta => {
         const card = document.createElement('article');
         card.className = 'deal-card';
 
@@ -120,7 +173,7 @@ function renderizarOfertas() {
         const esEnlaceInterno = oferta.web && oferta.web.startsWith('pages/');
         const webSegura = esEnlaceInterno ? oferta.web : validarUrlSegura(oferta.web);
         const destinoUrl = waUrl || webSegura || 'pages/anunciate.html';
-        const textoBoton = oferta.textoBoton || (waUrl ? '💬 Cotizar Oferta por WhatsApp' : 'Ver Detalles');
+        const textoBoton = oferta.textoBoton || (waUrl ? '💬 Cotizar por WhatsApp' : 'Ver Detalles');
         const targetAttr = esEnlaceInterno ? '' : 'target="_blank" rel="noopener noreferrer nofollow"';
         const claseBoton = oferta.esReferenciaReal ? 'btn-primary' : 'btn-whatsapp';
 
@@ -143,7 +196,7 @@ function renderizarOfertas() {
         `;
 
         card.querySelector('.deal-cta').addEventListener('click', () => {
-            registrarEventoClic(oferta.agencia, 'oferta_temporada');
+            registrarEventoClic(oferta.agencia, 'oferta_destacada');
         });
 
         grid.appendChild(card);
@@ -157,9 +210,14 @@ function renderizarAgencias() {
 
     grid.innerHTML = '';
 
-    const ordenadas = [...AGENCIAS_DATA].sort((a, b) => (b.destacada === true) - (a.destacada === true));
+    const baseUniverso = esModoMultisector()
+        ? AGENCIAS_DATA
+        : AGENCIAS_DATA.filter(a => a.categoria === 'viajes');
+
+    const ordenadas = [...baseUniverso].sort((a, b) => (b.destacada === true) - (a.destacada === true));
 
     const filtradas = ordenadas.filter(agencia => {
+        const cumpleCategoria = !esModoMultisector() || estadoFiltros.categoria === 'todos' || agencia.categoria === estadoFiltros.categoria;
         const cumpleDestino = estadoFiltros.destino === 'todos' || agencia.destinos.includes(estadoFiltros.destino);
         const cumpleOrigen = estadoFiltros.origen === 'todos' || (Array.isArray(agencia.estadosSalida) && agencia.estadosSalida.includes(estadoFiltros.origen));
 
@@ -168,29 +226,28 @@ function renderizarAgencias() {
             agencia.nombre.toLowerCase().includes(q) ||
             agencia.descripcion.toLowerCase().includes(q) ||
             agencia.salidaDesde.toLowerCase().includes(q) ||
-            (agencia.rnt && agencia.rnt.toLowerCase().includes(q)) ||
+            (agencia.categoriaNombre && agencia.categoriaNombre.toLowerCase().includes(q)) ||
             agencia.tags.some(t => t.toLowerCase().includes(q));
 
         let cumpleRapido = true;
         if (estadoFiltros.rapido === 'destacadas') cumpleRapido = agencia.destacada === true;
         if (estadoFiltros.rapido === 'whatsapp') cumpleRapido = Boolean(agencia.whatsappNumero);
-        if (estadoFiltros.rapido === 'rnt') cumpleRapido = Boolean(agencia.rnt);
         if (estadoFiltros.rapido === 'favoritas') cumpleRapido = favoritos.includes(agencia.id);
 
-        return cumpleDestino && cumpleOrigen && cumpleTexto && cumpleRapido;
+        return cumpleCategoria && cumpleDestino && cumpleOrigen && cumpleTexto && cumpleRapido;
     });
 
     if (counter) {
-        counter.textContent = `Mostrando ${filtradas.length} de ${AGENCIAS_DATA.length} agencias`;
+        counter.textContent = `Mostrando ${filtradas.length} de ${baseUniverso.length} anunciantes`;
     }
 
     if (filtradas.length === 0) {
         const emptyBox = document.createElement('div');
         emptyBox.style.cssText = 'grid-column: 1/-1; text-align: center; padding: 3rem 1rem; background: var(--bg-card); border-radius: 1rem; border: 1px solid var(--border);';
         emptyBox.innerHTML = `
-            <p style="color: var(--secondary); font-weight: 700; margin-bottom: 0.5rem;">No encontramos agencias con esa combinación de filtros</p>
-            <p style="color: var(--text-soft); font-size: 0.9rem; margin-bottom: 1rem;">Prueba seleccionando "Cualquier salida" o limpia los filtros activos.</p>
-            <button type="button" onclick="reiniciarFiltros()" class="btn-action btn-primary" style="display: inline-block; width: auto; padding: 0.6rem 1.25rem;">Ver todas las agencias</button>
+            <p style="color: var(--secondary); font-weight: 700; margin-bottom: 0.5rem;">No encontramos resultados con esa combinación de filtros</p>
+            <p style="color: var(--text-soft); font-size: 0.9rem; margin-bottom: 1rem;">Prueba cambiando el giro, destino o limpia los filtros activos.</p>
+            <button type="button" onclick="reiniciarFiltros()" class="btn-action btn-primary" style="display: inline-block; width: auto; padding: 0.6rem 1.25rem;">Mostrar todos</button>
         `;
         grid.appendChild(emptyBox);
         return;
@@ -202,7 +259,9 @@ function renderizarAgencias() {
 
         const esFav = favoritos.includes(agencia.id);
         const badgeHtml = agencia.destacada ? '<span class="badge-featured">⭐ Destacada</span>' : '';
-        const rntHtml = agencia.rnt ? `<span class="rnt-badge" title="Folio Registro Nacional de Turismo: ${escaparHTML(agencia.rnt)}">🛡️ RNT</span>` : '';
+        const catChipHtml = (esModoMultisector() && agencia.categoriaNombre)
+            ? `<span class="category-chip">${escaparHTML(agencia.categoriaNombre)}</span>`
+            : '';
         const tagsHtml = agencia.tags.map(tag => `<span class="tag">${escaparHTML(tag)}</span>`).join('');
         const webSegura = validarUrlSegura(agencia.web);
         const waUrl = generarUrlWhatsApp(agencia.nombre, agencia.whatsappNumero);
@@ -219,14 +278,12 @@ function renderizarAgencias() {
         card.innerHTML = `
             ${badgeHtml}
             <div>
+                ${catChipHtml}
                 <div class="agency-header">
                     <div class="agency-logo" style="color: ${escaparHTML(agencia.colorTexto)}; background: ${escaparHTML(agencia.colorFondo)};">${escaparHTML(agencia.iniciales)}</div>
                     <div>
                         <h3 class="agency-title">${escaparHTML(agencia.nombre)}</h3>
-                        <div>
-                            <span class="verified-tag">${escaparHTML(agencia.etiquetaEstado)}</span>
-                            ${rntHtml}
-                        </div>
+                        <span class="verified-tag">${escaparHTML(agencia.etiquetaEstado)}</span>
                     </div>
                     <button type="button" class="fav-btn ${esFav ? 'saved' : ''}" title="Guardar en favoritos">
                         ${esFav ? '❤️' : '🤍'}
@@ -282,16 +339,22 @@ function aplicarFiltroRapido(tipo, botonElement) {
 }
 
 function reiniciarFiltros() {
-    estadoFiltros = { destino: 'todos', origen: 'todos', texto: '', rapido: 'todas' };
+    estadoFiltros = {
+        categoria: esModoMultisector() ? 'todos' : 'viajes',
+        destino: 'todos',
+        origen: 'todos',
+        texto: '',
+        rapido: 'todas'
+    };
     const input = document.getElementById('searchInput');
     const selectDestino = document.getElementById('destinoSelect');
     const selectOrigen = document.getElementById('origenSelect');
     if (input) input.value = '';
     if (selectDestino) selectDestino.value = 'todos';
     if (selectOrigen) selectOrigen.value = 'todos';
-    document.querySelectorAll('.pill-btn').forEach((btn, idx) => {
-        btn.classList.toggle('active', idx === 0);
-    });
+    document.querySelectorAll('.pill-btn').forEach((btn, idx) => btn.classList.toggle('active', idx === 0));
+    document.querySelectorAll('.sector-tab').forEach((btn, idx) => btn.classList.toggle('active', idx === 0));
+    renderizarOfertas();
     renderizarAgencias();
 }
 
@@ -312,8 +375,6 @@ function abrirModalAgencia(id) {
         accionesModal += `<a href="${escaparHTML(waUrl)}" target="_blank" rel="noopener noreferrer nofollow" class="btn-action btn-whatsapp">Cotizar por WhatsApp</a>`;
     }
 
-    const rntDetalle = agencia.rnt ? `Folio ${escaparHTML(agencia.rnt)}` : 'En trámite / No declarado';
-
     body.innerHTML = `
         <div class="agency-header">
             <div class="agency-logo" style="color: ${escaparHTML(agencia.colorTexto)}; background: ${escaparHTML(agencia.colorFondo)};">${escaparHTML(agencia.iniciales)}</div>
@@ -324,15 +385,14 @@ function abrirModalAgencia(id) {
         </div>
         <p style="color: var(--text-main); font-size: 0.95rem; margin-top: 0.75rem;">${escaparHTML(agencia.descripcion)}</p>
         <div class="modal-details-grid">
-            <div><span>Salidas desde</span><strong>${escaparHTML(agencia.salidaDesde)}</strong></div>
+            <div><span>Cobertura / Salida</span><strong>${escaparHTML(agencia.salidaDesde)}</strong></div>
             <div><span>Rango orientativo</span><strong>${escaparHTML(agencia.rangoPrecio)}</strong></div>
-            <div><span>Registro Nacional (RNT)</span><strong>${rntDetalle}</strong></div>
-            <div><span>Especialidad</span><strong>${escaparHTML(agencia.especialidad)}</strong></div>
+            <div style="grid-column: 1/-1;"><span>Especialidad</span><strong>${escaparHTML(agencia.especialidad)}</strong></div>
         </div>
         <div class="tags">${agencia.tags.map(t => `<span class="tag">${escaparHTML(t)}</span>`).join('')}</div>
         <div class="card-actions">${accionesModal}</div>
         <p style="font-size: 0.75rem; color: var(--text-soft); margin-top: 1rem; text-align: center;">
-            Contacto directo con la agencia sin cargos extra ni intermediarios.
+            Contacto directo con el anunciante sin cargos extra ni intermediarios.
         </p>
     `;
 
@@ -347,6 +407,7 @@ function cerrarModalAgencia(event) {
 
 document.addEventListener('DOMContentLoaded', () => {
     inicializarApariencia();
+    inicializarModoPlataforma();
     renderizarOfertas();
     renderizarAgencias();
     const input = document.getElementById('searchInput');
@@ -357,4 +418,3 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-

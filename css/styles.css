@@ -944,3 +944,50 @@ footer a:hover { text-decoration: underline; }
     color: var(--text-soft);
     margin-bottom: 1.15rem;
 }
+
+/* Barra de navegacion por sectores */
+.sector-tabs-wrap {
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 5%;
+    display: flex;
+    justify-content: center;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+}
+
+.sector-tab {
+    background: var(--bg-muted);
+    border: 1px solid transparent;
+    color: var(--text-main);
+    padding: 0.45rem 1.1rem;
+    border-radius: 9999px;
+    font-size: 0.86rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.sector-tab:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.sector-tab.active {
+    background: var(--primary);
+    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(2, 132, 199, 0.25);
+}
+
+.category-chip {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--primary-dark);
+    background: var(--primary-soft);
+    padding: 0.15rem 0.55rem;
+    border-radius: 0.3rem;
+    margin-bottom: 0.35rem;
+}

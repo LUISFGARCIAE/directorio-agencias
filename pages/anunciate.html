@@ -84,6 +84,15 @@
                             <option value="Plan Estándar">Plan Estándar ( MXN)</option>
                         </select>
                     </div>
+                                        <div class="form-group">
+                        <label for="giroAgencia">Giro o Categoría del Negocio *</label>
+                        <select id="giroAgencia" required>
+                            <option value="Viajes y Turismo">✈️ Agencia de Viajes / Tours</option>
+                            <option value="Bodas y Eventos">💍 Bodas, Jardines y Banquetes</option>
+                            <option value="Quintas y Estancias">🏡 Quintas, Cabañas y Hospedaje</option>
+                            <option value="Fotografía y Experiencias">📸 Fotografía, Video y Experiencias</option>
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label for="nombreAgencia">Nombre Comercial de la Agencia *</label>
                         <input type="text" id="nombreAgencia" maxlength="60" oninput="actualizarPreview()" required placeholder="Ej. Viajes del Sol México">
@@ -579,3 +588,4 @@
     </script>
 </body>
 </html>
+
