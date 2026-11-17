@@ -222,6 +222,14 @@
                                         <input type="text" id="anunCuponBen" placeholder="10% de descuento directo">
                                     </div>
                                 </div>
+                                                                <div class="form-group">
+                                    <label>Galería de Fotos (URLs separadas por coma)</label>
+                                    <textarea id="anunGaleria" rows="2" placeholder="https://foto1.jpg, https://foto2.jpg, https://foto3.jpg"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Amenidades / Servicios Incluidos (separados por coma)</label>
+                                    <input type="text" id="anunAmenidades" placeholder="🍳 Desayuno Incluido, 🚗 Valet Parking, 📶 Wi-Fi">
+                                </div>
                                 <div class="form-group">
                                     <label>Etiquetas (separadas por coma)</label>
                                     <input type="text" id="anunTags" placeholder="Cancún, TodoIncluido">
@@ -694,6 +702,8 @@
             document.getElementById("anunPrecio").value = item.rangoPrecio || "";
             document.getElementById("anunCuponCod").value = item.cuponCodigo || "";
             document.getElementById("anunCuponBen").value = item.cuponBeneficio || "";
+            document.getElementById("anunGaleria").value = Array.isArray(item.galeria) ? item.galeria.join(", ") : "";
+            document.getElementById("anunAmenidades").value = Array.isArray(item.amenidades) ? item.amenidades.join(", ") : "";
             document.getElementById("anunTags").value = (item.tags || []).map(t => t.replace(/^#/, '')).join(", ");
             document.getElementById("anunDesc").value = item.descripcion || "";
             document.getElementById("anunDestacada").checked = Boolean(item.destacada);
@@ -737,6 +747,8 @@
                 rangoPrecio: document.getElementById("anunPrecio").value.trim() || "$ • Consultar",
                 cuponCodigo: document.getElementById("anunCuponCod").value.trim().toUpperCase(),
                 cuponBeneficio: document.getElementById("anunCuponBen").value.trim(),
+                galeria: document.getElementById("anunGaleria").value.split(",").map(u => validarUrlSegura(u)).filter(Boolean),
+                amenidades: document.getElementById("anunAmenidades").value.split(",").map(a => a.trim()).filter(Boolean),
                 especialidad: catNombre,
                 descripcion: document.getElementById("anunDesc").value.trim(),
                 destinos: ["cancun", "acapulco", "loscabos", "pueblos-magicos"],
