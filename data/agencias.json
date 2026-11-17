@@ -1,767 +1,973 @@
 {
-    "opiniones": [
-        {
-            "iniciales": "MR",
-            "detalle": "Viajó a Cancún • CDMX",
-            "nombre": "Mariana Ríos",
-            "texto": "Me gustó que te manda directo al WhatsApp de la agencia sin pedirte tarjeta ni cobrarte comisiones raras. Cotizamos un paquete a Cancún en 10 minutos."
-        },
-        {
-            "iniciales": "CG",
-            "detalle": "Viajó a Acapulco • Estado de México",
-            "nombre": "Carlos Gómez",
-            "texto": "Estábamos buscando salidas grupales de fin de semana para Acapulco y aquí pudimos comparar tres opciones rápido y guardar nuestras favoritas."
-        },
-        {
-            "iniciales": "AL",
-            "detalle": "Tour Pueblos Mágicos • Puebla",
-            "nombre": "Andrea López",
-            "texto": "Muy práctico tener todas las agencias ordenadas por destino. Encontramos un tour a Pueblos Mágicos con salida desde Puebla."
-        },
-        {
-            "iniciales": "SF",
-            "detalle": "Boda en Tepoztlán • CDMX",
-            "nombre": "Sofía & Fernando",
-            "texto": "Comparamos tres opciones de jardines y banquetes en un solo lugar y cotizamos directo por WhatsApp sin intermediarios. Nos ahorramos muchísimo tiempo."
-        },
-        {
-            "iniciales": "DM",
-            "detalle": "Vuelo en Globo • Estado de México",
-            "nombre": "Diego Martínez",
-            "texto": "Contraté el vuelo privado en Teotihuacán para mi aniversario usando el cotizador rápido y me confirmaron disponibilidad en menos de 15 minutos."
-        }
-    ],
-    "anunciantes": [
-        {
-            "id": "caribe-tours",
-            "categoria": "viajes",
-            "categoriaNombre": "Viajes y Turismo",
-            "nombre": "Caribe Tours & Travel",
-            "iniciales": "CT",
-            "colorTexto": "#0284c7",
-            "colorFondo": "#e0f2fe",
-            "destacada": true,
-            "rnt": "",
-            "rating": "4.9",
-            "etiquetaEstado": "✔ Anunciante Demo",
-            "salidaDesde": "CDMX y Área Metropolitana",
-            "estadosSalida": [
-                "cdmx"
-            ],
-            "rangoPrecio": "$$ • Paquetes Todo Incluido",
-            "especialidad": "Vuelos charter y resorts familiares",
-            "descripcion": "Especialistas en paquetes todo incluido hacia el Caribe Mexicano, Los Cabos y vuelos charter desde CDMX.",
-            "destinos": [
-                "cancun",
-                "loscabos"
-            ],
-            "tags": [
-                "#Cancún",
-                "#RivieraMaya",
-                "#LosCabos"
-            ],
-            "web": "https://example.com",
-            "whatsappNumero": "525500000000",
-            "ubicacionMaps": "Polanco, Ciudad de Mexico",
-            "galeria": [
-                "https://images.unsplash.com/photo-1510097467424-192d713fd8b2?auto=format&fit=crop&w=800&q=80",
-                "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
-                "https://images.unsplash.com/photo-1512813195386-6cf811ad3542?auto=format&fit=crop&w=800&q=80"
-            ],
-            "amenidades": [
-                "💳 Meses sin Intereses",
-                "🚐 Traslados Aeropuerto",
-                "🛡️ Asistencia 24/7"
-            ],
-            "cuponCodigo": "VIAJERO10",
-            "cuponBeneficio": "10% de descuento en paquetes todo incluido a Cancún"
-        },
-        {
-            "id": "best-day",
-            "categoria": "viajes",
-            "categoriaNombre": "Viajes y Turismo",
-            "nombre": "Best Day",
-            "iniciales": "BD",
-            "colorTexto": "#0284c7",
-            "colorFondo": "#e0f2fe",
-            "destacada": true,
-            "rnt": "",
-            "rating": "4.8",
-            "etiquetaEstado": "✔ Sitio Oficial (Referencia)",
-            "salidaDesde": "Todo México (CDMX, MTY, GDL)",
-            "estadosSalida": [
-                "cdmx",
-                "monterrey",
-                "guadalajara",
-                "puebla",
-                "bajio"
-            ],
-            "rangoPrecio": "$$ - $$$ • Flexible",
-            "especialidad": "Hoteles, vuelos y paquetes nacionales",
-            "descripcion": "Agencia líder en México para reservar hoteles, vuelos, tours y paquetes todo incluido en playas nacionales.",
-            "destinos": [
-                "cancun",
-                "acapulco",
-                "loscabos"
-            ],
-            "tags": [
-                "#Cancún",
-                "#Acapulco",
-                "#LosCabos"
-            ],
-            "web": "https://www.bestday.com.mx/",
-            "whatsappNumero": "",
-            "ubicacionMaps": "",
-            "galeria": [
-                "https://images.unsplash.com/photo-1510097467424-192d713fd8b2?auto=format&fit=crop&w=800&q=80",
-                "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
-                "https://images.unsplash.com/photo-1512813195386-6cf811ad3542?auto=format&fit=crop&w=800&q=80"
-            ],
-            "amenidades": [
-                "💳 Meses sin Intereses",
-                "🚐 Traslados Aeropuerto",
-                "🛡️ Asistencia 24/7"
-            ],
-            "cuponCodigo": "",
-            "cuponBeneficio": ""
-        },
-        {
-            "id": "mundo-joven",
-            "categoria": "viajes",
-            "categoriaNombre": "Viajes y Turismo",
-            "nombre": "Mundo Joven",
-            "iniciales": "MJ",
-            "colorTexto": "#dc2626",
-            "colorFondo": "#fee2e2",
-            "destacada": true,
-            "rnt": "",
-            "rating": "4.8",
-            "etiquetaEstado": "✔ Sitio Oficial (Referencia)",
-            "salidaDesde": "Todo México (CDMX, GDL, MTY, Puebla)",
-            "estadosSalida": [
-                "cdmx",
-                "guadalajara",
-                "monterrey",
-                "puebla"
-            ],
-            "rangoPrecio": "$$ • Experiencias y Circuitos",
-            "especialidad": "Tours culturales y viajes a la medida",
-            "descripcion": "Expertos en experiencias de viaje, tours guiados por México, circuitos culturales y paquetes a la medida.",
-            "destinos": [
-                "cancun",
-                "pueblos-magicos"
-            ],
-            "tags": [
-                "#PueblosMágicos",
-                "#Cancún",
-                "#Tours"
-            ],
-            "web": "https://mundojoven.com/",
-            "whatsappNumero": "525554828282",
-            "ubicacionMaps": "Ciudad de Mexico, CDMX",
-            "galeria": [
-                "https://images.unsplash.com/photo-1510097467424-192d713fd8b2?auto=format&fit=crop&w=800&q=80",
-                "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
-                "https://images.unsplash.com/photo-1512813195386-6cf811ad3542?auto=format&fit=crop&w=800&q=80"
-            ],
-            "amenidades": [
-                "💳 Meses sin Intereses",
-                "🚐 Traslados Aeropuerto",
-                "🛡️ Asistencia 24/7"
-            ],
-            "cuponCodigo": "MJDIRECTO",
-            "cuponBeneficio": "Traslado aeropuerto-hotel gratis en reservas de 4+ noches"
-        },
-        {
-            "id": "hacienda-los-arcos",
-            "categoria": "bodas",
-            "categoriaNombre": "Bodas y Eventos",
-            "nombre": "Hacienda & Jardín Los Arcos",
-            "iniciales": "HA",
-            "colorTexto": "#be123c",
-            "colorFondo": "#ffe4e6",
-            "destacada": true,
-            "rnt": "",
-            "rating": "4.9",
-            "etiquetaEstado": "✔ Anunciante Demo",
-            "salidaDesde": "Morelos, CDMX y Puebla",
-            "estadosSalida": [
-                "cdmx",
-                "puebla"
-            ],
-            "rangoPrecio": "$$$ • Bodas Destino y Banquetes",
-            "especialidad": "Bodas en jardín, coordinación integral y hospedaje",
-            "descripcion": "Jardines coloniales para bodas de 80 a 350 invitados con banquete, pista iluminada y suite nupcial incluida.",
-            "destinos": [
-                "pueblos-magicos",
-                "acapulco"
-            ],
-            "tags": [
-                "#BodasDestino",
-                "#JardínDeEventos",
-                "#Banquetes"
-            ],
-            "web": "https://example.com",
-            "whatsappNumero": "525500000000",
-            "ubicacionMaps": "Cuernavaca, Morelos, Mexico",
-            "galeria": [
-                "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80",
-                "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80",
-                "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=800&q=80"
-            ],
-            "amenidades": [
-                "🌿 Jardín Privado",
-                "🍽️ Banquete Incluido",
-                "🚗 Valet Parking"
-            ],
-            "cuponCodigo": "BODAARCOS",
-            "cuponBeneficio": "Prueba de menú para 4 personas + noche de bodas sin costo"
-        },
-        {
-            "id": "quinta-valle-verde",
-            "categoria": "hospedaje",
-            "categoriaNombre": "Quintas y Estancias",
-            "nombre": "Quinta Valle Verde & Spa",
-            "iniciales": "QV",
-            "colorTexto": "#047857",
-            "colorFondo": "#d1fae5",
-            "destacada": false,
-            "rnt": "",
-            "rating": "4.8",
-            "etiquetaEstado": "✔ Anunciante Demo",
-            "salidaDesde": "Querétaro, Bajío y CDMX",
-            "estadosSalida": [
-                "cdmx",
-                "bajio"
-            ],
-            "rangoPrecio": "$$ • Escapadas de Fin de Semana",
-            "especialidad": "Cabañas privadas, temazcal y viñedos",
-            "descripcion": "Renta de villas completas y cabañas boutique para grupos familiares o parejas cerca de la ruta del queso y el vino.",
-            "destinos": [
-                "pueblos-magicos"
-            ],
-            "tags": [
-                "#Cabañas",
-                "#EscapadaRomántica",
-                "#Bajío"
-            ],
-            "web": "",
-            "whatsappNumero": "525500000000",
-            "ubicacionMaps": "Tequisquiapan, Queretaro, Mexico",
-            "galeria": [
-                "https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=800&q=80",
-                "https://images.unsplash.com/photo-1587061949409-02df41d5e562?auto=format&fit=crop&w=800&q=80",
-                "https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?auto=format&fit=crop&w=800&q=80"
-            ],
-            "amenidades": [
-                "🐾 Pet Friendly",
-                "🔥 Fogatero y Asador",
-                "📶 Wi-Fi Alta Velocidad"
-            ],
-            "cuponCodigo": "",
-            "cuponBeneficio": ""
-        },
-        {
-            "id": "lumina-studio",
-            "categoria": "servicios",
-            "categoriaNombre": "Fotografía y Experiencias",
-            "nombre": "Lúmina Foto & Video Aéreo",
-            "iniciales": "LF",
-            "colorTexto": "#7c3aed",
-            "colorFondo": "#ede9fe",
-            "destacada": false,
-            "rnt": "",
-            "rating": "5.0",
-            "etiquetaEstado": "✔ Anunciante Demo",
-            "salidaDesde": "Todo México (Cobertura en Playa)",
-            "estadosSalida": [
-                "cdmx",
-                "monterrey",
-                "guadalajara",
-                "puebla",
-                "bajio"
-            ],
-            "rangoPrecio": "$$ • Cobertura por Evento",
-            "especialidad": "Sesiones en playa, bodas y dron 4K",
-            "descripcion": "Cobertura documental de bodas en playa, sesiones de pareja en Cancún y Los Cabos y producción con dron.",
-            "destinos": [
-                "cancun",
-                "loscabos",
-                "acapulco"
-            ],
-            "tags": [
-                "#FotografíaBodas",
-                "#Dron4K",
-                "#SesiónPlaya"
-            ],
-            "web": "https://example.com",
-            "whatsappNumero": "525500000000",
-            "ubicacionMaps": "",
-            "galeria": [
-                "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=800&q=80",
-                "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=800&q=80"
-            ],
-            "amenidades": [
-                "🚁 Dron 4K Incluido",
-                "📸 Entrega Digital",
-                "🇲🇽 Cobertura Nacional"
-            ],
-            "cuponCodigo": "",
-            "cuponBeneficio": ""
-        },
-        {
-            "id": "pacifico-escapes",
-            "categoria": "viajes",
-            "categoriaNombre": "Viajes y Turismo",
-            "nombre": "Pacífico Escapes",
-            "iniciales": "PE",
-            "colorTexto": "#ea580c",
-            "colorFondo": "#ffedd5",
-            "destacada": false,
-            "rnt": "",
-            "rating": "4.7",
-            "etiquetaEstado": "✔ Anunciante Demo",
-            "salidaDesde": "CDMX y Puebla",
-            "estadosSalida": [
-                "cdmx",
-                "puebla"
-            ],
-            "rangoPrecio": "$ • Económico / Grupal",
-            "especialidad": "Salidas en autobús y hotel",
-            "descripcion": "Salidas grupales y viajes familiares a Acapulco, Ixtapa y recorridos por Pueblos Mágicos del centro del país.",
-            "destinos": [
-                "acapulco",
-                "pueblos-magicos"
-            ],
-            "tags": [
-                "#Acapulco",
-                "#PueblosMágicos",
-                "#TodoPagado"
-            ],
-            "web": "https://example.com",
-            "whatsappNumero": "525500000000",
-            "ubicacionMaps": "",
-            "galeria": [
-                "https://images.unsplash.com/photo-1510097467424-192d713fd8b2?auto=format&fit=crop&w=800&q=80",
-                "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
-                "https://images.unsplash.com/photo-1512813195386-6cf811ad3542?auto=format&fit=crop&w=800&q=80"
-            ],
-            "amenidades": [
-                "💳 Meses sin Intereses",
-                "🚐 Traslados Aeropuerto",
-                "🛡️ Asistencia 24/7"
-            ],
-            "cuponCodigo": "",
-            "cuponBeneficio": ""
-        },
-        {
-            "salidaDesde": "CDMX, Morelos y Puebla",
-            "id": "banquetes-imperial-mx",
-            "etiquetaEstado": "✔ Proveedor Verificado",
-            "colorFondo": "#ffe4e6",
-            "amenidades": [
-                "🍽️ Degustación Previa",
-                "🥂 Descorche Libre",
-                "🎶 Audio e Iluminación"
-            ],
-            "destinos": [
-                "pueblos-magicos",
-                "acapulco"
-            ],
-            "iniciales": "BI",
-            "rnt": "",
-            "destacada": true,
-            "galeria": [
-                "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80",
-                "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80",
-                "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=800&q=80"
-            ],
-            "web": "https://www.google.com/search?q=banquetes+bodas+mexico",
-            "colorTexto": "#e11d48",
-            "categoria": "bodas",
-            "tags": [
-                "#BanquetesBoda",
-                "#Coordinacion",
-                "#EventosCDMX"
-            ],
-            "categoriaNombre": "Bodas y Eventos",
-            "rating": "4.9",
-            "ubicacionMaps": "Coyoacan, Ciudad de Mexico, CDMX",
-            "rangoPrecio": "ConvertFrom-Json$ • Desde  MXN por invitado",
-            "descripcion": "Más de 12 años diseñando bodas y eventos sociales con menú a 4 tiempos, cristalería fina, pista iluminada y capitán de meseros.",
-            "especialidad": "Banquetes gourmet, mobiliario de lujo y coordinación integral de bodas",
-            "whatsappNumero": "525512345601",
-            "nombre": "Banquetes & Eventos Imperial",
-            "estadosSalida": [
-                "cdmx",
-                "puebla"
-            ],
-            "cuponCodigo": "IMPERIAL26",
-            "cuponBeneficio": "1 hora extra de pista iluminada y DJ de cortesía"
-        },
-        {
-            "salidaDesde": "Cuernavaca, Tepoztlán y Acapulco",
-            "id": "wedding-planners-ensueno",
-            "etiquetaEstado": "✔ Especialista Destino",
-            "colorFondo": "#ffe4e6",
-            "amenidades": [
-                "📋 Cronograma Minuto a Minuto",
-                "💐 Diseño Floral",
-                "🏨 Tarifas Grupales"
-            ],
-            "destinos": [
-                "acapulco",
-                "pueblos-magicos",
-                "cancun"
-            ],
-            "iniciales": "EW",
-            "rnt": "",
-            "destacada": false,
-            "galeria": [
-                "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80",
-                "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&q=80"
-            ],
-            "web": "",
-            "colorTexto": "#e11d48",
-            "categoria": "bodas",
-            "tags": [
-                "#WeddingPlanner",
-                "#BodasDestino",
-                "#Tepoztlan"
-            ],
-            "categoriaNombre": "Bodas y Eventos",
-            "rating": "5.0",
-            "ubicacionMaps": "Tepoztlan, Morelos, Mexico",
-            "rangoPrecio": "ConvertFrom-Json • Planeación parcial o completa",
-            "descripcion": "Organizamos tu boda de principio a fin: búsqueda de hacienda, trámites civiles, hospedaje de invitados y logística el día del evento.",
-            "especialidad": "Bodas destino en jardines de Morelos y playas del Pacífico",
-            "whatsappNumero": "527771234502",
-            "nombre": "Ensueño Wedding Planners",
-            "estadosSalida": [
-                "cdmx",
-                "puebla"
-            ],
-            "cuponCodigo": "",
-            "cuponBeneficio": ""
-        },
-        {
-            "salidaDesde": "Guadalajara y Bajío",
-            "id": "botanica-diseno-floral",
-            "etiquetaEstado": "✔ Proveedor Verificado",
-            "colorFondo": "#d1fae5",
-            "amenidades": [
-                "🌸 Flor Natural Fresca",
-                "🕯️ Mobiliario Lounge",
-                "🚚 Montaje y Desmontaje"
-            ],
-            "destinos": [
-                "pueblos-magicos"
-            ],
-            "iniciales": "BA",
-            "rnt": "",
-            "destacada": false,
-            "galeria": [
-                "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=800&q=80",
-                "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80"
-            ],
-            "web": "",
-            "colorTexto": "#059669",
-            "categoria": "bodas",
-            "tags": [
-                "#FloresBoda",
-                "#Decoracion",
-                "#Guadalajara"
-            ],
-            "categoriaNombre": "Bodas y Eventos",
-            "rating": "4.8",
-            "ubicacionMaps": "Zapopan, Jalisco, Mexico",
-            "rangoPrecio": "ConvertFrom-Json • Paquetes florales personalizados",
-            "descripcion": "Creamos atmósferas inolvidables con flor natural de temporada, velas suspendidas y estructuras para ceremonias civiles o religiosas.",
-            "especialidad": "Arcos ceremoniales, centros de mesa y ambientación aérea",
-            "whatsappNumero": "523312345603",
-            "nombre": "Botánica Ambientación & Flores",
-            "estadosSalida": [
-                "guadalajara",
-                "bajio"
-            ],
-            "cuponCodigo": "",
-            "cuponBeneficio": ""
-        },
-        {
-            "salidaDesde": "Cobertura Nacional (CDMX, Cancún y Los Cabos)",
-            "id": "lente-eterno-estudio",
-            "etiquetaEstado": "✔ Estudio Certificado",
-            "colorFondo": "#e0f2fe",
-            "amenidades": [
-                "🚁 Dron 4K Incluido",
-                "📸 Entrega en 15 Días",
-                "📖 Photobook de Lujo"
-            ],
-            "destinos": [
-                "cancun",
-                "loscabos",
-                "acapulco",
-                "pueblos-magicos"
-            ],
-            "iniciales": "LE",
-            "rnt": "",
-            "destacada": true,
-            "galeria": [
-                "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=800&q=80",
-                "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=800&q=80"
-            ],
-            "web": "https://www.google.com/search?q=fotografia+bodas+mexico",
-            "colorTexto": "#0284c7",
-            "categoria": "servicios",
-            "tags": [
-                "#FotografiaBoda",
-                "#Video4K",
-                "#Dron"
-            ],
-            "categoriaNombre": "Fotografía y Experiencias",
-            "rating": "5.0",
-            "ubicacionMaps": "Roma Norte, Ciudad de Mexico, CDMX",
-            "rangoPrecio": "ConvertFrom-Json • Cobertura desde ,500 MXN",
-            "descripcion": "Capturamos emociones reales sin poses forzadas. Incluye sesión Save the Date, galería privada en alta resolución y photobook impreso.",
-            "especialidad": "Fotografía documental de bodas, video cinematográfico 4K y tomas aéreas",
-            "whatsappNumero": "525512345604",
-            "nombre": "Lente Eterno Fotografía & Dron",
-            "estadosSalida": [
-                "cdmx",
-                "monterrey",
-                "guadalajara",
-                "puebla",
-                "bajio"
-            ],
-            "cuponCodigo": "LENTE15",
-            "cuponBeneficio": "15% de descuento en cobertura completa + sesión Save the Date"
-        },
-        {
-            "salidaDesde": "CDMX y Valle de Teotihuacán",
-            "id": "teotihuacan-sky-globos",
-            "etiquetaEstado": "✔ Operador Certificado",
-            "colorFondo": "#ffedd5",
-            "amenidades": [
-                "🥂 Brindis y Desayuno",
-                "🛡️ Seguro de Viajero",
-                "💍 Lona Pedida de Mano"
-            ],
-            "destinos": [
-                "pueblos-magicos"
-            ],
-            "iniciales": "TS",
-            "rnt": "04150220019",
-            "destacada": true,
-            "galeria": [
-                "https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?auto=format&fit=crop&w=800&q=80",
-                "https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?auto=format&fit=crop&w=800&q=80"
-            ],
-            "web": "",
-            "colorTexto": "#ea580c",
-            "categoria": "servicios",
-            "tags": [
-                "#VueloEnGlobo",
-                "#Teotihuacan",
-                "#PedidaDeMano"
-            ],
-            "categoriaNombre": "Fotografía y Experiencias",
-            "rating": "4.9",
-            "ubicacionMaps": "San Martin de las Piramides, Estado de Mexico",
-            "rangoPrecio": "ConvertFrom-Json • Desde ,490 MXN por persona",
-            "descripcion": "Sobrevuela las pirámides al amanecer con pilotos certificados por AFAC, brindis con vino espumoso, certificado de vuelo y desayuno buffet.",
-            "especialidad": "Vuelos compartidos, vuelos privados para pedidas de mano y aniversario",
-            "whatsappNumero": "525512345605",
-            "nombre": "Teotihuacán Sky Vuelos en Globo",
-            "estadosSalida": [
-                "cdmx",
-                "puebla",
-                "bajio"
-            ],
-            "cuponCodigo": "SKYAMOR",
-            "cuponBeneficio": "Botella de vino espumoso extra y fotografías digitales"
-        },
-        {
-            "salidaDesde": "Querétaro, Bajío y CDMX",
-            "id": "ruta-vinedos-queretaro",
-            "etiquetaEstado": "✔ Experiencia Verificada",
-            "colorFondo": "#ede9fe",
-            "amenidades": [
-                "🍷 3 Catas Incluidas",
-                "🚐 Transporte Redondo",
-                "🧀 Maridaje Artesanal"
-            ],
-            "destinos": [
-                "pueblos-magicos"
-            ],
-            "iniciales": "RV",
-            "rnt": "",
-            "destacada": false,
-            "galeria": [
-                "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=800&q=80",
-                "https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=800&q=80"
-            ],
-            "web": "",
-            "colorTexto": "#7c3aed",
-            "categoria": "servicios",
-            "tags": [
-                "#Vinedos",
-                "#Enoturismo",
-                "#PenaDeBernal"
-            ],
-            "categoriaNombre": "Fotografía y Experiencias",
-            "rating": "4.8",
-            "ubicacionMaps": "Ezequiel Montes, Queretaro, Mexico",
-            "rangoPrecio": "$ • Tours desde ,190 MXN",
-            "descripcion": "Tours privados y grupales por los mejores viñedos de Ezequiel Montes y Peña de Bernal con degustación de vinos y tabla de quesos artesanales.",
-            "especialidad": "Recorridos por viñedos, catas guiadas, cavas subterráneas y despedidas",
-            "whatsappNumero": "524421234506",
-            "nombre": "Ruta del Arte, Queso y Vino",
-            "estadosSalida": [
-                "bajio",
-                "cdmx"
-            ],
-            "cuponCodigo": "",
-            "cuponBeneficio": ""
-        }
-    ],
-    "ofertas": [
-        {
-            "esReferenciaReal": true,
-            "categoria": "viajes",
-            "agencia": "Mundo Joven • Ejemplo Real",
-            "titulo": "Tours y Circuitos por México",
-            "detalle": "Consulta salidas vigentes, circuitos culturales y paquetes en su portal oficial.",
-            "precio": "Ver tarifas oficiales",
-            "etiqueta": "Sitio Oficial",
-            "imagen": "https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?auto=format&fit=crop&w=600&q=80",
-            "whatsappNumero": "",
-            "web": "https://mundojoven.com/",
-            "textoBoton": "Visitar Sitio Oficial"
-        },
-        {
-            "esReferenciaReal": false,
-            "categoria": "bodas",
-            "agencia": "Espacio Patrocinado • Bodas y Eventos",
-            "titulo": "Anuncia aquí tu Jardín, Banquete o Wedding Planner",
-            "detalle": "Conecta con parejas buscando locaciones en playa, haciendas y proveedores de eventos.",
-            "precio": "Disponible",
-            "etiqueta": "Nuevo Sector",
-            "imagen": "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80",
-            "whatsappNumero": "",
-            "web": "pages/anunciate.html",
-            "textoBoton": "Publicar mi Servicio"
-        },
-        {
-            "esReferenciaReal": false,
-            "categoria": "viajes",
-            "agencia": "Espacio Patrocinado • Viajes y Estancias",
-            "titulo": "Destaca tus paquetes de Playa o Cabañas",
-            "detalle": "Recibe solicitudes directas en tu WhatsApp de ventas sin pagar comisiones por reserva.",
-            "precio": "Disponible",
-            "etiqueta": "Espacio Publicitario",
-            "imagen": "https://images.unsplash.com/photo-1510097467424-192d713fd8b2?auto=format&fit=crop&w=600&q=80",
-            "whatsappNumero": "",
-            "web": "pages/anunciate.html",
-            "textoBoton": "Apartar este Espacio"
-        },
-        {
-            "etiqueta": "💍 Promo Bodas 2026",
-            "web": "",
-            "detalle": "Menú 4 tiempos + mobiliario + DJ + pista iluminada + prueba de menú sin costo",
-            "titulo": "Paquete Boda Todo Incluido (100 Invitados)",
-            "agencia": "Banquetes & Eventos Imperial",
-            "categoria": "bodas",
-            "precio": ",900 MXN",
-            "esReferenciaReal": true,
-            "textoBoton": "💬 Cotizar Boda",
-            "whatsappNumero": "525512345601",
-            "imagen": "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80"
-        },
-        {
-            "etiqueta": "🎈 Experiencia Top",
-            "web": "",
-            "detalle": "Canastilla exclusiva para 2 personas + brindis + desayuno buffet + fotos",
-            "titulo": "Vuelo Privado Romántico + Lona Pedida de Mano",
-            "agencia": "Teotihuacán Sky Vuelos en Globo",
-            "categoria": "servicios",
-            "precio": ",800 MXN Pareja",
-            "esReferenciaReal": true,
-            "textoBoton": "💬 Reservar Fecha",
-            "whatsappNumero": "525512345605",
-            "imagen": "https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?auto=format&fit=crop&w=600&q=80"
-        },
-        {
-            "etiqueta": "📸 15% Descuento",
-            "web": "",
-            "detalle": "8 horas de foto y video 4K + tomas con dron + galería digital ilimitada",
-            "titulo": "Cobertura Boda Completa + Sesión Save the Date",
-            "agencia": "Lente Eterno Fotografía & Dron",
-            "categoria": "servicios",
-            "precio": ",500 MXN",
-            "esReferenciaReal": true,
-            "textoBoton": "💬 Consultar Disponibilidad",
-            "whatsappNumero": "525512345604",
-            "imagen": "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=600&q=80"
-        }
-    ],
-    "faq": [
-        {
-            "respuesta": "No. Somos un directorio publicitario gratuito para el usuario. Todos los botones te comunican directamente al WhatsApp o sitio web oficial del anunciante sin cargos extra ni intermediarios.",
-            "pregunta": "¿Directorio Viajero cobra alguna comisión por cotizar o reservar?"
-        },
-        {
-            "respuesta": "Revisamos que los anunciantes cuenten con canales oficiales activos, sitio web o redes comprobables y, en el caso de agencias turísticas en México, destacamos con insignia especial a quienes acreditan su folio del Registro Nacional de Turismo (RNT).",
-            "pregunta": "¿Cómo verifican a las agencias de viajes y proveedores?"
-        },
-        {
-            "respuesta": "Sí. Usa el botón 'Comparar' en hasta 3 tarjetas para abrir nuestra tabla comparativa lado a lado y enviar tu fecha y número de personas a cada proveedor con un clic.",
-            "pregunta": "¿Puedo pedir cotización a varias opciones al mismo tiempo?"
-        },
-        {
-            "respuesta": "Haz clic en el botón superior 'Anúnciate Aquí', completa tu ficha con vista previa en vivo y envíala. Durante la etapa de lanzamiento contamos con lugares destacados sin costo por 3 meses.",
-            "pregunta": "¿Cómo registro mi agencia, jardín de bodas o servicio?"
-        }
-    ],
-    "guias": [
-        {
-            "tiempoLectura": "3 min de lectura",
-            "resumen": "Aprende a validar en segundos si una agencia está registrada formalmente ante SECTUR y evita fraudes en paquetes vacacionales.",
-            "categoriaLabel": "✈️ Seguridad al Viajar",
-            "imagen": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
-            "categoria": "viajes",
-            "id": "verificar-rnt-mexico",
-            "contenido": "Antes de realizar cualquier anticipo para tus vacaciones, solicita a la agencia su constancia del Registro Nacional de Turismo (RNT). Este folio oficial emitido por la Secretaría de Turismo acredita que el prestador cuenta con domicilio fiscal comprobable y operación formal en México. Además, verifica que el nombre comercial coincida con la razón social de la cuenta bancaria y desconfía de descuentos extremos que exigen pago inmediato sin contrato de adhesión.",
-            "titulo": "Cómo verificar el folio RNT de una agencia de viajes en México antes de transferir"
-        },
-        {
-            "tiempoLectura": "4 min de lectura",
-            "resumen": "Desde horas extra de música hasta planta de luz y descorche: lo que debes confirmar por escrito en tu contrato.",
-            "categoriaLabel": "💍 Bodas y Eventos",
-            "imagen": "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80",
-            "categoria": "bodas",
-            "id": "checklist-jardin-bodas",
-            "contenido": "Al visitar haciendas o jardines para eventos en destinos como Morelos, Querétaro o playa, pregunta siempre por: 1) Horario límite de sonido permitido por el municipio, 2) Si incluye planta de emergencia eléctrica, 3) Costo por hora adicional de renta, 4) Políticas de lluvia o carpa de respaldo, 5) Si permiten proveedores externos de banquete o fotografía sin penalización, 6) Estacionamiento o valet parking y 7) Hospedaje incluido para los novios.",
-            "titulo": "7 puntos clave que debes revisar antes de apartar un jardín o hacienda para boda"
-        },
-        {
-            "tiempoLectura": "3 min de lectura",
-            "resumen": "Conoce las ventanas de temporada baja donde los vuelos charter y resorts ofrecen hasta 35% de ahorro.",
-            "categoriaLabel": "🌴 Consejos de Destino",
-            "imagen": "https://images.unsplash.com/photo-1510097467424-192d713fd8b2?auto=format&fit=crop&w=800&q=80",
-            "categoria": "viajes",
-            "id": "temporadas-baratas-caribe",
-            "contenido": "Si tienes flexibilidad de fechas, las mejores tarifas en playas mexicanas suelen encontrarse entre mayo y mediados de junio, así como de septiembre a noviembre (evitando puentes festivos). Durante estas semanas las aerolíneas y agencias mayoristas lanzan bloqueos charter con menores incluidos gratis o meses sin intereses. Compara al menos 3 agencias en nuestro directorio para cotizar el mismo hotel y fecha.",
-            "titulo": "Mejores meses para encontrar paquetes todo incluido económicos en Cancún y Los Cabos"
-        },
-        {
-            "tiempoLectura": "3 min de lectura",
-            "resumen": "Asegura los tiempos de entrega, respaldo de archivos en alta resolución y permisos de vuelo de dron antes de firmar.",
-            "categoriaLabel": "📸 Fotografía y Video",
-            "imagen": "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=800&q=80",
-            "categoria": "servicios",
-            "id": "como-contratar-fotografo-bodas",
-            "contenido": "Al elegir estudio de fotografía y video para bodas o eventos sociales, confirma siempre: 1) Tiempo máximo de entrega de la galería completa por contrato, 2) Si entregan todas las fotografías editadas en alta resolución sin marcas de agua, 3) Si el jardín o hacienda permite el vuelo de dron y si el piloto cuenta con licencia vigente, 4) Equipo de respaldo (doble cámara y tarjetas duales) el día del evento y 5) Si incluye sesión previa (Save the Date) para romper el hielo antes de la boda.",
-            "titulo": "5 preguntas clave antes de contratar fotógrafo y video con dron para tu evento"
-        }
-    ]
+    "opiniones":  [
+                      {
+                          "iniciales":  "MR",
+                          "detalle":  "Viajó a Cancún • CDMX",
+                          "nombre":  "Mariana Ríos",
+                          "texto":  "Me gustó que te manda directo al WhatsApp de la agencia sin pedirte tarjeta ni cobrarte comisiones raras. Cotizamos un paquete a Cancún en 10 minutos."
+                      },
+                      {
+                          "iniciales":  "CG",
+                          "detalle":  "Viajó a Acapulco • Estado de México",
+                          "nombre":  "Carlos Gómez",
+                          "texto":  "Estábamos buscando salidas grupales de fin de semana para Acapulco y aquí pudimos comparar tres opciones rápido y guardar nuestras favoritas."
+                      },
+                      {
+                          "iniciales":  "AL",
+                          "detalle":  "Tour Pueblos Mágicos • Puebla",
+                          "nombre":  "Andrea López",
+                          "texto":  "Muy práctico tener todas las agencias ordenadas por destino. Encontramos un tour a Pueblos Mágicos con salida desde Puebla."
+                      },
+                      {
+                          "iniciales":  "SF",
+                          "detalle":  "Boda en Tepoztlán • CDMX",
+                          "nombre":  "Sofía \u0026 Fernando",
+                          "texto":  "Comparamos tres opciones de jardines y banquetes en un solo lugar y cotizamos directo por WhatsApp sin intermediarios. Nos ahorramos muchísimo tiempo."
+                      },
+                      {
+                          "iniciales":  "DM",
+                          "detalle":  "Vuelo en Globo • Estado de México",
+                          "nombre":  "Diego Martínez",
+                          "texto":  "Contraté el vuelo privado en Teotihuacán para mi aniversario usando el cotizador rápido y me confirmaron disponibilidad en menos de 15 minutos."
+                      }
+                  ],
+    "anunciantes":  [
+                        {
+                            "id":  "caribe-tours",
+                            "categoria":  "viajes",
+                            "categoriaNombre":  "Viajes y Turismo",
+                            "nombre":  "Caribe Tours \u0026 Travel",
+                            "iniciales":  "CT",
+                            "colorTexto":  "#0284c7",
+                            "colorFondo":  "#e0f2fe",
+                            "destacada":  true,
+                            "rnt":  "",
+                            "rating":  "4.9",
+                            "etiquetaEstado":  "✔ Anunciante Demo",
+                            "salidaDesde":  "CDMX y Área Metropolitana",
+                            "estadosSalida":  [
+                                                  "cdmx"
+                                              ],
+                            "rangoPrecio":  "$$ • Paquetes Todo Incluido",
+                            "especialidad":  "Vuelos charter y resorts familiares",
+                            "descripcion":  "Especialistas en paquetes todo incluido hacia el Caribe Mexicano, Los Cabos y vuelos charter desde CDMX.",
+                            "destinos":  [
+                                             "cancun",
+                                             "loscabos"
+                                         ],
+                            "tags":  [
+                                         "#Cancún",
+                                         "#RivieraMaya",
+                                         "#LosCabos"
+                                     ],
+                            "web":  "https://example.com",
+                            "whatsappNumero":  "525500000000",
+                            "ubicacionMaps":  "Polanco, Ciudad de Mexico",
+                            "galeria":  [
+                                            "https://images.unsplash.com/photo-1510097467424-192d713fd8b2?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                                            "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                                            "https://images.unsplash.com/photo-1512813195386-6cf811ad3542?auto=format\u0026fit=crop\u0026w=800\u0026q=80"
+                                        ],
+                            "amenidades":  [
+                                               "💳 Meses sin Intereses",
+                                               "🚐 Traslados Aeropuerto",
+                                               "🛡️ Asistencia 24/7"
+                                           ],
+                            "cuponCodigo":  "VIAJERO10",
+                            "cuponBeneficio":  "10% de descuento en paquetes todo incluido a Cancún"
+                        },
+                        {
+                            "id":  "best-day",
+                            "categoria":  "viajes",
+                            "categoriaNombre":  "Viajes y Turismo",
+                            "nombre":  "Best Day",
+                            "iniciales":  "BD",
+                            "colorTexto":  "#0284c7",
+                            "colorFondo":  "#e0f2fe",
+                            "destacada":  true,
+                            "rnt":  "",
+                            "rating":  "4.8",
+                            "etiquetaEstado":  "✔ Sitio Oficial (Referencia)",
+                            "salidaDesde":  "Todo México (CDMX, MTY, GDL)",
+                            "estadosSalida":  [
+                                                  "cdmx",
+                                                  "monterrey",
+                                                  "guadalajara",
+                                                  "puebla",
+                                                  "bajio"
+                                              ],
+                            "rangoPrecio":  "$$ - $$$ • Flexible",
+                            "especialidad":  "Hoteles, vuelos y paquetes nacionales",
+                            "descripcion":  "Agencia líder en México para reservar hoteles, vuelos, tours y paquetes todo incluido en playas nacionales.",
+                            "destinos":  [
+                                             "cancun",
+                                             "acapulco",
+                                             "loscabos"
+                                         ],
+                            "tags":  [
+                                         "#Cancún",
+                                         "#Acapulco",
+                                         "#LosCabos"
+                                     ],
+                            "web":  "https://www.bestday.com.mx/",
+                            "whatsappNumero":  "",
+                            "ubicacionMaps":  "",
+                            "galeria":  [
+                                            "https://images.unsplash.com/photo-1510097467424-192d713fd8b2?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                                            "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                                            "https://images.unsplash.com/photo-1512813195386-6cf811ad3542?auto=format\u0026fit=crop\u0026w=800\u0026q=80"
+                                        ],
+                            "amenidades":  [
+                                               "💳 Meses sin Intereses",
+                                               "🚐 Traslados Aeropuerto",
+                                               "🛡️ Asistencia 24/7"
+                                           ],
+                            "cuponCodigo":  "",
+                            "cuponBeneficio":  ""
+                        },
+                        {
+                            "id":  "mundo-joven",
+                            "categoria":  "viajes",
+                            "categoriaNombre":  "Viajes y Turismo",
+                            "nombre":  "Mundo Joven",
+                            "iniciales":  "MJ",
+                            "colorTexto":  "#dc2626",
+                            "colorFondo":  "#fee2e2",
+                            "destacada":  true,
+                            "rnt":  "",
+                            "rating":  "4.8",
+                            "etiquetaEstado":  "✔ Sitio Oficial (Referencia)",
+                            "salidaDesde":  "Todo México (CDMX, GDL, MTY, Puebla)",
+                            "estadosSalida":  [
+                                                  "cdmx",
+                                                  "guadalajara",
+                                                  "monterrey",
+                                                  "puebla"
+                                              ],
+                            "rangoPrecio":  "$$ • Experiencias y Circuitos",
+                            "especialidad":  "Tours culturales y viajes a la medida",
+                            "descripcion":  "Expertos en experiencias de viaje, tours guiados por México, circuitos culturales y paquetes a la medida.",
+                            "destinos":  [
+                                             "cancun",
+                                             "pueblos-magicos"
+                                         ],
+                            "tags":  [
+                                         "#PueblosMágicos",
+                                         "#Cancún",
+                                         "#Tours"
+                                     ],
+                            "web":  "https://mundojoven.com/",
+                            "whatsappNumero":  "525554828282",
+                            "ubicacionMaps":  "Ciudad de Mexico, CDMX",
+                            "galeria":  [
+                                            "https://images.unsplash.com/photo-1510097467424-192d713fd8b2?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                                            "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                                            "https://images.unsplash.com/photo-1512813195386-6cf811ad3542?auto=format\u0026fit=crop\u0026w=800\u0026q=80"
+                                        ],
+                            "amenidades":  [
+                                               "💳 Meses sin Intereses",
+                                               "🚐 Traslados Aeropuerto",
+                                               "🛡️ Asistencia 24/7"
+                                           ],
+                            "cuponCodigo":  "MJDIRECTO",
+                            "cuponBeneficio":  "Traslado aeropuerto-hotel gratis en reservas de 4+ noches"
+                        },
+                        {
+                            "id":  "hacienda-los-arcos",
+                            "categoria":  "bodas",
+                            "categoriaNombre":  "Bodas y Eventos",
+                            "nombre":  "Hacienda \u0026 Jardín Los Arcos",
+                            "iniciales":  "HA",
+                            "colorTexto":  "#be123c",
+                            "colorFondo":  "#ffe4e6",
+                            "destacada":  true,
+                            "rnt":  "",
+                            "rating":  "4.9",
+                            "etiquetaEstado":  "✔ Anunciante Demo",
+                            "salidaDesde":  "Morelos, CDMX y Puebla",
+                            "estadosSalida":  [
+                                                  "cdmx",
+                                                  "puebla"
+                                              ],
+                            "rangoPrecio":  "$$$ • Bodas Destino y Banquetes",
+                            "especialidad":  "Bodas en jardín, coordinación integral y hospedaje",
+                            "descripcion":  "Jardines coloniales para bodas de 80 a 350 invitados con banquete, pista iluminada y suite nupcial incluida.",
+                            "destinos":  [
+                                             "pueblos-magicos",
+                                             "acapulco"
+                                         ],
+                            "tags":  [
+                                         "#BodasDestino",
+                                         "#JardínDeEventos",
+                                         "#Banquetes"
+                                     ],
+                            "web":  "https://example.com",
+                            "whatsappNumero":  "525500000000",
+                            "ubicacionMaps":  "Cuernavaca, Morelos, Mexico",
+                            "galeria":  [
+                                            "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                                            "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                                            "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format\u0026fit=crop\u0026w=800\u0026q=80"
+                                        ],
+                            "amenidades":  [
+                                               "🌿 Jardín Privado",
+                                               "🍽️ Banquete Incluido",
+                                               "🚗 Valet Parking"
+                                           ],
+                            "cuponCodigo":  "BODAARCOS",
+                            "cuponBeneficio":  "Prueba de menú para 4 personas + noche de bodas sin costo"
+                        },
+                        {
+                            "id":  "quinta-valle-verde",
+                            "categoria":  "hospedaje",
+                            "categoriaNombre":  "Quintas y Estancias",
+                            "nombre":  "Quinta Valle Verde \u0026 Spa",
+                            "iniciales":  "QV",
+                            "colorTexto":  "#047857",
+                            "colorFondo":  "#d1fae5",
+                            "destacada":  false,
+                            "rnt":  "",
+                            "rating":  "4.8",
+                            "etiquetaEstado":  "✔ Anunciante Demo",
+                            "salidaDesde":  "Querétaro, Bajío y CDMX",
+                            "estadosSalida":  [
+                                                  "cdmx",
+                                                  "bajio"
+                                              ],
+                            "rangoPrecio":  "$$ • Escapadas de Fin de Semana",
+                            "especialidad":  "Cabañas privadas, temazcal y viñedos",
+                            "descripcion":  "Renta de villas completas y cabañas boutique para grupos familiares o parejas cerca de la ruta del queso y el vino.",
+                            "destinos":  [
+                                             "pueblos-magicos"
+                                         ],
+                            "tags":  [
+                                         "#Cabañas",
+                                         "#EscapadaRomántica",
+                                         "#Bajío"
+                                     ],
+                            "web":  "",
+                            "whatsappNumero":  "525500000000",
+                            "ubicacionMaps":  "Tequisquiapan, Queretaro, Mexico",
+                            "galeria":  [
+                                            "https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                                            "https://images.unsplash.com/photo-1587061949409-02df41d5e562?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                                            "https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?auto=format\u0026fit=crop\u0026w=800\u0026q=80"
+                                        ],
+                            "amenidades":  [
+                                               "🐾 Pet Friendly",
+                                               "🔥 Fogatero y Asador",
+                                               "📶 Wi-Fi Alta Velocidad"
+                                           ],
+                            "cuponCodigo":  "",
+                            "cuponBeneficio":  ""
+                        },
+                        {
+                            "id":  "lumina-studio",
+                            "categoria":  "servicios",
+                            "categoriaNombre":  "Fotografía y Experiencias",
+                            "nombre":  "Lúmina Foto \u0026 Video Aéreo",
+                            "iniciales":  "LF",
+                            "colorTexto":  "#7c3aed",
+                            "colorFondo":  "#ede9fe",
+                            "destacada":  false,
+                            "rnt":  "",
+                            "rating":  "5.0",
+                            "etiquetaEstado":  "✔ Anunciante Demo",
+                            "salidaDesde":  "Todo México (Cobertura en Playa)",
+                            "estadosSalida":  [
+                                                  "cdmx",
+                                                  "monterrey",
+                                                  "guadalajara",
+                                                  "puebla",
+                                                  "bajio"
+                                              ],
+                            "rangoPrecio":  "$$ • Cobertura por Evento",
+                            "especialidad":  "Sesiones en playa, bodas y dron 4K",
+                            "descripcion":  "Cobertura documental de bodas en playa, sesiones de pareja en Cancún y Los Cabos y producción con dron.",
+                            "destinos":  [
+                                             "cancun",
+                                             "loscabos",
+                                             "acapulco"
+                                         ],
+                            "tags":  [
+                                         "#FotografíaBodas",
+                                         "#Dron4K",
+                                         "#SesiónPlaya"
+                                     ],
+                            "web":  "https://example.com",
+                            "whatsappNumero":  "525500000000",
+                            "ubicacionMaps":  "",
+                            "galeria":  [
+                                            "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                                            "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format\u0026fit=crop\u0026w=800\u0026q=80"
+                                        ],
+                            "amenidades":  [
+                                               "🚁 Dron 4K Incluido",
+                                               "📸 Entrega Digital",
+                                               "🇲🇽 Cobertura Nacional"
+                                           ],
+                            "cuponCodigo":  "",
+                            "cuponBeneficio":  ""
+                        },
+                        {
+                            "id":  "pacifico-escapes",
+                            "categoria":  "viajes",
+                            "categoriaNombre":  "Viajes y Turismo",
+                            "nombre":  "Pacífico Escapes",
+                            "iniciales":  "PE",
+                            "colorTexto":  "#ea580c",
+                            "colorFondo":  "#ffedd5",
+                            "destacada":  false,
+                            "rnt":  "",
+                            "rating":  "4.7",
+                            "etiquetaEstado":  "✔ Anunciante Demo",
+                            "salidaDesde":  "CDMX y Puebla",
+                            "estadosSalida":  [
+                                                  "cdmx",
+                                                  "puebla"
+                                              ],
+                            "rangoPrecio":  "$ • Económico / Grupal",
+                            "especialidad":  "Salidas en autobús y hotel",
+                            "descripcion":  "Salidas grupales y viajes familiares a Acapulco, Ixtapa y recorridos por Pueblos Mágicos del centro del país.",
+                            "destinos":  [
+                                             "acapulco",
+                                             "pueblos-magicos"
+                                         ],
+                            "tags":  [
+                                         "#Acapulco",
+                                         "#PueblosMágicos",
+                                         "#TodoPagado"
+                                     ],
+                            "web":  "https://example.com",
+                            "whatsappNumero":  "525500000000",
+                            "ubicacionMaps":  "",
+                            "galeria":  [
+                                            "https://images.unsplash.com/photo-1510097467424-192d713fd8b2?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                                            "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                                            "https://images.unsplash.com/photo-1512813195386-6cf811ad3542?auto=format\u0026fit=crop\u0026w=800\u0026q=80"
+                                        ],
+                            "amenidades":  [
+                                               "💳 Meses sin Intereses",
+                                               "🚐 Traslados Aeropuerto",
+                                               "🛡️ Asistencia 24/7"
+                                           ],
+                            "cuponCodigo":  "",
+                            "cuponBeneficio":  ""
+                        },
+                        {
+                            "salidaDesde":  "CDMX, Morelos y Puebla",
+                            "id":  "banquetes-imperial-mx",
+                            "etiquetaEstado":  "✔ Proveedor Verificado",
+                            "colorFondo":  "#ffe4e6",
+                            "amenidades":  [
+                                               "🍽️ Degustación Previa",
+                                               "🥂 Descorche Libre",
+                                               "🎶 Audio e Iluminación"
+                                           ],
+                            "destinos":  [
+                                             "pueblos-magicos",
+                                             "acapulco"
+                                         ],
+                            "iniciales":  "BI",
+                            "rnt":  "",
+                            "destacada":  true,
+                            "galeria":  [
+                                            "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                                            "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                                            "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format\u0026fit=crop\u0026w=800\u0026q=80"
+                                        ],
+                            "web":  "https://www.google.com/search?q=banquetes+bodas+mexico",
+                            "colorTexto":  "#e11d48",
+                            "categoria":  "bodas",
+                            "tags":  [
+                                         "#BanquetesBoda",
+                                         "#Coordinacion",
+                                         "#EventosCDMX"
+                                     ],
+                            "categoriaNombre":  "Bodas y Eventos",
+                            "rating":  "4.9",
+                            "ubicacionMaps":  "Coyoacan, Ciudad de Mexico, CDMX",
+                            "rangoPrecio":  "ConvertFrom-Json$ • Desde  MXN por invitado",
+                            "descripcion":  "Más de 12 años diseñando bodas y eventos sociales con menú a 4 tiempos, cristalería fina, pista iluminada y capitán de meseros.",
+                            "especialidad":  "Banquetes gourmet, mobiliario de lujo y coordinación integral de bodas",
+                            "whatsappNumero":  "525512345601",
+                            "nombre":  "Banquetes \u0026 Eventos Imperial",
+                            "estadosSalida":  [
+                                                  "cdmx",
+                                                  "puebla"
+                                              ],
+                            "cuponCodigo":  "IMPERIAL26",
+                            "cuponBeneficio":  "1 hora extra de pista iluminada y DJ de cortesía"
+                        },
+                        {
+                            "salidaDesde":  "Cuernavaca, Tepoztlán y Acapulco",
+                            "id":  "wedding-planners-ensueno",
+                            "etiquetaEstado":  "✔ Especialista Destino",
+                            "colorFondo":  "#ffe4e6",
+                            "amenidades":  [
+                                               "📋 Cronograma Minuto a Minuto",
+                                               "💐 Diseño Floral",
+                                               "🏨 Tarifas Grupales"
+                                           ],
+                            "destinos":  [
+                                             "acapulco",
+                                             "pueblos-magicos",
+                                             "cancun"
+                                         ],
+                            "iniciales":  "EW",
+                            "rnt":  "",
+                            "destacada":  false,
+                            "galeria":  [
+                                            "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                                            "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format\u0026fit=crop\u0026w=800\u0026q=80"
+                                        ],
+                            "web":  "",
+                            "colorTexto":  "#e11d48",
+                            "categoria":  "bodas",
+                            "tags":  [
+                                         "#WeddingPlanner",
+                                         "#BodasDestino",
+                                         "#Tepoztlan"
+                                     ],
+                            "categoriaNombre":  "Bodas y Eventos",
+                            "rating":  "5.0",
+                            "ubicacionMaps":  "Tepoztlan, Morelos, Mexico",
+                            "rangoPrecio":  "ConvertFrom-Json • Planeación parcial o completa",
+                            "descripcion":  "Organizamos tu boda de principio a fin: búsqueda de hacienda, trámites civiles, hospedaje de invitados y logística el día del evento.",
+                            "especialidad":  "Bodas destino en jardines de Morelos y playas del Pacífico",
+                            "whatsappNumero":  "527771234502",
+                            "nombre":  "Ensueño Wedding Planners",
+                            "estadosSalida":  [
+                                                  "cdmx",
+                                                  "puebla"
+                                              ],
+                            "cuponCodigo":  "",
+                            "cuponBeneficio":  ""
+                        },
+                        {
+                            "salidaDesde":  "Guadalajara y Bajío",
+                            "id":  "botanica-diseno-floral",
+                            "etiquetaEstado":  "✔ Proveedor Verificado",
+                            "colorFondo":  "#d1fae5",
+                            "amenidades":  [
+                                               "🌸 Flor Natural Fresca",
+                                               "🕯️ Mobiliario Lounge",
+                                               "🚚 Montaje y Desmontaje"
+                                           ],
+                            "destinos":  [
+                                             "pueblos-magicos"
+                                         ],
+                            "iniciales":  "BA",
+                            "rnt":  "",
+                            "destacada":  false,
+                            "galeria":  [
+                                            "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                                            "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format\u0026fit=crop\u0026w=800\u0026q=80"
+                                        ],
+                            "web":  "",
+                            "colorTexto":  "#059669",
+                            "categoria":  "bodas",
+                            "tags":  [
+                                         "#FloresBoda",
+                                         "#Decoracion",
+                                         "#Guadalajara"
+                                     ],
+                            "categoriaNombre":  "Bodas y Eventos",
+                            "rating":  "4.8",
+                            "ubicacionMaps":  "Zapopan, Jalisco, Mexico",
+                            "rangoPrecio":  "ConvertFrom-Json • Paquetes florales personalizados",
+                            "descripcion":  "Creamos atmósferas inolvidables con flor natural de temporada, velas suspendidas y estructuras para ceremonias civiles o religiosas.",
+                            "especialidad":  "Arcos ceremoniales, centros de mesa y ambientación aérea",
+                            "whatsappNumero":  "523312345603",
+                            "nombre":  "Botánica Ambientación \u0026 Flores",
+                            "estadosSalida":  [
+                                                  "guadalajara",
+                                                  "bajio"
+                                              ],
+                            "cuponCodigo":  "",
+                            "cuponBeneficio":  ""
+                        },
+                        {
+                            "salidaDesde":  "Cobertura Nacional (CDMX, Cancún y Los Cabos)",
+                            "id":  "lente-eterno-estudio",
+                            "etiquetaEstado":  "✔ Estudio Certificado",
+                            "colorFondo":  "#e0f2fe",
+                            "amenidades":  [
+                                               "🚁 Dron 4K Incluido",
+                                               "📸 Entrega en 15 Días",
+                                               "📖 Photobook de Lujo"
+                                           ],
+                            "destinos":  [
+                                             "cancun",
+                                             "loscabos",
+                                             "acapulco",
+                                             "pueblos-magicos"
+                                         ],
+                            "iniciales":  "LE",
+                            "rnt":  "",
+                            "destacada":  true,
+                            "galeria":  [
+                                            "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                                            "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format\u0026fit=crop\u0026w=800\u0026q=80"
+                                        ],
+                            "web":  "https://www.google.com/search?q=fotografia+bodas+mexico",
+                            "colorTexto":  "#0284c7",
+                            "categoria":  "servicios",
+                            "tags":  [
+                                         "#FotografiaBoda",
+                                         "#Video4K",
+                                         "#Dron"
+                                     ],
+                            "categoriaNombre":  "Fotografía y Experiencias",
+                            "rating":  "5.0",
+                            "ubicacionMaps":  "Roma Norte, Ciudad de Mexico, CDMX",
+                            "rangoPrecio":  "ConvertFrom-Json • Cobertura desde ,500 MXN",
+                            "descripcion":  "Capturamos emociones reales sin poses forzadas. Incluye sesión Save the Date, galería privada en alta resolución y photobook impreso.",
+                            "especialidad":  "Fotografía documental de bodas, video cinematográfico 4K y tomas aéreas",
+                            "whatsappNumero":  "525512345604",
+                            "nombre":  "Lente Eterno Fotografía \u0026 Dron",
+                            "estadosSalida":  [
+                                                  "cdmx",
+                                                  "monterrey",
+                                                  "guadalajara",
+                                                  "puebla",
+                                                  "bajio"
+                                              ],
+                            "cuponCodigo":  "LENTE15",
+                            "cuponBeneficio":  "15% de descuento en cobertura completa + sesión Save the Date"
+                        },
+                        {
+                            "salidaDesde":  "CDMX y Valle de Teotihuacán",
+                            "id":  "teotihuacan-sky-globos",
+                            "etiquetaEstado":  "✔ Operador Certificado",
+                            "colorFondo":  "#ffedd5",
+                            "amenidades":  [
+                                               "🥂 Brindis y Desayuno",
+                                               "🛡️ Seguro de Viajero",
+                                               "💍 Lona Pedida de Mano"
+                                           ],
+                            "destinos":  [
+                                             "pueblos-magicos"
+                                         ],
+                            "iniciales":  "TS",
+                            "rnt":  "04150220019",
+                            "destacada":  true,
+                            "galeria":  [
+                                            "https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                                            "https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?auto=format\u0026fit=crop\u0026w=800\u0026q=80"
+                                        ],
+                            "web":  "",
+                            "colorTexto":  "#ea580c",
+                            "categoria":  "servicios",
+                            "tags":  [
+                                         "#VueloEnGlobo",
+                                         "#Teotihuacan",
+                                         "#PedidaDeMano"
+                                     ],
+                            "categoriaNombre":  "Fotografía y Experiencias",
+                            "rating":  "4.9",
+                            "ubicacionMaps":  "San Martin de las Piramides, Estado de Mexico",
+                            "rangoPrecio":  "ConvertFrom-Json • Desde ,490 MXN por persona",
+                            "descripcion":  "Sobrevuela las pirámides al amanecer con pilotos certificados por AFAC, brindis con vino espumoso, certificado de vuelo y desayuno buffet.",
+                            "especialidad":  "Vuelos compartidos, vuelos privados para pedidas de mano y aniversario",
+                            "whatsappNumero":  "525512345605",
+                            "nombre":  "Teotihuacán Sky Vuelos en Globo",
+                            "estadosSalida":  [
+                                                  "cdmx",
+                                                  "puebla",
+                                                  "bajio"
+                                              ],
+                            "cuponCodigo":  "SKYAMOR",
+                            "cuponBeneficio":  "Botella de vino espumoso extra y fotografías digitales"
+                        },
+                        {
+                            "salidaDesde":  "Querétaro, Bajío y CDMX",
+                            "id":  "ruta-vinedos-queretaro",
+                            "etiquetaEstado":  "✔ Experiencia Verificada",
+                            "colorFondo":  "#ede9fe",
+                            "amenidades":  [
+                                               "🍷 3 Catas Incluidas",
+                                               "🚐 Transporte Redondo",
+                                               "🧀 Maridaje Artesanal"
+                                           ],
+                            "destinos":  [
+                                             "pueblos-magicos"
+                                         ],
+                            "iniciales":  "RV",
+                            "rnt":  "",
+                            "destacada":  false,
+                            "galeria":  [
+                                            "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                                            "https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format\u0026fit=crop\u0026w=800\u0026q=80"
+                                        ],
+                            "web":  "",
+                            "colorTexto":  "#7c3aed",
+                            "categoria":  "servicios",
+                            "tags":  [
+                                         "#Vinedos",
+                                         "#Enoturismo",
+                                         "#PenaDeBernal"
+                                     ],
+                            "categoriaNombre":  "Fotografía y Experiencias",
+                            "rating":  "4.8",
+                            "ubicacionMaps":  "Ezequiel Montes, Queretaro, Mexico",
+                            "rangoPrecio":  "$ • Tours desde ,190 MXN",
+                            "descripcion":  "Tours privados y grupales por los mejores viñedos de Ezequiel Montes y Peña de Bernal con degustación de vinos y tabla de quesos artesanales.",
+                            "especialidad":  "Recorridos por viñedos, catas guiadas, cavas subterráneas y despedidas",
+                            "whatsappNumero":  "524421234506",
+                            "nombre":  "Ruta del Arte, Queso y Vino",
+                            "estadosSalida":  [
+                                                  "bajio",
+                                                  "cdmx"
+                                              ],
+                            "cuponCodigo":  "",
+                            "cuponBeneficio":  ""
+                        },
+                        {
+                            "salidaDesde":  "San Miguel de Allende, Guanajuato",
+                            "cuponBeneficio":  "15% de descuento sobre tarifa web + desayuno incluido",
+                            "id":  "casa-cobalto-hotel-boutique",
+                            "etiquetaEstado":  "✔ Hotel Verificado",
+                            "colorFondo":  "#e0f2fe",
+                            "amenidades":  [
+                                               "🍳 Desayuno Incluido",
+                                               "🧖‍♀️ Spa \u0026 Temazcal",
+                                               "🍷 Terraza Panorámica"
+                                           ],
+                            "destinos":  [
+                                             "pueblos-magicos"
+                                         ],
+                            "iniciales":  "CC",
+                            "rnt":  "01220140088",
+                            "destacada":  true,
+                            "galeria":  [
+                                            "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                                            "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                                            "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format\u0026fit=crop\u0026w=800\u0026q=80"
+                                        ],
+                            "web":  "https://www.google.com/search?q=hotel+boutique+san+miguel+de+allende",
+                            "colorTexto":  "#0284c7",
+                            "categoria":  "hoteles",
+                            "cuponCodigo":  "DIRECTO15",
+                            "tags":  [
+                                         "#HotelBoutique",
+                                         "#SanMiguelDeAllende",
+                                         "#EscapadaRomantica"
+                                     ],
+                            "categoriaNombre":  "Hoteles y Hostales",
+                            "rating":  "4.9",
+                            "ubicacionMaps":  "San Miguel de Allende, Guanajuato, Mexico",
+                            "rangoPrecio":  "ConvertFrom-Json$ • Desde $3,450 MXN / noche",
+                            "descripcion":  "Hotel boutique de 14 suites en el corazón de San Miguel de Allende. Reserva directo con nosotros y obtén desayuno gourmet y ascenso de habitación.",
+                            "especialidad":  "Suites de autor, terraza con vista a la parroquia y spa holístico",
+                            "whatsappNumero":  "524151234510",
+                            "nombre":  "Casa Cobalto Hotel Boutique \u0026 Spa",
+                            "estadosSalida":  [
+                                                  "cdmx",
+                                                  "bajio",
+                                                  "guadalajara",
+                                                  "monterrey"
+                                              ]
+                        },
+                        {
+                            "salidaDesde":  "Tulum y Riviera Maya, Quintana Roo",
+                            "cuponBeneficio":  "Paga 2 noches y quédate 3 entre domingo y jueves",
+                            "id":  "hostal-selva-viva-tulum",
+                            "etiquetaEstado":  "✔ Alojamiento Verificado",
+                            "colorFondo":  "#d1fae5",
+                            "amenidades":  [
+                                               "🚲 Bicicletas Gratis",
+                                               "💻 Coworking Wi-Fi",
+                                               "🏊 Alberca Tropical"
+                                           ],
+                            "destinos":  [
+                                             "cancun"
+                                         ],
+                            "iniciales":  "SV",
+                            "rnt":  "",
+                            "destacada":  false,
+                            "galeria":  [
+                                            "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                                            "https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format\u0026fit=crop\u0026w=800\u0026q=80"
+                                        ],
+                            "web":  "",
+                            "colorTexto":  "#059669",
+                            "categoria":  "hoteles",
+                            "cuponCodigo":  "TULUM3X2",
+                            "tags":  [
+                                         "#HostalTulum",
+                                         "#EcoGlamping",
+                                         "#NomadasDigitales"
+                                     ],
+                            "categoriaNombre":  "Hoteles y Hostales",
+                            "rating":  "4.8",
+                            "ubicacionMaps":  "Tulum, Quintana Roo, Mexico",
+                            "rangoPrecio":  "$ • Desde $590 MXN / noche",
+                            "descripcion":  "Ambiente viajero a 10 minutos de la zona arqueológica y playas de Tulum. Incluye bicicletas de cortesía, coworking con fibra óptica y clases de yoga.",
+                            "especialidad":  "Habitaciones privadas, dormitorios compartidos con A/C y alberca cenote",
+                            "whatsappNumero":  "529841234511",
+                            "nombre":  "Selva Viva Eco-Hostal \u0026 Glamping",
+                            "estadosSalida":  [
+                                                  "cdmx",
+                                                  "monterrey",
+                                                  "guadalajara",
+                                                  "puebla",
+                                                  "bajio"
+                                              ]
+                        },
+                        {
+                            "salidaDesde":  "Centro Histórico CDMX y Puebla",
+                            "cuponBeneficio":  "Coctel de bienvenida o postre conmemorativo de cortesía",
+                            "id":  "mirador-de-los-volcanes-terraza",
+                            "etiquetaEstado":  "✔ Restaurante Destacado",
+                            "colorFondo":  "#ffedd5",
+                            "amenidades":  [
+                                               "🌇 Vista Panorámica",
+                                               "🥂 Salones Privados",
+                                               "🚗 Valet Parking"
+                                           ],
+                            "destinos":  [
+                                             "pueblos-magicos"
+                                         ],
+                            "iniciales":  "TM",
+                            "rnt":  "",
+                            "destacada":  true,
+                            "galeria":  [
+                                            "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                                            "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format\u0026fit=crop\u0026w=800\u0026q=80"
+                                        ],
+                            "web":  "https://www.google.com/search?q=restaurantes+terraza+cdmx",
+                            "colorTexto":  "#ea580c",
+                            "categoria":  "gastronomia",
+                            "cuponCodigo":  "BRINDISDV",
+                            "tags":  [
+                                         "#TerrazaCDMX",
+                                         "#CenaRomantica",
+                                         "#Mixologia"
+                                     ],
+                            "categoriaNombre":  "Restaurantes y Terrazas",
+                            "rating":  "4.9",
+                            "ubicacionMaps":  "Centro Historico, Ciudad de Mexico, CDMX",
+                            "rangoPrecio":  "$$ • Consumo promedio $650 MXN",
+                            "descripcion":  "Gastronomía mexicana contemporánea y mixología de autor en terraza panorámica. Contamos con salones privados para cenas de compromiso y grupos.",
+                            "especialidad":  "Cenas románticas, aniversarios, pedidas de mano y eventos privados",
+                            "whatsappNumero":  "525512345612",
+                            "nombre":  "Terraza Mirador \u0026 Cocina de Autor",
+                            "estadosSalida":  [
+                                                  "cdmx",
+                                                  "puebla"
+                                              ]
+                        },
+                        {
+                            "salidaDesde":  "CDMX, Querétaro, Puebla y Morelos",
+                            "cuponBeneficio":  "10% de descuento en paquetes de traslado para invitados de boda",
+                            "id":  "rutas-ejecutivas-sprinter-mx",
+                            "etiquetaEstado":  "✔ Transporte Certificado SCT",
+                            "colorFondo":  "#e0e7ff",
+                            "amenidades":  [
+                                               "🛡️ Seguro de Viajero",
+                                               "❄️ A/C y Asientos Reclinables",
+                                               "🕒 Puntualidad Garantizada"
+                                           ],
+                            "destinos":  [
+                                             "acapulco",
+                                             "pueblos-magicos"
+                                         ],
+                            "iniciales":  "RE",
+                            "rnt":  "05090180044",
+                            "destacada":  true,
+                            "galeria":  [
+                                            "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                                            "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format\u0026fit=crop\u0026w=800\u0026q=80"
+                                        ],
+                            "web":  "",
+                            "colorTexto":  "#4f46e5",
+                            "categoria":  "transporte",
+                            "cuponCodigo":  "TRASLADO10",
+                            "tags":  [
+                                         "#RentaDeSprinter",
+                                         "#TransporteBodas",
+                                         "#ToursGrupales"
+                                     ],
+                            "categoriaNombre":  "Transporte Turístico",
+                            "rating":  "5.0",
+                            "ubicacionMaps":  "Aeropuerto Internacional Benito Juarez, CDMX",
+                            "rangoPrecio":  "$$ • Renta por día o traslado redondo",
+                            "descripcion":  "Unidades modelo reciente con aire acondicionado, pantallas, seguro de viajero amplio y operadores certificados para traslados de invitados a haciendas o playas.",
+                            "especialidad":  "Camionetas Mercedes Sprinter de 17 a 20 pasajeros para bodas y tours",
+                            "whatsappNumero":  "525512345613",
+                            "nombre":  "Rutas Ejecutivas \u0026 Sprinter VIP",
+                            "estadosSalida":  [
+                                                  "cdmx",
+                                                  "puebla",
+                                                  "bajio"
+                                              ]
+                        }
+                    ],
+    "ofertas":  [
+                    {
+                        "esReferenciaReal":  true,
+                        "categoria":  "viajes",
+                        "agencia":  "Mundo Joven • Ejemplo Real",
+                        "titulo":  "Tours y Circuitos por México",
+                        "detalle":  "Consulta salidas vigentes, circuitos culturales y paquetes en su portal oficial.",
+                        "precio":  "Ver tarifas oficiales",
+                        "etiqueta":  "Sitio Oficial",
+                        "imagen":  "https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?auto=format\u0026fit=crop\u0026w=600\u0026q=80",
+                        "whatsappNumero":  "",
+                        "web":  "https://mundojoven.com/",
+                        "textoBoton":  "Visitar Sitio Oficial"
+                    },
+                    {
+                        "esReferenciaReal":  false,
+                        "categoria":  "bodas",
+                        "agencia":  "Espacio Patrocinado • Bodas y Eventos",
+                        "titulo":  "Anuncia aquí tu Jardín, Banquete o Wedding Planner",
+                        "detalle":  "Conecta con parejas buscando locaciones en playa, haciendas y proveedores de eventos.",
+                        "precio":  "Disponible",
+                        "etiqueta":  "Nuevo Sector",
+                        "imagen":  "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format\u0026fit=crop\u0026w=600\u0026q=80",
+                        "whatsappNumero":  "",
+                        "web":  "pages/anunciate.html",
+                        "textoBoton":  "Publicar mi Servicio"
+                    },
+                    {
+                        "esReferenciaReal":  false,
+                        "categoria":  "viajes",
+                        "agencia":  "Espacio Patrocinado • Viajes y Estancias",
+                        "titulo":  "Destaca tus paquetes de Playa o Cabañas",
+                        "detalle":  "Recibe solicitudes directas en tu WhatsApp de ventas sin pagar comisiones por reserva.",
+                        "precio":  "Disponible",
+                        "etiqueta":  "Espacio Publicitario",
+                        "imagen":  "https://images.unsplash.com/photo-1510097467424-192d713fd8b2?auto=format\u0026fit=crop\u0026w=600\u0026q=80",
+                        "whatsappNumero":  "",
+                        "web":  "pages/anunciate.html",
+                        "textoBoton":  "Apartar este Espacio"
+                    },
+                    {
+                        "etiqueta":  "💍 Promo Bodas 2026",
+                        "web":  "",
+                        "detalle":  "Menú 4 tiempos + mobiliario + DJ + pista iluminada + prueba de menú sin costo",
+                        "titulo":  "Paquete Boda Todo Incluido (100 Invitados)",
+                        "agencia":  "Banquetes \u0026 Eventos Imperial",
+                        "categoria":  "bodas",
+                        "precio":  ",900 MXN",
+                        "esReferenciaReal":  true,
+                        "textoBoton":  "💬 Cotizar Boda",
+                        "whatsappNumero":  "525512345601",
+                        "imagen":  "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format\u0026fit=crop\u0026w=600\u0026q=80"
+                    },
+                    {
+                        "etiqueta":  "🎈 Experiencia Top",
+                        "web":  "",
+                        "detalle":  "Canastilla exclusiva para 2 personas + brindis + desayuno buffet + fotos",
+                        "titulo":  "Vuelo Privado Romántico + Lona Pedida de Mano",
+                        "agencia":  "Teotihuacán Sky Vuelos en Globo",
+                        "categoria":  "servicios",
+                        "precio":  ",800 MXN Pareja",
+                        "esReferenciaReal":  true,
+                        "textoBoton":  "💬 Reservar Fecha",
+                        "whatsappNumero":  "525512345605",
+                        "imagen":  "https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?auto=format\u0026fit=crop\u0026w=600\u0026q=80"
+                    },
+                    {
+                        "etiqueta":  "📸 15% Descuento",
+                        "web":  "",
+                        "detalle":  "8 horas de foto y video 4K + tomas con dron + galería digital ilimitada",
+                        "titulo":  "Cobertura Boda Completa + Sesión Save the Date",
+                        "agencia":  "Lente Eterno Fotografía \u0026 Dron",
+                        "categoria":  "servicios",
+                        "precio":  ",500 MXN",
+                        "esReferenciaReal":  true,
+                        "textoBoton":  "💬 Consultar Disponibilidad",
+                        "whatsappNumero":  "525512345604",
+                        "imagen":  "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format\u0026fit=crop\u0026w=600\u0026q=80"
+                    },
+                    {
+                        "etiqueta":  "🏨 Tarifa Directa",
+                        "web":  "",
+                        "detalle":  "Suite Junior + desayunos gourmet + acceso a circuito de spa y botella de vino",
+                        "titulo":  "Escapada Romántica 2 Noches en San Miguel de Allende",
+                        "agencia":  "Casa Cobalto Hotel Boutique \u0026 Spa",
+                        "categoria":  "hoteles",
+                        "precio":  "$6,490 MXN Pareja",
+                        "esReferenciaReal":  true,
+                        "textoBoton":  "💬 Reservar Suite",
+                        "whatsappNumero":  "524151234510",
+                        "imagen":  "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format\u0026fit=crop\u0026w=600\u0026q=80"
+                    },
+                    {
+                        "etiqueta":  "🚐 Ideal Eventos",
+                        "web":  "",
+                        "detalle":  "Salida desde CDMX a Cuernavaca o Tepoztlán con operador y casetas incluidas",
+                        "titulo":  "Traslado Redondo Invitados Boda (Sprinter 20 Pax)",
+                        "agencia":  "Rutas Ejecutivas \u0026 Sprinter VIP",
+                        "categoria":  "transporte",
+                        "precio":  "$5,800 MXN Redondo",
+                        "esReferenciaReal":  true,
+                        "textoBoton":  "💬 Cotizar Ruta",
+                        "whatsappNumero":  "525512345613",
+                        "imagen":  "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format\u0026fit=crop\u0026w=600\u0026q=80"
+                    }
+                ],
+    "faq":  [
+                {
+                    "respuesta":  "No. Somos un directorio publicitario gratuito para el usuario. Todos los botones te comunican directamente al WhatsApp o sitio web oficial del anunciante sin cargos extra ni intermediarios.",
+                    "pregunta":  "¿Directorio Viajero cobra alguna comisión por cotizar o reservar?"
+                },
+                {
+                    "respuesta":  "Revisamos que los anunciantes cuenten con canales oficiales activos, sitio web o redes comprobables y, en el caso de agencias turísticas en México, destacamos con insignia especial a quienes acreditan su folio del Registro Nacional de Turismo (RNT).",
+                    "pregunta":  "¿Cómo verifican a las agencias de viajes y proveedores?"
+                },
+                {
+                    "respuesta":  "Sí. Usa el botón \u0027Comparar\u0027 en hasta 3 tarjetas para abrir nuestra tabla comparativa lado a lado y enviar tu fecha y número de personas a cada proveedor con un clic.",
+                    "pregunta":  "¿Puedo pedir cotización a varias opciones al mismo tiempo?"
+                },
+                {
+                    "respuesta":  "Haz clic en el botón superior \u0027Anúnciate Aquí\u0027, completa tu ficha con vista previa en vivo y envíala. Durante la etapa de lanzamiento contamos con lugares destacados sin costo por 3 meses.",
+                    "pregunta":  "¿Cómo registro mi agencia, jardín de bodas o servicio?"
+                }
+            ],
+    "guias":  [
+                  {
+                      "tiempoLectura":  "3 min de lectura",
+                      "resumen":  "Aprende a validar en segundos si una agencia está registrada formalmente ante SECTUR y evita fraudes en paquetes vacacionales.",
+                      "categoriaLabel":  "✈️ Seguridad al Viajar",
+                      "imagen":  "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                      "categoria":  "viajes",
+                      "id":  "verificar-rnt-mexico",
+                      "contenido":  "Antes de realizar cualquier anticipo para tus vacaciones, solicita a la agencia su constancia del Registro Nacional de Turismo (RNT). Este folio oficial emitido por la Secretaría de Turismo acredita que el prestador cuenta con domicilio fiscal comprobable y operación formal en México. Además, verifica que el nombre comercial coincida con la razón social de la cuenta bancaria y desconfía de descuentos extremos que exigen pago inmediato sin contrato de adhesión.",
+                      "titulo":  "Cómo verificar el folio RNT de una agencia de viajes en México antes de transferir"
+                  },
+                  {
+                      "tiempoLectura":  "4 min de lectura",
+                      "resumen":  "Desde horas extra de música hasta planta de luz y descorche: lo que debes confirmar por escrito en tu contrato.",
+                      "categoriaLabel":  "💍 Bodas y Eventos",
+                      "imagen":  "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                      "categoria":  "bodas",
+                      "id":  "checklist-jardin-bodas",
+                      "contenido":  "Al visitar haciendas o jardines para eventos en destinos como Morelos, Querétaro o playa, pregunta siempre por: 1) Horario límite de sonido permitido por el municipio, 2) Si incluye planta de emergencia eléctrica, 3) Costo por hora adicional de renta, 4) Políticas de lluvia o carpa de respaldo, 5) Si permiten proveedores externos de banquete o fotografía sin penalización, 6) Estacionamiento o valet parking y 7) Hospedaje incluido para los novios.",
+                      "titulo":  "7 puntos clave que debes revisar antes de apartar un jardín o hacienda para boda"
+                  },
+                  {
+                      "tiempoLectura":  "3 min de lectura",
+                      "resumen":  "Conoce las ventanas de temporada baja donde los vuelos charter y resorts ofrecen hasta 35% de ahorro.",
+                      "categoriaLabel":  "🌴 Consejos de Destino",
+                      "imagen":  "https://images.unsplash.com/photo-1510097467424-192d713fd8b2?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                      "categoria":  "viajes",
+                      "id":  "temporadas-baratas-caribe",
+                      "contenido":  "Si tienes flexibilidad de fechas, las mejores tarifas en playas mexicanas suelen encontrarse entre mayo y mediados de junio, así como de septiembre a noviembre (evitando puentes festivos). Durante estas semanas las aerolíneas y agencias mayoristas lanzan bloqueos charter con menores incluidos gratis o meses sin intereses. Compara al menos 3 agencias en nuestro directorio para cotizar el mismo hotel y fecha.",
+                      "titulo":  "Mejores meses para encontrar paquetes todo incluido económicos en Cancún y Los Cabos"
+                  },
+                  {
+                      "tiempoLectura":  "3 min de lectura",
+                      "resumen":  "Asegura los tiempos de entrega, respaldo de archivos en alta resolución y permisos de vuelo de dron antes de firmar.",
+                      "categoriaLabel":  "📸 Fotografía y Video",
+                      "imagen":  "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                      "categoria":  "servicios",
+                      "id":  "como-contratar-fotografo-bodas",
+                      "contenido":  "Al elegir estudio de fotografía y video para bodas o eventos sociales, confirma siempre: 1) Tiempo máximo de entrega de la galería completa por contrato, 2) Si entregan todas las fotografías editadas en alta resolución sin marcas de agua, 3) Si el jardín o hacienda permite el vuelo de dron y si el piloto cuenta con licencia vigente, 4) Equipo de respaldo (doble cámara y tarjetas duales) el día del evento y 5) Si incluye sesión previa (Save the Date) para romper el hielo antes de la boda.",
+                      "titulo":  "5 preguntas clave antes de contratar fotógrafo y video con dron para tu evento"
+                  }
+              ]
 }

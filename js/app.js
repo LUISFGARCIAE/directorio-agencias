@@ -1025,6 +1025,9 @@ function mostrarPasoWizard(paso) {
                 <button type="button" class="wizard-opt-btn" onclick="wizardSeleccion.categoria='viajes'; mostrarPasoWizard(2);">✈️ Un Viaje o Vacaciones</button>
                 <button type="button" class="wizard-opt-btn" onclick="wizardSeleccion.categoria='bodas'; mostrarPasoWizard(2);">💍 Una Boda o Evento</button>
                 <button type="button" class="wizard-opt-btn" onclick="wizardSeleccion.categoria='hospedaje'; mostrarPasoWizard(2);">🏡 Renta de Quinta / Cabaña</button>
+                <button type="button" class="wizard-opt-btn" onclick="wizardSeleccion.categoria='hoteles'; mostrarPasoWizard(2);">🏨 Hotel Boutique u Hostal</button>
+                <button type="button" class="wizard-opt-btn" onclick="wizardSeleccion.categoria='gastronomia'; mostrarPasoWizard(2);">🍽️ Restaurante o Terraza</button>
+                <button type="button" class="wizard-opt-btn" onclick="wizardSeleccion.categoria='transporte'; mostrarPasoWizard(2);">🚐 Renta de Sprinter / Transporte</button>
                 <button type="button" class="wizard-opt-btn" onclick="wizardSeleccion.categoria='servicios'; mostrarPasoWizard(2);">📸 Fotografía o Experiencia</button>
             </div>
         `;
