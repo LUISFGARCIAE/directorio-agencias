@@ -1,72 +1,72 @@
 {
-    "MODO_MULTISECTOR":  false,
-    "apariencia":  {
-                       "paletaDefault":  "caribe",
-                       "temaDefault":  "light"
-                   },
-    "hero":  {
-                 "badge":  "🇲🇽 El punto de encuentro turístico y de eventos en México",
-                 "titulo":  "Conecta directo con Especialistas en Viajes, Bodas y Experiencias",
-                 "subtitulo":  "Explora agencias de viajes, jardines para bodas, cabañas y servicios verificados en México sin intermediarios."
-             },
-    "bannerPatrocinado":  {
-                              "visible":  true,
-                              "titulo":  "¿Quieres que tu negocio aparezca en este banner principal?",
-                              "descripcion":  "Destaca tus promociones de temporada frente a miles de clientes buscando opciones en México.",
-                              "textoBoton":  "Reservar Banner",
-                              "urlBoton":  "pages/anunciate.html"
-                          },
-    "ordenSecciones":  [
-                           "destinos",
-                           "ofertas",
-                           "banner",
-                           "agencias",
-                           "mapa",
-                           "opiniones",
-                           "guias",
-                           "faq",
-                           "b2b"
-                       ],
-    "categorias":  [
-                       {
-                           "id":  "todos",
-                           "label":  "🌐 Todos los giros"
-                       },
-                       {
-                           "id":  "viajes",
-                           "label":  "✈️ Viajes y Turismo"
-                       },
-                       {
-                           "id":  "bodas",
-                           "label":  "💍 Bodas y Eventos"
-                       },
-                       {
-                           "id":  "hospedaje",
-                           "label":  "🏡 Quintas y Estancias"
-                       },
-                       {
-                           "id":  "servicios",
-                           "label":  "📸 Fotografía y Experiencias"
-                       }
-                   ],
-    "topBar":  {
-                   "urlBoton":  "#sec-ofertas",
-                   "texto":  "🔥 Especial de Lanzamiento: ¡Usa los cupones exclusivos en cada ficha y ahorra en tu próximo viaje o evento!",
-                   "visible":  true,
-                   "textoBoton":  "Ver Ofertas"
-               },
-    "whatsappConcierge":  "525500000000",
-    "comercialB2B":  {
-                         "planEstandarNota":  "/ lanzamiento",
-                         "ofertaTemporadaPrecio":  " MXN / mes",
-                         "tituloB2BPortada":  "¿Tienes una Agencia, Jardín de Bodas, Quinta o Servicio?",
-                         "bannerPatrocinadoPrecio":  " MXN / mes",
-                         "planDestacadoNota":  "/ primeros 50 registros",
-                         "planEstandarPrecio":  " MXN",
-                         "planDestacadoPrecio":  "Gratis 3 meses",
-                         "subtituloB2BPortada":  "Recibe clientes listos para reservar directo en tu WhatsApp, sin comisiones por venta. Plan Destacado:",
-                         "planDestacadoPost":  "Después  MXN/mes",
-                         "correoAdmin":  "tu-correo@gmail.com",
-                         "whatsappAdmin":  "525500000000"
-                     }
+    "MODO_MULTISECTOR": false,
+    "apariencia": {
+        "paletaDefault": "caribe",
+        "temaDefault": "light"
+    },
+    "hero": {
+        "badge": "🇲🇽 El punto de encuentro turístico y de eventos en México",
+        "titulo": "Conecta directo con Especialistas en Viajes, Bodas y Experiencias",
+        "subtitulo": "Explora agencias de viajes, jardines para bodas, cabañas y servicios verificados en México sin intermediarios."
+    },
+    "bannerPatrocinado": {
+        "visible": true,
+        "titulo": "¿Quieres que tu negocio aparezca en este banner principal?",
+        "descripcion": "Destaca tus promociones de temporada frente a miles de clientes buscando opciones en México.",
+        "textoBoton": "Reservar Banner",
+        "urlBoton": "pages/anunciate.html"
+    },
+    "ordenSecciones": [
+        "destinos",
+        "ofertas",
+        "banner",
+        "agencias",
+        "mapa",
+        "opiniones",
+        "guias",
+        "faq",
+        "b2b"
+    ],
+    "categorias": [
+        {
+            "id": "todos",
+            "label": "🌐 Todos los giros"
+        },
+        {
+            "id": "viajes",
+            "label": "✈️ Viajes y Turismo"
+        },
+        {
+            "id": "bodas",
+            "label": "💍 Bodas y Eventos"
+        },
+        {
+            "id": "hospedaje",
+            "label": "🏡 Quintas y Estancias"
+        },
+        {
+            "id": "servicios",
+            "label": "📸 Fotografía y Experiencias"
+        }
+    ],
+    "topBar": {
+        "urlBoton": "#sec-ofertas",
+        "texto": "🔥 Especial de Lanzamiento: ¡Usa los cupones exclusivos en cada ficha y ahorra en tu próximo viaje o evento!",
+        "visible": true,
+        "textoBoton": "Ver Ofertas"
+    },
+    "whatsappConcierge": "525500000000",
+    "comercialB2B": {
+        "planEstandarNota": "/ lanzamiento",
+        "ofertaTemporadaPrecio": " MXN / mes",
+        "tituloB2BPortada": "¿Tienes una Agencia, Jardín de Bodas, Quinta o Servicio?",
+        "bannerPatrocinadoPrecio": " MXN / mes",
+        "planDestacadoNota": "/ primeros 50 registros",
+        "planEstandarPrecio": " MXN",
+        "planDestacadoPrecio": "Gratis 3 meses",
+        "subtituloB2BPortada": "Recibe clientes listos para reservar directo en tu WhatsApp, sin comisiones por venta. Plan Destacado:",
+        "planDestacadoPost": "Después  MXN/mes",
+        "correoAdmin": "tu-correo@gmail.com",
+        "whatsappAdmin": "525500000000"
+    }
 }
