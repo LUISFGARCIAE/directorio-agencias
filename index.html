@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://images.unsplash.com data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="description" content="Directorio publicitario de agencias de viajes verificadas en México. Encuentra especialistas para Acapulco, Cancún, Los Cabos y Pueblos Mágicos.">
     
     <meta property="og:title" content="Directorio Viajero | Agencias de Viajes Verificadas en México">
@@ -43,7 +45,7 @@
         <p>Compara opciones por destino y cotiza directamente con especialistas, sin intermediarios ni comisiones ocultas.</p>
         
         <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Buscar agencia, paquete (ej. todo incluido, charter, CDMX)..." aria-label="Buscar por palabra clave">
+            <input type="text" id="searchInput" maxlength="80" placeholder="Buscar agencia, paquete (ej. todo incluido, charter, CDMX)..." aria-label="Buscar por palabra clave">
             <select id="destinoSelect" aria-label="Seleccionar destino" onchange="ejecutarBusqueda()">
                 <option value="todos">Todos los destinos</option>
                 <option value="acapulco">Acapulco</option>
@@ -55,14 +57,13 @@
         </div>
 
         <div class="trust-strip">
-            <div><strong>100% Directo</strong> • Trato sin intermediarios</div>
-            <div><strong>+4 Destinos</strong> • Playas y Pueblos Mágicos</div>
-            <div><strong>Cero Comisiones</strong> • Cotiza directo en WhatsApp</div>
+            <div><strong>100% Directo</strong> &bull; Trato sin intermediarios</div>
+            <div><strong>+4 Destinos</strong> &bull; Playas y Pueblos Mágicos</div>
+            <div><strong>Cero Comisiones</strong> &bull; Cotiza directo en WhatsApp</div>
         </div>
     </section>
 
     <main class="container">
-        <!-- Destinos populares -->
         <div id="destinos">
             <div class="section-header">
                 <div>
@@ -103,7 +104,6 @@
             </div>
         </div>
 
-        <!-- Espacio publicitario horizontal -->
         <aside class="ad-banner-slot">
             <span class="ad-tag">Espacio Patrocinado</span>
             <div class="ad-banner-content">
@@ -113,7 +113,6 @@
             <a href="pages/anunciate.html" class="btn-banner">Reservar Banner</a>
         </aside>
 
-        <!-- Listado de agencias -->
         <div id="agencias">
             <div class="section-header">
                 <div>
@@ -135,7 +134,6 @@
             <div class="directory-grid" id="agencyGrid"></div>
         </div>
 
-        <!-- Experiencias de viajeros -->
         <section class="reviews-section" id="opiniones">
             <div class="section-header">
                 <div>
@@ -152,7 +150,7 @@
                         <div class="author-avatar">MR</div>
                         <div class="author-info">
                             <strong>Mariana Ríos</strong>
-                            <span>Viajó a Cancún • CDMX</span>
+                            <span>Viajó a Cancún &bull; CDMX</span>
                         </div>
                     </div>
                 </article>
@@ -164,7 +162,7 @@
                         <div class="author-avatar">CG</div>
                         <div class="author-info">
                             <strong>Carlos Gómez</strong>
-                            <span>Viajó a Acapulco • Estado de México</span>
+                            <span>Viajó a Acapulco &bull; Estado de México</span>
                         </div>
                     </div>
                 </article>
@@ -176,14 +174,13 @@
                         <div class="author-avatar">AL</div>
                         <div class="author-info">
                             <strong>Andrea López</strong>
-                            <span>Tour Pueblos Mágicos • Puebla</span>
+                            <span>Tour Pueblos Mágicos &bull; Puebla</span>
                         </div>
                     </div>
                 </article>
             </div>
         </section>
 
-        <!-- Registro para agencias -->
         <section class="b2b-cta-section">
             <h2>¿Tienes una Agencia de Viajes?</h2>
             <p>Publica tu agencia en nuestro directorio y recibe clientes interesados directamente en tu WhatsApp o página web, sin pagar comisiones por venta.</p>
@@ -191,7 +188,6 @@
         </section>
     </main>
 
-    <!-- Ventana modal de ficha -->
     <div id="agencyModal" class="modal-backdrop" onclick="cerrarModalAgencia(event)">
         <div class="modal-card">
             <button type="button" class="modal-close" onclick="cerrarModalAgencia()">✕</button>

@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://formsubmit.co; object-src 'none'; base-uri 'self'; form-action 'self' https://formsubmit.co;">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>Anúnciate Aquí | Directorio Viajero</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -67,9 +69,14 @@
         <div class="registration-layout" id="registro">
             <div class="form-box">
                 <h2 style="margin-bottom: 0.4rem; color: var(--secondary);">Solicitud de Alta de Agencia</h2>
-                <p style="color: var(--text-soft); font-size: 0.9rem; margin-bottom: 1.5rem;">Escribe tus datos y mira a la derecha cómo lucirá tu tarjeta publicada.</p>
+                <p style="color: var(--text-soft); font-size: 0.9rem; margin-bottom: 1.5rem;">Todos los registros pasan por validación manual antes de publicarse en el directorio.</p>
 
                 <form id="registroForm" onsubmit="enviarSolicitud(event)">
+                    <!-- Campo trampa anti-bots -->
+                    <div style="position: absolute; left: -9999px;" aria-hidden="true">
+                        <input type="text" id="website_confirm" name="_honey" tabindex="-1" autocomplete="off">
+                    </div>
+
                     <div class="form-group">
                         <label for="planAgencia">Plan seleccionado *</label>
                         <select id="planAgencia" onchange="actualizarPreview()" required>
@@ -79,27 +86,27 @@
                     </div>
                     <div class="form-group">
                         <label for="nombreAgencia">Nombre Comercial de la Agencia *</label>
-                        <input type="text" id="nombreAgencia" oninput="actualizarPreview()" required placeholder="Ej. Viajes del Sol México">
+                        <input type="text" id="nombreAgencia" maxlength="60" oninput="actualizarPreview()" required placeholder="Ej. Viajes del Sol México">
                     </div>
                     <div class="form-group">
                         <label for="salidaAgencia">Ciudad o Estado de salida *</label>
-                        <input type="text" id="salidaAgencia" oninput="actualizarPreview()" required placeholder="Ej. CDMX y Área Metropolitana">
+                        <input type="text" id="salidaAgencia" maxlength="50" oninput="actualizarPreview()" required placeholder="Ej. CDMX y Área Metropolitana">
                     </div>
                     <div class="form-group">
                         <label for="correoAgencia">Correo Electrónico de Contacto *</label>
-                        <input type="email" id="correoAgencia" required placeholder="contacto@tuagencia.com">
+                        <input type="email" id="correoAgencia" maxlength="80" required placeholder="contacto@tuagencia.com">
                     </div>
                     <div class="form-group">
-                        <label for="whatsappAgencia">WhatsApp de Ventas (con lada) *</label>
-                        <input type="tel" id="whatsappAgencia" oninput="actualizarPreview()" required placeholder="Ej. 52 55 1234 5678">
+                        <label for="whatsappAgencia">WhatsApp de Ventas (10 a 15 dígitos con lada) *</label>
+                        <input type="tel" id="whatsappAgencia" maxlength="20" oninput="actualizarPreview()" required placeholder="Ej. 52 55 1234 5678">
                     </div>
                     <div class="form-group">
-                        <label for="webAgencia">Sitio Web o Página de Facebook</label>
-                        <input type="url" id="webAgencia" oninput="actualizarPreview()" placeholder="https://tuagencia.com">
+                        <label for="webAgencia">Sitio Web o Página de Facebook (debe iniciar con https://)</label>
+                        <input type="url" id="webAgencia" maxlength="120" oninput="actualizarPreview()" placeholder="https://tuagencia.com">
                     </div>
                     <div class="form-group">
                         <label for="destinosAgencia">Destinos principales (separados por coma) *</label>
-                        <input type="text" id="destinosAgencia" oninput="actualizarPreview()" required placeholder="Ej. Cancún, Acapulco, Pueblos Mágicos">
+                        <input type="text" id="destinosAgencia" maxlength="80" oninput="actualizarPreview()" required placeholder="Ej. Cancún, Acapulco, Pueblos Mágicos">
                     </div>
                     <div class="form-group">
                         <label for="descAgencia">Descripción corta (máx. 140 caracteres) *</label>
@@ -162,6 +169,11 @@
     <script>
         const CORREO_DESTINO = "tu-correo@gmail.com";
         const WHATSAPP_ADMIN = "525500000000";
+        let ultimoEnvio = 0;
+
+        function limpiarEntrada(str) {
+            return String(str || '').replace(/[<>"']/g, '').trim();
+        }
 
         function seleccionarPlan(plan) {
             document.getElementById('planAgencia').value = plan;
@@ -170,11 +182,11 @@
 
         function actualizarPreview() {
             const plan = document.getElementById('planAgencia').value;
-            const nombre = document.getElementById('nombreAgencia').value.trim() || "Tu Agencia de Viajes";
-            const salida = document.getElementById('salidaAgencia').value.trim() || "CDMX y Área Metropolitana";
-            const desc = document.getElementById('descAgencia').value.trim() || "Aquí aparecerá la descripción de tus paquetes, salidas y especialidad para atraer viajeros.";
-            const destinosRaw = document.getElementById('destinosAgencia').value.trim();
-            const web = document.getElementById('webAgencia').value.trim();
+            const nombre = limpiarEntrada(document.getElementById('nombreAgencia').value) || "Tu Agencia de Viajes";
+            const salida = limpiarEntrada(document.getElementById('salidaAgencia').value) || "CDMX y Área Metropolitana";
+            const desc = limpiarEntrada(document.getElementById('descAgencia').value) || "Aquí aparecerá la descripción de tus paquetes, salidas y especialidad para atraer viajeros.";
+            const destinosRaw = limpiarEntrada(document.getElementById('destinosAgencia').value);
+            const webSegura = validarUrlSegura(document.getElementById('webAgencia').value);
 
             const palabras = nombre.split(' ').filter(Boolean);
             const iniciales = palabras.length >= 2 
@@ -197,35 +209,58 @@
             }
 
             const tagsContainer = document.getElementById('prevTags');
+            tagsContainer.innerHTML = '';
             if (destinosRaw) {
                 const lista = destinosRaw.split(',').map(d => d.trim()).filter(Boolean).slice(0, 3);
-                tagsContainer.innerHTML = lista.map(d => <span class="tag">#</span>).join('');
+                lista.forEach(d => {
+                    const span = document.createElement('span');
+                    span.className = 'tag';
+                    span.textContent = '#' + d.replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]/g, '');
+                    tagsContainer.appendChild(span);
+                });
             } else {
                 tagsContainer.innerHTML = '<span class="tag">#Cancún</span><span class="tag">#Acapulco</span>';
             }
 
             const actions = document.getElementById('prevActions');
-            if (plan === 'Plan Destacado' && web) {
+            if (plan === 'Plan Destacado' && webSegura) {
                 actions.innerHTML = '<span class="btn-action btn-primary">Sitio Web</span><span class="btn-action btn-whatsapp">WhatsApp</span>';
             } else {
                 actions.innerHTML = '<span class="btn-action btn-whatsapp">Cotizar WhatsApp</span>';
             }
         }
 
-        function generarCodigoJS() {
-            const nombre = document.getElementById('nombreAgencia').value.trim();
-            const salida = document.getElementById('salidaAgencia').value.trim();
-            const desc = document.getElementById('descAgencia').value.trim();
+        function generarNodoSeguro() {
+            const nombre = limpiarEntrada(document.getElementById('nombreAgencia').value);
+            const salida = limpiarEntrada(document.getElementById('salidaAgencia').value);
+            const desc = limpiarEntrada(document.getElementById('descAgencia').value);
             const wa = document.getElementById('whatsappAgencia').value.replace(/\D/g, '');
-            const web = document.getElementById('webAgencia').value.trim();
+            const web = validarUrlSegura(document.getElementById('webAgencia').value);
             const destacada = document.getElementById('planAgencia').value === 'Plan Destacado';
-            const tags = document.getElementById('destinosAgencia').value.split(',').map(t => "#").join(', ');
+            const tags = limpiarEntrada(document.getElementById('destinosAgencia').value)
+                .split(',')
+                .map(t => t.trim().replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]/g, ''))
+                .filter(Boolean)
+                .slice(0, 3)
+                .map(t => '#' + t);
 
-            return { id: "", nombre: "", iniciales: "", colorTexto: "#0284c7", colorFondo: "#e0f2fe", destacada: , rating: "5.0", etiquetaEstado: "✔ Agencia Verificada", salidaDesde: "", rangoPrecio: "<!DOCTYPE html>
+            const nodo = {
+                id: nombre.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+                nombre: nombre,
+                iniciales: nombre.substring(0, 2).toUpperCase(),
+                colorTexto: "#0284c7",
+                colorFondo: "#e0f2fe",
+                destacada: destacada,
+                rating: "5.0",
+                etiquetaEstado: "✔ Agencia Verificada",
+                salidaDesde: salida,
+                rangoPrecio: "<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://images.unsplash.com data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="description" content="Directorio publicitario de agencias de viajes verificadas en México. Encuentra especialistas para Acapulco, Cancún, Los Cabos y Pueblos Mágicos.">
     
     <meta property="og:title" content="Directorio Viajero | Agencias de Viajes Verificadas en México">
@@ -266,7 +301,7 @@
         <p>Compara opciones por destino y cotiza directamente con especialistas, sin intermediarios ni comisiones ocultas.</p>
         
         <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Buscar agencia, paquete (ej. todo incluido, charter, CDMX)..." aria-label="Buscar por palabra clave">
+            <input type="text" id="searchInput" maxlength="80" placeholder="Buscar agencia, paquete (ej. todo incluido, charter, CDMX)..." aria-label="Buscar por palabra clave">
             <select id="destinoSelect" aria-label="Seleccionar destino" onchange="ejecutarBusqueda()">
                 <option value="todos">Todos los destinos</option>
                 <option value="acapulco">Acapulco</option>
@@ -278,14 +313,13 @@
         </div>
 
         <div class="trust-strip">
-            <div><strong>100% Directo</strong> • Trato sin intermediarios</div>
-            <div><strong>+4 Destinos</strong> • Playas y Pueblos Mágicos</div>
-            <div><strong>Cero Comisiones</strong> • Cotiza directo en WhatsApp</div>
+            <div><strong>100% Directo</strong> &bull; Trato sin intermediarios</div>
+            <div><strong>+4 Destinos</strong> &bull; Playas y Pueblos Mágicos</div>
+            <div><strong>Cero Comisiones</strong> &bull; Cotiza directo en WhatsApp</div>
         </div>
     </section>
 
     <main class="container">
-        <!-- Destinos populares -->
         <div id="destinos">
             <div class="section-header">
                 <div>
@@ -326,7 +360,6 @@
             </div>
         </div>
 
-        <!-- Espacio publicitario horizontal -->
         <aside class="ad-banner-slot">
             <span class="ad-tag">Espacio Patrocinado</span>
             <div class="ad-banner-content">
@@ -336,7 +369,6 @@
             <a href="pages/anunciate.html" class="btn-banner">Reservar Banner</a>
         </aside>
 
-        <!-- Listado de agencias -->
         <div id="agencias">
             <div class="section-header">
                 <div>
@@ -358,7 +390,6 @@
             <div class="directory-grid" id="agencyGrid"></div>
         </div>
 
-        <!-- Experiencias de viajeros -->
         <section class="reviews-section" id="opiniones">
             <div class="section-header">
                 <div>
@@ -375,7 +406,7 @@
                         <div class="author-avatar">MR</div>
                         <div class="author-info">
                             <strong>Mariana Ríos</strong>
-                            <span>Viajó a Cancún • CDMX</span>
+                            <span>Viajó a Cancún &bull; CDMX</span>
                         </div>
                     </div>
                 </article>
@@ -387,7 +418,7 @@
                         <div class="author-avatar">CG</div>
                         <div class="author-info">
                             <strong>Carlos Gómez</strong>
-                            <span>Viajó a Acapulco • Estado de México</span>
+                            <span>Viajó a Acapulco &bull; Estado de México</span>
                         </div>
                     </div>
                 </article>
@@ -399,14 +430,13 @@
                         <div class="author-avatar">AL</div>
                         <div class="author-info">
                             <strong>Andrea López</strong>
-                            <span>Tour Pueblos Mágicos • Puebla</span>
+                            <span>Tour Pueblos Mágicos &bull; Puebla</span>
                         </div>
                     </div>
                 </article>
             </div>
         </section>
 
-        <!-- Registro para agencias -->
         <section class="b2b-cta-section">
             <h2>¿Tienes una Agencia de Viajes?</h2>
             <p>Publica tu agencia en nuestro directorio y recibe clientes interesados directamente en tu WhatsApp o página web, sin pagar comisiones por venta.</p>
@@ -414,7 +444,6 @@
         </section>
     </main>
 
-    <!-- Ventana modal de ficha -->
     <div id="agencyModal" class="modal-backdrop" onclick="cerrarModalAgencia(event)">
         <div class="modal-card">
             <button type="button" class="modal-close" onclick="cerrarModalAgencia()">✕</button>
@@ -436,11 +465,41 @@
     <script src="data/agencias.js"></script>
     <script src="js/app.js"></script>
 </body>
-</html> • Consultar", especialidad: "Paquetes turísticos", descripcion: "", destinos: ["cancun", "acapulco"], tags: [], web: "", whatsappNumero: "" },;
+</html> - Consultar",
+                especialidad: "Paquetes turísticos",
+                descripcion: desc,
+                destinos: ["cancun", "acapulco"],
+                tags: tags,
+                web: web,
+                whatsappNumero: wa
+            };
+
+            return JSON.stringify(nodo) + ",";
         }
 
         async function enviarSolicitud(e) {
             e.preventDefault();
+            const honeypot = document.getElementById('website_confirm').value;
+            if (honeypot) return;
+
+            const ahora = Date.now();
+            if (ahora - ultimoEnvio < 30000) {
+                alert("Por favor espera 30 segundos antes de enviar otra solicitud.");
+                return;
+            }
+
+            const waDigitos = document.getElementById('whatsappAgencia').value.replace(/\D/g, '');
+            if (waDigitos.length < 10 || waDigitos.length > 15) {
+                alert("Ingresa un número de WhatsApp válido (entre 10 y 15 dígitos con lada).");
+                return;
+            }
+
+            const webInput = document.getElementById('webAgencia').value.trim();
+            if (webInput && !validarUrlSegura(webInput)) {
+                alert("El enlace del sitio web debe comenzar con https:// o http://");
+                return;
+            }
+
             const btn = document.getElementById('btnSubmit');
             const feedback = document.getElementById('formFeedback');
             const form = e.target;
@@ -449,18 +508,18 @@
             btn.textContent = "Enviando solicitud...";
 
             const datos = {
-                _subject: "Nueva Agencia: " + document.getElementById('nombreAgencia').value,
+                _subject: "Nueva Agencia: " + limpiarEntrada(document.getElementById('nombreAgencia').value),
                 _template: "table",
                 _captcha: "false",
                 Plan: document.getElementById('planAgencia').value,
-                Agencia: document.getElementById('nombreAgencia').value,
-                Salida: document.getElementById('salidaAgencia').value,
-                Correo: document.getElementById('correoAgencia').value,
-                WhatsApp: document.getElementById('whatsappAgencia').value,
-                Sitio_Web: document.getElementById('webAgencia').value || "No especificado",
-                Destinos: document.getElementById('destinosAgencia').value,
-                Descripcion: document.getElementById('descAgencia').value,
-                Nodo_Catalogo: generarCodigoJS()
+                Agencia: limpiarEntrada(document.getElementById('nombreAgencia').value),
+                Salida: limpiarEntrada(document.getElementById('salidaAgencia').value),
+                Correo: limpiarEntrada(document.getElementById('correoAgencia').value),
+                WhatsApp: waDigitos,
+                Sitio_Web: validarUrlSegura(webInput) || "No especificado",
+                Destinos: limpiarEntrada(document.getElementById('destinosAgencia').value),
+                Descripcion: limpiarEntrada(document.getElementById('descAgencia').value),
+                Nodo_Catalogo: generarNodoSeguro()
             };
 
             try {
@@ -471,10 +530,11 @@
                 });
 
                 if (response.ok) {
+                    ultimoEnvio = Date.now();
                     feedback.style.display = 'block';
                     feedback.style.background = '#dcfce7';
                     feedback.style.color = '#166534';
-                    feedback.textContent = '✅ ¡Solicitud enviada! Validaremos los datos de "' + datos.Agencia + '" y te confirmaremos pronto.';
+                    feedback.textContent = '✅ Solicitud recibida. Validaremos los datos de "' + datos.Agencia + '" antes de su publicación.';
                     form.reset();
                     actualizarPreview();
                 } else {
@@ -492,16 +552,16 @@
         }
 
         function enviarPorWhatsApp() {
-            const nombre = document.getElementById('nombreAgencia').value.trim();
-            const whatsapp = document.getElementById('whatsappAgencia').value.trim();
-            const destinos = document.getElementById('destinosAgencia').value.trim();
-            const salida = document.getElementById('salidaAgencia').value.trim();
-            const desc = document.getElementById('descAgencia').value.trim();
-            const web = document.getElementById('webAgencia').value.trim();
+            const nombre = limpiarEntrada(document.getElementById('nombreAgencia').value);
+            const waDigitos = document.getElementById('whatsappAgencia').value.replace(/\D/g, '');
+            const destinos = limpiarEntrada(document.getElementById('destinosAgencia').value);
+            const salida = limpiarEntrada(document.getElementById('salidaAgencia').value);
+            const desc = limpiarEntrada(document.getElementById('descAgencia').value);
+            const web = validarUrlSegura(document.getElementById('webAgencia').value);
             const plan = document.getElementById('planAgencia').value;
 
-            if (!nombre || !whatsapp || !destinos) {
-                alert("Por favor llena al menos el Nombre de la Agencia, tu WhatsApp y los Destinos.");
+            if (!nombre || waDigitos.length < 10 || !destinos) {
+                alert("Completa al menos el Nombre de la Agencia, un WhatsApp válido y los Destinos.");
                 return;
             }
 
@@ -509,12 +569,12 @@
                             "• *Plan:* " + encodeURIComponent(plan) + "%0A" +
                             "• *Agencia:* " + encodeURIComponent(nombre) + "%0A" +
                             "• *Salida:* " + encodeURIComponent(salida) + "%0A" +
-                            "• *WhatsApp:* " + encodeURIComponent(whatsapp) + "%0A" +
+                            "• *WhatsApp:* " + encodeURIComponent(waDigitos) + "%0A" +
                             "• *Web/FB:* " + encodeURIComponent(web || "N/A") + "%0A" +
                             "• *Destinos:* " + encodeURIComponent(destinos) + "%0A" +
                             "• *Descripción:* " + encodeURIComponent(desc);
 
-            window.open("https://wa.me/" + WHATSAPP_ADMIN + "?text=" + mensaje, "_blank");
+            window.open("https://wa.me/" + WHATSAPP_ADMIN + "?text=" + mensaje, "_blank", "noopener,noreferrer");
         }
     </script>
 </body>
