@@ -1,3 +1,4 @@
-﻿User-agent: *
+User-agent: *
 Allow: /
+Disallow: /pages/admin.html
 Sitemap: https://luisfgarciae.github.io/directorio-agencias/sitemap.xml
