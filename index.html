@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://images.unsplash.com data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <meta name="description" content="Directorio publicitario de agencias de viajes verificadas en México. Encuentra especialistas para Acapulco, Cancún, Los Cabos y Pueblos Mágicos.">
+    <meta name="description" content="Directorio publicitario de agencias de viajes verificadas en México. Filtra por destino y ciudad de salida (CDMX, Monterrey, Guadalajara, Puebla).">
     
     <meta property="og:title" content="Directorio Viajero | Agencias de Viajes Verificadas en México">
     <meta property="og:description" content="Conecta directo con agencias especialistas para Acapulco, Cancún, Los Cabos y Pueblos Mágicos sin intermediarios.">
@@ -42,12 +42,20 @@
     <section class="hero">
         <span class="hero-badge">🇲🇽 El punto de encuentro turístico en México</span>
         <h1>Conecta directo con Agencias de Viajes Verificadas</h1>
-        <p>Compara opciones por destino y cotiza directamente con especialistas, sin intermediarios ni comisiones ocultas.</p>
+        <p>Filtra por destino o ciudad de salida y cotiza directamente con especialistas, sin intermediarios ni comisiones ocultas.</p>
         
-        <div class="search-box">
-            <input type="text" id="searchInput" maxlength="80" placeholder="Buscar agencia, paquete (ej. todo incluido, charter, CDMX)..." aria-label="Buscar por palabra clave">
+        <div class="search-box" style="max-width: 900px;">
+            <input type="text" id="searchInput" maxlength="80" placeholder="Buscar agencia o paquete (ej. charter, todo incluido)..." aria-label="Buscar por palabra clave">
+            <select id="origenSelect" aria-label="Ciudad de salida" onchange="ejecutarBusqueda()" style="border-right: 1px solid var(--border);">
+                <option value="todos">📍 Cualquier salida</option>
+                <option value="cdmx">CDMX y Área Metro</option>
+                <option value="monterrey">Monterrey / Nuevo León</option>
+                <option value="guadalajara">Guadalajara / Jalisco</option>
+                <option value="puebla">Puebla</option>
+                <option value="bajio">Bajío (Querétaro / León)</option>
+            </select>
             <select id="destinoSelect" aria-label="Seleccionar destino" onchange="ejecutarBusqueda()">
-                <option value="todos">Todos los destinos</option>
+                <option value="todos">🌴 Todos los destinos</option>
                 <option value="acapulco">Acapulco</option>
                 <option value="cancun">Cancún y Riviera Maya</option>
                 <option value="loscabos">Los Cabos</option>
@@ -58,7 +66,7 @@
 
         <div class="trust-strip">
             <div><strong>100% Directo</strong> &bull; Trato sin intermediarios</div>
-            <div><strong>+4 Destinos</strong> &bull; Playas y Pueblos Mágicos</div>
+            <div><strong>Cobertura Nacional</strong> &bull; Salidas desde todo México</div>
             <div><strong>Cero Comisiones</strong> &bull; Cotiza directo en WhatsApp</div>
         </div>
     </section>

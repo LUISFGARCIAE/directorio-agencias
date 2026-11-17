@@ -1,5 +1,6 @@
 ﻿let estadoFiltros = {
     destino: 'todos',
+    origen: 'todos',
     texto: '',
     rapido: 'todas'
 };
@@ -14,7 +15,6 @@ try {
     favoritos = [];
 }
 
-// Sanitizacion contra inyeccion HTML / XSS
 function escaparHTML(texto) {
     if (texto === null || texto === undefined) return '';
     return String(texto)
@@ -26,7 +26,6 @@ function escaparHTML(texto) {
         .replace(/`/g, '&#96;');
 }
 
-// Validar que las URLs externas usen exclusivamente http o https
 function validarUrlSegura(url) {
     if (!url || typeof url !== 'string') return '';
     const limpia = url.trim();
@@ -106,6 +105,8 @@ function renderizarAgencias() {
 
     const filtradas = ordenadas.filter(agencia => {
         const cumpleDestino = estadoFiltros.destino === 'todos' || agencia.destinos.includes(estadoFiltros.destino);
+        const cumpleOrigen = estadoFiltros.origen === 'todos' || (Array.isArray(agencia.estadosSalida) && agencia.estadosSalida.includes(estadoFiltros.origen));
+
         const q = estadoFiltros.texto.toLowerCase().trim();
         const cumpleTexto = !q || 
             agencia.nombre.toLowerCase().includes(q) ||
@@ -118,7 +119,7 @@ function renderizarAgencias() {
         if (estadoFiltros.rapido === 'whatsapp') cumpleRapido = Boolean(agencia.whatsappNumero);
         if (estadoFiltros.rapido === 'favoritas') cumpleRapido = favoritos.includes(agencia.id);
 
-        return cumpleDestino && cumpleTexto && cumpleRapido;
+        return cumpleDestino && cumpleOrigen && cumpleTexto && cumpleRapido;
     });
 
     if (counter) {
@@ -129,8 +130,8 @@ function renderizarAgencias() {
         const emptyBox = document.createElement('div');
         emptyBox.style.cssText = 'grid-column: 1/-1; text-align: center; padding: 3rem 1rem; background: var(--bg-card); border-radius: 1rem; border: 1px solid var(--border);';
         emptyBox.innerHTML = `
-            <p style="color: var(--secondary); font-weight: 700; margin-bottom: 0.5rem;">No encontramos agencias con estos filtros</p>
-            <p style="color: var(--text-soft); font-size: 0.9rem; margin-bottom: 1rem;">Prueba cambiando el destino o limpia los filtros activos.</p>
+            <p style="color: var(--secondary); font-weight: 700; margin-bottom: 0.5rem;">No encontramos agencias con esa combinación de filtros</p>
+            <p style="color: var(--text-soft); font-size: 0.9rem; margin-bottom: 1rem;">Prueba seleccionando "Todo México" en ciudad de salida o limpia los filtros activos.</p>
             <button type="button" onclick="reiniciarFiltros()" class="btn-action btn-primary" style="display: inline-block; width: auto; padding: 0.6rem 1.25rem;">Ver todas las agencias</button>
         `;
         grid.appendChild(emptyBox);
@@ -188,16 +189,20 @@ function renderizarAgencias() {
 
 function ejecutarBusqueda() {
     const input = document.getElementById('searchInput');
-    const select = document.getElementById('destinoSelect');
+    const selectDestino = document.getElementById('destinoSelect');
+    const selectOrigen = document.getElementById('origenSelect');
+
     estadoFiltros.texto = input ? input.value.slice(0, 80) : '';
-    estadoFiltros.destino = select ? select.value : 'todos';
+    estadoFiltros.destino = selectDestino ? selectDestino.value : 'todos';
+    estadoFiltros.origen = selectOrigen ? selectOrigen.value : 'todos';
+
     renderizarAgencias();
     document.getElementById('agencias').scrollIntoView({ behavior: 'smooth' });
 }
 
 function seleccionarDestinoCard(destino) {
-    const select = document.getElementById('destinoSelect');
-    if (select) select.value = destino;
+    const selectDestino = document.getElementById('destinoSelect');
+    if (selectDestino) selectDestino.value = destino;
     estadoFiltros.destino = destino;
     renderizarAgencias();
     document.getElementById('agencias').scrollIntoView({ behavior: 'smooth' });
@@ -211,11 +216,13 @@ function aplicarFiltroRapido(tipo, botonElement) {
 }
 
 function reiniciarFiltros() {
-    estadoFiltros = { destino: 'todos', texto: '', rapido: 'todas' };
+    estadoFiltros = { destino: 'todos', origen: 'todos', texto: '', rapido: 'todas' };
     const input = document.getElementById('searchInput');
-    const select = document.getElementById('destinoSelect');
+    const selectDestino = document.getElementById('destinoSelect');
+    const selectOrigen = document.getElementById('origenSelect');
     if (input) input.value = '';
-    if (select) select.value = 'todos';
+    if (selectDestino) selectDestino.value = 'todos';
+    if (selectOrigen) selectOrigen.value = 'todos';
     document.querySelectorAll('.pill-btn').forEach((btn, idx) => {
         btn.classList.toggle('active', idx === 0);
     });
