@@ -5,18 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://images.unsplash.com data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <meta name="description" content="Directorio publicitario de agencias de viajes verificadas en México. Filtra por destino y ciudad de salida (CDMX, Monterrey, Guadalajara, Puebla).">
+    <meta name="theme-color" content="#0284c7">
+    <meta name="description" content="Directorio publicitario de agencias de viajes verificadas en México con Registro Nacional de Turismo (RNT). Cotiza directo en WhatsApp.">
     
     <meta property="og:title" content="Directorio Viajero | Agencias de Viajes Verificadas en México">
     <meta property="og:description" content="Conecta directo con agencias especialistas para Acapulco, Cancún, Los Cabos y Pueblos Mágicos sin intermediarios.">
     <meta property="og:image" content="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80">
     <meta property="og:type" content="website">
 
+    <link rel="manifest" href="manifest.json">
     <title>Directorio Viajero | Conecta con Agencias de Viajes en México</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+
 </head>
 <body>
 
@@ -24,7 +27,7 @@
         <a href="index.html" class="logo">✈️ Directorio<span>Viajero</span></a>
         <nav>
             <a href="index.html">Inicio</a>
-            <a href="#destinos">Destinos</a>
+            <a href="#ofertas">Ofertas</a>
             <a href="#agencias">Agencias</a>
             <a href="#opiniones">Opiniones</a>
 
@@ -45,7 +48,7 @@
         <p>Filtra por destino o ciudad de salida y cotiza directamente con especialistas, sin intermediarios ni comisiones ocultas.</p>
         
         <div class="search-box" style="max-width: 900px;">
-            <input type="text" id="searchInput" maxlength="80" placeholder="Buscar agencia o paquete (ej. charter, todo incluido)..." aria-label="Buscar por palabra clave">
+            <input type="text" id="searchInput" maxlength="80" placeholder="Buscar agencia, folio RNT o paquete (ej. charter)..." aria-label="Buscar por palabra clave">
             <select id="origenSelect" aria-label="Ciudad de salida" onchange="ejecutarBusqueda()" style="border-right: 1px solid var(--border);">
                 <option value="todos">📍 Cualquier salida</option>
                 <option value="cdmx">CDMX y Área Metro</option>
@@ -66,12 +69,13 @@
 
         <div class="trust-strip">
             <div><strong>100% Directo</strong> &bull; Trato sin intermediarios</div>
-            <div><strong>Cobertura Nacional</strong> &bull; Salidas desde todo México</div>
+            <div><strong>Agencias con RNT</strong> &bull; Mayor seguridad al viajar</div>
             <div><strong>Cero Comisiones</strong> &bull; Cotiza directo en WhatsApp</div>
         </div>
     </section>
 
     <main class="container">
+        <!-- Destinos populares -->
         <div id="destinos">
             <div class="section-header">
                 <div>
@@ -112,6 +116,18 @@
             </div>
         </div>
 
+        <!-- Ofertas de Temporada -->
+        <section class="deals-section" id="ofertas">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">🔥 Ofertas de Temporada</h2>
+                    <p class="section-subtitle">Promociones publicadas directamente por agencias anunciantes</p>
+                </div>
+            </div>
+            <div class="deals-grid" id="dealsGrid"></div>
+        </section>
+
+        <!-- Espacio publicitario horizontal -->
         <aside class="ad-banner-slot">
             <span class="ad-tag">Espacio Patrocinado</span>
             <div class="ad-banner-content">
@@ -121,6 +137,7 @@
             <a href="pages/anunciate.html" class="btn-banner">Reservar Banner</a>
         </aside>
 
+        <!-- Listado de agencias -->
         <div id="agencias">
             <div class="section-header">
                 <div>
@@ -133,6 +150,7 @@
                 <div class="quick-pills">
                     <button type="button" class="pill-btn active" onclick="aplicarFiltroRapido('todas', this)">Todas</button>
                     <button type="button" class="pill-btn" onclick="aplicarFiltroRapido('destacadas', this)">⭐ Destacadas</button>
+                    <button type="button" class="pill-btn" onclick="aplicarFiltroRapido('rnt', this)">🛡️ Con Folio RNT</button>
                     <button type="button" class="pill-btn" onclick="aplicarFiltroRapido('whatsapp', this)">💬 Con WhatsApp</button>
                     <button type="button" class="pill-btn" onclick="aplicarFiltroRapido('favoritas', this)">❤️ Mis Favoritas</button>
                 </div>
@@ -142,6 +160,7 @@
             <div class="directory-grid" id="agencyGrid"></div>
         </div>
 
+        <!-- Experiencias de viajeros -->
         <section class="reviews-section" id="opiniones">
             <div class="section-header">
                 <div>
@@ -177,7 +196,7 @@
 
                 <article class="review-card">
                     <div class="review-stars">★★★★★</div>
-                    <p class="review-text">"Muy práctico tener todas las agencias ordenadas por destino. Encontramos un tour a Pueblos Mágicos con salida desde Puebla."</p>
+                    <p class="review-text">"Muy práctico tener todas las agencias ordenadas por destino y ver cuáles tienen registro RNT. Encontramos un tour a Pueblos Mágicos saliendo de Puebla."</p>
                     <div class="review-author">
                         <div class="author-avatar">AL</div>
                         <div class="author-info">
@@ -189,6 +208,7 @@
             </div>
         </section>
 
+        <!-- Registro para agencias -->
         <section class="b2b-cta-section">
             <h2>¿Tienes una Agencia de Viajes?</h2>
             <p>Publica tu agencia en nuestro directorio y recibe clientes interesados directamente en tu WhatsApp o página web, sin pagar comisiones por venta.</p>

@@ -6,6 +6,7 @@
         colorTexto: "#0284c7",
         colorFondo: "#e0f2fe",
         destacada: true,
+        rnt: "04090150001",
         rating: "4.9",
         etiquetaEstado: "✔ Agencia Verificada",
         salidaDesde: "CDMX y Área Metropolitana",
@@ -25,6 +26,7 @@
         colorTexto: "#0284c7",
         colorFondo: "#e0f2fe",
         destacada: true,
+        rnt: "04230050002",
         rating: "4.8",
         etiquetaEstado: "✔ Sitio Oficial (Ejemplo)",
         salidaDesde: "Todo México (CDMX, MTY, GDL)",
@@ -44,6 +46,7 @@
         colorTexto: "#dc2626",
         colorFondo: "#fee2e2",
         destacada: true,
+        rnt: "04090150089",
         rating: "4.8",
         etiquetaEstado: "✔ Sitio Oficial (Ejemplo)",
         salidaDesde: "Todo México (CDMX, GDL, MTY, Puebla)",
@@ -63,6 +66,7 @@
         colorTexto: "#ea580c",
         colorFondo: "#ffedd5",
         destacada: true,
+        rnt: "04120010045",
         rating: "4.7",
         etiquetaEstado: "✔ Agencia Verificada",
         salidaDesde: "CDMX y Puebla",
@@ -82,6 +86,7 @@
         colorTexto: "#1d4ed8",
         colorFondo: "#dbeafe",
         destacada: false,
+        rnt: "04230050114",
         rating: "4.7",
         etiquetaEstado: "✔ Sitio Oficial (Ejemplo)",
         salidaDesde: "Todo México (CDMX, MTY, GDL, Bajío)",
@@ -101,6 +106,7 @@
         colorTexto: "#7c3aed",
         colorFondo: "#ede9fe",
         destacada: false,
+        rnt: "",
         rating: "4.6",
         etiquetaEstado: "✔ Sitio Oficial (Ejemplo)",
         salidaDesde: "CDMX y Bajío (Querétaro / León)",
@@ -120,6 +126,7 @@
         colorTexto: "#16a34a",
         colorFondo: "#dcfce7",
         destacada: false,
+        rnt: "04090080211",
         rating: "4.9",
         etiquetaEstado: "✔ Agencia Verificada",
         salidaDesde: "CDMX y Puebla",
@@ -131,5 +138,38 @@
         tags: ["#PueblosMágicos", "#Ecoturismo"],
         web: "",
         whatsappNumero: "525500000000"
+    }
+];
+
+const OFERTAS_TEMPORADA = [
+    {
+        agencia: "Caribe Tours & Travel",
+        titulo: "Cancún Todo Incluido • 4 Días / 3 Noches",
+        detalle: "Vuelo redondo desde CDMX + Traslados + Hotel frente al mar.",
+        precio: "Desde $6,890 MXN",
+        etiqueta: "Vuelo Charter",
+        imagen: "https://images.unsplash.com/photo-1510097467424-192d713fd8b2?auto=format&fit=crop&w=600&q=80",
+        whatsappNumero: "525500000000",
+        web: ""
+    },
+    {
+        agencia: "Pacífico Escapes",
+        titulo: "Acapulco Fin de Semana • Autobús + Hotel",
+        detalle: "Salida viernes noche desde CDMX y Puebla. Desayunos incluidos.",
+        precio: "Desde $2,350 MXN",
+        etiqueta: "Salida Grupal",
+        imagen: "https://images.unsplash.com/photo-1582972236019-ea4af5ffe587?auto=format&fit=crop&w=600&q=80",
+        whatsappNumero: "525500000000",
+        web: ""
+    },
+    {
+        agencia: "Mundo Joven",
+        titulo: "Ruta Pueblos Mágicos y Cenotes",
+        detalle: "Tour guiado con entradas incluidas y hospedaje boutique.",
+        precio: "Desde $3,490 MXN",
+        etiqueta: "Cupo Limitado",
+        imagen: "https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?auto=format&fit=crop&w=600&q=80",
+        whatsappNumero: "525554828282",
+        web: "https://mundojoven.com/"
     }
 ];
