@@ -350,7 +350,7 @@
         </div>
     </main>
 
-    <script src="../js/app.js"></script>
+    <script src="../js/app.js?v=20261117ultra"></script>
     <script>
         const REPO_OWNER = "LUISFGARCIAE";
         const REPO_NAME = "directorio-agencias";
@@ -362,6 +362,7 @@
             agencias: "🏢 Directorio Principal de Anunciantes",
             mapa: "📍 Mapa de Sedes y Locaciones",
             opiniones: "💬 Opiniones de Usuarios",
+            faq: "❓ Preguntas Frecuentes (FAQ)",
             b2b: "🚀 Llamado de Registro para Negocios"
         };
 
@@ -471,7 +472,7 @@
 
         function renderizarOrdenSecciones() {
             const cont = document.getElementById("listaOrdenSecciones");
-            const orden = configActual.ordenSecciones || ["destinos", "ofertas", "banner", "agencias", "opiniones", "b2b"];
+            const orden = configActual.ordenSecciones || ["destinos", "ofertas", "banner", "agencias", "mapa", "opiniones", "faq", "b2b"];
             configActual.ordenSecciones = orden;
             cont.innerHTML = "";
 

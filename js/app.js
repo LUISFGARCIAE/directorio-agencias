@@ -2,6 +2,7 @@ let PLATAFORMA_CONFIG = { MODO_MULTISECTOR: false, categorias: [] };
 let AGENCIAS_DATA = [];
 let OFERTAS_TEMPORADA = [];
 let OPINIONES_DATA = [];
+let FAQ_DATA = [];
 
 let heroSlideIdx = 0;
 let heroIntervalId = null;
@@ -127,6 +128,7 @@ async function cargarDatosRemotos() {
             AGENCIAS_DATA = Array.isArray(dataJson.anunciantes) ? dataJson.anunciantes : [];
             OFERTAS_TEMPORADA = Array.isArray(dataJson.ofertas) ? dataJson.ofertas : [];
             OPINIONES_DATA = Array.isArray(dataJson.opiniones) ? dataJson.opiniones : [];
+            FAQ_DATA = Array.isArray(dataJson.faq) ? dataJson.faq : [];
         }
     } catch (error) {
         console.error('Error cargando datos:', error);
@@ -716,6 +718,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         renderizarAgencias();
         renderizarMapaLocaciones();
         renderizarOpiniones();
+        renderizarFAQ();
         inicializarBarraEdicionVisual();
         verificarDeepLinkAgencia();
     } else {
@@ -807,7 +810,29 @@ function abrirModalComparador() {
         bodyRows += `<tr><th>${f.titulo}</th>` + items.map(a => `<td>${f.fn(a)}</td>`).join('') + `</tr>`;
     });
 
-    cont.innerHTML = `<table class="compare-table"><thead><tr>${headersHtml}</tr></thead><tbody>${bodyRows}</tbody></table>`;
+    const conWhatsApp = items.filter(a => Boolean(a.whatsappNumero));
+    let multiQuoteHtml = '';
+    if (conWhatsApp.length > 0) {
+        multiQuoteHtml = `
+            <div class="quick-quote-box" style="margin-top: 1.25rem;">
+                <div class="quick-quote-title">⚡ Cotización Múltiple (Envía los mismos datos a tus ${conWhatsApp.length} opciones)</div>
+                <div class="quick-quote-grid">
+                    <input type="text" id="mqFecha" placeholder="Fecha o mes deseado">
+                    <input type="text" id="mqPersonas" placeholder="Personas / Invitados (Ej. 4 adultos)">
+                </div>
+                <input type="text" id="mqDetalle" placeholder="Comentarios (Ej. Salida desde CDMX, todo incluido...)" style="width:100%; padding:0.5rem 0.65rem; border-radius:0.45rem; border:1px solid var(--border); background:var(--bg-card); color:var(--text-main); font-size:0.82rem; margin-bottom:0.75rem;">
+                <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+                    ${conWhatsApp.map(a => `
+                        <button type="button" onclick="enviarMultiCotizacion('${escaparHTML(a.id)}')" class="btn-action btn-whatsapp" style="flex:1; min-width:160px;">
+                            💬 Enviar a ${escaparHTML(a.nombre)}
+                        </button>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+
+    cont.innerHTML = `<table class="compare-table"><thead><tr>${headersHtml}</tr></thead><tbody>${bodyRows}</tbody></table>${multiQuoteHtml}`;
     modal.classList.add('open');
 }
 
@@ -860,4 +885,148 @@ function verificarDeepLinkAgencia() {
     if (idAgencia && AGENCIAS_DATA.some(a => a.id === idAgencia)) {
         abrirModalAgencia(idAgencia);
     }
+}
+
+function cambiarFotoModal(url, btnEl) {
+    const mainImg = document.getElementById('modalMainPhoto');
+    if (mainImg) mainImg.src = url;
+    document.querySelectorAll('.modal-thumb-btn').forEach(b => b.classList.remove('active'));
+    if (btnEl) btnEl.classList.add('active');
+}
+
+function enviarMultiCotizacion(id) {
+    const agencia = AGENCIAS_DATA.find(a => a.id === id);
+    if (!agencia || !agencia.whatsappNumero) return;
+
+    const soloDigitos = String(agencia.whatsappNumero).replace(/\D/g, '');
+    const fecha = document.getElementById('mqFecha').value || 'Por definir';
+    const personas = document.getElementById('mqPersonas').value || 'Por definir';
+    const detalle = document.getElementById('mqDetalle').value.trim();
+
+    const msg = `Hola *${agencia.nombre}*, estoy comparando opciones en *Directorio Viajero* y me gustaría cotizar:\n` +
+                `• *Fecha:* ${fecha}\n` +
+                `• *Personas:* ${personas}\n` +
+                (detalle ? `• *Detalles:* ${detalle}` : '');
+
+    registrarEventoClic(agencia.nombre, 'cotizacion_multiple_comparador');
+    window.open(`https://wa.me/${soloDigitos}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
+}
+
+function renderizarFAQ() {
+    const cont = document.getElementById('faqListContainer');
+    if (!cont || !FAQ_DATA.length) return;
+    cont.innerHTML = '';
+
+    FAQ_DATA.forEach((item, idx) => {
+        const div = document.createElement('div');
+        div.className = `faq-item ${idx === 0 ? 'open' : ''}`;
+        div.innerHTML = `
+            <button type="button" class="faq-question">
+                <span>${escaparHTML(item.pregunta)}</span>
+                <span>＋</span>
+            </button>
+            <div class="faq-answer">${escaparHTML(item.respuesta)}</div>
+        `;
+        div.querySelector('.faq-question').addEventListener('click', () => {
+            div.classList.toggle('open');
+        });
+        cont.appendChild(div);
+    });
+
+    // Inyectar Schema.org FAQPage para SEO en Google
+    let ldScript = document.getElementById('faqSchemaLd');
+    if (!ldScript) {
+        ldScript = document.createElement('script');
+        ldScript.id = 'faqSchemaLd';
+        ldScript.type = 'application/ld+json';
+        document.head.appendChild(ldScript);
+    }
+    const schema = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": FAQ_DATA.map(f => ({
+            "@type": "Question",
+            "name": f.pregunta,
+            "acceptedAnswer": { "@type": "Answer", "text": f.respuesta }
+        }))
+    };
+    ldScript.textContent = JSON.stringify(schema);
+}
+
+// Asistente de Recomendacion en 3 Pasos
+let wizardSeleccion = { categoria: 'todos', destino: 'todos', soloWa: false };
+
+function abrirAsistenteRecomendacion() {
+    wizardSeleccion = { categoria: esModoMultisector() ? 'todos' : 'viajes', destino: 'todos', soloWa: false };
+    const modal = document.getElementById('wizardModal');
+    if (esModoMultisector()) {
+        mostrarPasoWizard(1);
+    } else {
+        mostrarPasoWizard(2);
+    }
+    modal.classList.add('open');
+}
+
+function cerrarModalWizard(event) {
+    if (!event || event.target.id === 'wizardModal' || event.target.classList.contains('modal-close')) {
+        document.getElementById('wizardModal').classList.remove('open');
+    }
+}
+
+function mostrarPasoWizard(paso) {
+    const body = document.getElementById('wizardBody');
+    if (paso === 1) {
+        body.innerHTML = `
+            <span style="font-size:0.78rem; font-weight:700; color:var(--primary);">PASO 1 DE 3</span>
+            <h3 style="font-size:1.3rem; color:var(--secondary); margin-top:0.25rem;">¿Qué estás planeando hoy?</h3>
+            <div class="wizard-options-grid">
+                <button type="button" class="wizard-opt-btn" onclick="wizardSeleccion.categoria='viajes'; mostrarPasoWizard(2);">✈️ Un Viaje o Vacaciones</button>
+                <button type="button" class="wizard-opt-btn" onclick="wizardSeleccion.categoria='bodas'; mostrarPasoWizard(2);">💍 Una Boda o Evento</button>
+                <button type="button" class="wizard-opt-btn" onclick="wizardSeleccion.categoria='hospedaje'; mostrarPasoWizard(2);">🏡 Renta de Quinta / Cabaña</button>
+                <button type="button" class="wizard-opt-btn" onclick="wizardSeleccion.categoria='servicios'; mostrarPasoWizard(2);">📸 Fotografía o Experiencia</button>
+            </div>
+        `;
+    } else if (paso === 2) {
+        body.innerHTML = `
+            <span style="font-size:0.78rem; font-weight:700; color:var(--primary);">PASO 2 DE 3</span>
+            <h3 style="font-size:1.3rem; color:var(--secondary); margin-top:0.25rem;">¿Qué destino o zona prefieres?</h3>
+            <div class="wizard-options-grid">
+                <button type="button" class="wizard-opt-btn" onclick="wizardSeleccion.destino='cancun'; mostrarPasoWizard(3);">🏝️ Cancún y Riviera Maya</button>
+                <button type="button" class="wizard-opt-btn" onclick="wizardSeleccion.destino='acapulco'; mostrarPasoWizard(3);">🌊 Acapulco / Pacífico</button>
+                <button type="button" class="wizard-opt-btn" onclick="wizardSeleccion.destino='pueblos-magicos'; mostrarPasoWizard(3);">🏛️ Pueblos Mágicos / Centro</button>
+                <button type="button" class="wizard-opt-btn" onclick="wizardSeleccion.destino='todos'; mostrarPasoWizard(3);">🌎 Cualquier destino en México</button>
+            </div>
+        `;
+    } else {
+        body.innerHTML = `
+            <span style="font-size:0.78rem; font-weight:700; color:var(--primary);">PASO 3 DE 3</span>
+            <h3 style="font-size:1.3rem; color:var(--secondary); margin-top:0.25rem;">¿Cómo prefieres cotizar?</h3>
+            <div class="wizard-options-grid">
+                <button type="button" class="wizard-opt-btn" onclick="aplicarResultadoWizard(true);">💬 Atención rápida por WhatsApp</button>
+                <button type="button" class="wizard-opt-btn" onclick="aplicarResultadoWizard(false);">🌐 Ver todas las opciones disponibles</button>
+            </div>
+        `;
+    }
+}
+
+function aplicarResultadoWizard(soloWa) {
+    wizardSeleccion.soloWa = soloWa;
+    estadoFiltros.categoria = wizardSeleccion.categoria;
+    estadoFiltros.destino = wizardSeleccion.destino;
+    estadoFiltros.rapido = soloWa ? 'whatsapp' : 'todas';
+
+    const selectDestino = document.getElementById('destinoSelect');
+    if (selectDestino) selectDestino.value = wizardSeleccion.destino;
+
+    document.querySelectorAll('.sector-tab').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.toLowerCase().includes(wizardSeleccion.categoria === 'todos' ? 'todos' : wizardSeleccion.categoria));
+    });
+
+    cerrarModalWizard();
+    renderizarOfertas();
+    renderizarAgencias();
+    renderizarMapaLocaciones();
+
+    const target = document.getElementById('sec-agencias');
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
 }

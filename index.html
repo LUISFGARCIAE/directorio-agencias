@@ -18,7 +18,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css?v=20261117pro">
+    <link rel="stylesheet" href="css/styles.css?v=20261117ultra">
 </head>
 <body>
 
@@ -79,6 +79,7 @@
                 <div><strong>Cero Comisiones</strong> &bull; Cotiza directo en WhatsApp</div>
             </div>
 
+            <button type="button" class="wizard-trigger-btn" onclick="abrirAsistenteRecomendacion()">✨ Ayúdame a elegir en 30 segundos</button>
             <div class="hero-dots" id="heroDots"></div>
         </div>
     </section>
@@ -216,6 +217,20 @@
             <div class="reviews-grid" id="reviewsGrid"></div>
         </section>
 
+                <!-- Bloque: Preguntas Frecuentes (FAQ) -->
+        <section class="faq-section" id="sec-faq">
+            <div class="section-move-controls">
+                <button type="button" class="btn-action btn-outline" onclick="moverBloqueVisual('faq', -1)">▲ Subir bloque</button>
+                <button type="button" class="btn-action btn-outline" onclick="moverBloqueVisual('faq', 1)">▼ Bajar bloque</button>
+            </div>
+            <div class="section-header" style="justify-content: center; text-align: center;">
+                <div>
+                    <h2 class="section-title">Preguntas Frecuentes</h2>
+                    <p class="section-subtitle">Resolvemos tus dudas antes de contactar a los especialistas</p>
+                </div>
+            </div>
+            <div class="faq-list" id="faqListContainer"></div>
+        </section>
         <!-- Bloque: Llamado B2B -->
         <section class="b2b-cta-section" id="sec-b2b">
             <h2>¿Tienes una Agencia o Servicio Turístico?</h2>
@@ -250,6 +265,13 @@
             <div style="overflow-x: auto;" id="compareTableContainer"></div>
         </div>
     </div>
+        <!-- Modal Asistente de Recomendacion en 3 Pasos -->
+    <div id="wizardModal" class="modal-backdrop" onclick="cerrarModalWizard(event)">
+        <div class="modal-card" style="max-width: 560px;">
+            <button type="button" class="modal-close" onclick="cerrarModalWizard()">✕</button>
+            <div id="wizardBody"></div>
+        </div>
+    </div>
     <footer>
         <p><strong>Directorio Viajero</strong> &copy; 2026. Todos los derechos reservados.</p>
         <div class="footer-links">
@@ -261,6 +283,6 @@
         </p>
     </footer>
 
-    <script src="js/app.js?v=20261117pro"></script>
+    <script src="js/app.js?v=20261117ultra"></script>
 </body>
 </html>
