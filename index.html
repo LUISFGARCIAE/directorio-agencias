@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Directorio publicitario de agencias de viajes verificadas en México. Encuentra especialistas para tu próximo viaje a Acapulco, Cancún, Los Cabos y más.">
+    <title>Directorio Viajero | Conecta con Agencias de Viajes en México</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">✈️ Directorio<span>Viajero</span></a>
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="#destinos">Destinos</a>
+            <a href="#agencias">Agencias</a>
+            <a href="pages/anunciate.html" class="btn-cta">Anúnciate Aquí</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <span class="hero-badge">🇲🇽 El punto de encuentro turístico en México</span>
+        <h1>Conecta directo con Agencias de Viajes Verificadas</h1>
+        <p>Compara opciones por destino y cotiza directamente con especialistas, sin intermediarios ni comisiones ocultas.</p>
+        
+        <div class="search-box">
+            <select id="destinoSelect" aria-label="Seleccionar destino">
+                <option value="todos">Todos los destinos disponibles</option>
+                <option value="acapulco">Acapulco</option>
+                <option value="cancun">Cancún y Riviera Maya</option>
+                <option value="loscabos">Los Cabos</option>
+                <option value="pueblos-magicos">Pueblos Mágicos</option>
+            </select>
+            <button type="button" onclick="filtrarPorSelect()">Buscar Agencias</button>
+        </div>
+    </section>
+
+    <main class="container">
+        <div id="destinos">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Explora por Destino</h2>
+                    <p class="section-subtitle">Selecciona un lugar para filtrar las agencias especialistas</p>
+                </div>
+            </div>
+
+            <div class="destinations-grid">
+                <div class="dest-card" onclick="filtrarAgencias('acapulco', 'Acapulco')">
+                    <img src="https://images.unsplash.com/photo-1582972236019-ea4af5ffe587?auto=format&fit=crop&w=600&q=80" alt="Playas de Acapulco">
+                    <div class="dest-overlay">
+                        <h3>Acapulco</h3>
+                        <span>Escapadas y paquetes familiares</span>
+                    </div>
+                </div>
+                <div class="dest-card" onclick="filtrarAgencias('cancun', 'Cancún y Riviera Maya')">
+                    <img src="https://images.unsplash.com/photo-1510097467424-192d713fd8b2?auto=format&fit=crop&w=600&q=80" alt="Mar Caribe en Cancún">
+                    <div class="dest-overlay">
+                        <h3>Cancún y Riviera Maya</h3>
+                        <span>Todo incluido y vuelos charter</span>
+                    </div>
+                </div>
+                <div class="dest-card" onclick="filtrarAgencias('loscabos', 'Los Cabos')">
+                    <img src="https://images.unsplash.com/photo-1512813195386-6cf811ad3542?auto=format&fit=crop&w=600&q=80" alt="Arco de Los Cabos">
+                    <div class="dest-overlay">
+                        <h3>Los Cabos</h3>
+                        <span>Resorts y tours en el Pacífico</span>
+                    </div>
+                </div>
+                <div class="dest-card" onclick="filtrarAgencias('pueblos-magicos', 'Pueblos Mágicos')">
+                    <img src="https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?auto=format&fit=crop&w=600&q=80" alt="Pueblos Mágicos de México">
+                    <div class="dest-overlay">
+                        <h3>Pueblos Mágicos</h3>
+                        <span>Tours culturales de fin de semana</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="agencias">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Agencias Anunciantes</h2>
+                    <p class="section-subtitle">Contacta directamente a su sitio web o WhatsApp oficial</p>
+                </div>
+            </div>
+
+            <div id="filterStatus" class="filter-status">
+                <span id="filterText">Mostrando agencias para: Todos</span>
+                <button onclick="filtrarAgencias('todos', 'Todos')">Ver todas</button>
+            </div>
+
+            <div class="directory-grid" id="agencyGrid"></div>
+        </div>
+
+        <section class="b2b-cta-section">
+            <h2>¿Tienes una Agencia de Viajes?</h2>
+            <p>Publica tu agencia en nuestro directorio y recibe clientes interesados directamente en tu WhatsApp o página web, sin pagar comisiones por venta.</p>
+            <a href="pages/anunciate.html" class="btn-b2b">Registrar mi Agencia Ahora</a>
+        </section>
+    </main>
+
+    <footer>
+        <p><strong>Directorio Viajero</strong> &copy; 2026. Todos los derechos reservados.</p>
+        <div class="footer-links">
+            <a href="pages/legal.html">Aviso de Privacidad y Términos</a>
+            <a href="pages/anunciate.html">Contacto Comercial</a>
+        </div>
+        <p class="disclaimer-text">
+            Deslinde de responsabilidad: Este sitio web opera únicamente como un directorio publicitario y plataforma de difusión de ofertas turísticas. No somos una agencia de viajes, no gestionamos reservas, no procesamos pagos ni intervenimos en la relación contractual entre los usuarios y los anunciantes exhibidos.
+        </p>
+    </footer>
+
+    <script src="data/agencias.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

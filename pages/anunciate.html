@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anúnciate Aquí | Directorio Viajero</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+    <header>
+        <a href="../index.html" class="logo">✈️ Directorio<span>Viajero</span></a>
+        <nav>
+            <a href="../index.html">Inicio</a>
+            <a href="../index.html#destinos">Destinos</a>
+            <a href="../index.html#agencias">Agencias</a>
+            <a href="anunciate.html" class="btn-cta">Anúnciate Aquí</a>
+        </nav>
+    </header>
+
+    <section class="page-banner">
+        <h1>Haz crecer tu Agencia de Viajes</h1>
+        <p>Recibe prospectos calificados directo en tu WhatsApp o página web. Sin comisiones por reservación.</p>
+    </section>
+
+    <main class="container">
+        <div class="plans-grid">
+            <div class="plan-card">
+                <div>
+                    <h3>Plan Estándar</h3>
+                    <div class="plan-price">$0 MXN <span>/ lanzamiento</span></div>
+                    <ul class="plan-features">
+                        <li>✔ Tarjeta en el directorio general</li>
+                        <li>✔ Logotipo y descripción breve (140 caracteres)</li>
+                        <li>✔ Hasta 3 etiquetas de destino</li>
+                        <li>✔ 1 botón directo (WhatsApp o Sitio Web)</li>
+                    </ul>
+                </div>
+                <a href="#registro" class="btn-action btn-primary">Seleccionar Estándar</a>
+            </div>
+
+            <div class="plan-card popular">
+                <div>
+                    <span style="background: #e0f2fe; color: #0369a1; font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.65rem; border-radius: 9999px;">MÁS POPULAR</span>
+                    <h3 style="margin-top: 0.5rem;">Plan Destacado</h3>
+                    <div class="plan-price">Gratis 3 meses <span>/ primeros 50 registros</span></div>
+                    <ul class="plan-features">
+                        <li>✔ Posición prioritaria en los primeros lugares</li>
+                        <li>✔ Insignia visual "⭐ Destacada"</li>
+                        <li>✔ Doble botón activo (Sitio Web + WhatsApp)</li>
+                        <li>✔ Aparición en búsquedas por destino</li>
+                    </ul>
+                </div>
+                <a href="#registro" class="btn-action btn-whatsapp">Apartar Lugar Destacado</a>
+            </div>
+        </div>
+
+        <div class="form-box" id="registro">
+            <h2 style="margin-bottom: 0.5rem; color: var(--secondary);">Solicitud de Alta de Agencia</h2>
+            <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 1.75rem;">Completa tus datos para validar tu perfil y publicarlo en el directorio.</p>
+
+            <form onsubmit="enviarSolicitud(event)">
+                <div class="form-group">
+                    <label for="nombreAgencia">Nombre Comercial de la Agencia *</label>
+                    <input type="text" id="nombreAgencia" required placeholder="Ej. Viajes del Sol México">
+                </div>
+                <div class="form-group">
+                    <label for="whatsappAgencia">WhatsApp de Ventas (con lada) *</label>
+                    <input type="tel" id="whatsappAgencia" required placeholder="Ej. 52 55 1234 5678">
+                </div>
+                <div class="form-group">
+                    <label for="webAgencia">Sitio Web o Página de Facebook</label>
+                    <input type="url" id="webAgencia" placeholder="https://tuagencia.com">
+                </div>
+                <div class="form-group">
+                    <label for="destinosAgencia">Destinos principales que manejas *</label>
+                    <input type="text" id="destinosAgencia" required placeholder="Ej. Cancún, Acapulco, Pueblos Mágicos">
+                </div>
+                <div class="form-group">
+                    <label for="descAgencia">Descripción corta de tus servicios (máx. 140 caracteres) *</label>
+                    <textarea id="descAgencia" rows="3" maxlength="140" required placeholder="Especialistas en paquetes familiares todo incluido y salidas grupales..."></textarea>
+                </div>
+                <button type="submit" class="btn-action btn-primary" style="width: 100%; border: none; cursor: pointer; font-size: 1rem; padding: 0.9rem;">Enviar Solicitud de Registro</button>
+            </form>
+            <p id="formFeedback" style="display:none; margin-top: 1rem; padding: 1rem; background: #dcfce7; color: #166534; border-radius: 0.5rem; font-weight: 600; text-align: center;"></p>
+        </div>
+    </main>
+
+    <footer>
+        <p><strong>Directorio Viajero</strong> &copy; 2026. Todos los derechos reservados.</p>
+        <div class="footer-links">
+            <a href="../index.html">Volver al Inicio</a>
+            <a href="legal.html">Aviso de Privacidad y Términos</a>
+        </div>
+    </footer>
+
+    <script>
+        function enviarSolicitud(e) {
+            e.preventDefault();
+            const nombre = document.getElementById('nombreAgencia').value;
+            const feedback = document.getElementById('formFeedback');
+            feedback.style.display = 'block';
+            feedback.textContent = '✅ ¡Gracias! Recibimos la solicitud de "' + nombre + '". Validaremos tus datos para publicar tu tarjeta.';
+            e.target.reset();
+        }
+    </script>
+</body>
+</html>
