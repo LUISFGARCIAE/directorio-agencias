@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/styles.css?v=20261117">
 </head>
 <body>
 
@@ -17,8 +17,8 @@
         <a href="../index.html" class="logo">✈️ Directorio<span>Viajero</span></a>
         <nav>
             <a href="../index.html">Inicio</a>
-            <a href="../index.html#destinos">Destinos</a>
-            <a href="../index.html#agencias">Agencias</a>
+            <a href="../index.html#sec-destinos">Destinos</a>
+            <a href="../index.html#sec-agencias">Agencias</a>
             <div class="theme-controls" title="Personalizar colores y modo">
                 <button type="button" class="color-dot dot-caribe" onclick="cambiarPaleta('caribe')"></button>
                 <button type="button" class="color-dot dot-coral" onclick="cambiarPaleta('coral')"></button>
@@ -30,7 +30,7 @@
     </header>
 
     <section class="page-banner">
-        <h1>Haz crecer tu Agencia de Viajes</h1>
+        <h1>Haz crecer tu Negocio o Agencia</h1>
         <p>Recibe prospectos calificados directo en tu WhatsApp o página web. Sin comisiones por reservación.</p>
     </section>
 
@@ -68,15 +68,23 @@
 
         <div class="registration-layout" id="registro">
             <div class="form-box">
-                <h2 style="margin-bottom: 0.4rem; color: var(--secondary);">Solicitud de Alta de Agencia</h2>
-                <p style="color: var(--text-soft); font-size: 0.9rem; margin-bottom: 1.5rem;">Todos los registros pasan por validación manual antes de publicarse en el directorio.</p>
+                <h2 style="margin-bottom: 0.4rem; color: var(--secondary);">Solicitud de Alta en el Directorio</h2>
+                <p style="color: var(--text-soft); font-size: 0.9rem; margin-bottom: 1.5rem;">Todos los registros pasan por validación manual antes de publicarse.</p>
 
                 <form id="registroForm" onsubmit="enviarSolicitud(event)">
-                    <!-- Campo trampa anti-bots -->
                     <div style="position: absolute; left: -9999px;" aria-hidden="true">
                         <input type="text" id="website_confirm" name="_honey" tabindex="-1" autocomplete="off">
                     </div>
 
+                    <div class="form-group">
+                        <label for="giroAgencia">Giro o Categoría del Negocio *</label>
+                        <select id="giroAgencia" required>
+                            <option value="viajes|Viajes y Turismo">✈️ Agencia de Viajes / Tours</option>
+                            <option value="bodas|Bodas y Eventos">💍 Bodas, Jardines y Banquetes</option>
+                            <option value="hospedaje|Quintas y Estancias">🏡 Quintas, Cabañas y Hospedaje</option>
+                            <option value="servicios|Fotografía y Experiencias">📸 Fotografía, Video y Experiencias</option>
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label for="planAgencia">Plan seleccionado *</label>
                         <select id="planAgencia" onchange="actualizarPreview()" required>
@@ -84,37 +92,28 @@
                             <option value="Plan Estándar">Plan Estándar ( MXN)</option>
                         </select>
                     </div>
-                                        <div class="form-group">
-                        <label for="giroAgencia">Giro o Categoría del Negocio *</label>
-                        <select id="giroAgencia" required>
-                            <option value="Viajes y Turismo">✈️ Agencia de Viajes / Tours</option>
-                            <option value="Bodas y Eventos">💍 Bodas, Jardines y Banquetes</option>
-                            <option value="Quintas y Estancias">🏡 Quintas, Cabañas y Hospedaje</option>
-                            <option value="Fotografía y Experiencias">📸 Fotografía, Video y Experiencias</option>
-                        </select>
-                    </div>
                     <div class="form-group">
-                        <label for="nombreAgencia">Nombre Comercial de la Agencia *</label>
+                        <label for="nombreAgencia">Nombre Comercial *</label>
                         <input type="text" id="nombreAgencia" maxlength="60" oninput="actualizarPreview()" required placeholder="Ej. Viajes del Sol México">
                     </div>
                     <div class="form-group">
-                        <label for="salidaAgencia">Ciudad o Estado de salida *</label>
+                        <label for="salidaAgencia">Ciudad o Estado de cobertura *</label>
                         <input type="text" id="salidaAgencia" maxlength="50" oninput="actualizarPreview()" required placeholder="Ej. CDMX y Área Metropolitana">
                     </div>
                     <div class="form-group">
                         <label for="correoAgencia">Correo Electrónico de Contacto *</label>
-                        <input type="email" id="correoAgencia" maxlength="80" required placeholder="contacto@tuagencia.com">
+                        <input type="email" id="correoAgencia" maxlength="80" required placeholder="contacto@tunegocio.com">
                     </div>
                     <div class="form-group">
                         <label for="whatsappAgencia">WhatsApp de Ventas (10 a 15 dígitos con lada) *</label>
                         <input type="tel" id="whatsappAgencia" maxlength="20" oninput="actualizarPreview()" required placeholder="Ej. 52 55 1234 5678">
                     </div>
                     <div class="form-group">
-                        <label for="webAgencia">Sitio Web o Página de Facebook (debe iniciar con https://)</label>
-                        <input type="url" id="webAgencia" maxlength="120" oninput="actualizarPreview()" placeholder="https://tuagencia.com">
+                        <label for="webAgencia">Sitio Web o Página de Facebook (iniciar con https://)</label>
+                        <input type="url" id="webAgencia" maxlength="120" oninput="actualizarPreview()" placeholder="https://tunegocio.com">
                     </div>
                     <div class="form-group">
-                        <label for="destinosAgencia">Destinos principales (separados por coma) *</label>
+                        <label for="destinosAgencia">Destinos o Servicios principales (separados por coma) *</label>
                         <input type="text" id="destinosAgencia" maxlength="80" oninput="actualizarPreview()" required placeholder="Ej. Cancún, Acapulco, Pueblos Mágicos">
                     </div>
                     <div class="form-group">
@@ -143,15 +142,15 @@
                         <div class="agency-header">
                             <div id="prevLogo" class="agency-logo" style="color: #0284c7; background: #e0f2fe;">VS</div>
                             <div>
-                                <h3 id="prevNombre" class="agency-title">Tu Agencia de Viajes</h3>
-                                <span class="verified-tag">✔ Agencia Verificada</span>
+                                <h3 id="prevNombre" class="agency-title">Tu Negocio</h3>
+                                <span class="verified-tag">✔ Verificado</span>
                             </div>
                         </div>
                         <div class="agency-meta">
                             <span id="prevSalida">📍 CDMX y Área Metropolitana</span>
                             <span>⭐ 5.0</span>
                         </div>
-                        <p id="prevDesc" class="agency-desc">Aquí aparecerá la descripción de tus paquetes, salidas y especialidad para atraer viajeros.</p>
+                        <p id="prevDesc" class="agency-desc">Aquí aparecerá la descripción de tus paquetes o servicios para atraer clientes.</p>
                         <div id="prevTags" class="tags">
                             <span class="tag">#Cancún</span>
                             <span class="tag">#Acapulco</span>
@@ -174,7 +173,7 @@
         </div>
     </footer>
 
-    <script src="../js/app.js"></script>
+    <script src="../js/app.js?v=20261117"></script>
     <script>
         const CORREO_DESTINO = "tu-correo@gmail.com";
         const WHATSAPP_ADMIN = "525500000000";
@@ -191,9 +190,9 @@
 
         function actualizarPreview() {
             const plan = document.getElementById('planAgencia').value;
-            const nombre = limpiarEntrada(document.getElementById('nombreAgencia').value) || "Tu Agencia de Viajes";
+            const nombre = limpiarEntrada(document.getElementById('nombreAgencia').value) || "Tu Negocio";
             const salida = limpiarEntrada(document.getElementById('salidaAgencia').value) || "CDMX y Área Metropolitana";
-            const desc = limpiarEntrada(document.getElementById('descAgencia').value) || "Aquí aparecerá la descripción de tus paquetes, salidas y especialidad para atraer viajeros.";
+            const desc = limpiarEntrada(document.getElementById('descAgencia').value) || "Aquí aparecerá la descripción de tus paquetes o servicios para atraer clientes.";
             const destinosRaw = limpiarEntrada(document.getElementById('destinosAgencia').value);
             const webSegura = validarUrlSegura(document.getElementById('webAgencia').value);
 
@@ -240,6 +239,7 @@
         }
 
         function generarNodoSeguro() {
+            const [catId, catNombre] = document.getElementById('giroAgencia').value.split('|');
             const nombre = limpiarEntrada(document.getElementById('nombreAgencia').value);
             const salida = limpiarEntrada(document.getElementById('salidaAgencia').value);
             const desc = limpiarEntrada(document.getElementById('descAgencia').value);
@@ -255,235 +255,29 @@
 
             const nodo = {
                 id: nombre.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+                categoria: catId,
+                categoriaNombre: catNombre,
                 nombre: nombre,
                 iniciales: nombre.substring(0, 2).toUpperCase(),
                 colorTexto: "#0284c7",
                 colorFondo: "#e0f2fe",
                 destacada: destacada,
+                rnt: "",
                 rating: "5.0",
-                etiquetaEstado: "✔ Agencia Verificada",
+                etiquetaEstado: "Verificado",
                 salidaDesde: salida,
-                rangoPrecio: "<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://images.unsplash.com data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';">
-    <meta name="referrer" content="strict-origin-when-cross-origin">
-    <meta name="description" content="Directorio publicitario de agencias de viajes verificadas en México. Encuentra especialistas para Acapulco, Cancún, Los Cabos y Pueblos Mágicos.">
-    
-    <meta property="og:title" content="Directorio Viajero | Agencias de Viajes Verificadas en México">
-    <meta property="og:description" content="Conecta directo con agencias especialistas para Acapulco, Cancún, Los Cabos y Pueblos Mágicos sin intermediarios.">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80">
-    <meta property="og:type" content="website">
-
-    <title>Directorio Viajero | Conecta con Agencias de Viajes en México</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-
-    <header>
-        <a href="index.html" class="logo">✈️ Directorio<span>Viajero</span></a>
-        <nav>
-            <a href="index.html">Inicio</a>
-            <a href="#destinos">Destinos</a>
-            <a href="#agencias">Agencias</a>
-            <a href="#opiniones">Opiniones</a>
-
-            <div class="theme-controls" title="Personalizar colores y modo">
-                <button type="button" class="color-dot dot-caribe" onclick="cambiarPaleta('caribe')" aria-label="Color Azul Caribe"></button>
-                <button type="button" class="color-dot dot-coral" onclick="cambiarPaleta('coral')" aria-label="Color Coral"></button>
-                <button type="button" class="color-dot dot-esmeralda" onclick="cambiarPaleta('esmeralda')" aria-label="Color Esmeralda"></button>
-                <button type="button" id="darkToggleBtn" class="dark-toggle" onclick="alternarModoOscuro()" aria-label="Cambiar modo oscuro">🌙</button>
-            </div>
-
-            <a href="pages/anunciate.html" class="btn-cta">Anúnciate Aquí</a>
-        </nav>
-    </header>
-
-    <section class="hero">
-        <span class="hero-badge">🇲🇽 El punto de encuentro turístico en México</span>
-        <h1>Conecta directo con Agencias de Viajes Verificadas</h1>
-        <p>Compara opciones por destino y cotiza directamente con especialistas, sin intermediarios ni comisiones ocultas.</p>
-        
-        <div class="search-box">
-            <input type="text" id="searchInput" maxlength="80" placeholder="Buscar agencia, paquete (ej. todo incluido, charter, CDMX)..." aria-label="Buscar por palabra clave">
-            <select id="destinoSelect" aria-label="Seleccionar destino" onchange="ejecutarBusqueda()">
-                <option value="todos">Todos los destinos</option>
-                <option value="acapulco">Acapulco</option>
-                <option value="cancun">Cancún y Riviera Maya</option>
-                <option value="loscabos">Los Cabos</option>
-                <option value="pueblos-magicos">Pueblos Mágicos</option>
-            </select>
-            <button type="button" onclick="ejecutarBusqueda()">Buscar</button>
-        </div>
-
-        <div class="trust-strip">
-            <div><strong>100% Directo</strong> &bull; Trato sin intermediarios</div>
-            <div><strong>+4 Destinos</strong> &bull; Playas y Pueblos Mágicos</div>
-            <div><strong>Cero Comisiones</strong> &bull; Cotiza directo en WhatsApp</div>
-        </div>
-    </section>
-
-    <main class="container">
-        <div id="destinos">
-            <div class="section-header">
-                <div>
-                    <h2 class="section-title">Explora por Destino</h2>
-                    <p class="section-subtitle">Elige un destino para ver las agencias disponibles</p>
-                </div>
-            </div>
-
-            <div class="destinations-grid">
-                <div class="dest-card" onclick="seleccionarDestinoCard('acapulco')">
-                    <img src="https://images.unsplash.com/photo-1582972236019-ea4af5ffe587?auto=format&fit=crop&w=600&q=80" alt="Playas de Acapulco">
-                    <div class="dest-overlay">
-                        <h3>Acapulco</h3>
-                        <span>Escapadas y paquetes familiares</span>
-                    </div>
-                </div>
-                <div class="dest-card" onclick="seleccionarDestinoCard('cancun')">
-                    <img src="https://images.unsplash.com/photo-1510097467424-192d713fd8b2?auto=format&fit=crop&w=600&q=80" alt="Mar Caribe en Cancún">
-                    <div class="dest-overlay">
-                        <h3>Cancún y Riviera Maya</h3>
-                        <span>Todo incluido y vuelos charter</span>
-                    </div>
-                </div>
-                <div class="dest-card" onclick="seleccionarDestinoCard('loscabos')">
-                    <img src="https://images.unsplash.com/photo-1512813195386-6cf811ad3542?auto=format&fit=crop&w=600&q=80" alt="Arco de Los Cabos">
-                    <div class="dest-overlay">
-                        <h3>Los Cabos</h3>
-                        <span>Resorts y tours en el Pacífico</span>
-                    </div>
-                </div>
-                <div class="dest-card" onclick="seleccionarDestinoCard('pueblos-magicos')">
-                    <img src="https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?auto=format&fit=crop&w=600&q=80" alt="Pueblos Mágicos de México">
-                    <div class="dest-overlay">
-                        <h3>Pueblos Mágicos</h3>
-                        <span>Tours culturales de fin de semana</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <aside class="ad-banner-slot">
-            <span class="ad-tag">Espacio Patrocinado</span>
-            <div class="ad-banner-content">
-                <h4>🚀 ¿Quieres que tu agencia aparezca en este banner principal?</h4>
-                <p>Destaca tus promociones de temporada frente a miles de viajeros buscando paquetes en México.</p>
-            </div>
-            <a href="pages/anunciate.html" class="btn-banner">Reservar Banner</a>
-        </aside>
-
-        <div id="agencias">
-            <div class="section-header">
-                <div>
-                    <h2 class="section-title">Agencias Anunciantes</h2>
-                    <p class="section-subtitle">Contacta directamente a su sitio web o WhatsApp oficial</p>
-                </div>
-            </div>
-
-            <div class="filter-toolbar">
-                <div class="quick-pills">
-                    <button type="button" class="pill-btn active" onclick="aplicarFiltroRapido('todas', this)">Todas</button>
-                    <button type="button" class="pill-btn" onclick="aplicarFiltroRapido('destacadas', this)">⭐ Destacadas</button>
-                    <button type="button" class="pill-btn" onclick="aplicarFiltroRapido('whatsapp', this)">💬 Con WhatsApp</button>
-                    <button type="button" class="pill-btn" onclick="aplicarFiltroRapido('favoritas', this)">❤️ Mis Favoritas</button>
-                </div>
-                <span id="resultsCounter" class="results-counter"></span>
-            </div>
-
-            <div class="directory-grid" id="agencyGrid"></div>
-        </div>
-
-        <section class="reviews-section" id="opiniones">
-            <div class="section-header">
-                <div>
-                    <h2 class="section-title">Lo que dicen los viajeros</h2>
-                    <p class="section-subtitle">Comentarios de personas que encontraron agencia en el directorio</p>
-                </div>
-            </div>
-
-            <div class="reviews-grid">
-                <article class="review-card">
-                    <div class="review-stars">★★★★★</div>
-                    <p class="review-text">"Me gustó que te manda directo al WhatsApp de la agencia sin pedirte tarjeta ni cobrarte comisiones raras. Cotizamos un paquete a Cancún en 10 minutos."</p>
-                    <div class="review-author">
-                        <div class="author-avatar">MR</div>
-                        <div class="author-info">
-                            <strong>Mariana Ríos</strong>
-                            <span>Viajó a Cancún &bull; CDMX</span>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="review-card">
-                    <div class="review-stars">★★★★★</div>
-                    <p class="review-text">"Estábamos buscando salidas grupales de fin de semana para Acapulco y aquí pudimos comparar tres opciones rápido y guardar nuestras favoritas."</p>
-                    <div class="review-author">
-                        <div class="author-avatar">CG</div>
-                        <div class="author-info">
-                            <strong>Carlos Gómez</strong>
-                            <span>Viajó a Acapulco &bull; Estado de México</span>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="review-card">
-                    <div class="review-stars">★★★★★</div>
-                    <p class="review-text">"Muy práctico tener todas las agencias ordenadas por destino. Encontramos un tour a Pueblos Mágicos con salida desde Puebla."</p>
-                    <div class="review-author">
-                        <div class="author-avatar">AL</div>
-                        <div class="author-info">
-                            <strong>Andrea López</strong>
-                            <span>Tour Pueblos Mágicos &bull; Puebla</span>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        </section>
-
-        <section class="b2b-cta-section">
-            <h2>¿Tienes una Agencia de Viajes?</h2>
-            <p>Publica tu agencia en nuestro directorio y recibe clientes interesados directamente en tu WhatsApp o página web, sin pagar comisiones por venta.</p>
-            <a href="pages/anunciate.html" class="btn-b2b">Registrar mi Agencia Ahora</a>
-        </section>
-    </main>
-
-    <div id="agencyModal" class="modal-backdrop" onclick="cerrarModalAgencia(event)">
-        <div class="modal-card">
-            <button type="button" class="modal-close" onclick="cerrarModalAgencia()">✕</button>
-            <div id="modalBody"></div>
-        </div>
-    </div>
-
-    <footer>
-        <p><strong>Directorio Viajero</strong> &copy; 2026. Todos los derechos reservados.</p>
-        <div class="footer-links">
-            <a href="pages/legal.html">Aviso de Privacidad y Términos</a>
-            <a href="pages/anunciate.html">Contacto Comercial</a>
-        </div>
-        <p class="disclaimer-text">
-            Deslinde de responsabilidad: Este sitio web opera únicamente como un directorio publicitario y plataforma de difusión de ofertas turísticas. No somos una agencia de viajes, no gestionamos reservas, no procesamos pagos ni intervenimos en la relación contractual entre los usuarios y los anunciantes exhibidos.
-        </p>
-    </footer>
-
-    <script src="data/agencias.js"></script>
-    <script src="js/app.js"></script>
-</body>
-</html> - Consultar",
-                especialidad: "Paquetes turísticos",
+                estadosSalida: ["cdmx", "monterrey", "guadalajara", "puebla", "bajio"],
+                rangoPrecio: "Consultar",
+                especialidad: catNombre,
                 descripcion: desc,
-                destinos: ["cancun", "acapulco"],
+                destinos: ["cancun", "acapulco", "loscabos", "pueblos-magicos"],
                 tags: tags,
                 web: web,
-                whatsappNumero: wa
+                whatsappNumero: wa,
+                ubicacionMaps: ""
             };
 
-            return JSON.stringify(nodo) + ",";
+            return JSON.stringify(nodo);
         }
 
         async function enviarSolicitud(e) {
@@ -517,16 +311,17 @@
             btn.textContent = "Enviando solicitud...";
 
             const datos = {
-                _subject: "Nueva Agencia: " + limpiarEntrada(document.getElementById('nombreAgencia').value),
+                _subject: "Nuevo Registro: " + limpiarEntrada(document.getElementById('nombreAgencia').value),
                 _template: "table",
                 _captcha: "false",
+                Giro: document.getElementById('giroAgencia').value,
                 Plan: document.getElementById('planAgencia').value,
-                Agencia: limpiarEntrada(document.getElementById('nombreAgencia').value),
-                Salida: limpiarEntrada(document.getElementById('salidaAgencia').value),
+                Negocio: limpiarEntrada(document.getElementById('nombreAgencia').value),
+                Cobertura: limpiarEntrada(document.getElementById('salidaAgencia').value),
                 Correo: limpiarEntrada(document.getElementById('correoAgencia').value),
                 WhatsApp: waDigitos,
                 Sitio_Web: validarUrlSegura(webInput) || "No especificado",
-                Destinos: limpiarEntrada(document.getElementById('destinosAgencia').value),
+                Servicios: limpiarEntrada(document.getElementById('destinosAgencia').value),
                 Descripcion: limpiarEntrada(document.getElementById('descAgencia').value),
                 Nodo_Catalogo: generarNodoSeguro()
             };
@@ -543,7 +338,7 @@
                     feedback.style.display = 'block';
                     feedback.style.background = '#dcfce7';
                     feedback.style.color = '#166534';
-                    feedback.textContent = '✅ Solicitud recibida. Validaremos los datos de "' + datos.Agencia + '" antes de su publicación.';
+                    feedback.textContent = 'Solicitud recibida. Validaremos los datos de "' + datos.Negocio + '" antes de su publicación.';
                     form.reset();
                     actualizarPreview();
                 } else {
@@ -553,10 +348,10 @@
                 feedback.style.display = 'block';
                 feedback.style.background = '#fee2e2';
                 feedback.style.color = '#991b1b';
-                feedback.textContent = '⚠️ Usa el botón verde de abajo para enviarnos tu registro directo por WhatsApp.';
+                feedback.textContent = 'Usa el botón verde de abajo para enviarnos tu registro directo por WhatsApp.';
             } finally {
                 btn.disabled = false;
-                btn.textContent = "📩 Enviar Solicitud por Correo";
+                btn.textContent = "Enviar Solicitud por Correo";
             }
         }
 
@@ -570,22 +365,21 @@
             const plan = document.getElementById('planAgencia').value;
 
             if (!nombre || waDigitos.length < 10 || !destinos) {
-                alert("Completa al menos el Nombre de la Agencia, un WhatsApp válido y los Destinos.");
+                alert("Completa al menos el Nombre Comercial, un WhatsApp válido y los Servicios.");
                 return;
             }
 
-            const mensaje = "Hola, quiero registrar mi agencia en *Directorio Viajero*:%0A%0A" +
-                            "• *Plan:* " + encodeURIComponent(plan) + "%0A" +
-                            "• *Agencia:* " + encodeURIComponent(nombre) + "%0A" +
-                            "• *Salida:* " + encodeURIComponent(salida) + "%0A" +
-                            "• *WhatsApp:* " + encodeURIComponent(waDigitos) + "%0A" +
-                            "• *Web/FB:* " + encodeURIComponent(web || "N/A") + "%0A" +
-                            "• *Destinos:* " + encodeURIComponent(destinos) + "%0A" +
-                            "• *Descripción:* " + encodeURIComponent(desc);
+            const mensaje = "Hola, quiero registrar mi negocio en Directorio Viajero:%0A%0A" +
+                            "Plan: " + encodeURIComponent(plan) + "%0A" +
+                            "Nombre: " + encodeURIComponent(nombre) + "%0A" +
+                            "Cobertura: " + encodeURIComponent(salida) + "%0A" +
+                            "WhatsApp: " + encodeURIComponent(waDigitos) + "%0A" +
+                            "Web/FB: " + encodeURIComponent(web || "N/A") + "%0A" +
+                            "Servicios: " + encodeURIComponent(destinos) + "%0A" +
+                            "Descripcion: " + encodeURIComponent(desc);
 
             window.open("https://wa.me/" + WHATSAPP_ADMIN + "?text=" + mensaje, "_blank", "noopener,noreferrer");
         }
     </script>
 </body>
 </html>
-
