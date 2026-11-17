@@ -21,6 +21,41 @@
     ],
     "anunciantes": [
         {
+            "id": "el-mundo-de-robaaaa-203",
+            "categoria": "viajes",
+            "categoriaNombre": "Viajes y Turismo",
+            "nombre": "El mundo de Robaaaa",
+            "iniciales": "EL",
+            "colorTexto": "#0284c7",
+            "colorFondo": "#e0f2fe",
+            "destacada": false,
+            "rnt": "",
+            "rating": "5.0",
+            "etiquetaEstado": "✔ Verificado",
+            "salidaDesde": "MEXICO",
+            "estadosSalida": [
+                "cdmx",
+                "monterrey",
+                "guadalajara",
+                "puebla",
+                "bajio"
+            ],
+            "rangoPrecio": "$$ • Consultar",
+            "especialidad": "Viajes y Turismo",
+            "descripcion": "AAAA",
+            "destinos": [
+                "cancun",
+                "acapulco",
+                "loscabos",
+                "pueblos-magicos"
+            ],
+            "tags": [
+                "#ViajesyTurismo"
+            ],
+            "web": "",
+            "whatsappNumero": ""
+        },
+        {
             "id": "caribe-tours",
             "categoria": "viajes",
             "categoriaNombre": "Viajes y Turismo",
