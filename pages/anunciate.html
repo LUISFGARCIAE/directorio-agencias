@@ -185,7 +185,7 @@
                     const cfg = await res.json();
                     const b2b = cfg.comercialB2B || {};
                     if (b2b.correoAdmin) CORREO_DESTINO = b2b.correoAdmin;
-                    if (b2b.whatsappAdmin) WHATSAPP_ADMIN = String(b2b.whatsappAdmin).replace(/\D/g, '');
+                    if (b2b.whatsappAdmin) { let d = String(b2b.whatsappAdmin).replace(/\D/g, ""); WHATSAPP_ADMIN = d.length === 10 ? "52" + d : d; }
 
                     const elEst = document.getElementById('precioEstandarCard');
                     if (elEst && b2b.planEstandarPrecio) {

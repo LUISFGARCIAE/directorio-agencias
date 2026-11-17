@@ -1,3 +1,8 @@
+function normalizarTelefonoWa(raw) {
+    let d = String(raw || '').replace(/\D/g, '');
+    if (d.length === 10) d = '52' + d;
+    return d || '525652415593';
+}
 let PLATAFORMA_CONFIG = { MODO_MULTISECTOR: false, categorias: [] };
 let AGENCIAS_DATA = [];
 let OFERTAS_TEMPORADA = [];
@@ -1150,7 +1155,7 @@ function copiarCupon(codigo) {
 
 function abrirConciergeWhatsApp() {
     const b2b = PLATAFORMA_CONFIG.comercialB2B || {};
-    const num = String(b2b.whatsappAdmin || PLATAFORMA_CONFIG.whatsappConcierge || '525500000000').replace(/\D/g, '');
+    const num = normalizarTelefonoWa(b2b.whatsappAdmin || PLATAFORMA_CONFIG.whatsappConcierge);
     const msg = 'Hola, vengo de *Directorio Viajero* y me gustaría que me recomienden opciones según lo que busco.';
     window.open(`https://wa.me/${num}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
 }
@@ -1219,7 +1224,7 @@ function filtrarPorResultadoCalc() {
 
 function contactarVentasB2B() {
     const b2b = PLATAFORMA_CONFIG.comercialB2B || {};
-    const num = String(b2b.whatsappAdmin || PLATAFORMA_CONFIG.whatsappConcierge || '525500000000').replace(/\D/g, '');
+    const num = normalizarTelefonoWa(b2b.whatsappAdmin || PLATAFORMA_CONFIG.whatsappConcierge);
     const msg = 'Hola, vi *Directorio Viajero* y me interesa conocer los beneficios y planes para anunciar mi negocio en la plataforma.';
     window.open(`https://wa.me/${num}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
 }

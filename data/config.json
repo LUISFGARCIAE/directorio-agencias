@@ -55,18 +55,18 @@
                    "visible":  true,
                    "textoBoton":  "Ver Ofertas"
                },
-    "whatsappConcierge":  "525500000000",
+    "whatsappConcierge":  "525652415593",
     "comercialB2B":  {
                          "planEstandarNota":  "/ lanzamiento",
-                         "ofertaTemporadaPrecio":  " MXN / mes",
+                         "ofertaTemporadaPrecio":  "$499 MXN / mes",
                          "tituloB2BPortada":  "¿Tienes una Agencia, Jardín de Bodas, Quinta o Servicio?",
-                         "bannerPatrocinadoPrecio":  " MXN / mes",
+                         "bannerPatrocinadoPrecio":  "$899 MXN / mes",
                          "planDestacadoNota":  "/ primeros 50 registros",
-                         "planEstandarPrecio":  " MXN",
+                         "planEstandarPrecio":  "$0 MXN",
                          "planDestacadoPrecio":  "Gratis 3 meses",
-                         "subtituloB2BPortada":  "Recibe clientes listos para reservar directo en tu WhatsApp, sin comisiones por venta. Plan Destacado:",
-                         "planDestacadoPost":  "Después  MXN/mes",
+                         "subtituloB2BPortada":  "Recibe clientes listos para reservar directo en tu WhatsApp, sin comisiones por venta.",
+                         "planDestacadoPost":  "Después $399 MXN/mes",
                          "correoAdmin":  "tu-correo@gmail.com",
-                         "whatsappAdmin":  "525500000000"
+                         "whatsappAdmin":  "525652415593"
                      }
 }
