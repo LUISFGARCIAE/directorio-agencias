@@ -17,6 +17,18 @@
                           "detalle":  "Tour Pueblos Mágicos • Puebla",
                           "nombre":  "Andrea López",
                           "texto":  "Muy práctico tener todas las agencias ordenadas por destino. Encontramos un tour a Pueblos Mágicos con salida desde Puebla."
+                      },
+                      {
+                          "iniciales":  "SF",
+                          "detalle":  "Boda en Tepoztlán • CDMX",
+                          "nombre":  "Sofía \u0026 Fernando",
+                          "texto":  "Comparamos tres opciones de jardines y banquetes en un solo lugar y cotizamos directo por WhatsApp sin intermediarios. Nos ahorramos muchísimo tiempo."
+                      },
+                      {
+                          "iniciales":  "DM",
+                          "detalle":  "Vuelo en Globo • Estado de México",
+                          "nombre":  "Diego Martínez",
+                          "texto":  "Contraté el vuelo privado en Teotihuacán para mi aniversario usando el cotizador rápido y me confirmaron disponibilidad en menos de 15 minutos."
                       }
                   ],
     "anunciantes":  [
@@ -327,6 +339,263 @@
                                                "🚐 Traslados Aeropuerto",
                                                "🛡️ Asistencia 24/7"
                                            ]
+                        },
+                        {
+                            "salidaDesde":  "CDMX, Morelos y Puebla",
+                            "id":  "banquetes-imperial-mx",
+                            "etiquetaEstado":  "✔ Proveedor Verificado",
+                            "colorFondo":  "#ffe4e6",
+                            "amenidades":  [
+                                               "🍽️ Degustación Previa",
+                                               "🥂 Descorche Libre",
+                                               "🎶 Audio e Iluminación"
+                                           ],
+                            "destinos":  [
+                                             "pueblos-magicos",
+                                             "acapulco"
+                                         ],
+                            "iniciales":  "BI",
+                            "rnt":  "",
+                            "destacada":  true,
+                            "galeria":  [
+                                            "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                                            "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                                            "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format\u0026fit=crop\u0026w=800\u0026q=80"
+                                        ],
+                            "web":  "https://www.google.com/search?q=banquetes+bodas+mexico",
+                            "colorTexto":  "#e11d48",
+                            "categoria":  "bodas",
+                            "tags":  [
+                                         "#BanquetesBoda",
+                                         "#Coordinacion",
+                                         "#EventosCDMX"
+                                     ],
+                            "categoriaNombre":  "Bodas y Eventos",
+                            "rating":  "4.9",
+                            "ubicacionMaps":  "Coyoacan, Ciudad de Mexico, CDMX",
+                            "rangoPrecio":  "ConvertFrom-Json$ • Desde  MXN por invitado",
+                            "descripcion":  "Más de 12 años diseñando bodas y eventos sociales con menú a 4 tiempos, cristalería fina, pista iluminada y capitán de meseros.",
+                            "especialidad":  "Banquetes gourmet, mobiliario de lujo y coordinación integral de bodas",
+                            "whatsappNumero":  "525512345601",
+                            "nombre":  "Banquetes \u0026 Eventos Imperial",
+                            "estadosSalida":  [
+                                                  "cdmx",
+                                                  "puebla"
+                                              ]
+                        },
+                        {
+                            "salidaDesde":  "Cuernavaca, Tepoztlán y Acapulco",
+                            "id":  "wedding-planners-ensueno",
+                            "etiquetaEstado":  "✔ Especialista Destino",
+                            "colorFondo":  "#ffe4e6",
+                            "amenidades":  [
+                                               "📋 Cronograma Minuto a Minuto",
+                                               "💐 Diseño Floral",
+                                               "🏨 Tarifas Grupales"
+                                           ],
+                            "destinos":  [
+                                             "acapulco",
+                                             "pueblos-magicos",
+                                             "cancun"
+                                         ],
+                            "iniciales":  "EW",
+                            "rnt":  "",
+                            "destacada":  false,
+                            "galeria":  [
+                                            "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                                            "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format\u0026fit=crop\u0026w=800\u0026q=80"
+                                        ],
+                            "web":  "",
+                            "colorTexto":  "#e11d48",
+                            "categoria":  "bodas",
+                            "tags":  [
+                                         "#WeddingPlanner",
+                                         "#BodasDestino",
+                                         "#Tepoztlan"
+                                     ],
+                            "categoriaNombre":  "Bodas y Eventos",
+                            "rating":  "5.0",
+                            "ubicacionMaps":  "Tepoztlan, Morelos, Mexico",
+                            "rangoPrecio":  "ConvertFrom-Json • Planeación parcial o completa",
+                            "descripcion":  "Organizamos tu boda de principio a fin: búsqueda de hacienda, trámites civiles, hospedaje de invitados y logística el día del evento.",
+                            "especialidad":  "Bodas destino en jardines de Morelos y playas del Pacífico",
+                            "whatsappNumero":  "527771234502",
+                            "nombre":  "Ensueño Wedding Planners",
+                            "estadosSalida":  [
+                                                  "cdmx",
+                                                  "puebla"
+                                              ]
+                        },
+                        {
+                            "salidaDesde":  "Guadalajara y Bajío",
+                            "id":  "botanica-diseno-floral",
+                            "etiquetaEstado":  "✔ Proveedor Verificado",
+                            "colorFondo":  "#d1fae5",
+                            "amenidades":  [
+                                               "🌸 Flor Natural Fresca",
+                                               "🕯️ Mobiliario Lounge",
+                                               "🚚 Montaje y Desmontaje"
+                                           ],
+                            "destinos":  [
+                                             "pueblos-magicos"
+                                         ],
+                            "iniciales":  "BA",
+                            "rnt":  "",
+                            "destacada":  false,
+                            "galeria":  [
+                                            "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                                            "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format\u0026fit=crop\u0026w=800\u0026q=80"
+                                        ],
+                            "web":  "",
+                            "colorTexto":  "#059669",
+                            "categoria":  "bodas",
+                            "tags":  [
+                                         "#FloresBoda",
+                                         "#Decoracion",
+                                         "#Guadalajara"
+                                     ],
+                            "categoriaNombre":  "Bodas y Eventos",
+                            "rating":  "4.8",
+                            "ubicacionMaps":  "Zapopan, Jalisco, Mexico",
+                            "rangoPrecio":  "ConvertFrom-Json • Paquetes florales personalizados",
+                            "descripcion":  "Creamos atmósferas inolvidables con flor natural de temporada, velas suspendidas y estructuras para ceremonias civiles o religiosas.",
+                            "especialidad":  "Arcos ceremoniales, centros de mesa y ambientación aérea",
+                            "whatsappNumero":  "523312345603",
+                            "nombre":  "Botánica Ambientación \u0026 Flores",
+                            "estadosSalida":  [
+                                                  "guadalajara",
+                                                  "bajio"
+                                              ]
+                        },
+                        {
+                            "salidaDesde":  "Cobertura Nacional (CDMX, Cancún y Los Cabos)",
+                            "id":  "lente-eterno-estudio",
+                            "etiquetaEstado":  "✔ Estudio Certificado",
+                            "colorFondo":  "#e0f2fe",
+                            "amenidades":  [
+                                               "🚁 Dron 4K Incluido",
+                                               "📸 Entrega en 15 Días",
+                                               "📖 Photobook de Lujo"
+                                           ],
+                            "destinos":  [
+                                             "cancun",
+                                             "loscabos",
+                                             "acapulco",
+                                             "pueblos-magicos"
+                                         ],
+                            "iniciales":  "LE",
+                            "rnt":  "",
+                            "destacada":  true,
+                            "galeria":  [
+                                            "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                                            "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format\u0026fit=crop\u0026w=800\u0026q=80"
+                                        ],
+                            "web":  "https://www.google.com/search?q=fotografia+bodas+mexico",
+                            "colorTexto":  "#0284c7",
+                            "categoria":  "servicios",
+                            "tags":  [
+                                         "#FotografiaBoda",
+                                         "#Video4K",
+                                         "#Dron"
+                                     ],
+                            "categoriaNombre":  "Fotografía y Experiencias",
+                            "rating":  "5.0",
+                            "ubicacionMaps":  "Roma Norte, Ciudad de Mexico, CDMX",
+                            "rangoPrecio":  "ConvertFrom-Json • Cobertura desde ,500 MXN",
+                            "descripcion":  "Capturamos emociones reales sin poses forzadas. Incluye sesión Save the Date, galería privada en alta resolución y photobook impreso.",
+                            "especialidad":  "Fotografía documental de bodas, video cinematográfico 4K y tomas aéreas",
+                            "whatsappNumero":  "525512345604",
+                            "nombre":  "Lente Eterno Fotografía \u0026 Dron",
+                            "estadosSalida":  [
+                                                  "cdmx",
+                                                  "monterrey",
+                                                  "guadalajara",
+                                                  "puebla",
+                                                  "bajio"
+                                              ]
+                        },
+                        {
+                            "salidaDesde":  "CDMX y Valle de Teotihuacán",
+                            "id":  "teotihuacan-sky-globos",
+                            "etiquetaEstado":  "✔ Operador Certificado",
+                            "colorFondo":  "#ffedd5",
+                            "amenidades":  [
+                                               "🥂 Brindis y Desayuno",
+                                               "🛡️ Seguro de Viajero",
+                                               "💍 Lona Pedida de Mano"
+                                           ],
+                            "destinos":  [
+                                             "pueblos-magicos"
+                                         ],
+                            "iniciales":  "TS",
+                            "rnt":  "04150220019",
+                            "destacada":  true,
+                            "galeria":  [
+                                            "https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                                            "https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?auto=format\u0026fit=crop\u0026w=800\u0026q=80"
+                                        ],
+                            "web":  "",
+                            "colorTexto":  "#ea580c",
+                            "categoria":  "servicios",
+                            "tags":  [
+                                         "#VueloEnGlobo",
+                                         "#Teotihuacan",
+                                         "#PedidaDeMano"
+                                     ],
+                            "categoriaNombre":  "Fotografía y Experiencias",
+                            "rating":  "4.9",
+                            "ubicacionMaps":  "San Martin de las Piramides, Estado de Mexico",
+                            "rangoPrecio":  "ConvertFrom-Json • Desde ,490 MXN por persona",
+                            "descripcion":  "Sobrevuela las pirámides al amanecer con pilotos certificados por AFAC, brindis con vino espumoso, certificado de vuelo y desayuno buffet.",
+                            "especialidad":  "Vuelos compartidos, vuelos privados para pedidas de mano y aniversario",
+                            "whatsappNumero":  "525512345605",
+                            "nombre":  "Teotihuacán Sky Vuelos en Globo",
+                            "estadosSalida":  [
+                                                  "cdmx",
+                                                  "puebla",
+                                                  "bajio"
+                                              ]
+                        },
+                        {
+                            "salidaDesde":  "Querétaro, Bajío y CDMX",
+                            "id":  "ruta-vinedos-queretaro",
+                            "etiquetaEstado":  "✔ Experiencia Verificada",
+                            "colorFondo":  "#ede9fe",
+                            "amenidades":  [
+                                               "🍷 3 Catas Incluidas",
+                                               "🚐 Transporte Redondo",
+                                               "🧀 Maridaje Artesanal"
+                                           ],
+                            "destinos":  [
+                                             "pueblos-magicos"
+                                         ],
+                            "iniciales":  "RV",
+                            "rnt":  "",
+                            "destacada":  false,
+                            "galeria":  [
+                                            "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                                            "https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format\u0026fit=crop\u0026w=800\u0026q=80"
+                                        ],
+                            "web":  "",
+                            "colorTexto":  "#7c3aed",
+                            "categoria":  "servicios",
+                            "tags":  [
+                                         "#Vinedos",
+                                         "#Enoturismo",
+                                         "#PenaDeBernal"
+                                     ],
+                            "categoriaNombre":  "Fotografía y Experiencias",
+                            "rating":  "4.8",
+                            "ubicacionMaps":  "Ezequiel Montes, Queretaro, Mexico",
+                            "rangoPrecio":  "$ • Tours desde ,190 MXN",
+                            "descripcion":  "Tours privados y grupales por los mejores viñedos de Ezequiel Montes y Peña de Bernal con degustación de vinos y tabla de quesos artesanales.",
+                            "especialidad":  "Recorridos por viñedos, catas guiadas, cavas subterráneas y despedidas",
+                            "whatsappNumero":  "524421234506",
+                            "nombre":  "Ruta del Arte, Queso y Vino",
+                            "estadosSalida":  [
+                                                  "bajio",
+                                                  "cdmx"
+                                              ]
                         }
                     ],
     "ofertas":  [
@@ -368,6 +637,45 @@
                         "whatsappNumero":  "",
                         "web":  "pages/anunciate.html",
                         "textoBoton":  "Apartar este Espacio"
+                    },
+                    {
+                        "etiqueta":  "💍 Promo Bodas 2026",
+                        "web":  "",
+                        "detalle":  "Menú 4 tiempos + mobiliario + DJ + pista iluminada + prueba de menú sin costo",
+                        "titulo":  "Paquete Boda Todo Incluido (100 Invitados)",
+                        "agencia":  "Banquetes \u0026 Eventos Imperial",
+                        "categoria":  "bodas",
+                        "precio":  ",900 MXN",
+                        "esReferenciaReal":  true,
+                        "textoBoton":  "💬 Cotizar Boda",
+                        "whatsappNumero":  "525512345601",
+                        "imagen":  "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format\u0026fit=crop\u0026w=600\u0026q=80"
+                    },
+                    {
+                        "etiqueta":  "🎈 Experiencia Top",
+                        "web":  "",
+                        "detalle":  "Canastilla exclusiva para 2 personas + brindis + desayuno buffet + fotos",
+                        "titulo":  "Vuelo Privado Romántico + Lona Pedida de Mano",
+                        "agencia":  "Teotihuacán Sky Vuelos en Globo",
+                        "categoria":  "servicios",
+                        "precio":  ",800 MXN Pareja",
+                        "esReferenciaReal":  true,
+                        "textoBoton":  "💬 Reservar Fecha",
+                        "whatsappNumero":  "525512345605",
+                        "imagen":  "https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?auto=format\u0026fit=crop\u0026w=600\u0026q=80"
+                    },
+                    {
+                        "etiqueta":  "📸 15% Descuento",
+                        "web":  "",
+                        "detalle":  "8 horas de foto y video 4K + tomas con dron + galería digital ilimitada",
+                        "titulo":  "Cobertura Boda Completa + Sesión Save the Date",
+                        "agencia":  "Lente Eterno Fotografía \u0026 Dron",
+                        "categoria":  "servicios",
+                        "precio":  ",500 MXN",
+                        "esReferenciaReal":  true,
+                        "textoBoton":  "💬 Consultar Disponibilidad",
+                        "whatsappNumero":  "525512345604",
+                        "imagen":  "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format\u0026fit=crop\u0026w=600\u0026q=80"
                     }
                 ],
     "faq":  [
@@ -418,6 +726,16 @@
                       "id":  "temporadas-baratas-caribe",
                       "contenido":  "Si tienes flexibilidad de fechas, las mejores tarifas en playas mexicanas suelen encontrarse entre mayo y mediados de junio, así como de septiembre a noviembre (evitando puentes festivos). Durante estas semanas las aerolíneas y agencias mayoristas lanzan bloqueos charter con menores incluidos gratis o meses sin intereses. Compara al menos 3 agencias en nuestro directorio para cotizar el mismo hotel y fecha.",
                       "titulo":  "Mejores meses para encontrar paquetes todo incluido económicos en Cancún y Los Cabos"
+                  },
+                  {
+                      "tiempoLectura":  "3 min de lectura",
+                      "resumen":  "Asegura los tiempos de entrega, respaldo de archivos en alta resolución y permisos de vuelo de dron antes de firmar.",
+                      "categoriaLabel":  "📸 Fotografía y Video",
+                      "imagen":  "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                      "categoria":  "servicios",
+                      "id":  "como-contratar-fotografo-bodas",
+                      "contenido":  "Al elegir estudio de fotografía y video para bodas o eventos sociales, confirma siempre: 1) Tiempo máximo de entrega de la galería completa por contrato, 2) Si entregan todas las fotografías editadas en alta resolución sin marcas de agua, 3) Si el jardín o hacienda permite el vuelo de dron y si el piloto cuenta con licencia vigente, 4) Equipo de respaldo (doble cámara y tarjetas duales) el día del evento y 5) Si incluye sesión previa (Save the Date) para romper el hielo antes de la boda.",
+                      "titulo":  "5 preguntas clave antes de contratar fotógrafo y video con dron para tu evento"
                   }
               ]
 }
