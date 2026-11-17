@@ -802,6 +802,188 @@
                                                   "puebla",
                                                   "bajio"
                                               ]
+                        },
+                        {
+                            "salidaDesde":  "CDMX, Estado de México, Morelos y Querétaro",
+                            "cuponBeneficio":  "4 chisperos de pirotecnia fría gratis para tu vals",
+                            "id":  "sonido-galaxia-dj-produccion",
+                            "etiquetaEstado":  "✔ Producción Verificada",
+                            "colorFondo":  "#ede9fe",
+                            "amenidades":  [
+                                               "🎤 10 Músicos en Vivo",
+                                               "✨ Pirotecnia Fría",
+                                               "🎧 DJ + Souvenires"
+                                           ],
+                            "destinos":  [
+                                             "acapulco",
+                                             "pueblos-magicos"
+                                         ],
+                            "iniciales":  "GA",
+                            "rnt":  "",
+                            "destacada":  true,
+                            "galeria":  [
+                                            "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                                            "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                                            "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format\u0026fit=crop\u0026w=800\u0026q=80"
+                                        ],
+                            "web":  "https://www.google.com/search?q=grupo+versatil+bodas+mexico",
+                            "colorTexto":  "#7c3aed",
+                            "categoria":  "musica",
+                            "cuponCodigo":  "FIESTA26",
+                            "tags":  [
+                                         "#GrupoVersatil",
+                                         "#DJBodas",
+                                         "#ProduccionEventos"
+                                     ],
+                            "categoriaNombre":  "Música, DJs y Grupos",
+                            "rating":  "4.9",
+                            "ubicacionMaps":  "Del Valle, Ciudad de Mexico, CDMX",
+                            "rangoPrecio":  "$$$ • Paquetes desde $18,500 MXN",
+                            "descripcion":  "Ambientamos bodas, XV años y eventos empresariales con repertorio bilingüe en vivo, souvenires luminosos, cabina DJ y pista iluminada.",
+                            "especialidad":  "Grupo versátil de 10 integrantes, DJ profesional, pantallas LED y pirotecnia fría",
+                            "whatsappNumero":  "525512345620",
+                            "nombre":  "Galaxia Audio, DJ \u0026 Grupo Versátil",
+                            "estadosSalida":  [
+                                                  "cdmx",
+                                                  "puebla",
+                                                  "bajio"
+                                              ]
+                        },
+                        {
+                            "salidaDesde":  "Guadalajara, CDMX y Bajío",
+                            "cuponBeneficio":  "10% de descuento al contratar 2 o más horas continuas",
+                            "id":  "mariachi-imperial-de-gala",
+                            "etiquetaEstado":  "✔ Agrupación Certificada",
+                            "colorFondo":  "#ffe4e6",
+                            "amenidades":  [
+                                               "🎺 Trajes de Gala",
+                                               "🎶 Misa Panamericana",
+                                               "🧾 Facturación Disponible"
+                                           ],
+                            "destinos":  [
+                                             "pueblos-magicos"
+                                         ],
+                            "iniciales":  "MI",
+                            "rnt":  "",
+                            "destacada":  false,
+                            "galeria":  [
+                                            "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                                            "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format\u0026fit=crop\u0026w=800\u0026q=80"
+                                        ],
+                            "web":  "",
+                            "colorTexto":  "#be123c",
+                            "categoria":  "musica",
+                            "cuponCodigo":  "GALA10",
+                            "tags":  [
+                                         "#MariachiGala",
+                                         "#CeremoniaBoda",
+                                         "#Serenatas"
+                                     ],
+                            "categoriaNombre":  "Música, DJs y Grupos",
+                            "rating":  "5.0",
+                            "ubicacionMaps":  "Guadalajara, Jalisco, Mexico",
+                            "rangoPrecio":  "$$ • Serenatas y eventos por hora",
+                            "descripcion":  "Misas panamericanas, entrada de novios, serenatas y shows folclóricos con repertorio tradicional y moderno de alta calidad vocal.",
+                            "especialidad":  "Mariachi de 8 a 12 elementos con trajes de gala para ceremonias y recepciones",
+                            "whatsappNumero":  "523312345621",
+                            "nombre":  "Mariachi Imperial de Gala MX",
+                            "estadosSalida":  [
+                                                  "guadalajara",
+                                                  "cdmx",
+                                                  "bajio"
+                                              ]
+                        },
+                        {
+                            "salidaDesde":  "Ciudad Valles, SLP, Monterrey y CDMX",
+                            "cuponBeneficio":  "15% de descuento en paquetes de 3 días de aventura",
+                            "id":  "huasteca-extrema-expediciones",
+                            "etiquetaEstado":  "✔ Operador Certificado SECTUR",
+                            "colorFondo":  "#d1fae5",
+                            "amenidades":  [
+                                               "🦺 Equipo Certificado",
+                                               "📸 Fotos GoPro Incluidas",
+                                               "🚐 Transporte a Cascadas"
+                                           ],
+                            "destinos":  [
+                                             "pueblos-magicos"
+                                         ],
+                            "iniciales":  "HE",
+                            "rnt":  "02240190073",
+                            "destacada":  true,
+                            "galeria":  [
+                                            "https://images.unsplash.com/photo-1530866495561-507c9faab2ed?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                                            "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                                            "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?auto=format\u0026fit=crop\u0026w=800\u0026q=80"
+                                        ],
+                            "web":  "https://www.google.com/search?q=tours+huasteca+potosina",
+                            "colorTexto":  "#059669",
+                            "categoria":  "aventura",
+                            "cuponCodigo":  "AVENTURA15",
+                            "tags":  [
+                                         "#HuastecaPotosina",
+                                         "#RaftingMexico",
+                                         "#Ecoturismo"
+                                     ],
+                            "categoriaNombre":  "Parques y Aventura",
+                            "rating":  "4.9",
+                            "ubicacionMaps":  "Ciudad Valles, San Luis Potosi, Mexico",
+                            "rangoPrecio":  "$$ • Tours desde $1,350 MXN / día",
+                            "descripcion":  "Expediciones guiadas con equipo certificado de seguridad, chalecos, cascos, transporte local, comidas típicas y fotografía acuática incluida.",
+                            "especialidad":  "Salto en cascadas de Micos, rafting en río Tampaón y rappel en Sótano de las Golondrinas",
+                            "whatsappNumero":  "524811234522",
+                            "nombre":  "Huasteca Extrema \u0026 Ecoturismo",
+                            "estadosSalida":  [
+                                                  "monterrey",
+                                                  "cdmx",
+                                                  "bajio",
+                                                  "guadalajara"
+                                              ]
+                        },
+                        {
+                            "salidaDesde":  "Cancún, Playa del Carmen y Riviera Maya",
+                            "cuponBeneficio":  "2do acompañante al 50% reservando directo por WhatsApp",
+                            "id":  "selva-canopy-parque-tematico",
+                            "etiquetaEstado":  "✔ Parque Verificado",
+                            "colorFondo":  "#e0f2fe",
+                            "amenidades":  [
+                                               "🚐 Transporte Hotel Incluido",
+                                               "🍽️ Buffet Regional",
+                                               "🪖 Casco y Arnés"
+                                           ],
+                            "destinos":  [
+                                             "cancun"
+                                         ],
+                            "iniciales":  "SC",
+                            "rnt":  "01230210051",
+                            "destacada":  false,
+                            "galeria":  [
+                                            "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?auto=format\u0026fit=crop\u0026w=800\u0026q=80",
+                                            "https://images.unsplash.com/photo-1530866495561-507c9faab2ed?auto=format\u0026fit=crop\u0026w=800\u0026q=80"
+                                        ],
+                            "web":  "",
+                            "colorTexto":  "#0284c7",
+                            "categoria":  "aventura",
+                            "cuponCodigo":  "CENOTE2X1",
+                            "tags":  [
+                                         "#TirolesasCancun",
+                                         "#Cenotes",
+                                         "#Cuatrimotos"
+                                     ],
+                            "categoriaNombre":  "Parques y Aventura",
+                            "rating":  "4.8",
+                            "ubicacionMaps":  "Puerto Morelos, Quintana Roo, Mexico",
+                            "rangoPrecio":  "$$ • Pase Todo Incluido $1,890 MXN",
+                            "descripcion":  "Parque ecoturístico en la Ruta de los Cenotes con transportación redonda desde tu hotel en Cancún o Riviera Maya y acceso ilimitado a actividades.",
+                            "especialidad":  "Circuito de 8 tirolesas, cenote subterráneo, cuatrimotos 4x4 y comida regional",
+                            "whatsappNumero":  "529981234523",
+                            "nombre":  "Selva Maya Canopy \u0026 Cenotes Park",
+                            "estadosSalida":  [
+                                                  "cdmx",
+                                                  "monterrey",
+                                                  "guadalajara",
+                                                  "puebla",
+                                                  "bajio"
+                                              ]
                         }
                     ],
     "ofertas":  [
@@ -908,6 +1090,32 @@
                         "textoBoton":  "💬 Cotizar Ruta",
                         "whatsappNumero":  "525512345613",
                         "imagen":  "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format\u0026fit=crop\u0026w=600\u0026q=80"
+                    },
+                    {
+                        "etiqueta":  "🎶 Promo Eventos",
+                        "web":  "",
+                        "detalle":  "5 horas de música continua + souvenires neon + cabina iluminada + 4 chisperos",
+                        "titulo":  "Paquete Boda Completo: Grupo Versátil + DJ + Pantallas",
+                        "agencia":  "Galaxia Audio, DJ \u0026 Grupo Versátil",
+                        "categoria":  "musica",
+                        "precio":  "$22,900 MXN",
+                        "esReferenciaReal":  true,
+                        "textoBoton":  "💬 Cotizar Fecha",
+                        "whatsappNumero":  "525512345620",
+                        "imagen":  "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format\u0026fit=crop\u0026w=600\u0026q=80"
+                    },
+                    {
+                        "etiqueta":  "🧗‍♂️ Aventura Top",
+                        "web":  "",
+                        "detalle":  "Cascadas de Micos + Tamul + Puente de Dios + transporte local + comidas y fotos",
+                        "titulo":  "Expedición Huasteca Potosina 3 Días / 2 Noches",
+                        "agencia":  "Huasteca Extrema \u0026 Ecoturismo",
+                        "categoria":  "aventura",
+                        "precio":  "$3,890 MXN / Persona",
+                        "esReferenciaReal":  true,
+                        "textoBoton":  "💬 Apartar Lugar",
+                        "whatsappNumero":  "524811234522",
+                        "imagen":  "https://images.unsplash.com/photo-1530866495561-507c9faab2ed?auto=format\u0026fit=crop\u0026w=600\u0026q=80"
                     }
                 ],
     "faq":  [

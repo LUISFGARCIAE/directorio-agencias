@@ -1028,6 +1028,8 @@ function mostrarPasoWizard(paso) {
                 <button type="button" class="wizard-opt-btn" onclick="wizardSeleccion.categoria='hoteles'; mostrarPasoWizard(2);">🏨 Hotel Boutique u Hostal</button>
                 <button type="button" class="wizard-opt-btn" onclick="wizardSeleccion.categoria='gastronomia'; mostrarPasoWizard(2);">🍽️ Restaurante o Terraza</button>
                 <button type="button" class="wizard-opt-btn" onclick="wizardSeleccion.categoria='transporte'; mostrarPasoWizard(2);">🚐 Renta de Sprinter / Transporte</button>
+                <button type="button" class="wizard-opt-btn" onclick="wizardSeleccion.categoria='musica'; mostrarPasoWizard(2);">🎶 Música, DJ o Grupo Versátil</button>
+                <button type="button" class="wizard-opt-btn" onclick="wizardSeleccion.categoria='aventura'; mostrarPasoWizard(2);">🧗‍♂️ Parque Temático o Aventura</button>
                 <button type="button" class="wizard-opt-btn" onclick="wizardSeleccion.categoria='servicios'; mostrarPasoWizard(2);">📸 Fotografía o Experiencia</button>
             </div>
         `;
