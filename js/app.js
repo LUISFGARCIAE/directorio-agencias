@@ -13,7 +13,8 @@ let estadoFiltros = {
     destino: 'todos',
     origen: 'todos',
     texto: '',
-    rapido: 'todas'
+    rapido: 'todas',
+    presupuesto: 'todos'
 };
 
 let favoritos = [];
@@ -432,7 +433,14 @@ function renderizarAgencias() {
         if (estadoFiltros.rapido === 'rnt') cumpleRapido = Boolean(agencia.rnt);
         if (estadoFiltros.rapido === 'favoritas') cumpleRapido = favoritos.includes(agencia.id);
 
-        return cumpleCategoria && cumpleDestino && cumpleOrigen && cumpleTexto && cumpleRapido;
+        let cumplePresupuesto = true;
+        if (estadoFiltros.presupuesto !== 'todos') {
+            const matchSimbolos = String(agencia.rangoPrecio || '').match(/^\$+/);
+            const nivelAgencia = matchSimbolos ? matchSimbolos[0] : '$$';
+            cumplePresupuesto = nivelAgencia === estadoFiltros.presupuesto;
+        }
+
+        return cumpleCategoria && cumpleDestino && cumpleOrigen && cumpleTexto && cumpleRapido && cumplePresupuesto;
     });
 
     if (counter) {
@@ -548,7 +556,8 @@ function reiniciarFiltros() {
         destino: 'todos',
         origen: 'todos',
         texto: '',
-        rapido: 'todas'
+        rapido: 'todas',
+    presupuesto: 'todos'
     };
     const input = document.getElementById('searchInput');
     const selectDestino = document.getElementById('destinoSelect');
@@ -556,7 +565,8 @@ function reiniciarFiltros() {
     if (input) input.value = '';
     if (selectDestino) selectDestino.value = 'todos';
     if (selectOrigen) selectOrigen.value = 'todos';
-    document.querySelectorAll('.pill-btn').forEach((btn, idx) => btn.classList.toggle('active', idx === 0));
+    document.querySelectorAll('.pill-btn:not(.budget-pill)').forEach((btn, idx) => btn.classList.toggle('active', idx === 0));
+    document.querySelectorAll('.budget-pill').forEach((btn, idx) => btn.classList.toggle('active', idx === 0));
     document.querySelectorAll('.sector-tab').forEach((btn, idx) => btn.classList.toggle('active', idx === 0));
     renderizarOfertas();
     renderizarAgencias();
@@ -1097,4 +1107,11 @@ function cerrarModalGuia(event) {
     if (!event || event.target.id === 'guideModal' || event.target.classList.contains('modal-close')) {
         document.getElementById('guideModal').classList.remove('open');
     }
+}
+
+function aplicarFiltroPresupuesto(nivel, botonElement) {
+    estadoFiltros.presupuesto = nivel;
+    document.querySelectorAll('.budget-pill').forEach(btn => btn.classList.remove('active'));
+    if (botonElement) botonElement.classList.add('active');
+    renderizarAgencias();
 }
