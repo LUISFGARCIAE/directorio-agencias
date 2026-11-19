@@ -549,7 +549,19 @@
         </div>
     </main>
 
-    <script src="../js/app.js?v=20261117cmsfull"></script>
+    <script src="../js/app.js?v=20261117cmsfull">        // Refresco garantizado de Solicitudes por Autorizar en el Panel de Control
+        function sincronizarBandejaSolicitudes() {
+            if (typeof renderizarSolicitudesPendientes === "function") {
+                renderizarSolicitudesPendientes();
+            }
+        }
+        document.addEventListener("DOMContentLoaded", sincronizarBandejaSolicitudes);
+        window.addEventListener("focus", sincronizarBandejaSolicitudes);
+        window.addEventListener("storage", function(e) {
+            if (e.key === "dv_solicitudes_pendientes") sincronizarBandejaSolicitudes();
+        });
+        setInterval(sincronizarBandejaSolicitudes, 2500);
+    </script>
     <script>
         const REPO_OWNER = "LUISFGARCIAE";
         const REPO_NAME = "directorio-agencias";
@@ -1194,6 +1206,18 @@
                 setStatus("❌ Error al publicar: " + e.message, "#dc2626");
             }
         }
+            // Refresco garantizado de Solicitudes por Autorizar en el Panel de Control
+        function sincronizarBandejaSolicitudes() {
+            if (typeof renderizarSolicitudesPendientes === "function") {
+                renderizarSolicitudesPendientes();
+            }
+        }
+        document.addEventListener("DOMContentLoaded", sincronizarBandejaSolicitudes);
+        window.addEventListener("focus", sincronizarBandejaSolicitudes);
+        window.addEventListener("storage", function(e) {
+            if (e.key === "dv_solicitudes_pendientes") sincronizarBandejaSolicitudes();
+        });
+        setInterval(sincronizarBandejaSolicitudes, 2500);
     </script>
 </body>
 </html>
