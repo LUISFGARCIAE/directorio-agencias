@@ -1,82 +1,82 @@
 {
-    "MODO_MULTISECTOR":  false,
-    "apariencia":  {
-                       "paletaDefault":  "caribe",
-                       "temaDefault":  "light"
-                   },
-    "hero":  {
-                 "badge":  "🇲🇽 El punto de encuentro turístico y de eventos en México",
-                 "titulo":  "Conecta directo con Especialistas en Viajes, Bodas y Experiencias",
-                 "subtitulo":  "Explora agencias de viajes, jardines para bodas, cabañas y servicios verificados en México sin intermediarios."
-             },
-    "bannerPatrocinado":  {
-                              "visible":  true,
-                              "titulo":  "¿Quieres que tu negocio aparezca en este banner principal?",
-                              "descripcion":  "Destaca tus promociones de temporada frente a miles de clientes buscando opciones en México.",
-                              "textoBoton":  "Reservar Banner",
-                              "urlBoton":  "pages/anunciate.html"
-                          },
-    "ordenSecciones":  [
-                           "destinos",
-                           "ofertas",
-                           "banner",
-                           "agencias",
-                           "mapa",
-                           "opiniones",
-                           "guias",
-                           "faq",
-                           "b2b"
-                       ],
-    "categorias":  [
-                       {
-                           "id":  "todos",
-                           "label":  "🌐 Todos los giros"
-                       },
-                       {
-                           "id":  "viajes",
-                           "label":  "✈️ Viajes y Turismo"
-                       },
-                       {
-                           "id":  "bodas",
-                           "label":  "💍 Bodas y Eventos"
-                       },
-                       {
-                           "id":  "hospedaje",
-                           "label":  "🏡 Quintas y Estancias"
-                       },
-                       {
-                           "id":  "servicios",
-                           "label":  "📸 Fotografía y Experiencias"
-                       }
-                   ],
-    "topBar":  {
-                   "urlBoton":  "#sec-ofertas",
-                   "texto":  "🔥 Especial de Lanzamiento: ¡Usa los cupones exclusivos en cada ficha y ahorra en tu próximo viaje o evento!",
-                   "visible":  true,
-                   "textoBoton":  "Ver Ofertas"
-               },
-    "whatsappConcierge":  "525652415593",
-    "comercialB2B":  {
-                         "planEstandarNota":  "/ mes",
-                         "ofertaTemporadaPrecio":  "$499 MXN / mes",
-                         "tituloB2BPortada":  "¿Tienes una Agencia, Jardín de Bodas, Quinta o Servicio?",
-                         "bannerPatrocinadoPrecio":  "$899 MXN / mes",
-                         "planDestacadoNota":  "/ mes",
-                         "planEstandarPrecio":  "$100 MXN",
-                         "planDestacadoPrecio":  "$499 MXN",
-                         "subtituloB2BPortada":  "Recibe clientes listos para reservar directo en tu WhatsApp, sin comisiones por venta.",
-                         "planDestacadoPost":  "Activación inmediata y prioridad en portada",
-                         "correoAdmin":  "tu-correo@gmail.com",
-                         "whatsappAdmin":  "525652415593"
-                     },
-    "pagosB2B":  {
-                     "mostrarModuloPagos":  true,
-                     "speiBeneficiario":  "Directorio Viajero México",
-                     "speiBanco":  "Mercado Pago / STP",
-                     "mpLinkBanner":  "https://www.mercadopago.com.mx",
-                     "mpLinkDestacado":  "https://www.mercadopago.com.mx",
-                     "modoDemoVisual":  true,
-                     "speiClabe":  "0000 0000 0000 0000 00",
-                     "mpLinkOferta":  "https://www.mercadopago.com.mx"
-                 }
+    "MODO_MULTISECTOR": false,
+    "apariencia": {
+        "paletaDefault": "caribe",
+        "temaDefault": "light"
+    },
+    "hero": {
+        "badge": "🇲🇽 El punto de encuentro turístico y de eventos en México",
+        "titulo": "Conecta directo con Especialistas en Viajes, Bodas y Experiencias",
+        "subtitulo": "Explora agencias de viajes, jardines para bodas, cabañas y servicios verificados en México sin intermediarios."
+    },
+    "bannerPatrocinado": {
+        "visible": true,
+        "titulo": "¿Quieres que tu negocio aparezca en este banner principal?",
+        "descripcion": "Destaca tus promociones de temporada frente a miles de clientes buscando opciones en México.",
+        "textoBoton": "Reservar Banner",
+        "urlBoton": "pages/anunciate.html"
+    },
+    "ordenSecciones": [
+        "destinos",
+        "ofertas",
+        "banner",
+        "agencias",
+        "mapa",
+        "opiniones",
+        "guias",
+        "faq",
+        "b2b"
+    ],
+    "categorias": [
+        {
+            "id": "todos",
+            "label": "🌐 Todos los giros"
+        },
+        {
+            "id": "viajes",
+            "label": "✈️ Viajes y Turismo"
+        },
+        {
+            "id": "bodas",
+            "label": "💍 Bodas y Eventos"
+        },
+        {
+            "id": "hospedaje",
+            "label": "🏡 Quintas y Estancias"
+        },
+        {
+            "id": "servicios",
+            "label": "📸 Fotografía y Experiencias"
+        }
+    ],
+    "topBar": {
+        "urlBoton": "#sec-ofertas",
+        "texto": "🔥 Especial de Lanzamiento: ¡Usa los cupones exclusivos en cada ficha y ahorra en tu próximo viaje o evento!",
+        "visible": true,
+        "textoBoton": "Ver Ofertas"
+    },
+    "whatsappConcierge": "525652415593",
+    "comercialB2B": {
+        "planEstandarNota": "/ mes",
+        "ofertaTemporadaPrecio": "$499 MXN / mes",
+        "tituloB2BPortada": "¿Tienes una Agencia, Jardín de Bodas, Quinta o Servicio?",
+        "bannerPatrocinadoPrecio": "$899 MXN / mes",
+        "planDestacadoNota": "/ mes",
+        "planEstandarPrecio": "$100 MXN",
+        "planDestacadoPrecio": "$499 MXN",
+        "subtituloB2BPortada": "Recibe clientes listos para reservar directo en tu WhatsApp, sin comisiones por venta.",
+        "planDestacadoPost": "Activación inmediata y prioridad en portada",
+        "correoAdmin": "tu-correo@gmail.com",
+        "whatsappAdmin": "525652415593"
+    },
+    "pagosB2B": {
+        "mostrarModuloPagos": true,
+        "speiBeneficiario": "Directorio Viajero México",
+        "speiBanco": "Mercado Pago / STP",
+        "mpLinkBanner": "https://www.mercadopago.com.mx",
+        "mpLinkDestacado": "https://www.mercadopago.com.mx",
+        "modoDemoVisual": true,
+        "speiClabe": "0000 0000 0000 0000 00",
+        "mpLinkOferta": "https://www.mercadopago.com.mx"
+    }
 }
