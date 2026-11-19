@@ -224,7 +224,21 @@
                                         <input type="text" id="anunCuponBen" placeholder="10% de descuento directo">
                                     </div>
                                 </div>
-                                                                <div class="form-group">
+                                                                                                <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">
+                                    <div class="form-group">
+                                        <label>Duración del Servicio / Estancia</label>
+                                        <input type="text" id="anunDuracion" placeholder="Ej. 3 Días / 2 Noches o 5 horas">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Tipos de Cobro (separados por coma)</label>
+                                        <input type="text" id="anunTiposCobro" placeholder="Tarjeta, 3 y 6 MSI, Transferencia SPEI, Efectivo">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Promoción Destacada en Tarjeta de Revista</label>
+                                    <input type="text" id="anunPromocion" placeholder="Ej. 15% OFF reservando directo + desayuno incluido">
+                                </div>
+                                <div class="form-group">
                                     <label>Galería de Fotos (URLs separadas por coma)</label>
                                     <textarea id="anunGaleria" rows="2" placeholder="https://foto1.jpg, https://foto2.jpg, https://foto3.jpg"></textarea>
                                 </div>
@@ -795,6 +809,9 @@
             document.getElementById("anunPrecio").value = item.rangoPrecio || "";
             document.getElementById("anunCuponCod").value = item.cuponCodigo || "";
             document.getElementById("anunCuponBen").value = item.cuponBeneficio || "";
+            document.getElementById("anunDuracion").value = item.duracion || "";
+            document.getElementById("anunPromocion").value = item.promocion || item.cuponBeneficio || "";
+            document.getElementById("anunTiposCobro").value = Array.isArray(item.tiposCobro) ? item.tiposCobro.join(", ") : "";
             document.getElementById("anunGaleria").value = Array.isArray(item.galeria) ? item.galeria.join(", ") : "";
             document.getElementById("anunAmenidades").value = Array.isArray(item.amenidades) ? item.amenidades.join(", ") : "";
             document.getElementById("anunTags").value = (item.tags || []).map(t => t.replace(/^#/, '')).join(", ");
@@ -840,6 +857,9 @@
                 rangoPrecio: document.getElementById("anunPrecio").value.trim() || "$ • Consultar",
                 cuponCodigo: document.getElementById("anunCuponCod").value.trim().toUpperCase(),
                 cuponBeneficio: document.getElementById("anunCuponBen").value.trim(),
+                duracion: document.getElementById("anunDuracion").value.trim(),
+                promocion: document.getElementById("anunPromocion").value.trim(),
+                tiposCobro: document.getElementById("anunTiposCobro").value.split(",").map(x => x.trim()).filter(Boolean),
                 galeria: document.getElementById("anunGaleria").value.split(",").map(u => validarUrlSegura(u)).filter(Boolean),
                 amenidades: document.getElementById("anunAmenidades").value.split(",").map(a => a.trim()).filter(Boolean),
                 especialidad: catNombre,

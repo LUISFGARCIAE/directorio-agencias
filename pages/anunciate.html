@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://images.unsplash.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>Anúnciate en Directorio Viajero | Planes y Registro</title>
@@ -251,6 +251,36 @@
                         <input type="text" id="destinosAgencia" required maxlength="120" placeholder="Ej. Cancún, Acapulco, Pueblos Mágicos">
                     </div>
 
+                                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                        <div class="form-group">
+                            <label>Cobro / Tarifa aproximada *</label>
+                            <input type="text" id="tarifaAgencia" required maxlength="60" placeholder="Ej. $ • Desde $2,490 MXN">
+                        </div>
+                        <div class="form-group">
+                            <label>Duración del Servicio / Paquete *</label>
+                            <input type="text" id="duracionAgencia" required maxlength="60" placeholder="Ej. 3 Días / 2 Noches o 5 hrs">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Promoción Vigente (opcional)</label>
+                        <input type="text" id="promoAgencia" maxlength="100" placeholder="Ej. 15% de descuento reservando directo o desayuno gratis">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Tipos de Cobro Aceptados *</label>
+                        <div style="display:flex; flex-wrap:wrap; gap:0.65rem; padding:0.5rem 0.65rem; background:var(--bg-muted); border:1px solid var(--border); border-radius:0.6rem; font-size:0.82rem;">
+                            <label style="display:inline-flex; align-items:center; gap:0.3rem; margin:0; font-weight:600;"><input type="checkbox" class="chk-cobro" value="Tarjeta Crédito/Débito" checked style="width:auto;"> Tarjeta</label>
+                            <label style="display:inline-flex; align-items:center; gap:0.3rem; margin:0; font-weight:600;"><input type="checkbox" class="chk-cobro" value="Meses sin Intereses" style="width:auto;"> MSI</label>
+                            <label style="display:inline-flex; align-items:center; gap:0.3rem; margin:0; font-weight:600;"><input type="checkbox" class="chk-cobro" value="Transferencia SPEI" checked style="width:auto;"> SPEI</label>
+                            <label style="display:inline-flex; align-items:center; gap:0.3rem; margin:0; font-weight:600;"><input type="checkbox" class="chk-cobro" value="Efectivo" checked style="width:auto;"> Efectivo</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Imágenes de tu servicio o producto (URLs https:// separadas por coma)</label>
+                        <input type="text" id="imagenesAgencia" maxlength="400" placeholder="https://tusitio.com/foto1.jpg, https://tusitio.com/foto2.jpg">
+                    </div>
                     <div class="form-group">
                         <label>Descripción corta (máx. 140 caracteres) *</label>
                         <textarea id="descAgencia" rows="3" maxlength="140" required placeholder="Especialistas en paquetes familiares todo incluido y salidas grupales..."></textarea>
@@ -647,7 +677,7 @@
                         etiquetaEstado: "✔ Verificado",
                         salidaDesde: ciudad,
                         estadosSalida: ["cdmx", "monterrey", "guadalajara", "puebla", "bajio"],
-                        rangoPrecio: "$$ • Cotización directa",
+                        rangoPrecio: limpiarTextoPlano(document.getElementById("tarifaAgencia").value, 60) || "$ • Cotización directa", duracion: limpiarTextoPlano(document.getElementById("duracionAgencia").value, 60) || "Flexible", promocion: limpiarTextoPlano(document.getElementById("promoAgencia").value, 100), tiposCobro: Array.from(document.querySelectorAll(".chk-cobro:checked")).map(c => c.value), galeria: (document.getElementById("imagenesAgencia").value || "").split(",").map(u => validarUrlHttpSegura(u)).filter(Boolean),
                         especialidad: destinosRaw,
                         descripcion: desc,
                         destinos: ["cancun", "acapulco", "pueblos-magicos"],
