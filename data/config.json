@@ -1,96 +1,97 @@
 {
-    "MODO_MULTISECTOR":  false,
-    "apariencia":  {
-                       "paletaDefault":  "caribe",
-                       "temaDefault":  "light"
-                   },
-    "hero":  {
-                 "badge":  "🇲🇽 El punto de encuentro turístico y de eventos en México",
-                 "titulo":  "Conecta directo con Especialistas en Viajes, Bodas y Experiencias",
-                 "subtitulo":  "Explora agencias de viajes, jardines para bodas, cabañas y servicios verificados en México sin intermediarios."
-             },
-    "bannerPatrocinado":  {
-                              "visible":  true,
-                              "titulo":  "¿Quieres que tu negocio aparezca en este banner principal?",
-                              "descripcion":  "Destaca tus promociones de temporada frente a miles de clientes buscando opciones en México.",
-                              "textoBoton":  "Reservar Banner",
-                              "urlBoton":  "pages/anunciate.html"
-                          },
-    "ordenSecciones":  [
-                           "destinos",
-                           "ofertas",
-                           "banner",
-                           "agencias",
-                           "mapa",
-                           "opiniones",
-                           "guias",
-                           "faq",
-                           "b2b"
-                       ],
-    "categorias":  [
-                       {
-                           "id":  "todos",
-                           "label":  "🌐 Todos los giros"
-                       },
-                       {
-                           "id":  "viajes",
-                           "label":  "✈️ Viajes y Turismo"
-                       },
-                       {
-                           "id":  "bodas",
-                           "label":  "💍 Bodas y Eventos"
-                       },
-                       {
-                           "id":  "hospedaje",
-                           "label":  "🏡 Quintas y Estancias"
-                       },
-                       {
-                           "id":  "servicios",
-                           "label":  "📸 Fotografía y Experiencias"
-                       }
-                   ],
-    "topBar":  {
-                   "urlBoton":  "#sec-ofertas",
-                   "texto":  "🔥 Especial de Lanzamiento: ¡Usa los cupones exclusivos en cada ficha y ahorra en tu próximo viaje o evento!",
-                   "visible":  true,
-                   "textoBoton":  "Ver Ofertas"
-               },
-    "whatsappConcierge":  "525652415593",
-    "comercialB2B":  {
-                         "planEstandarNota":  "/ mes",
-                         "ofertaTemporadaPrecio":  "$499 MXN / mes",
-                         "tituloB2BPortada":  "¿Tienes una Agencia, Jardín de Bodas, Quinta o Servicio?",
-                         "bannerPatrocinadoPrecio":  "$899 MXN / mes",
-                         "planDestacadoNota":  "/ mes",
-                         "planEstandarPrecio":  "$100 MXN",
-                         "planDestacadoPrecio":  "$499 MXN",
-                         "subtituloB2BPortada":  "Recibe clientes listos para reservar directo en tu WhatsApp, sin comisiones por venta.",
-                         "planDestacadoPost":  "Activación inmediata y prioridad en portada",
-                         "correoAdmin":  "tu-correo@gmail.com",
-                         "whatsappAdmin":  "525652415593"
-                     },
-    "pagosB2B":  {
-                     "mostrarModuloPagos":  true,
-                     "speiBeneficiario":  "Directorio Viajero México",
-                     "speiBanco":  "Mercado Pago / STP",
-                     "mpLinkBanner":  "https://www.mercadopago.com.mx",
-                     "mpLinkDestacado":  "https://www.mercadopago.com.mx",
-                     "modoDemoVisual":  true,
-                     "speiClabe":  "0000 0000 0000 0000 00",
-                     "mpLinkOferta":  "https://www.mercadopago.com.mx"
-                 },
-    "revistaEditorial":  {
-                             "mostrarFaq":  true,
-                             "heroTitle":  "Descubre Paquetes, Hoteles, Lugares y Experiencias en un Solo Catálogo",
-                             "mostrarCta":  true,
-                             "kickerTexto":  "✨ EDICIÓN MÉXICO 2026 • REVISTA DE ANUNCIANTES VERIFICADOS",
-                             "mostrarGuias":  true,
-                             "heroSubtitle":  "Explora cada anuncio como revista de productos: revisa fotos reales, tarifas, duración, promociones vigentes y tipos de cobro aceptados antes de contactar.",
-                             "mostrarOfertas":  true,
-                             "mostrarSpotlight":  true,
-                             "spotlightId":  "",
-                             "temaDefault":  "oceano",
-                             "disclaimerTexto":  "Promocionamos los servicios, paquetes y promociones de anunciantes en México. Todas las cotizaciones y pagos se realizan directamente con cada proveedor."
-                         },
-    "buzonNubeUrl":  ""
+  "MODO_MULTISECTOR": false,
+  "apariencia": {
+    "paletaDefault": "caribe",
+    "temaDefault": "light"
+  },
+  "hero": {
+    "badge": "🇲🇽 El punto de encuentro turístico y de eventos en México",
+    "titulo": "Conecta directo con Especialistas en Viajes, Bodas y Experiencias",
+    "subtitulo": "Explora agencias de viajes, jardines para bodas, cabañas y servicios verificados en México sin intermediarios."
+  },
+  "bannerPatrocinado": {
+    "visible": true,
+    "titulo": "¿Quieres que tu negocio aparezca en este banner principal?",
+    "descripcion": "Destaca tus promociones de temporada frente a miles de clientes buscando opciones en México.",
+    "textoBoton": "Reservar Banner",
+    "urlBoton": "pages/anunciate.html"
+  },
+  "ordenSecciones": [
+    "destinos",
+    "ofertas",
+    "banner",
+    "agencias",
+    "mapa",
+    "opiniones",
+    "guias",
+    "faq",
+    "b2b"
+  ],
+  "categorias": [
+    {
+      "id": "todos",
+      "label": "🌐 Todos los giros"
+    },
+    {
+      "id": "viajes",
+      "label": "✈️ Viajes y Turismo"
+    },
+    {
+      "id": "bodas",
+      "label": "💍 Bodas y Eventos"
+    },
+    {
+      "id": "hospedaje",
+      "label": "🏡 Quintas y Estancias"
+    },
+    {
+      "id": "servicios",
+      "label": "📸 Fotografía y Experiencias"
+    }
+  ],
+  "topBar": {
+    "urlBoton": "#sec-ofertas",
+    "texto": "🔥 Especial de Lanzamiento: ¡Usa los cupones exclusivos en cada ficha y ahorra en tu próximo viaje o evento!",
+    "visible": true,
+    "textoBoton": "Ver Ofertas"
+  },
+  "whatsappConcierge": "525652415593",
+  "comercialB2B": {
+    "planEstandarNota": "/ mes",
+    "ofertaTemporadaPrecio": "$499 MXN / mes",
+    "tituloB2BPortada": "¿Tienes una Agencia, Jardín de Bodas, Quinta o Servicio?",
+    "bannerPatrocinadoPrecio": "$899 MXN / mes",
+    "planDestacadoNota": "/ mes",
+    "planEstandarPrecio": "$100 MXN",
+    "planDestacadoPrecio": "$499 MXN",
+    "subtituloB2BPortada": "Recibe clientes listos para reservar directo en tu WhatsApp, sin comisiones por venta.",
+    "planDestacadoPost": "Activación inmediata y prioridad en portada",
+    "correoAdmin": "tu-correo@gmail.com",
+    "whatsappAdmin": "525652415593"
+  },
+  "pagosB2B": {
+    "mostrarModuloPagos": true,
+    "modoDemoVisual": true,
+    "mpLinkEstandar": "https://www.mercadopago.com.mx/",
+    "mpLinkDestacado": "https://www.mercadopago.com.mx/",
+    "speiBanco": "Mercado Pago / STP",
+    "speiClabe": "0000 0000 0000 0000 00",
+    "speiBeneficiario": "Directorio Viajero México"
+  },
+  "revistaEditorial": {
+    "disclaimerTexto": "Promocionamos los servicios, paquetes y promociones de anunciantes en México. Todas las cotizaciones y pagos se realizan directamente con cada proveedor.",
+    "kickerTexto": "✨ EDICIÓN MÉXICO 2026 • REVISTA DE ANUNCIANTES VERIFICADOS",
+    "heroTitle": "Descubre Paquetes, Hoteles, Lugares y Experiencias en un Solo Catálogo",
+    "heroSubtitle": "Explora cada anuncio como revista de productos: revisa fotos reales, tarifas, duración, promociones vigentes y tipos de cobro aceptados antes de contactar.",
+    "mostrarSpotlight": true,
+    "spotlightId": "",
+    "mostrarOfertas": true,
+    "mostrarCta": true,
+    "mostrarGuias": true,
+    "mostrarFaq": true,
+    "temaDefault": "oceano"
+  },
+  "buzonNubeUrl": "https://script.google.com/macros/s/AKfycbyuph7q0u3_XJ5u3owotgshfyDAzHN3Z_g93BbzxuSfPnZ2Od4l_-wbtEBqEpvw2Ob3xw/exec",
+  "topBarActivo": false,
+  "topBarTexto": ""
 }
