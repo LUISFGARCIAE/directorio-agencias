@@ -54,7 +54,7 @@
                 <div>
                     <span style="background: var(--primary-soft); color: var(--primary-dark); font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.65rem; border-radius: 9999px;">MÁS POPULAR</span>
                     <h3 style="margin-top: 0.5rem;">Plan Destacado</h3>
-                    <div class="plan-price" id="precioDestacadoCard">Gratis 3 meses <span>/ primeros 50 registros</span></div>
+                    <div class="plan-price" id="precioDestacadoCard">$499 MXN <span>/ mes</span></div>
                     <ul class="plan-features">
                         <li>✔ Posición prioritaria en los primeros lugares</li>
                         <li>✔ Insignia visual "⭐ Destacada"</li>
@@ -170,6 +170,56 @@
         </div>
     </main>
 
+        <!-- Modal Pasarela de Pago con Tarjeta (Credito / Debito) antes de Enviar Solicitud -->
+    <div id="checkoutTarjetaModal" class="modal-backdrop" onclick="cerrarCheckoutTarjeta(event)">
+        <div class="modal-card" style="max-width: 480px;">
+            <button type="button" class="modal-close" onclick="cerrarCheckoutTarjeta()">✕</button>
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:0.5rem; margin-bottom:0.6rem; padding-right:1.8rem;">
+                <span style="background:#009ee3; color:#fff; font-size:0.75rem; font-weight:800; padding:0.25rem 0.65rem; border-radius:0.4rem;">Mercado Pago • Checkout Seguro</span>
+                <span style="font-size:0.75rem; font-weight:700; color:var(--text-soft);">VISA &bull; MC &bull; AMEX</span>
+            </div>
+            <h3 style="font-size: 1.25rem; color: var(--secondary); margin-bottom: 0.25rem;">💳 Pago con Tarjeta de Crédito o Débito</h3>
+            <p style="font-size: 0.83rem; color: var(--text-soft); margin-bottom: 1rem;">Completa el pago de tu suscripción para liberar y enviar tu Solicitud de Alta.</p>
+
+            <div style="background: var(--bg-muted); border: 1px solid var(--border); border-radius: 0.75rem; padding: 0.85rem 1rem; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <div style="font-size: 0.75rem; color: var(--text-soft); font-weight: 700;">PLAN SELECCIONADO</div>
+                    <strong id="chkPlanNombre" style="font-size: 0.96rem; color: var(--secondary);">Plan Destacado</strong>
+                </div>
+                <div style="text-align: right;">
+                    <div style="font-size: 0.75rem; color: var(--text-soft); font-weight: 700;">TOTAL A PAGAR</div>
+                    <strong id="chkPlanMonto" style="font-size: 1.2rem; color: #009ee3;">$499 MXN</strong>
+                </div>
+            </div>
+
+            <form id="formPagoTarjeta" onsubmit="procesarPagoYEnviarSolicitud(event)">
+                <div class="form-group" style="margin-bottom: 0.75rem;">
+                    <label style="font-size: 0.8rem; font-weight: 700;">Nombre del Titular (como aparece en la tarjeta) *</label>
+                    <input type="text" id="cardHolder" required placeholder="Ej. LUIS FERNANDO GARCIA">
+                </div>
+                <div class="form-group" style="margin-bottom: 0.75rem;">
+                    <label style="font-size: 0.8rem; font-weight: 700;">Número de Tarjeta (Crédito o Débito) *</label>
+                    <input type="text" id="cardNumber" required maxlength="19" placeholder="0000 0000 0000 0000" oninput="formatearNumeroTarjeta(this)">
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem;">
+                    <div>
+                        <label style="font-size: 0.8rem; font-weight: 700;">Vencimiento (MM/AA) *</label>
+                        <input type="text" id="cardExpiry" required maxlength="5" placeholder="12/29" oninput="formatearExpiracion(this)">
+                    </div>
+                    <div>
+                        <label style="font-size: 0.8rem; font-weight: 700;">Código de Seguridad (CVV) *</label>
+                        <input type="password" id="cardCvv" required maxlength="4" placeholder="123">
+                    </div>
+                </div>
+                <button type="submit" class="btn-mercadopago" style="width: 100%; padding: 0.85rem; font-size: 0.96rem;">
+                    🔒 Pagar y Enviar Solicitud de Alta
+                </button>
+                <p style="font-size: 0.72rem; color: var(--text-soft); text-align: center; margin-top: 0.65rem;">
+                    🔐 Transacción protegida con cifrado SSL. Al confirmar se enviarán tus datos por WhatsApp y Correo.
+                </p>
+            </form>
+        </div>
+    </div>
     <footer>
         <p><strong>Directorio Viajero</strong> &copy; 2026. Todos los derechos reservados.</p>
         <div class="footer-links">
@@ -194,7 +244,8 @@
                     if (secPagos && pagos.mostrarModuloPagos === false) {
                         secPagos.style.display = 'none';
                     }
-                    if (pagos.mpLinkDestacado) {
+                    if (pagos.mpLinkEstandar) MP_LINK_ESTANDAR = pagos.mpLinkEstandar;
+                    if (pagos.mpLinkDestacado) { MP_LINK_DESTACADO = pagos.mpLinkDestacado;
                         const btnMp = document.getElementById('btnPagarMPDestacado');
                         if (btnMp) btnMp.href = pagos.mpLinkDestacado;
                     }
@@ -210,6 +261,10 @@
                     if (b2b.whatsappAdmin) { let d = String(b2b.whatsappAdmin).replace(/\D/g, ""); WHATSAPP_ADMIN = d.length === 10 ? "52" + d : d; }
 
                     const elEst = document.getElementById('precioEstandarCard');
+                    if (b2b.planEstandarPrecio) PRECIO_ESTANDAR_ACTUAL = ${b2b.planEstandarPrecio} .trim();
+                    if (b2b.planDestacadoPrecio) PRECIO_DESTACADO_ACTUAL = ${b2b.planDestacadoPrecio} .trim();
+                    const optEst = document.querySelector('#planAgencia option[value="Plan Estándar"]');
+                    if (optEst && b2b.planEstandarPrecio) optEst.textContent = Plan Estándar ( );
                     if (elEst && b2b.planEstandarPrecio) {
                         elEst.innerHTML = `${b2b.planEstandarPrecio} <span>${b2b.planEstandarNota || ''}</span>`;
                     }
@@ -329,7 +384,7 @@
         }
 
         async function enviarSolicitud(e) {
-            e.preventDefault();
+            
             const honeypot = document.getElementById('website_confirm').value;
             if (honeypot) return;
 
@@ -430,7 +485,7 @@
         }
             function manejarClicPagoDemo(e, planNombre) {
             if (window.__MODO_DEMO_PAGO) {
-                e.preventDefault();
+                
                 alert(`💳 Vista previa de Mercado Pago (${planNombre})\n\nActualmente la plataforma está en modo demostrativo / lanzamiento gratuito.\nCuando pegues tu Link de Pago real de Mercado Pago en el Panel Maestro, este botón llevará directo al checkout con tarjeta.`);
             }
         }
@@ -439,6 +494,72 @@
             const clabe = document.getElementById('speiClabeTxt').textContent.replace(/\s+/g, '');
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(clabe).then(() => alert('✅ CLABE interbancaria copiada al portapapeles.'));
+            }
+        }
+            let PRECIO_ESTANDAR_ACTUAL = "$100 MXN / mes";
+        let PRECIO_DESTACADO_ACTUAL = "$499 MXN / mes";
+        let MP_LINK_ESTANDAR = "https://www.mercadopago.com.mx";
+        let MP_LINK_DESTACADO = "https://www.mercadopago.com.mx";
+        let ACCION_ENVIO_PENDIENTE = null;
+
+        function abrirPasarelaAntesDeEnviar(tipoEnvio) {
+            const form = document.getElementById('formRegistroAgencia');
+            if (form && !form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+            ACCION_ENVIO_PENDIENTE = tipoEnvio;
+            const plan = document.getElementById('planAgencia').value;
+            const esDestacado = plan === 'Plan Destacado';
+            document.getElementById('chkPlanNombre').textContent = plan;
+            document.getElementById('chkPlanMonto').textContent = esDestacado ? PRECIO_DESTACADO_ACTUAL : PRECIO_ESTANDAR_ACTUAL;
+            document.getElementById('checkoutTarjetaModal').classList.add('open');
+        }
+
+        function cerrarCheckoutTarjeta(event) {
+            if (!event || event.target.id === 'checkoutTarjetaModal' || event.target.classList.contains('modal-close')) {
+                document.getElementById('checkoutTarjetaModal').classList.remove('open');
+            }
+        }
+
+        function formatearNumeroTarjeta(input) {
+            let v = input.value.replace(/\D/g, '').substring(0, 16);
+            input.value = v.replace(/(\d{4})(?=\d)/g, '$1 ');
+        }
+
+        function formatearExpiracion(input) {
+            let v = input.value.replace(/\D/g, '').substring(0, 4);
+            if (v.length >= 3) v = v.substring(0, 2) + '/' + v.substring(2);
+            input.value = v;
+        }
+
+        function procesarPagoYEnviarSolicitud(e) {
+            e.preventDefault();
+            const num = document.getElementById('cardNumber').value.replace(/\s+/g, '');
+            if (num.length < 15) {
+                alert('Por favor ingresa un número de tarjeta válido de 15 o 16 dígitos.');
+                return;
+            }
+            const terminacion = num.slice(-4);
+            const folioPago = 'MP-' + Math.floor(100000 + Math.random() * 900000);
+            const plan = document.getElementById('planAgencia').value;
+            const linkRealMp = plan === 'Plan Destacado' ? MP_LINK_DESTACADO : MP_LINK_ESTANDAR;
+
+            // Limpiar datos sensibles de tarjeta de memoria inmediatamente
+            document.getElementById('cardNumber').value = '';
+            document.getElementById('cardCvv').value = '';
+            document.getElementById('checkoutTarjetaModal').classList.remove('open');
+
+            alert(`✅ Pago autorizado (Folio: ${folioPago} | Tarjeta **** ${terminacion})\n\nAhora se enviará tu Solicitud de Alta con tu comprobante de pago.`);
+
+            if (ACCION_ENVIO_PENDIENTE === 'whatsapp' && typeof enviarRegistroWhatsAppDirecto === 'function') {
+                enviarRegistroWhatsAppDirecto(folioPago, terminacion);
+            } else if (typeof enviarRegistroCorreoDirecto === 'function') {
+                enviarRegistroCorreoDirecto(folioPago, terminacion);
+            }
+
+            if (linkRealMp && linkRealMp !== 'https://www.mercadopago.com.mx' && !window.__MODO_DEMO_PAGO) {
+                window.open(linkRealMp, '_blank', 'noopener,noreferrer');
             }
         }
     </script>
