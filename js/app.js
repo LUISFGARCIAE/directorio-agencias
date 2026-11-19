@@ -57,8 +57,14 @@ function renderizarSpotlight() {
     const cont = document.getElementById("bloqueSpotlight");
     if (!cont) return;
 
+    const revCfg = CONFIG_SITE.revistaEditorial || {};
+    if (revCfg.mostrarSpotlight === false) {
+        cont.innerHTML = "";
+        return;
+    }
+    const manual = revCfg.spotlightId ? CATALOGO.anunciantes.find(a => a.id === revCfg.spotlightId) : null;
     const destacados = CATALOGO.anunciantes.filter(a => a.destacada);
-    const item = destacados[0] || CATALOGO.anunciantes[0];
+    const item = manual || destacados[0] || CATALOGO.anunciantes[0];
     if (!item || SECTOR_ACTIVO !== "todos" || SOLO_FAVORITOS || (document.getElementById("inputBusqueda")?.value.trim())) {
         cont.innerHTML = "";
         return;
@@ -561,6 +567,35 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (CONFIG_SITE.topBarActivo && CONFIG_SITE.topBarTexto) {
             document.getElementById("topPromoText").textContent = CONFIG_SITE.topBarTexto;
             document.getElementById("topPromoBar").style.display = "block";
+        }
+        const rev = CONFIG_SITE.revistaEditorial || {};
+        if (!savedColor && rev.temaDefault) {
+            document.documentElement.setAttribute("data-color-theme", rev.temaDefault);
+        }
+        if (rev.disclaimerTexto) {
+            const bar = document.getElementById("magDisclaimerBar");
+            if (bar) bar.innerHTML = `📣 <strong>Plataforma Publicitaria Independiente:</strong> ${escaparHTML(rev.disclaimerTexto)}`;
+        }
+        if (rev.kickerTexto && document.getElementById("magKickerText")) {
+            document.getElementById("magKickerText").textContent = rev.kickerTexto;
+        }
+        if (rev.heroTitle && document.getElementById("heroTitle")) {
+            document.getElementById("heroTitle").textContent = rev.heroTitle;
+        }
+        if (rev.heroSubtitle && document.getElementById("heroSubtitle")) {
+            document.getElementById("heroSubtitle").textContent = rev.heroSubtitle;
+        }
+        if (rev.mostrarOfertas === false && document.getElementById("seccionOfertas")) {
+            document.getElementById("seccionOfertas").style.display = "none";
+        }
+        if (rev.mostrarCta === false && document.getElementById("bloqueCtaAnunciante")) {
+            document.getElementById("bloqueCtaAnunciante").style.display = "none";
+        }
+        if (rev.mostrarGuias === false && document.getElementById("seccionGuias")) {
+            document.getElementById("seccionGuias").style.display = "none";
+        }
+        if (rev.mostrarFaq === false && document.getElementById("seccionFaq")) {
+            document.getElementById("seccionFaq").style.display = "none";
         }
     } catch (e) {
         console.error("Error cargando datos de la revista:", e);

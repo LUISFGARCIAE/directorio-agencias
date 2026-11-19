@@ -691,7 +691,7 @@
                 // Guardar en la cola local del Panel de Control
                 const cola = JSON.parse(localStorage.getItem("dv_solicitudes_pendientes") || "[]");
                 cola.unshift(solicitudObj);
-                localStorage.setItem("dv_solicitudes_pendientes", JSON.stringify(cola));
+                localStorage.setItem("dv_solicitudes_pendientes", JSON.stringify(cola)); try { const bc = new BroadcastChannel("dv_solicitudes_channel"); bc.postMessage("nueva_solicitud"); bc.close(); } catch (err) {}
 
                 document.getElementById("btnEnviarSolicitudPanel").disabled = true;
                 document.getElementById("btnEnviarSolicitudPanel").textContent = "✔ Solicitud Enviada";

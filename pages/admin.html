@@ -1,1243 +1,1179 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-MX">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.github.com; object-src 'none'; base-uri 'self';">
-    <meta name="robots" content="noindex, nofollow">
-    <title>Panel Maestro CMS | Directorio Viajero</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/styles.css">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://api.github.com; object-src 'none'; base-uri 'self';">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <title>Panel Maestro CMS | Revista Directorio Viajero</title>
+    <link rel="stylesheet" href="../css/styles.css?v=20261119admin">
     <style>
-        .cms-tabs { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1.5rem; border-bottom: 2px solid var(--border); padding-bottom: 0.75rem; }
-        .cms-tab { background: var(--bg-card); border: 1px solid var(--border); color: var(--text-main); padding: 0.6rem 1.2rem; border-radius: 0.6rem; font-weight: 700; font-size: 0.9rem; cursor: pointer; }
-        .cms-tab.active { background: var(--primary); color: white; border-color: var(--primary); }
+        .admin-wrap { max-width: 1220px; margin: 0 auto; padding: 1.5rem 1.25rem 4rem; }
+        .admin-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 1rem; padding: 1.35rem; box-shadow: var(--shadow-sm); margin-bottom: 1.25rem; }
+        .admin-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 1.25rem; align-items: start; }
+        @media (max-width: 920px) { .admin-grid { grid-template-columns: 1fr; } }
+        .cms-tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1.15rem 0; }
+        .cms-tab { background: var(--bg-card); border: 1px solid var(--border); color: var(--text-main); padding: 0.58rem 0.95rem; border-radius: 0.7rem; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.15s ease; }
+        .cms-tab:hover { border-color: var(--primary); }
+        .cms-tab.active { background: var(--primary); color: #ffffff; border-color: var(--primary); }
+        .cms-tab.has-pending { border-color: #f59e0b; background: rgba(245, 158, 11, 0.14); color: var(--secondary); }
+        .cms-tab.active.has-pending { background: #d97706; color: #ffffff; border-color: #d97706; }
         .cms-panel { display: none; }
         .cms-panel.active { display: block; }
-        .admin-grid { display: grid; grid-template-columns: 1fr 1.45fr; gap: 1.75rem; align-items: start; }
-        .admin-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 1rem; padding: 1.65rem; box-shadow: var(--shadow-sm); margin-bottom: 1.5rem; }
-        .switch-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1rem; background: var(--bg-muted); border-radius: 0.75rem; margin-bottom: 1rem; }
-        .item-row { display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; padding: 0.85rem 1rem; border: 1px solid var(--border); border-radius: 0.65rem; margin-bottom: 0.65rem; background: var(--bg-body); }
-        .item-actions { display: flex; gap: 0.35rem; flex-shrink: 0; }
-        .btn-mini { padding: 0.38rem 0.62rem; border-radius: 0.4rem; border: none; font-size: 0.78rem; font-weight: 700; cursor: pointer; background: var(--bg-muted); color: var(--text-main); }
-        .btn-mini:hover { opacity: 0.85; }
-        .btn-star.active { background: #f59e0b; color: white; }
-        .btn-edit { background: #e0f2fe; color: #0369a1; }
-        .btn-del { background: #fee2e2; color: #b91c1c; }
-        .publish-bar { position: sticky; bottom: 16px; background: #0f172a; color: white; padding: 1rem 1.5rem; border-radius: 0.85rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; box-shadow: 0 20px 35px rgba(0,0,0,0.4); z-index: 90; flex-wrap: wrap; }
-        @media (max-width: 900px) { .admin-grid { grid-template-columns: 1fr; } }
+        .form-group { margin-bottom: 0.85rem; }
+        .form-group label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--secondary); margin-bottom: 0.3rem; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.62rem 0.8rem; border: 1px solid var(--border); border-radius: 0.55rem; background: var(--bg-muted); color: var(--text-main); font-size: 0.88rem; font-family: inherit; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+        @media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
+        .item-row { display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; padding: 0.8rem; border: 1px solid var(--border); border-radius: 0.7rem; background: var(--bg-muted); margin-bottom: 0.6rem; flex-wrap: wrap; }
+        .btn-mini { padding: 0.38rem 0.65rem; border-radius: 0.45rem; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-main); font-size: 0.78rem; font-weight: 700; cursor: pointer; }
+        .btn-mini:hover { border-color: var(--primary); }
+        .btn-del { color: #dc2626; border-color: rgba(220, 38, 38, 0.3); }
+        .publish-bar { background: #0f172a; color: #ffffff; border-radius: 1rem; padding: 1.1rem 1.4rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin: 1.25rem 0; }
+        .sol-card { border: 1px solid var(--border); border-left: 4px solid #f59e0b; background: var(--bg-muted); border-radius: 0.85rem; padding: 1.15rem; margin-bottom: 0.9rem; }
+        .pill-mini { display: inline-block; font-size: 0.72rem; font-weight: 700; padding: 0.18rem 0.55rem; border-radius: 9999px; background: var(--bg-card); border: 1px solid var(--border); color: var(--text-main); }
+        .thumb-strip { display: flex; gap: 0.45rem; flex-wrap: wrap; margin-top: 0.5rem; }
+        .thumb-strip img { width: 72px; height: 50px; object-fit: cover; border-radius: 0.4rem; border: 1px solid var(--border); }
     </style>
 </head>
 <body>
-
-    <header>
-        <a href="../index.html" class="logo">⚙️ Panel<span>Maestro</span></a>
-        <nav>
-            <a href="media-kit.html" target="_blank">📄 Media Kit PDF</a>
-            <a href="../index.html" target="_blank">Abrir Sitio Público ↗</a>
-            <button type="button" id="darkToggleBtn" class="dark-toggle" onclick="alternarModoOscuro()">🌙</button>
+    <header class="navbar">
+        <a href="../index.html" class="brand">🛠️ Panel Maestro <span>Revista</span></a>
+        <nav class="nav-links">
+            <a href="../index.html" target="_blank" rel="noopener noreferrer">👁️ Ver Revista en Vivo</a>
+            <a href="anunciate.html" target="_blank" rel="noopener noreferrer">📢 Probar Alta</a>
+            <a href="media-kit.html" target="_blank" rel="noopener noreferrer">📄 Media Kit</a>
+            <button type="button" class="dark-toggle" id="btnDarkMode" onclick="toggleModoOscuro()">🌙</button>
         </nav>
     </header>
 
-    <section class="page-banner" style="padding: 2.25rem 1.5rem;">
-        <h1>Editor Visual y Control Central</h1>
-        <p>Modifica textos, mueve el orden de las secciones, administra anunciantes y publica en vivo.</p>
-    </section>
-
-    <main class="container">
-        <!-- Conexion con GitHub -->
-        <div class="admin-card" id="authBox">
-            <h2 style="font-size: 1.15rem; margin-bottom: 0.4rem;">Conexión con Repositorio (LUISFGARCIAE/directorio-agencias)</h2>
-            <p style="font-size: 0.86rem; color: var(--text-soft); margin-bottom: 1rem;">
-                Pega tu Personal Access Token de GitHub para cargar el editor completo. Solo vive en esta pestaña mientras trabajas.
-            </p>
-            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-                <input type="password" id="ghTokenInput" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" style="flex: 1; min-width: 240px; padding: 0.7rem 1rem; border-radius: 0.5rem; border: 1px solid var(--border); background: var(--bg-body); color: var(--text-main);">
-                <button type="button" onclick="conectarGitHub()" class="btn-action btn-primary" style="flex: 0 0 auto; padding: 0.7rem 1.5rem;">Conectar al Editor</button>
+    <main class="admin-wrap">
+        <!-- Conexión GitHub -->
+        <section class="admin-card">
+            <h2 style="font-size: 1.18rem; color: var(--secondary); margin: 0 0 0.25rem;">Conexión con Repositorio (LUISFGARCIAE/directorio-agencias)</h2>
+            <p style="font-size: 0.84rem; color: var(--text-soft); margin: 0 0 0.85rem;">Pega tu Personal Access Token de GitHub para publicar cambios en vivo. Solo vive en esta pestaña mientras trabajas.</p>
+            <div style="display: flex; gap: 0.65rem; flex-wrap: wrap;">
+                <input type="password" id="githubTokenInput" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx o github_pat_..." style="flex: 1; min-width: 240px; padding: 0.68rem 0.85rem; border: 1px solid var(--border); border-radius: 0.6rem; background: var(--bg-muted); color: var(--text-main);">
+                <button type="button" id="btnConectarGithub" class="btn-action btn-primary" onclick="conectarEditorGithub()" style="padding: 0.68rem 1.35rem;">Conectar al Editor</button>
             </div>
-            <p id="statusMsg" style="margin-top: 0.85rem; font-size: 0.88rem; font-weight: 600;"></p>
+            <div id="statusConexion" style="font-size: 0.84rem; font-weight: 700; margin-top: 0.65rem; color: var(--text-soft);">
+                ⏳ Modo lectura cargado. Conecta tu token para publicar cambios en GitHub Pages.
+            </div>
+        </section>
+
+        <!-- Barra de Pestañas -->
+        <div class="cms-tabs">
+            <button type="button" id="btnTabSolicitudes" class="cms-tab active" onclick="cambiarTab('tab-solicitudes', this)">📥 Solicitudes por Autorizar (<span id="badgeSolPendientes">0</span>)</button>
+            <button type="button" class="cms-tab" onclick="cambiarTab('tab-revista', this)">🎨 Portada y Revista</button>
+            <button type="button" class="cms-tab" onclick="cambiarTab('tab-anunciantes', this)">📰 Anunciantes (<span id="badgeAnunciantes">0</span>)</button>
+            <button type="button" class="cms-tab" onclick="cambiarTab('tab-ofertas', this)">🔥 Ofertas (<span id="badgeOfertas">0</span>)</button>
+            <button type="button" class="cms-tab" onclick="cambiarTab('tab-guias', this)">🧭 Guías y FAQ</button>
+            <button type="button" class="cms-tab" onclick="cambiarTab('tab-comercial', this)">💼 Tarifas y Mercado Pago</button>
+            <button type="button" class="cms-tab" onclick="cambiarTab('tab-prospeccion', this)">🎯 Prospección CRM</button>
+            <button type="button" class="cms-tab" onclick="cambiarTab('tab-respaldo', this)">💾 Respaldo</button>
         </div>
 
-        <!-- Espacio de Trabajo CMS -->
-        <div id="workspace" style="display: none;">
-            <div class="cms-tabs">
-                <button type="button" class="cms-tab active" onclick="cambiarTab('tab-diseno', this)">🎨 Modo Edición y Diseño</button>
-                <button type="button" class="cms-tab" onclick="cambiarTab('tab-solicitudes', this)">📥 Solicitudes por Autorizar (<span id="badgeSolPendientes">0</span>)</button>
-                <button type="button" class="cms-tab" onclick="cambiarTab('tab-anunciantes', this)">🏢 Anunciantes (<span id="badgeCountAnun">0</span>)</button>
-                <button type="button" class="cms-tab" onclick="cambiarTab('tab-ofertas', this)">🔥 Ofertas y Banners</button>
-                <button type="button" class="cms-tab" onclick="cambiarTab('tab-guias', this)">📖 Guías SEO</button>
-                <button type="button" class="cms-tab" onclick="cambiarTab('tab-prospeccion', this)">🎯 Prospección y Cierre</button>
-                <button type="button" class="cms-tab" onclick="cambiarTab('tab-comercial', this)">💼 Tarifas y Mercado Pago</button>
-                <button type="button" class="cms-tab" onclick="cambiarTab('tab-opiniones', this)">💬 Opiniones y Respaldo</button>
+        <!-- Barra de Publicación Global -->
+        <div class="publish-bar">
+            <div>
+                <strong style="font-size: 1rem; display: block;">¿Terminaste tus cambios manuales?</strong>
+                <span id="statusPublicacion" style="font-size: 0.82rem; color: #cbd5e1;">Se actualizarán los archivos en GitHub y el sitio en vivo en ~10 segundos.</span>
             </div>
-
-            <!-- PESTAÑA 1: MODO EDICION VISUAL (LAYOUT, TEXTOS Y COLORES) -->
-            <div id="tab-diseno" class="cms-panel active">
-                <div class="admin-grid">
-                    <div>
-                        <div class="admin-card">
-                            <h3 style="font-size: 1.08rem; margin-bottom: 1rem;">Arquitectura y Apariencia</h3>
-                            <div class="switch-row">
-                                <div>
-                                    <strong>Modo Multisectorial</strong>
-                                    <p style="font-size: 0.8rem; color: var(--text-soft);">Muestra pestañas de Bodas, Quintas y Servicios además de Viajes.</p>
-                                </div>
-                                <input type="checkbox" id="cfgMultisector" style="width: 22px; height: 22px; cursor: pointer;">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Paleta de Color Predeterminada del Sitio</label>
-                                <select id="cfgPaleta">
-                                    <option value="caribe">🔵 Azul Caribe (Turismo)</option>
-                                    <option value="coral">🔴 Coral Tropical (Bodas y Eventos)</option>
-                                    <option value="esmeralda">🟢 Verde Esmeralda (Ecoturismo)</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Tema Visual Inicial</label>
-                                <select id="cfgTema">
-                                    <option value="light">☀️ Modo Claro</option>
-                                    <option value="dark">🌙 Modo Oscuro</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="admin-card">
-                            <h3 style="font-size: 1.08rem; margin-bottom: 0.4rem;">Orden de Secciones en Portada</h3>
-                            <p style="font-size: 0.82rem; color: var(--text-soft); margin-bottom: 1rem;">Usa las flechas para mover qué bloque aparece arriba o abajo en la página.</p>
-                            <div id="listaOrdenSecciones"></div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div class="admin-card">
-                            <h3 style="font-size: 1.08rem; margin-bottom: 1rem;">Textos de Portada Principal (Hero)</h3>
-                            <div class="form-group">
-                                <label>Etiqueta Superior (Badge)</label>
-                                <input type="text" id="cfgHeroBadge">
-                            </div>
-                            <div class="form-group">
-                                <label>Título Principal (H1)</label>
-                                <input type="text" id="cfgHeroTitulo">
-                            </div>
-                            <div class="form-group">
-                                <label>Subtítulo Descriptivo</label>
-                                <textarea id="cfgHeroSubtitulo" rows="2"></textarea>
-                            </div>
-                        </div>
-
-                        <div class="admin-card">
-                            <h3 style="font-size: 1.08rem; margin-bottom: 1rem;">Banner Publicitario Horizontal</h3>
-                            <div class="switch-row">
-                                <div>
-                                    <strong>Mostrar Banner Patrocinado</strong>
-                                    <p style="font-size: 0.8rem; color: var(--text-soft);">Activa o oculta la franja publicitaria intermedia.</p>
-                                </div>
-                                <input type="checkbox" id="cfgBannerVisible" style="width: 22px; height: 22px; cursor: pointer;">
-                            </div>
-                            <div class="form-group">
-                                <label>Título del Banner</label>
-                                <input type="text" id="cfgBannerTitulo">
-                            </div>
-                            <div class="form-group">
-                                <label>Descripción del Banner</label>
-                                <input type="text" id="cfgBannerDesc">
-                            </div>
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
-                                <div class="form-group">
-                                    <label>Texto del Botón</label>
-                                    <input type="text" id="cfgBannerTextoBtn">
-                                </div>
-                                <div class="form-group">
-                                    <label>Enlace destino</label>
-                                    <input type="text" id="cfgBannerUrl">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- PESTAÑA 2: GESTOR DE ANUNCIANTES (ALTA, EDICION Y ORDEN) -->
-            <div id="tab-anunciantes" class="cms-panel">
-                <div class="admin-grid">
-                    <div>
-                        <div class="admin-card">
-                            <h3 id="formAnunTitulo" style="font-size: 1.08rem; margin-bottom: 1rem;">➕ Nuevo Anunciante</h3>
-                            <form id="formAnunciante" onsubmit="guardarAnuncianteForm(event)">
-                                <input type="hidden" id="editIndexAnun" value="-1">
-                                <div class="form-group">
-                                    <label>Giro / Categoría</label>
-                                    <select id="anunCat" required>
-                                        <option value="viajes|Viajes y Turismo">✈️ Viajes y Turismo</option>
-                                        <option value="bodas|Bodas y Eventos">💍 Bodas y Eventos</option>
-                                        <option value="hospedaje|Quintas y Estancias">🏡 Quintas y Estancias</option>
-                                        <option value="servicios|Fotografía y Experiencias">📸 Fotografía y Experiencias</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Nombre Comercial *</label>
-                                    <input type="text" id="anunNombre" required>
-                                </div>
-                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
-                                    <div class="form-group">
-                                        <label>Etiqueta Estado</label>
-                                        <input type="text" id="anunEstado" value="✔ Agencia Verificada">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Folio RNT (Opcional)</label>
-                                        <input type="text" id="anunRnt" placeholder="Ej. 04090150001">
-                                    </div>
-                                </div>
-                                                                <div class="form-group">
-                                    <label>Ubicación en Google Maps (Opcional, para mostrar mapa)</label>
-                                    <input type="text" id="anunMaps" placeholder="Ej. Cuernavaca, Morelos, Mexico">
-                                </div>
-                                <div class="form-group">
-                                    <label>Cobertura / Ciudad de Salida *</label>
-                                    <input type="text" id="anunSalida" required placeholder="Ej. CDMX y Puebla">
-                                </div>
-                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
-                                    <div class="form-group">
-                                        <label>WhatsApp (10-15 dígitos)</label>
-                                        <input type="tel" id="anunWa" placeholder="525512345678">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Sitio Web (https://...)</label>
-                                        <input type="url" id="anunWeb" placeholder="https://...">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Rango de Precio / Especialidad</label>
-                                    <input type="text" id="anunPrecio" placeholder="$$ • Paquetes Todo Incluido">
-                                </div>
-                                                                <div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 0.75rem;">
-                                    <div class="form-group">
-                                        <label>Código Cupón (Opcional)</label>
-                                        <input type="text" id="anunCuponCod" placeholder="Ej. VIAJERO10">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Beneficio del Cupón</label>
-                                        <input type="text" id="anunCuponBen" placeholder="10% de descuento directo">
-                                    </div>
-                                </div>
-                                                                                                <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">
-                                    <div class="form-group">
-                                        <label>Duración del Servicio / Estancia</label>
-                                        <input type="text" id="anunDuracion" placeholder="Ej. 3 Días / 2 Noches o 5 horas">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Tipos de Cobro (separados por coma)</label>
-                                        <input type="text" id="anunTiposCobro" placeholder="Tarjeta, 3 y 6 MSI, Transferencia SPEI, Efectivo">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Promoción Destacada en Tarjeta de Revista</label>
-                                    <input type="text" id="anunPromocion" placeholder="Ej. 15% OFF reservando directo + desayuno incluido">
-                                </div>
-                                <div class="form-group">
-                                    <label>Galería de Fotos (URLs separadas por coma)</label>
-                                    <textarea id="anunGaleria" rows="2" placeholder="https://foto1.jpg, https://foto2.jpg, https://foto3.jpg"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label>Amenidades / Servicios Incluidos (separados por coma)</label>
-                                    <input type="text" id="anunAmenidades" placeholder="🍳 Desayuno Incluido, 🚗 Valet Parking, 📶 Wi-Fi">
-                                </div>
-                                <div class="form-group">
-                                    <label>Etiquetas (separadas por coma)</label>
-                                    <input type="text" id="anunTags" placeholder="Cancún, TodoIncluido">
-                                </div>
-                                <div class="form-group">
-                                    <label>Descripción corta (máx. 140) *</label>
-                                    <textarea id="anunDesc" rows="2" maxlength="140" required></textarea>
-                                </div>
-                                <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem;">
-                                    <input type="checkbox" id="anunDestacada" style="width: auto;">
-                                    <label for="anunDestacada" style="margin: 0;">Marcar como ⭐ Destacada</label>
-                                </div>
-                                <div style="display: flex; gap: 0.5rem;">
-                                    <button type="submit" id="btnGuardarAnun" class="btn-action btn-whatsapp" style="flex: 1;">Guardar en Lista</button>
-                                    <button type="button" id="btnCancelarEdit" onclick="cancelarEdicionAnun()" class="btn-action btn-outline" style="display:none;">Cancelar</button>
-                                </div>
-                            </form>
-                        </div>
-
-                        <div class="admin-card">
-                            <h3 style="font-size: 1rem; margin-bottom: 0.5rem;">📥 Importar Nodo desde Correo</h3>
-                            <p style="font-size: 0.8rem; color: var(--text-soft); margin-bottom: 0.75rem;">Pega aquí el bloque JSON que te llega por correo desde el formulario de registro:</p>
-                            <textarea id="importJsonBox" rows="3" placeholder='{"id":"...", "nombre":"..."}' style="width:100%; padding:0.6rem; border-radius:0.5rem; border:1px solid var(--border); background:var(--bg-body); color:var(--text-main); font-size:0.8rem;"></textarea>
-                            <button type="button" onclick="importarNodoCorreo()" class="btn-action btn-primary" style="width: 100%; margin-top: 0.6rem;">Importar Anunciante</button>
-                        </div>
-                    </div>
-
-                    <div class="admin-card">
-                        <h3 style="font-size: 1.1rem; margin-bottom: 1rem;">Listado Activo (Usa ▲ ▼ para mover posición)</h3>
-                        <div id="listaAnunciantesAdmin"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- PESTAÑA 3: OFERTAS DE TEMPORADA -->
-            <div id="tab-ofertas" class="cms-panel">
-                <div class="admin-grid">
-                    <div class="admin-card">
-                        <h3 style="font-size: 1.08rem; margin-bottom: 1rem;">➕ Agregar Tarjeta de Oferta</h3>
-                        <form onsubmit="agregarOfertaForm(event)">
-                            <div class="form-group">
-                                <label>Sector</label>
-                                <select id="ofCat">
-                                    <option value="viajes">✈️ Viajes y Turismo</option>
-                                    <option value="bodas">💍 Bodas y Eventos</option>
-                                    <option value="hospedaje">🏡 Quintas y Estancias</option>
-                                    <option value="servicios">📸 Fotografía y Experiencias</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Nombre del Anunciante *</label>
-                                <input type="text" id="ofAgencia" required placeholder="Ej. Mundo Joven">
-                            </div>
-                            <div class="form-group">
-                                <label>Título de la Promoción *</label>
-                                <input type="text" id="ofTitulo" required placeholder="Ej. Cancún 4 Días / 3 Noches">
-                            </div>
-                            <div class="form-group">
-                                <label>Detalle breve *</label>
-                                <input type="text" id="ofDetalle" required placeholder="Vuelo redondo + hotel frente al mar">
-                            </div>
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
-                                <div class="form-group">
-                                    <label>Precio / Etiqueta Precio *</label>
-                                    <input type="text" id="ofPrecio" required placeholder="Desde $5,990 MXN">
-                                </div>
-                                <div class="form-group">
-                                    <label>Cinta Superior</label>
-                                    <input type="text" id="ofBadge" value="Oferta Especial">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>URL de Imagen (Unsplash o https://)</label>
-                                <input type="url" id="ofImagen" value="https://images.unsplash.com/photo-1510097467424-192d713fd8b2?auto=format&fit=crop&w=600&q=80" required>
-                            </div>
-                            <div class="form-group">
-                                <label>WhatsApp Directo (o deja vacío para usar URL)</label>
-                                <input type="tel" id="ofWa" placeholder="525512345678">
-                            </div>
-                            <div class="form-group">
-                                <label>Enlace Web Alternativo</label>
-                                <input type="text" id="ofWeb" value="pages/anunciate.html">
-                            </div>
-                            <button type="submit" class="btn-action btn-whatsapp" style="width: 100%;">Añadir Oferta</button>
-                        </form>
-                    </div>
-
-                    <div class="admin-card">
-                        <h3 style="font-size: 1.1rem; margin-bottom: 1rem;">Ofertas Publicadas (<span id="countOfertas">0</span>)</h3>
-                        <div id="listaOfertasAdmin"></div>
-                    </div>
-                </div>
-            </div>
-
-                        <!-- PESTAÑA EXTRA: GUIAS Y BLOG SEO -->
-            <div id="tab-guias" class="cms-panel">
-                <div class="admin-grid">
-                    <div class="admin-card">
-                        <h3 style="font-size: 1.08rem; margin-bottom: 1rem;">✍️ Publicar Nueva Guía / Artículo SEO</h3>
-                        <form onsubmit="agregarGuiaForm(event)">
-                            <div class="form-group">
-                                <label>Sector Relacionado</label>
-                                <select id="guiaCat">
-                                    <option value="viajes|✈️ Seguridad y Viajes">✈️ Seguridad y Viajes</option>
-                                    <option value="bodas|💍 Bodas y Eventos">💍 Bodas y Eventos</option>
-                                    <option value="hospedaje|🏡 Quintas y Estancias">🏡 Quintas y Estancias</option>
-                                    <option value="servicios|📸 Fotografía y Experiencias">📸 Fotografía y Experiencias</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Título del Artículo *</label>
-                                <input type="text" id="guiaTitulo" required placeholder="Ej. Cómo elegir el mejor paquete todo incluido">
-                            </div>
-                            <div class="form-group">
-                                <label>Tiempo de Lectura</label>
-                                <input type="text" id="guiaTiempo" value="3 min de lectura">
-                            </div>
-                            <div class="form-group">
-                                <label>URL de Imagen de Portada</label>
-                                <input type="url" id="guiaImg" value="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Resumen corto para la tarjeta *</label>
-                                <textarea id="guiaResumen" rows="2" maxlength="160" required></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>Contenido completo del artículo *</label>
-                                <textarea id="guiaContenido" rows="5" required></textarea>
-                            </div>
-                            <button type="submit" class="btn-action btn-whatsapp" style="width: 100%;">➕ Añadir Guía al Blog</button>
-                        </form>
-                    </div>
-
-                    <div class="admin-card">
-                        <h3 style="font-size: 1.1rem; margin-bottom: 1rem;">Guías Publicadas (<span id="countGuias">0</span>)</h3>
-                        <div id="listaGuiasAdmin"></div>
-                    </div>
-                </div>
-            </div>
-                                    <!-- PESTAÑA PROSPECCION Y CIERRE DE PRIMEROS CLIENTES -->
-            <div id="tab-prospeccion" class="cms-panel">
-                <div class="admin-grid">
-                    <div class="admin-card">
-                        <h3 style="font-size: 1.08rem; margin-bottom: 0.4rem;">🚀 Generador de Mensaje de Prospección (WhatsApp)</h3>
-                        <p style="font-size: 0.84rem; color: var(--text-soft); margin-bottom: 1rem;">Contacta agencias, haciendas, hoteles o proveedores en 1 clic con el speech personalizado y tu Media Kit.</p>
-                        <div class="form-group">
-                            <label>Nombre del Negocio Prospecto *</label>
-                            <input type="text" id="prosNombre" placeholder="Ej. Jardín Las Bugambilias">
-                        </div>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
-                            <div class="form-group">
-                                <label>WhatsApp del Prospecto (10 dígitos o con 52)</label>
-                                <input type="tel" id="prosWhatsApp" placeholder="5512345678">
-                            </div>
-                            <div class="form-group">
-                                <label>Giro del Negocio</label>
-                                <select id="prosGiro">
-                                    <option value="Agencia de Viajes">✈️ Agencia de Viajes</option>
-                                    <option value="Jardín o Hacienda de Bodas">💍 Jardín / Hacienda de Bodas</option>
-                                    <option value="Quinta o Casa de Descanso">🏡 Quinta / Casa de Descanso</option>
-                                    <option value="Hotel Boutique u Hostal">🏨 Hotel Boutique / Hostal</option>
-                                    <option value="Grupo Musical o DJ">🎶 Grupo Musical / DJ</option>
-                                    <option value="Tour de Aventura o Fotografía">📸 Aventura / Fotografía</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div style="display: flex; gap: 0.65rem; flex-wrap: wrap;">
-                            <button type="button" class="btn-action btn-whatsapp" onclick="enviarProspeccionWhatsApp()">💬 Abrir WhatsApp y Registrar Prospecto</button>
-                        </div>
-                    </div>
-
-                    <div class="admin-card">
-                        <h3 style="font-size: 1.08rem; margin-bottom: 0.4rem;">📋 Seguimiento de Prospectos (<span id="countProspectos">0</span>)</h3>
-                        <p style="font-size: 0.82rem; color: var(--text-soft); margin-bottom: 0.85rem;">Guarda aquí los negocios que vas contactando para darles seguimiento hasta publicarlos.</p>
-                        <div id="listaProspectosAdmin"></div>
-                    </div>
-                </div>
-            </div>
-            <!-- PESTAÑA COMERCIAL: CONTACTO Y TARIFAS B2B -->
-            <div id="tab-comercial" class="cms-panel">
-                <div class="admin-grid">
-                    <div class="admin-card">
-                        <h3 style="font-size: 1.08rem; margin-bottom: 0.4rem;">📞 Contacto Comercial y Concierge</h3>
-                        <p style="font-size: 0.84rem; color: var(--text-soft); margin-bottom: 1.1rem;">Se actualiza al instante en el botón flotante, el formulario de registro y el Media Kit PDF.</p>
-                        <div class="form-group">
-                            <label>WhatsApp Administrativo / Concierge (con lada, ej. 525512345678)</label>
-                            <input type="tel" id="cfgWaAdmin" placeholder="525500000000">
-                        </div>
-                        <div class="form-group">
-                            <label>Correo Electrónico Comercial (donde llegan los registros)</label>
-                            <input type="email" id="cfgCorreoAdmin" placeholder="tu-correo@gmail.com">
-                        </div>
-                        <div class="form-group">
-                            <label>Título del Llamado Comercial en Portada</label>
-                            <input type="text" id="cfgB2BTitulo" placeholder="¿Tienes una Agencia, Jardín de Bodas, Quinta o Servicio?">
-                        </div>
-                        <div class="form-group">
-                            <label>Subtítulo Comercial en Portada</label>
-                            <input type="text" id="cfgB2BSubtitulo" placeholder="Recibe clientes listos para reservar directo en tu WhatsApp...">
-                        </div>
-                    </div>
-
-                    <div class="admin-card">
-                        <h3 style="font-size: 1.08rem; margin-bottom: 0.4rem;">💰 Tarifas de Contratación y Planes B2B</h3>
-                        <p style="font-size: 0.84rem; color: var(--text-soft); margin-bottom: 1.1rem;">Cambia entre etapa gratuita de lanzamiento y tarifas comerciales cuando quieras.</p>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
-                            <div class="form-group">
-                                <label>Plan Estándar (Precio)</label>
-                                <input type="text" id="cfgPlanEstPrecio" placeholder="<!-- PESTAÑA 4: OPINIONES Y RESPALDO --> MXN">
-                            </div>
-                            <div class="form-group">
-                                <label>Plan Estándar (Nota)</label>
-                                <input type="text" id="cfgPlanEstNota" placeholder="/ lanzamiento">
-                            </div>
-                        </div>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
-                            <div class="form-group">
-                                <label>Plan Destacado (Precio / Promo)</label>
-                                <input type="text" id="cfgPlanDestPrecio" placeholder="Gratis 3 meses">
-                            </div>
-                            <div class="form-group">
-                                <label>Plan Destacado (Etiqueta)</label>
-                                <input type="text" id="cfgPlanDestNota" placeholder="/ primeros 50 registros">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Plan Destacado (Nota precio regular posterior)</label>
-                            <input type="text" id="cfgPlanDestPost" placeholder="Después $399 MXN/mes">
-                        </div>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
-                            <div class="form-group">
-                                <label>Oferta de Temporada (Media Kit)</label>
-                                <input type="text" id="cfgOfertaPrecio" placeholder="$499 MXN / mes">
-                            </div>
-                            <div class="form-group">
-                                <label>Banner Patrocinado (Media Kit)</label>
-                                <input type="text" id="cfgBannerPrecio" placeholder="$899 MXN / mes">
-                            </div>
-                        <hr style="border: 0; border-top: 1px solid var(--border); margin: 1.1rem 0;">
-                        <h4 style="font-size: 0.96rem; color: #009ee3; margin-bottom: 0.65rem;">💳 Pasarela de Pagos (Mercado Pago / Tarjetas y SPEI)</h4>
-                        <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 0.85rem;">
-                            <label style="font-size: 0.82rem; font-weight: 700; display: flex; align-items: center; gap: 0.4rem;">
-                                <input type="checkbox" id="cfgMostrarPagos" checked> Mostrar bloque de pagos en Anúnciate
-                            </label>
-                            <label style="font-size: 0.82rem; font-weight: 700; display: flex; align-items: center; gap: 0.4rem;">
-                                <input type="checkbox" id="cfgModoDemoPago" checked> Modo visual estático (aviso de demo al hacer clic)
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <label>Link de Pago Mercado Pago (Plan Destacado)</label>
-                            <input type="url" id="cfgMpLinkDestacado" placeholder="https://mpago.la/xxxxxxx">
-                        </div>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
-                            <div class="form-group">
-                                <label>Banco SPEI</label>
-                                <input type="text" id="cfgSpeiBanco" placeholder="Mercado Pago / STP">
-                            </div>
-                            <div class="form-group">
-                                <label>CLABE Interbancaria (18 dígitos)</label>
-                                <input type="text" id="cfgSpeiClabe" placeholder="0000 0000 0000 0000 00">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Nombre del Beneficiario SPEI</label>
-                            <input type="text" id="cfgSpeiBenef" placeholder="Tu nombre o razón social">
-                        </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- PESTAÑA 4: OPINIONES Y RESPALDO -->
-            <div id="tab-opiniones" class="cms-panel">
-                <div class="admin-grid">
-                    <div class="admin-card">
-                        <h3 style="font-size: 1.08rem; margin-bottom: 1rem;">➕ Agregar Opinión de Usuario</h3>
-                        <form onsubmit="agregarOpinionForm(event)">
-                            <div class="form-group">
-                                <label>Nombre del Cliente *</label>
-                                <input type="text" id="opNombre" required placeholder="Ej. Laura Hernández">
-                            </div>
-                            <div class="form-group">
-                                <label>Viaje / Servicio y Ciudad *</label>
-                                <input type="text" id="opDetalle" required placeholder="Ej. Viajó a Los Cabos • Monterrey">
-                            </div>
-                            <div class="form-group">
-                                <label>Comentario *</label>
-                                <textarea id="opTexto" rows="3" required></textarea>
-                            </div>
-                            <button type="submit" class="btn-action btn-primary" style="width: 100%;">Añadir Opinión</button>
-                        </form>
-
-                        <hr style="margin: 1.5rem 0; border: none; border-top: 1px solid var(--border);">
-                        <h3 style="font-size: 1rem; margin-bottom: 0.5rem;">📦 Copia de Seguridad</h3>
-                        <p style="font-size: 0.82rem; color: var(--text-soft); margin-bottom: 0.75rem;">Descarga toda tu base de datos en JSON antes de hacer cambios grandes.</p>
-                        <button type="button" onclick="descargarRespaldo()" class="btn-action btn-outline" style="width: 100%;">⬇️ Descargar Backup JSON</button>
-                    </div>
-
-                    <div class="admin-card">
-                        <h3 style="font-size: 1.1rem; margin-bottom: 1rem;">Opiniones Activas</h3>
-                        <div id="listaOpinionesAdmin"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Barra flotante de publicacion -->
-            <div class="publish-bar">
-                <div>
-                    <strong>¿Terminaste tus cambios?</strong>
-                    <span style="font-size: 0.85rem; color: #cbd5e1; display: block;">Se actualizarán los archivos en GitHub y el sitio en vivo en ~10 segundos.</span>
-                </div>
-                <button type="button" onclick="publicarTodoEnVivo()" class="btn-action btn-whatsapp" style="flex: 0 0 auto; padding: 0.8rem 1.75rem; font-size: 0.95rem;">
-                    🚀 Publicar Todos los Cambios en Vivo
-                </button>
-            </div>
+            <button type="button" id="btnPublicarTodo" class="btn-action btn-whatsapp" onclick="publicarTodoEnVivo()" style="padding: 0.78rem 1.4rem; font-size: 0.92rem;">
+                🚀 Publicar Todos los Cambios en Vivo
+            </button>
         </div>
+
+        <!-- ================================================================ -->
+        <!-- TAB 1: SOLICITUDES POR AUTORIZAR                                 -->
+        <!-- ================================================================ -->
+        <section id="tab-solicitudes" class="cms-panel active">
+            <div class="admin-card">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem; margin-bottom:0.85rem;">
+                    <div>
+                        <h3 style="font-size: 1.15rem; color: var(--secondary); margin: 0 0 0.2rem;">📥 Solicitudes Recibidas Esperando Autorización</h3>
+                        <p style="font-size: 0.84rem; color: var(--text-soft); margin: 0;">Ningún anuncio se muestra en la revista pública hasta que tú presiones <strong>Autorizar y Publicar</strong>.</p>
+                    </div>
+                    <button type="button" class="btn-mini" onclick="renderizarSolicitudesPendientes()">🔄 Actualizar Bandeja</button>
+                </div>
+                <div id="listaSolicitudesPendientes"></div>
+            </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- TAB 2: PORTADA Y REVISTA (CONTROL MANUAL)                        -->
+        <!-- ================================================================ -->
+        <section id="tab-revista" class="cms-panel">
+            <div class="admin-grid">
+                <div class="admin-card">
+                    <h3 style="font-size: 1.1rem; color: var(--secondary); margin: 0 0 0.9rem;">✏️ Textos y Encabezado de la Revista</h3>
+                    <div class="form-group">
+                        <label style="display:flex; align-items:center; gap:0.5rem;">
+                            <input type="checkbox" id="revTopBarActivo" style="width:auto;"> Mostrar Barra Promocional Superior
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>Texto de Barra Promocional Superior</label>
+                        <input type="text" id="revTopBarTexto" placeholder="Ej. 📢 Espacios disponibles edición Noviembre 2026">
+                    </div>
+                    <div class="form-group">
+                        <label>Aviso de Plataforma Publicitaria (Franja Superior)</label>
+                        <textarea id="revDisclaimerTexto" rows="2"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Etiqueta de Edición (Kicker)</label>
+                        <input type="text" id="revKickerTexto">
+                    </div>
+                    <div class="form-group">
+                        <label>Título Principal de Portada</label>
+                        <input type="text" id="revHeroTitle">
+                    </div>
+                    <div class="form-group">
+                        <label>Subtítulo de Portada</label>
+                        <textarea id="revHeroSubtitle" rows="2"></textarea>
+                    </div>
+                </div>
+
+                <div class="admin-card">
+                    <h3 style="font-size: 1.1rem; color: var(--secondary); margin: 0 0 0.9rem;">⭐ Portada Destacada y Secciones Visibles</h3>
+                    <div class="form-group">
+                        <label style="display:flex; align-items:center; gap:0.5rem;">
+                            <input type="checkbox" id="revMostrarSpotlight" style="width:auto;"> Mostrar bloque gigante "Portada de la Edición"
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>Elegir Anunciante en Portada de la Edición</label>
+                        <select id="revSpotlightId">
+                            <option value="">✨ Automático (Primer anunciante destacado)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Tema de Color Predeterminado</label>
+                        <select id="revTemaDefault">
+                            <option value="oceano">🔵 Océano (Turismo / Revista)</option>
+                            <option value="bodas">🌹 Bodas y Eventos</option>
+                            <option value="natura">🟢 Natura y Aventura</option>
+                        </select>
+                    </div>
+                    <hr style="border:0; border-top:1px solid var(--border); margin:1rem 0;">
+                    <div style="display:flex; flex-direction:column; gap:0.55rem; font-size:0.86rem; font-weight:700;">
+                        <label style="display:flex; align-items:center; gap:0.5rem;"><input type="checkbox" id="revMostrarOfertas" style="width:auto;"> Mostrar sección "🔥 Promociones de Temporada"</label>
+                        <label style="display:flex; align-items:center; gap:0.5rem;"><input type="checkbox" id="revMostrarCta" style="width:auto;"> Mostrar banner "¿Quieres anunciar tus servicios aquí?"</label>
+                        <label style="display:flex; align-items:center; gap:0.5rem;"><input type="checkbox" id="revMostrarGuias" style="width:auto;"> Mostrar sección "🧭 Guías Editoriales"</label>
+                        <label style="display:flex; align-items:center; gap:0.5rem;"><input type="checkbox" id="revMostrarFaq" style="width:auto;"> Mostrar sección "❓ Preguntas Frecuentes"</label>
+                    </div>
+                    <button type="button" class="btn-action btn-primary" style="width:100%; margin-top:1.2rem;" onclick="aplicarCambiosRevistaLocal()">
+                        💾 Guardar Cambios de Portada (Listo para Publicar)
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- TAB 3: ANUNCIANTES (CATÁLOGO REVISTA)                            -->
+        <!-- ================================================================ -->
+        <section id="tab-anunciantes" class="cms-panel">
+            <div class="admin-grid">
+                <div class="admin-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.85rem;">
+                        <h3 id="tituloFormAnun" style="font-size: 1.08rem; color: var(--secondary); margin: 0;">➕ Agregar / Editar Anunciante</h3>
+                        <button type="button" class="btn-mini" onclick="limpiarFormAnunciante()">Limpiar</button>
+                    </div>
+                    <input type="hidden" id="anunEditIdx" value="-1">
+                    <input type="hidden" id="anunOrigenSolIdx" value="-1">
+
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Nombre Comercial *</label>
+                            <input type="text" id="anunNombre" placeholder="Ej. Caribe Azul Experiencias">
+                        </div>
+                        <div class="form-group">
+                            <label>Sector / Categoría *</label>
+                            <select id="anunCategoria">
+                                <option value="viajes|Viajes y Turismo">✈️ Viajes y Turismo</option>
+                                <option value="hoteles|Hoteles y Hostales">🏨 Hoteles y Hostales</option>
+                                <option value="bodas|Bodas y Eventos">💍 Bodas y Eventos</option>
+                                <option value="hospedaje|Quintas y Estancias">🏡 Quintas y Estancias</option>
+                                <option value="gastronomia|Restaurantes y Terrazas">🍽️ Restaurantes y Terrazas</option>
+                                <option value="transporte|Transporte Turístico">🚐 Transporte Turístico</option>
+                                <option value="musica|Música, DJs y Grupos">🎶 Música, DJs y Grupos</option>
+                                <option value="aventura|Parques y Aventura">🧗‍♂️ Parques y Aventura</option>
+                                <option value="servicios|Fotografía y Experiencias">📸 Fotografía y Experiencias</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Cobro / Tarifa Visible *</label>
+                            <input type="text" id="anunRangoPrecio" placeholder="Ej. $$ • $3,450 MXN / noche">
+                        </div>
+                        <div class="form-group">
+                            <label>Duración del Servicio / Estancia *</label>
+                            <input type="text" id="anunDuracion" placeholder="Ej. 4 Días / 3 Noches o 5 hrs">
+                        </div>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Lugar / Cobertura *</label>
+                            <input type="text" id="anunSalidaDesde" placeholder="Ej. Tepoztlán, Morelos / CDMX">
+                        </div>
+                        <div class="form-group">
+                            <label>WhatsApp de Ventas (con 52) *</label>
+                            <input type="tel" id="anunWhatsapp" placeholder="525512345678">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Promoción Vigente en Tarjeta</label>
+                        <input type="text" id="anunPromocion" placeholder="Ej. 15% OFF reservando directo + desayuno incluido">
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Tipos de Cobro (separados por coma)</label>
+                            <input type="text" id="anunTiposCobro" placeholder="Tarjeta Crédito/Débito, 3 y 6 MSI, Transferencia SPEI, Efectivo">
+                        </div>
+                        <div class="form-group">
+                            <label>Especialidad breve</label>
+                            <input type="text" id="anunEspecialidad" placeholder="Ej. Paquetes todo incluido con vuelo">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Descripción de la Oferta / Producto *</label>
+                        <textarea id="anunDescripcion" rows="2" placeholder="Describe qué incluye, beneficios y condiciones principales..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Galería de Fotos (URLs https:// separadas por coma)</label>
+                        <textarea id="anunGaleria" rows="2" placeholder="https://foto1.jpg, https://foto2.jpg, https://foto3.jpg"></textarea>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Amenidades / Incluye (separadas por coma)</label>
+                            <input type="text" id="anunAmenidades" placeholder="🍳 Desayuno, 🚗 Estacionamiento, 📶 Wi-Fi">
+                        </div>
+                        <div class="form-group">
+                            <label>Sitio Web / Red Social (https://)</label>
+                            <input type="url" id="anunWeb" placeholder="https://tunegocio.com">
+                        </div>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Código de Cupón (opcional)</label>
+                            <input type="text" id="anunCuponCod" placeholder="Ej. VERANO15">
+                        </div>
+                        <div class="form-group">
+                            <label>Etiqueta de Verificación / Rating</label>
+                            <input type="text" id="anunEtiqueta" value="✔ Anunciante Verificado">
+                        </div>
+                    </div>
+
+                    <div style="display:flex; gap:1rem; align-items:center; flex-wrap:wrap; margin-bottom:1rem;">
+                        <label style="font-size:0.84rem; font-weight:700; display:flex; align-items:center; gap:0.4rem;">
+                            <input type="checkbox" id="anunDestacada" style="width:auto;"> ⭐ Anunciante Destacado (Plan $499)
+                        </label>
+                    </div>
+
+                    <button type="button" class="btn-action btn-primary" style="width:100%;" onclick="guardarAnuncianteLocal()">
+                        💾 Guardar Anunciante en Catálogo
+                    </button>
+                </div>
+
+                <div class="admin-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.85rem;">
+                        <h3 style="font-size: 1.08rem; color: var(--secondary); margin: 0;">📋 Anunciantes Publicados</h3>
+                        <button type="button" class="btn-mini btn-del" onclick="eliminarTodosLosDemo()">🧹 Limpiar "-demo"</button>
+                    </div>
+                    <input type="search" id="filtroAdminAnun" placeholder="🔍 Filtrar anunciante por nombre o sector..." oninput="renderizarListaAnunciantes()" style="width:100%; padding:0.58rem 0.8rem; border:1px solid var(--border); border-radius:0.55rem; background:var(--bg-muted); color:var(--text-main); margin-bottom:0.85rem;">
+                    <div id="listaAnunciantesAdmin" style="max-height: 680px; overflow-y: auto;"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- TAB 4: OFERTAS Y PROMOCIONES                                     -->
+        <!-- ================================================================ -->
+        <section id="tab-ofertas" class="cms-panel">
+            <div class="admin-grid">
+                <div class="admin-card">
+                    <h3 style="font-size: 1.08rem; color: var(--secondary); margin: 0 0 0.85rem;">🔥 Nueva Promoción de Temporada</h3>
+                    <div class="form-group"><label>Nombre del Anunciante *</label><input type="text" id="ofAgencia" placeholder="Ej. Caribe Azul Experiencias"></div>
+                    <div class="form-group"><label>Título de la Promoción *</label><input type="text" id="ofTitulo" placeholder="Ej. Paquete 4 Días Todo Incluido"></div>
+                    <div class="grid-2">
+                        <div class="form-group"><label>Precio Visible *</label><input type="text" id="ofPrecio" placeholder="$8,990 MXN"></div>
+                        <div class="form-group"><label>Etiqueta</label><input type="text" id="ofEtiqueta" value="🔥 Promo Vigente"></div>
+                    </div>
+                    <div class="form-group"><label>Detalle breve *</label><textarea id="ofDetalle" rows="2"></textarea></div>
+                    <div class="grid-2">
+                        <div class="form-group"><label>WhatsApp (con 52)</label><input type="tel" id="ofWa" placeholder="525512345678"></div>
+                        <div class="form-group"><label>URL de Imagen (https://)</label><input type="url" id="ofImg" placeholder="https://images.unsplash.com/..."></div>
+                    </div>
+                    <button type="button" class="btn-action btn-primary" style="width:100%;" onclick="agregarOfertaLocal()">➕ Agregar Promoción</button>
+                </div>
+                <div class="admin-card">
+                    <h3 style="font-size: 1.08rem; color: var(--secondary); margin: 0 0 0.85rem;">📋 Promociones Activas</h3>
+                    <div id="listaOfertasAdmin"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- TAB 5: GUÍAS Y FAQ                                               -->
+        <!-- ================================================================ -->
+        <section id="tab-guias" class="cms-panel">
+            <div class="admin-grid">
+                <div class="admin-card">
+                    <h3 style="font-size: 1.08rem; color: var(--secondary); margin: 0 0 0.85rem;">🧭 Agregar Guía Editorial</h3>
+                    <div class="grid-2">
+                        <div class="form-group"><label>Categoría</label><input type="text" id="guiaCat" placeholder="Viajes / Bodas / Consejos"></div>
+                        <div class="form-group"><label>Título *</label><input type="text" id="guiaTitulo"></div>
+                    </div>
+                    <div class="form-group"><label>Resumen corto *</label><input type="text" id="guiaResumen"></div>
+                    <div class="form-group"><label>Contenido completo *</label><textarea id="guiaContenido" rows="3"></textarea></div>
+                    <button type="button" class="btn-action btn-primary" style="width:100%; margin-bottom:1rem;" onclick="agregarGuiaLocal()">➕ Guardar Guía</button>
+                    <div id="listaGuiasAdmin"></div>
+                </div>
+
+                <div class="admin-card">
+                    <h3 style="font-size: 1.08rem; color: var(--secondary); margin: 0 0 0.85rem;">❓ Preguntas Frecuentes (FAQ)</h3>
+                    <div class="form-group"><label>Pregunta *</label><input type="text" id="faqPregunta" placeholder="Ej. ¿Cobran comisión por reservar?"></div>
+                    <div class="form-group"><label>Respuesta *</label><textarea id="faqRespuesta" rows="2"></textarea></div>
+                    <button type="button" class="btn-action btn-primary" style="width:100%; margin-bottom:1rem;" onclick="agregarFaqLocal()">➕ Guardar Pregunta</button>
+                    <div id="listaFaqAdmin"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- TAB 6: TARIFAS, CONTACTO Y MERCADO PAGO                          -->
+        <!-- ================================================================ -->
+        <section id="tab-comercial" class="cms-panel">
+            <div class="admin-grid">
+                <div class="admin-card">
+                    <h3 style="font-size: 1.08rem; color: var(--secondary); margin: 0 0 0.85rem;">💼 Contacto Comercial y Planes</h3>
+                    <div class="grid-2">
+                        <div class="form-group"><label>WhatsApp Comercial (con 52)</label><input type="tel" id="cfgWaAdmin"></div>
+                        <div class="form-group"><label>Correo Oficial</label><input type="email" id="cfgCorreoAdmin"></div>
+                    </div>
+                    <div class="grid-2">
+                        <div class="form-group"><label>Precio Plan Estándar</label><input type="text" id="cfgEstPrecio"></div>
+                        <div class="form-group"><label>Nota Plan Estándar</label><input type="text" id="cfgEstNota"></div>
+                    </div>
+                    <div class="grid-2">
+                        <div class="form-group"><label>Precio Plan Destacado</label><input type="text" id="cfgDestPrecio"></div>
+                        <div class="form-group"><label>Nota Plan Destacado</label><input type="text" id="cfgDestNota"></div>
+                    </div>
+                    <div class="grid-2">
+                        <div class="form-group"><label>Precio Oferta Temporada (Media Kit)</label><input type="text" id="cfgOfertaPrecio"></div>
+                        <div class="form-group"><label>Precio Banner Patrocinado (Media Kit)</label><input type="text" id="cfgBannerPrecio"></div>
+                    </div>
+                </div>
+
+                <div class="admin-card">
+                    <h3 style="font-size: 1.08rem; color: #009ee3; margin: 0 0 0.85rem;">💳 Mercado Pago y Transferencia SPEI</h3>
+                    <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:0.85rem; font-size:0.84rem; font-weight:700;">
+                        <label style="display:flex; align-items:center; gap:0.4rem;"><input type="checkbox" id="cfgMostrarPagos" style="width:auto;"> Mostrar pagos</label>
+                        <label style="display:flex; align-items:center; gap:0.4rem;"><input type="checkbox" id="cfgModoDemoPago" style="width:auto;"> Modo simulación</label>
+                    </div>
+                    <div class="form-group"><label>Link Mercado Pago — Plan Estándar</label><input type="url" id="cfgMpLinkEst" placeholder="https://mpago.la/..."></div>
+                    <div class="form-group"><label>Link Mercado Pago — Plan Destacado</label><input type="url" id="cfgMpLinkDest" placeholder="https://mpago.la/..."></div>
+                    <div class="grid-2">
+                        <div class="form-group"><label>Banco SPEI</label><input type="text" id="cfgSpeiBanco"></div>
+                        <div class="form-group"><label>CLABE Interbancaria</label><input type="text" id="cfgSpeiClabe"></div>
+                    </div>
+                    <div class="form-group"><label>Beneficiario SPEI</label><input type="text" id="cfgSpeiBenef"></div>
+                    <button type="button" class="btn-action btn-primary" style="width:100%;" onclick="guardarComercialLocal()">💾 Guardar Tarifas y Pagos</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- TAB 7: PROSPECCIÓN CRM                                           -->
+        <!-- ================================================================ -->
+        <section id="tab-prospeccion" class="cms-panel">
+            <div class="admin-grid">
+                <div class="admin-card">
+                    <h3 style="font-size: 1.08rem; color: var(--secondary); margin: 0 0 0.65rem;">🚀 Prospección en 1 Clic (WhatsApp)</h3>
+                    <div class="form-group"><label>Nombre del Negocio Prospecto *</label><input type="text" id="prosNombre" placeholder="Ej. Hotel Boutique Vista Azul"></div>
+                    <div class="grid-2">
+                        <div class="form-group"><label>WhatsApp (10 dígitos o 52)</label><input type="tel" id="prosWhatsApp" placeholder="5512345678"></div>
+                        <div class="form-group">
+                            <label>Sector</label>
+                            <select id="prosGiro">
+                                <option value="Agencia de Viajes">✈️ Agencia de Viajes</option>
+                                <option value="Hotel o Boutique">🏨 Hotel / Hostal</option>
+                                <option value="Jardín o Hacienda de Bodas">💍 Bodas y Eventos</option>
+                                <option value="Quinta o Estancia">🏡 Quinta / Estancia</option>
+                                <option value="Restaurante o Terraza">🍽️ Gastronomía</option>
+                                <option value="Transporte o Tour">🚐 Transporte / Aventura</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-action btn-whatsapp" style="width:100%;" onclick="enviarProspeccionWhatsApp()">💬 Enviar Invitación por WhatsApp y Registrar</button>
+                </div>
+                <div class="admin-card">
+                    <h3 style="font-size: 1.08rem; color: var(--secondary); margin: 0 0 0.75rem;">📋 Prospectos (<span id="countProspectos">0</span>)</h3>
+                    <div id="listaProspectosAdmin"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- TAB 8: RESPALDO JSON                                             -->
+        <!-- ================================================================ -->
+        <section id="tab-respaldo" class="cms-panel">
+            <div class="admin-card">
+                <h3 style="font-size: 1.1rem; color: var(--secondary); margin: 0 0 0.5rem;">💾 Respaldo Local de Datos</h3>
+                <p style="font-size: 0.86rem; color: var(--text-soft); margin-bottom: 1rem;">Descarga en cualquier momento una copia íntegra de tus archivos JSON actuales.</p>
+                <div style="display:flex; gap:0.75rem; flex-wrap:wrap;">
+                    <button type="button" class="btn-action btn-primary" onclick="descargarRespaldo('agencias.json', catalogoActual)">⬇️ Descargar agencias.json</button>
+                    <button type="button" class="btn-action btn-outline" onclick="descargarRespaldo('config.json', configActual)">⬇️ Descargar config.json</button>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <script src="../js/app.js?v=20261117cmsfull">        // Refresco garantizado de Solicitudes por Autorizar en el Panel de Control
-        function sincronizarBandejaSolicitudes() {
-            if (typeof renderizarSolicitudesPendientes === "function") {
-                renderizarSolicitudesPendientes();
-            }
-        }
-        document.addEventListener("DOMContentLoaded", sincronizarBandejaSolicitudes);
-        window.addEventListener("focus", sincronizarBandejaSolicitudes);
-        window.addEventListener("storage", function(e) {
-            if (e.key === "dv_solicitudes_pendientes") sincronizarBandejaSolicitudes();
-        });
-        setInterval(sincronizarBandejaSolicitudes, 2500);
-    </script>
     <script>
-        const REPO_OWNER = "LUISFGARCIAE";
-        const REPO_NAME = "directorio-agencias";
+        const GH_OWNER = "LUISFGARCIAE";
+        const GH_REPO  = "directorio-agencias";
+        const GH_BRANCH = "main";
 
-        const NOMBRES_SECCIONES = {
-            destinos: "🗺️ Explora por Destino",
-            ofertas: "🔥 Ofertas y Espacios Destacados",
-            banner: "📢 Banner Publicitario Horizontal",
-            agencias: "🏢 Directorio Principal de Anunciantes",
-            mapa: "📍 Mapa de Sedes y Locaciones",
-            opiniones: "💬 Opiniones de Usuarios",
-            guias: "📖 Guías y Consejos (Blog SEO)",
-            faq: "❓ Preguntas Frecuentes (FAQ)",
-            b2b: "🚀 Llamado de Registro para Negocios"
-        };
+        let githubToken = "";
+        let editorConectado = false;
+        let configActual = {};
+        let catalogoActual = { anunciantes: [], ofertas: [], guias: [], faq: [] };
+        let cambiosPendientes = false;
 
-        let configActual = null;
-        let configSha = "";
-        let catalogoActual = null;
-        let catalogoSha = "";
-
-        function utf8ToBase64(str) {
-            return btoa(unescape(encodeURIComponent(str)));
+        function escaparHTML(str) {
+            return String(str || "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#39;");
         }
 
-        function base64ToUtf8(str) {
-            const limpio = str.replace(/\s+/g, '');
-            const bytes = Uint8Array.from(atob(limpio), c => c.charCodeAt(0));
-            return new TextDecoder('utf-8').decode(bytes).replace(/^\uFEFF/, '');
+        function validarUrlSegura(urlRaw) {
+            const limpio = String(urlRaw || "").trim();
+            if (!limpio) return "";
+            try {
+                const u = new URL(limpio);
+                if (u.protocol === "https:" || u.protocol === "http:") return u.href;
+            } catch (e) {}
+            return "";
         }
 
-        function setStatus(texto, color = "var(--text-main)") {
-            const el = document.getElementById("statusMsg");
-            el.style.color = color;
-            el.textContent = texto;
+        function decodeBase64UTF8(b64) {
+            const bin = atob(b64.replace(/\n/g, ""));
+            const bytes = Uint8Array.from(bin, c => c.charCodeAt(0));
+            return new TextDecoder("utf-8").decode(bytes);
         }
 
-                // Sincronizacion automatica de Solicitudes Pendientes al cargar, al hacer clic o desde otra pestaña
-        document.addEventListener("DOMContentLoaded", () => {
-            if (typeof renderizarSolicitudesPendientes === "function") {
-                renderizarSolicitudesPendientes();
+        function encodeBase64UTF8(str) {
+            const bytes = new TextEncoder().encode(str);
+            let bin = "";
+            for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+            return btoa(bin);
+        }
+
+        function toggleModoOscuro() {
+            const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+            document.documentElement.setAttribute("data-theme", next);
+            localStorage.setItem("dv_dark_mode", next);
+            document.getElementById("btnDarkMode").textContent = next === "dark" ? "☀️" : "🌙";
+        }
+
+        function marcarCambiosSinPublicar(msg) {
+            cambiosPendientes = true;
+            const st = document.getElementById("statusPublicacion");
+            if (st) {
+                st.textContent = "⚠️ " + (msg || "Tienes cambios guardados localmente. Presiona 'Publicar Todos los Cambios en Vivo' para subirlos.");
+                st.style.color = "#fde047";
             }
-        });
-        window.addEventListener("storage", (e) => {
-            if (e.key === "dv_solicitudes_pendientes" && typeof renderizarSolicitudesPendientes === "function") {
-                renderizarSolicitudesPendientes();
-            }
-        });
+        }
+
         function cambiarTab(tabId, btn) {
-            if (tabId === 'tab-solicitudes' && typeof renderizarSolicitudesPendientes === 'function') renderizarSolicitudesPendientes();
-            document.querySelectorAll('.cms-panel').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.cms-tab').forEach(b => b.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            btn.classList.add('active');
+            document.querySelectorAll(".cms-panel").forEach(p => p.classList.remove("active"));
+            document.querySelectorAll(".cms-tab").forEach(b => b.classList.remove("active"));
+            const panel = document.getElementById(tabId);
+            if (panel) panel.classList.add("active");
+            if (btn) btn.classList.add("active");
+            if (tabId === "tab-solicitudes") renderizarSolicitudesPendientes();
         }
 
-        async function githubApi(path, method = "GET", body = null) {
-            const token = sessionStorage.getItem("dv_gh_token");
-            const headers = {
-                "Authorization": "Bearer " + token,
-                "Accept": "application/vnd.github+json",
-                "X-GitHub-Api-Version": "2022-11-28"
-            };
-            if (body) headers["Content-Type"] = "application/json";
-
-            const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`, {
-                method,
-                headers,
-                body: body ? JSON.stringify(body) : null
+        // ======================================================================
+        // CONEXIÓN GITHUB Y CARGA DE ARCHIVOS
+        // ======================================================================
+        async function leerArchivoGithub(path) {
+            const res = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${path}?ref=${GH_BRANCH}&t=${Date.now()}`, {
+                headers: {
+                    "Authorization": `Bearer ${githubToken}`,
+                    "Accept": "application/vnd.github+json"
+                }
             });
-
-            if (!res.ok) {
-                const err = await res.json().catch(() => ({}));
-                throw new Error(err.message || "Error de conexión con GitHub");
-            }
-            return res.json();
+            if (!res.ok) throw new Error(`HTTP ${res.status} leyendo ${path}`);
+            const data = await res.json();
+            return { json: JSON.parse(decodeBase64UTF8(data.content)), sha: data.sha };
         }
 
-        async function conectarGitHub() {
-            const inputToken = document.getElementById("ghTokenInput").value.trim();
-            if (inputToken) sessionStorage.setItem("dv_gh_token", inputToken);
-            if (!sessionStorage.getItem("dv_gh_token")) {
-                setStatus("⚠️ Ingresa un token válido.", "#dc2626");
+        async function guardarArchivoGithub(path, obj, mensaje) {
+            if (!githubToken) throw new Error("Primero conecta tu Personal Access Token de GitHub.");
+            const actual = await leerArchivoGithub(path);
+            const res = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${path}`, {
+                method: "PUT",
+                headers: {
+                    "Authorization": `Bearer ${githubToken}`,
+                    "Accept": "application/vnd.github+json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    message: mensaje,
+                    content: encodeBase64UTF8(JSON.stringify(obj, null, 2)),
+                    sha: actual.sha,
+                    branch: GH_BRANCH
+                })
+            });
+            if (!res.ok) {
+                const errTxt = await res.text();
+                throw new Error(`Error al guardar ${path}: ${res.status} ${errTxt}`);
+            }
+            return await res.json();
+        }
+
+        async function conectarEditorGithub() {
+            const tk = document.getElementById("githubTokenInput").value.trim();
+            const st = document.getElementById("statusConexion");
+            if (!tk) {
+                alert("Pega tu Personal Access Token de GitHub.");
                 return;
             }
-
-            setStatus("Cargando configuración y base de datos...", "#0284c7");
-
+            githubToken = tk;
+            sessionStorage.setItem("dv_gh_token_session", tk);
+            st.textContent = "⏳ Conectando con GitHub...";
+            st.style.color = "#0284c7";
             try {
-                const [resConf, resCat] = await Promise.all([
-                    githubApi("data/config.json"),
-                    githubApi("data/agencias.json")
+                const [cfgRes, catRes] = await Promise.all([
+                    leerArchivoGithub("data/config.json"),
+                    leerArchivoGithub("data/agencias.json")
                 ]);
-
-                configSha = resConf.sha;
-                configActual = JSON.parse(base64ToUtf8(resConf.content));
-
-                catalogoSha = resCat.sha;
-                catalogoActual = JSON.parse(base64ToUtf8(resCat.content));
-                if (!Array.isArray(catalogoActual.opiniones)) catalogoActual.opiniones = [];
-
-                cargarFormularioDiseno();
-                renderizarOrdenSecciones();
-                renderizarListaAdmin();
-                renderizarOfertasAdmin();
-                                const b2b = configActual.comercialB2B || {};
-                document.getElementById("cfgWaAdmin").value = b2b.whatsappAdmin || "";
-                document.getElementById("cfgCorreoAdmin").value = b2b.correoAdmin || "";
-                document.getElementById("cfgB2BTitulo").value = b2b.tituloB2BPortada || "";
-                document.getElementById("cfgB2BSubtitulo").value = b2b.subtituloB2BPortada || "";
-                document.getElementById("cfgPlanEstPrecio").value = b2b.planEstandarPrecio || "renderizarGuiasAdmin(); MXN";
-                document.getElementById("cfgPlanEstNota").value = b2b.planEstandarNota || "/ lanzamiento";
-                document.getElementById("cfgPlanDestPrecio").value = b2b.planDestacadoPrecio || "Gratis 3 meses";
-                document.getElementById("cfgPlanDestNota").value = b2b.planDestacadoNota || "/ primeros 50 registros";
-                document.getElementById("cfgPlanDestPost").value = b2b.planDestacadoPost || "Después $399 MXN/mes";
-                document.getElementById("cfgOfertaPrecio").value = b2b.ofertaTemporadaPrecio || "$499 MXN / mes";
-                document.getElementById("cfgBannerPrecio").value = b2b.bannerPatrocinadoPrecio || "$899 MXN / mes";
-                renderizarGuiasAdmin();
-                renderizarOpinionesAdmin();
-
-                document.getElementById("workspace").style.display = "block";
-                setStatus("✅ Editor conectado. Ya puedes editar textos, mover bloques o administrar anunciantes.", "#16a34a");
+                configActual = cfgRes.json || {};
+                catalogoActual = catRes.json || { anunciantes: [], ofertas: [], guias: [], faq: [] };
+                editorConectado = true;
+                st.textContent = "✅ Editor conectado. Ya puedes autorizar solicitudes, editar la portada de la revista y publicar cambios.";
+                st.style.color = "#16a34a";
+                hidratarTodoElPanel();
             } catch (e) {
-                setStatus("❌ Error: " + e.message, "#dc2626");
+                editorConectado = false;
+                st.textContent = "❌ No se pudo conectar: verifica que el token tenga permiso 'Contents: Read and write'. (" + e.message + ")";
+                st.style.color = "#dc2626";
             }
         }
 
-        function cargarFormularioDiseno() {
-            document.getElementById("cfgMultisector").checked = Boolean(configActual.MODO_MULTISECTOR);
-            document.getElementById("cfgPaleta").value = (configActual.apariencia && configActual.apariencia.paletaDefault) || "caribe";
-            document.getElementById("cfgTema").value = (configActual.apariencia && configActual.apariencia.temaDefault) || "light";
-
-            const h = configActual.hero || {};
-            document.getElementById("cfgHeroBadge").value = h.badge || "";
-            document.getElementById("cfgHeroTitulo").value = h.titulo || "";
-            document.getElementById("cfgHeroSubtitulo").value = h.subtitulo || "";
-
-            const b = configActual.bannerPatrocinado || {};
-            document.getElementById("cfgBannerVisible").checked = b.visible !== false;
-            document.getElementById("cfgBannerTitulo").value = b.titulo || "";
-            document.getElementById("cfgBannerDesc").value = b.descripcion || "";
-            document.getElementById("cfgBannerTextoBtn").value = b.textoBoton || "";
-            document.getElementById("cfgBannerUrl").value = b.urlBoton || "pages/anunciate.html";
-        }
-
-        function renderizarOrdenSecciones() {
-            const cont = document.getElementById("listaOrdenSecciones");
-            const orden = configActual.ordenSecciones || ["destinos", "ofertas", "banner", "agencias", "mapa", "opiniones", "faq", "b2b"];
-            configActual.ordenSecciones = orden;
-            cont.innerHTML = "";
-
-            orden.forEach((key, idx) => {
-                const row = document.createElement("div");
-                row.className = "item-row";
-                row.innerHTML = `
-                    <strong>${idx + 1}. ${NOMBRES_SECCIONES[key] || key}</strong>
-                    <div class="item-actions">
-                        <button type="button" class="btn-mini" onclick="moverSeccion(${idx}, -1)" ${idx === 0 ? 'disabled' : ''}>▲</button>
-                        <button type="button" class="btn-mini" onclick="moverSeccion(${idx}, 1)" ${idx === orden.length - 1 ? 'disabled' : ''}>▼</button>
-                    </div>
-                `;
-                cont.appendChild(row);
-            });
-        }
-
-        function moverSeccion(idx, dir) {
-            const arr = configActual.ordenSecciones;
-            const nuevoIdx = idx + dir;
-            if (nuevoIdx < 0 || nuevoIdx >= arr.length) return;
-            [arr[idx], arr[nuevoIdx]] = [arr[nuevoIdx], arr[idx]];
-            renderizarOrdenSecciones();
-        }
-
-        // CRUD Anunciantes
-        function renderizarListaAdmin() {
-            const cont = document.getElementById("listaAnunciantesAdmin");
-            const lista = catalogoActual.anunciantes || [];
-            document.getElementById("badgeCountAnun").textContent = lista.length;
-            cont.innerHTML = "";
-
-            lista.forEach((item, index) => {
-                const row = document.createElement("div");
-                row.className = "item-row";
-                row.innerHTML = `
-                    <div>
-                        <strong>${escaparHTML(item.nombre)}</strong>
-                        <div style="font-size: 0.78rem; color: var(--text-soft);">
-                            ${escaparHTML(item.categoriaNombre || item.categoria)} &bull; 📍 ${escaparHTML(item.salidaDesde)}
-                        </div>
-                    </div>
-                    <div class="item-actions">
-                        <button type="button" class="btn-mini" onclick="moverAnunciante(${index}, -1)" title="Subir">▲</button>
-                        <button type="button" class="btn-mini" onclick="moverAnunciante(${index}, 1)" title="Bajar">▼</button>
-                        <button type="button" class="btn-mini btn-star ${item.destacada ? 'active' : ''}" onclick="alternarDestacada(${index})" title="Destacar">⭐</button>
-                        <button type="button" class="btn-mini btn-edit" onclick="cargarEdicionAnun(${index})" title="Editar">✏️</button>
-                        <button type="button" class="btn-mini btn-del" onclick="eliminarAnunciante(${index})" title="Eliminar">🗑️</button>
-                    </div>
-                `;
-                cont.appendChild(row);
-            });
-        }
-
-        function moverAnunciante(idx, dir) {
-            const arr = catalogoActual.anunciantes;
-            const nuevo = idx + dir;
-            if (nuevo < 0 || nuevo >= arr.length) return;
-            [arr[idx], arr[nuevo]] = [arr[nuevo], arr[idx]];
-            renderizarListaAdmin();
-        }
-
-        function alternarDestacada(idx) {
-            catalogoActual.anunciantes[idx].destacada = !catalogoActual.anunciantes[idx].destacada;
-            renderizarListaAdmin();
-        }
-
-        function cargarEdicionAnun(idx) {
-            const item = catalogoActual.anunciantes[idx];
-            document.getElementById("editIndexAnun").value = idx;
-            document.getElementById("formAnunTitulo").textContent = "✏️ Editando: " + item.nombre;
-            document.getElementById("btnGuardarAnun").textContent = "Actualizar Ficha";
-            document.getElementById("btnCancelarEdit").style.display = "inline-block";
-
-            document.getElementById("anunCat").value = `${item.categoria}|${item.categoriaNombre || 'Viajes y Turismo'}`;
-            document.getElementById("anunNombre").value = item.nombre;
-            document.getElementById("anunEstado").value = item.etiquetaEstado || "✔ Agencia Verificada";
-            document.getElementById("anunRnt").value = item.rnt || "";
-            document.getElementById("anunSalida").value = item.salidaDesde || "";
-            document.getElementById("anunMaps").value = item.ubicacionMaps || "";
-            document.getElementById("anunWa").value = item.whatsappNumero || "";
-            document.getElementById("anunWeb").value = item.web || "";
-            document.getElementById("anunPrecio").value = item.rangoPrecio || "";
-            document.getElementById("anunCuponCod").value = item.cuponCodigo || "";
-            document.getElementById("anunCuponBen").value = item.cuponBeneficio || "";
-            document.getElementById("anunDuracion").value = item.duracion || "";
-            document.getElementById("anunPromocion").value = item.promocion || item.cuponBeneficio || "";
-            document.getElementById("anunTiposCobro").value = Array.isArray(item.tiposCobro) ? item.tiposCobro.join(", ") : "";
-            document.getElementById("anunGaleria").value = Array.isArray(item.galeria) ? item.galeria.join(", ") : "";
-            document.getElementById("anunAmenidades").value = Array.isArray(item.amenidades) ? item.amenidades.join(", ") : "";
-            document.getElementById("anunTags").value = (item.tags || []).map(t => t.replace(/^#/, '')).join(", ");
-            document.getElementById("anunDesc").value = item.descripcion || "";
-            document.getElementById("anunDestacada").checked = Boolean(item.destacada);
-        }
-
-        function cancelarEdicionAnun() {
-            document.getElementById("editIndexAnun").value = "-1";
-            document.getElementById("formAnunTitulo").textContent = "➕ Nuevo Anunciante";
-            document.getElementById("btnGuardarAnun").textContent = "Guardar en Lista";
-            document.getElementById("btnCancelarEdit").style.display = "none";
-            document.getElementById("formAnunciante").reset();
-        }
-
-        function guardarAnuncianteForm(e) {
-            e.preventDefault();
-            const idx = parseInt(document.getElementById("editIndexAnun").value, 10);
-            const [catId, catNombre] = document.getElementById("anunCat").value.split("|");
-            const nombre = document.getElementById("anunNombre").value.trim();
-            const tags = document.getElementById("anunTags").value
-                .split(",")
-                .map(t => t.trim().replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]/g, ""))
-                .filter(Boolean)
-                .slice(0, 4)
-                .map(t => "#" + t);
-
-            const registro = {
-                id: idx >= 0 ? catalogoActual.anunciantes[idx].id : nombre.toLowerCase().replace(/[^a-z0-9]+/g, "-") + "-" + Date.now().toString().slice(-3),
-                categoria: catId,
-                categoriaNombre: catNombre,
-                nombre: nombre,
-                iniciales: nombre.substring(0, 2).toUpperCase(),
-                colorTexto: "#0284c7",
-                colorFondo: "#e0f2fe",
-                destacada: document.getElementById("anunDestacada").checked,
-                rnt: document.getElementById("anunRnt").value.trim(),
-                rating: idx >= 0 ? catalogoActual.anunciantes[idx].rating : "5.0",
-                etiquetaEstado: document.getElementById("anunEstado").value.trim() || "✔ Verificado",
-                salidaDesde: document.getElementById("anunSalida").value.trim(),
-                ubicacionMaps: document.getElementById("anunMaps").value.trim(),
-                estadosSalida: ["cdmx", "monterrey", "guadalajara", "puebla", "bajio"],
-                rangoPrecio: document.getElementById("anunPrecio").value.trim() || "$ • Consultar",
-                cuponCodigo: document.getElementById("anunCuponCod").value.trim().toUpperCase(),
-                cuponBeneficio: document.getElementById("anunCuponBen").value.trim(),
-                duracion: document.getElementById("anunDuracion").value.trim(),
-                promocion: document.getElementById("anunPromocion").value.trim(),
-                tiposCobro: document.getElementById("anunTiposCobro").value.split(",").map(x => x.trim()).filter(Boolean),
-                galeria: document.getElementById("anunGaleria").value.split(",").map(u => validarUrlSegura(u)).filter(Boolean),
-                amenidades: document.getElementById("anunAmenidades").value.split(",").map(a => a.trim()).filter(Boolean),
-                especialidad: catNombre,
-                descripcion: document.getElementById("anunDesc").value.trim(),
-                destinos: ["cancun", "acapulco", "loscabos", "pueblos-magicos"],
-                tags: tags.length ? tags : ["#" + catNombre.replace(/\s+/g, "")],
-                web: validarUrlSegura(document.getElementById("anunWeb").value),
-                whatsappNumero: document.getElementById("anunWa").value.replace(/\D/g, "")
-            };
-
-            if (idx >= 0) {
-                catalogoActual.anunciantes[idx] = registro;
-            } else {
-                catalogoActual.anunciantes.unshift(registro);
-            }
-
-            cancelarEdicionAnun();
-            renderizarListaAdmin();
-            setStatus("ℹ️ Cambios guardados en memoria. Presiona 'Publicar Todos los Cambios en Vivo' abajo.", "#0284c7");
-        }
-
-        function eliminarAnunciante(idx) {
-            if (confirm(`¿Eliminar a "${catalogoActual.anunciantes[idx].nombre}"?`)) {
-                catalogoActual.anunciantes.splice(idx, 1);
-                renderizarListaAdmin();
-            }
-        }
-
-        function importarNodoCorreo() {
-            const raw = document.getElementById("importJsonBox").value.trim().replace(/,$/, '');
+        async function cargarDatosSoloLectura() {
             try {
-                const obj = JSON.parse(raw);
-                if (!obj.nombre) throw new Error("Falta el nombre");
-                obj.categoria = obj.categoria || "viajes";
-                obj.categoriaNombre = obj.categoriaNombre || "Viajes y Turismo";
-                obj.estadosSalida = obj.estadosSalida || ["cdmx", "monterrey", "guadalajara", "puebla", "bajio"];
-                catalogoActual.anunciantes.unshift(obj);
-                document.getElementById("importJsonBox").value = "";
-                renderizarListaAdmin();
-                setStatus("✅ Nodo importado correctamente a la lista.", "#16a34a");
+                const [rCfg, rCat] = await Promise.all([
+                    fetch("../data/config.json?t=" + Date.now()),
+                    fetch("../data/agencias.json?t=" + Date.now())
+                ]);
+                if (rCfg.ok) configActual = await rCfg.json();
+                if (rCat.ok) catalogoActual = await rCat.json();
+                hidratarTodoElPanel();
+            } catch (e) {}
+        }
+
+        async function publicarTodoEnVivo() {
+            if (!editorConectado) {
+                alert("Primero pega tu token de GitHub arriba y haz clic en 'Conectar al Editor'.");
+                return;
+            }
+            aplicarCambiosRevistaLocal(true);
+            guardarComercialLocal(true);
+
+            const st = document.getElementById("statusPublicacion");
+            const btn = document.getElementById("btnPublicarTodo");
+            btn.disabled = true;
+            st.textContent = "⏳ Publicando config.json y agencias.json en GitHub Pages...";
+            st.style.color = "#7dd3fc";
+
+            try {
+                await guardarArchivoGithub("data/config.json", configActual, "Actualizar configuracion manual de Revista desde Panel Maestro");
+                await guardarArchivoGithub("data/agencias.json", catalogoActual, "Actualizar catalogo de anunciantes desde Panel Maestro");
+                cambiosPendientes = false;
+                st.textContent = "✅ ¡Todo publicado con éxito! Recarga el sitio público en ~10 segundos para ver los cambios.";
+                st.style.color = "#4ade80";
             } catch (e) {
-                alert("El texto pegado no es un objeto JSON válido: " + e.message);
+                st.textContent = "❌ Error al publicar: " + e.message;
+                st.style.color = "#fca5a5";
+            } finally {
+                btn.disabled = false;
             }
         }
 
-        // Ofertas
-        function renderizarOfertasAdmin() {
-            const cont = document.getElementById("listaOfertasAdmin");
-            const lista = catalogoActual.ofertas || [];
-            document.getElementById("countOfertas").textContent = lista.length;
-            cont.innerHTML = "";
-
-            lista.forEach((of, idx) => {
-                const row = document.createElement("div");
-                row.className = "item-row";
-                row.innerHTML = `
-                    <div>
-                        <strong>${escaparHTML(of.titulo)}</strong>
-                        <div style="font-size:0.78rem; color:var(--text-soft);">${escaparHTML(of.agencia)} &bull; ${escaparHTML(of.precio)}</div>
-                    </div>
-                    <button type="button" class="btn-mini btn-del" onclick="eliminarOferta(${idx})">🗑️</button>
-                `;
-                cont.appendChild(row);
-            });
+        // ======================================================================
+        // BANDEJA DE SOLICITUDES POR AUTORIZAR (SIEMPRE ACTIVA)
+        // ======================================================================
+        function leerColaSolicitudes() {
+            try {
+                const raw = localStorage.getItem("dv_solicitudes_pendientes");
+                const arr = raw ? JSON.parse(raw) : [];
+                return Array.isArray(arr) ? arr : [];
+            } catch (e) {
+                return [];
+            }
         }
 
-        function agregarOfertaForm(e) {
-            e.preventDefault();
-            const wa = document.getElementById("ofWa").value.replace(/\D/g, "");
-            const web = document.getElementById("ofWeb").value.trim();
-            catalogoActual.ofertas.unshift({
-                esReferenciaReal: true,
-                categoria: document.getElementById("ofCat").value,
-                agencia: document.getElementById("ofAgencia").value.trim(),
-                titulo: document.getElementById("ofTitulo").value.trim(),
-                detalle: document.getElementById("ofDetalle").value.trim(),
-                precio: document.getElementById("ofPrecio").value.trim(),
-                etiqueta: document.getElementById("ofBadge").value.trim(),
-                imagen: validarUrlSegura(document.getElementById("ofImagen").value),
-                whatsappNumero: wa,
-                web: web,
-                textoBoton: wa ? "💬 Cotizar Oferta" : "Ver Detalles"
-            });
-            e.target.reset();
-            renderizarOfertasAdmin();
-        }
-
-        function eliminarOferta(idx) {
-            catalogoActual.ofertas.splice(idx, 1);
-            renderizarOfertasAdmin();
-        }
-
-                function renderizarGuiasAdmin() {
-            const cont = document.getElementById("listaGuiasAdmin");
-            if (!cont) return;
-            if (!Array.isArray(catalogoActual.guias)) catalogoActual.guias = [];
-            document.getElementById("countGuias").textContent = catalogoActual.guias.length;
-            cont.innerHTML = "";
-
-            catalogoActual.guias.forEach((g, idx) => {
-                const row = document.createElement("div");
-                row.className = "item-row";
-                row.innerHTML = `
-                    <div>
-                        <strong>${escaparHTML(g.titulo)}</strong>
-                        <div style="font-size:0.78rem; color:var(--text-soft);">${escaparHTML(g.categoriaLabel || g.categoria)} &bull; ${escaparHTML(g.tiempoLectura || '')}</div>
-                    </div>
-                    <button type="button" class="btn-mini btn-del" onclick="eliminarGuia(${idx})">🗑️</button>
-                `;
-                cont.appendChild(row);
-            });
-        }
-
-        function agregarGuiaForm(e) {
-            e.preventDefault();
-            const [catId, catLabel] = document.getElementById("guiaCat").value.split("|");
-            const titulo = document.getElementById("guiaTitulo").value.trim();
-            if (!Array.isArray(catalogoActual.guias)) catalogoActual.guias = [];
-
-            catalogoActual.guias.unshift({
-                id: titulo.toLowerCase().replace(/[^a-z0-9]+/g, "-") + "-" + Date.now().toString().slice(-3),
-                categoria: catId,
-                categoriaLabel: catLabel,
-                tiempoLectura: document.getElementById("guiaTiempo").value.trim() || "3 min de lectura",
-                titulo: titulo,
-                resumen: document.getElementById("guiaResumen").value.trim(),
-                imagen: validarUrlSegura(document.getElementById("guiaImg").value),
-                contenido: document.getElementById("guiaContenido").value.trim()
-            });
-            e.target.reset();
-                            const b2b = configActual.comercialB2B || {};
-                document.getElementById("cfgWaAdmin").value = b2b.whatsappAdmin || "";
-                document.getElementById("cfgCorreoAdmin").value = b2b.correoAdmin || "";
-                document.getElementById("cfgB2BTitulo").value = b2b.tituloB2BPortada || "";
-                document.getElementById("cfgB2BSubtitulo").value = b2b.subtituloB2BPortada || "";
-                document.getElementById("cfgPlanEstPrecio").value = b2b.planEstandarPrecio || "renderizarGuiasAdmin(); MXN";
-                document.getElementById("cfgPlanEstNota").value = b2b.planEstandarNota || "/ lanzamiento";
-                document.getElementById("cfgPlanDestPrecio").value = b2b.planDestacadoPrecio || "Gratis 3 meses";
-                document.getElementById("cfgPlanDestNota").value = b2b.planDestacadoNota || "/ primeros 50 registros";
-                document.getElementById("cfgPlanDestPost").value = b2b.planDestacadoPost || "Después $399 MXN/mes";
-                document.getElementById("cfgOfertaPrecio").value = b2b.ofertaTemporadaPrecio || "$499 MXN / mes";
-                document.getElementById("cfgBannerPrecio").value = b2b.bannerPatrocinadoPrecio || "$899 MXN / mes";
-                renderizarGuiasAdmin();
-        }
-
-        function eliminarGuia(idx) {
-            catalogoActual.guias.splice(idx, 1);
-                            const b2b = configActual.comercialB2B || {};
-                document.getElementById("cfgWaAdmin").value = b2b.whatsappAdmin || "";
-                document.getElementById("cfgCorreoAdmin").value = b2b.correoAdmin || "";
-                document.getElementById("cfgB2BTitulo").value = b2b.tituloB2BPortada || "";
-                document.getElementById("cfgB2BSubtitulo").value = b2b.subtituloB2BPortada || "";
-                document.getElementById("cfgPlanEstPrecio").value = b2b.planEstandarPrecio || "renderizarGuiasAdmin(); MXN";
-                document.getElementById("cfgPlanEstNota").value = b2b.planEstandarNota || "/ lanzamiento";
-                document.getElementById("cfgPlanDestPrecio").value = b2b.planDestacadoPrecio || "Gratis 3 meses";
-                document.getElementById("cfgPlanDestNota").value = b2b.planDestacadoNota || "/ primeros 50 registros";
-                document.getElementById("cfgPlanDestPost").value = b2b.planDestacadoPost || "Después $399 MXN/mes";
-                document.getElementById("cfgOfertaPrecio").value = b2b.ofertaTemporadaPrecio || "$499 MXN / mes";
-                document.getElementById("cfgBannerPrecio").value = b2b.bannerPatrocinadoPrecio || "$899 MXN / mes";
-                renderizarGuiasAdmin();
-        }
-                function renderizarSolicitudesPendientes() {
-            const cont = document.getElementById("listaSolicitudesPendientes");
+        function renderizarSolicitudesPendientes() {
+            const lista = leerColaSolicitudes();
             const badge = document.getElementById("badgeSolPendientes");
-            if (!cont) return;
+            const tabBtn = document.getElementById("btnTabSolicitudes");
+            const cont = document.getElementById("listaSolicitudesPendientes");
 
-            const lista = JSON.parse(localStorage.getItem("dv_solicitudes_pendientes") || "[]");
-            if (badge) badge.textContent = lista.length;
-            cont.innerHTML = "";
+            if (badge) badge.textContent = String(lista.length);
+            if (tabBtn) tabBtn.classList.toggle("has-pending", lista.length > 0);
+            if (!cont) return;
 
             if (lista.length === 0) {
-                cont.innerHTML = `<p style="font-size:0.86rem; color:var(--text-soft); padding:1rem; background:var(--bg-muted); border-radius:0.65rem;">No hay solicitudes pendientes en este momento. Cuando un anunciante envíe su solicitud en <strong>Anúnciate</strong>, aparecerá aquí para tu aprobación.</p>`;
+                cont.innerHTML = `
+                    <div style="padding:1.25rem; background:var(--bg-muted); border-radius:0.75rem; border:1px dashed var(--border);">
+                        <strong style="color:var(--secondary); display:block; margin-bottom:0.3rem;">No hay solicitudes pendientes en este navegador.</strong>
+                        <p style="font-size:0.84rem; color:var(--text-soft); margin:0;">
+                            Cuando envíes una solicitud desde <a href="anunciate.html" target="_blank" style="color:var(--primary); font-weight:700;">Anúnciate</a> en este mismo navegador (mismo perfil, normal o incógnito), aparecerá aquí al instante para autorizarla.
+                        </p>
+                    </div>`;
                 return;
             }
 
-            lista.forEach((sol, idx) => {
+            cont.innerHTML = lista.map((sol, idx) => {
                 const a = sol.anunciante || {};
-                const card = document.createElement("div");
-                card.style.cssText = "border:1px solid var(--border); background:var(--bg-muted); border-radius:0.85rem; padding:1.1rem; margin-bottom:0.85rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;";
-                card.innerHTML = `
-                    <div style="flex:1; min-width:250px;">
-                        <div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.35rem;">
-                            <strong style="font-size:1.02rem; color:var(--secondary);">${escaparHTML(a.nombre || "Sin nombre")}</strong>
-                            <span style="background:#dcfce7; color:#166534; font-size:0.72rem; font-weight:800; padding:0.18rem 0.55rem; border-radius:9999px;">Folio ${escaparHTML(sol.solicitudId || "")} (**** ${escaparHTML(sol.terminacionTarjeta || "0000")})</span>
-                            <span style="background:var(--primary-soft); color:var(--primary-dark); font-size:0.72rem; font-weight:800; padding:0.18rem 0.55rem; border-radius:9999px;">${escaparHTML(sol.plan || "")}</span>
+                const fotos = Array.isArray(a.galeria) ? a.galeria.map(validarUrlSegura).filter(Boolean) : [];
+                const cobros = Array.isArray(a.tiposCobro) ? a.tiposCobro : [];
+                return `
+                    <div class="sol-card">
+                        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.75rem; margin-bottom:0.65rem;">
+                            <div>
+                                <div style="display:flex; gap:0.45rem; flex-wrap:wrap; align-items:center; margin-bottom:0.3rem;">
+                                    <strong style="font-size:1.08rem; color:var(--secondary);">${escaparHTML(a.nombre || "Sin nombre")}</strong>
+                                    <span class="pill-mini" style="background:#dcfce7; color:#166534; border-color:#86efac;">Folio ${escaparHTML(sol.solicitudId || "SIM")} • **** ${escaparHTML(sol.terminacionTarjeta || "0000")}</span>
+                                    <span class="pill-mini" style="background:var(--primary-soft); color:var(--primary-dark);">${escaparHTML(sol.plan || "")}</span>
+                                </div>
+                                <div style="font-size:0.8rem; color:var(--text-soft);">
+                                    📅 ${escaparHTML(sol.fecha || "")} &bull; <strong>Sector:</strong> ${escaparHTML(a.categoriaNombre || "")} &bull; <strong>Lugar:</strong> ${escaparHTML(a.salidaDesde || "")}
+                                </div>
+                            </div>
+                            <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">
+                                <button type="button" class="btn-action btn-whatsapp" style="padding:0.55rem 0.95rem; font-size:0.82rem;" onclick="autorizarYPublicarSolicitud(${idx})">
+                                    ✅ Autorizar y Publicar
+                                </button>
+                                <button type="button" class="btn-mini" onclick="editarSolicitudAntesDePublicar(${idx})">
+                                    ✏️ Revisar / Editar
+                                </button>
+                                <button type="button" class="btn-mini btn-del" onclick="rechazarSolicitud(${idx})">
+                                    🗑️ Rechazar
+                                </button>
+                            </div>
                         </div>
-                        <div style="font-size:0.82rem; color:var(--text-soft); margin-bottom:0.3rem;">
-                            <strong>Sector:</strong> ${escaparHTML(a.categoriaNombre || "")} &bull; <strong>Cobertura:</strong> ${escaparHTML(a.salidaDesde || "")} &bull; <strong>WhatsApp:</strong> +${escaparHTML(a.whatsappNumero || "")}
+
+                        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:0.5rem; background:var(--bg-card); padding:0.7rem; border-radius:0.6rem; border:1px solid var(--border); font-size:0.8rem; margin-bottom:0.6rem;">
+                            <div><strong>💰 Cobro:</strong> ${escaparHTML(a.rangoPrecio || "N/A")}</div>
+                            <div><strong>⏱️ Duración:</strong> ${escaparHTML(a.duracion || "N/A")}</div>
+                            <div><strong>💬 WhatsApp:</strong> +${escaparHTML(a.whatsappNumero || "N/A")}</div>
+                            <div><strong>📩 Correo:</strong> ${escaparHTML(sol.correoContacto || "N/A")}</div>
                         </div>
-                        <p style="font-size:0.83rem; color:var(--text-main); margin:0;">${escaparHTML(a.descripcion || "")}</p>
-                    </div>
-                    <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-                        <button type="button" class="btn-action btn-whatsapp" style="padding:0.6rem 1rem; font-size:0.84rem;" onclick="autorizarYPublicarSolicitud(${idx})">
-                            ✅ Autorizar y Publicar en Portada
-                        </button>
-                        <button type="button" class="btn-mini btn-del" style="padding:0.6rem 0.8rem;" onclick="rechazarSolicitud(${idx})">
-                            🗑️ Rechazar
-                        </button>
+
+                        ${a.promocion ? `<div style="font-size:0.82rem; margin-bottom:0.4rem;"><strong>🎁 Promoción:</strong> ${escaparHTML(a.promocion)}</div>` : ""}
+                        ${cobros.length ? `<div style="font-size:0.8rem; margin-bottom:0.4rem;"><strong>💳 Tipos de cobro:</strong> ${escaparHTML(cobros.join(", "))}</div>` : ""}
+                        <p style="font-size:0.84rem; color:var(--text-main); margin:0;">${escaparHTML(a.descripcion || "")}</p>
+                        ${fotos.length ? `<div class="thumb-strip">${fotos.map(f => `<img src="${escaparHTML(f)}" alt="Foto">`).join("")}</div>` : ""}
                     </div>
                 `;
-                cont.appendChild(card);
-            });
+            }).join("");
         }
 
         async function autorizarYPublicarSolicitud(idx) {
-            const lista = JSON.parse(localStorage.getItem("dv_solicitudes_pendientes") || "[]");
+            const lista = leerColaSolicitudes();
             const sol = lista[idx];
             if (!sol || !sol.anunciante) return;
 
-            if (!confirm(`¿Autorizar y publicar "${sol.anunciante.nombre}" en la página principal ahora mismo?`)) return;
+            if (!editorConectado) {
+                alert("Para autorizar y publicar en la revista en vivo, primero pega tu token de GitHub arriba y haz clic en 'Conectar al Editor'.");
+                return;
+            }
+            if (!confirm(`¿Autorizar y publicar "${sol.anunciante.nombre}" en la revista principal ahora mismo?`)) return;
 
             catalogoActual.anunciantes.unshift(sol.anunciante);
             lista.splice(idx, 1);
             localStorage.setItem("dv_solicitudes_pendientes", JSON.stringify(lista));
-            renderizarSolicitudesPendientes();
-            if (typeof renderizarListasAdmin === "function") renderizarListasAdmin();
+            hidratarTodoElPanel();
 
-            if (typeof guardarEnGitHub === "function") {
-                await guardarEnGitHub("data/agencias.json", catalogoActual, `Autorizar y publicar anunciante: ${sol.anunciante.nombre}`);
+            const st = document.getElementById("statusPublicacion");
+            st.textContent = `⏳ Publicando "${sol.anunciante.nombre}" en GitHub Pages...`;
+            st.style.color = "#7dd3fc";
+            try {
+                await guardarArchivoGithub("data/agencias.json", catalogoActual, `Autorizar y publicar anunciante: ${sol.anunciante.nombre}`);
+                st.textContent = `✅ "${sol.anunciante.nombre}" autorizado y publicado. Recarga la portada en ~10 segundos.`;
+                st.style.color = "#4ade80";
+            } catch (e) {
+                st.textContent = "❌ Error al subir a GitHub: " + e.message;
+                st.style.color = "#fca5a5";
             }
         }
 
+        function editarSolicitudAntesDePublicar(idx) {
+            const lista = leerColaSolicitudes();
+            const sol = lista[idx];
+            if (!sol || !sol.anunciante) return;
+            cargarAnuncianteEnFormulario(sol.anunciante, -1, idx);
+            const btnTabAnun = Array.from(document.querySelectorAll(".cms-tab")).find(b => b.textContent.includes("Anunciantes"));
+            cambiarTab("tab-anunciantes", btnTabAnun);
+            document.getElementById("tituloFormAnun").textContent = "✏️ Revisando Solicitud Pendiente (al guardar se agregará al catálogo)";
+        }
+
         function rechazarSolicitud(idx) {
-            if (!confirm("¿Eliminar esta solicitud pendiente?")) return;
-            const lista = JSON.parse(localStorage.getItem("dv_solicitudes_pendientes") || "[]");
+            if (!confirm("¿Rechazar y eliminar esta solicitud pendiente?")) return;
+            const lista = leerColaSolicitudes();
             lista.splice(idx, 1);
             localStorage.setItem("dv_solicitudes_pendientes", JSON.stringify(lista));
             renderizarSolicitudesPendientes();
         }
 
-        function importarCodigoSolicitud() {
-            const raw = prompt("Pega aquí el Código de Solicitud (inicia con DVSOL:) que generó el cliente:");
-            if (!raw || !raw.trim().startsWith("DVSOL:")) {
-                if (raw) alert("El código ingresado no es válido. Debe comenzar con DVSOL:");
-                return;
-            }
-            try {
-                const b64 = raw.trim().slice(6);
-                const jsonStr = decodeURIComponent(escape(atob(b64)));
-                const solObj = JSON.parse(jsonStr);
-                if (!solObj || !solObj.anunciante) throw new Error("Formato inválido");
+        // ======================================================================
+        // HIDRATAR TODAS LAS PESTAÑAS DEL PANEL
+        // ======================================================================
+        function hidratarTodoElPanel() {
+            if (!Array.isArray(catalogoActual.anunciantes)) catalogoActual.anunciantes = [];
+            if (!Array.isArray(catalogoActual.ofertas)) catalogoActual.ofertas = [];
+            if (!Array.isArray(catalogoActual.guias)) catalogoActual.guias = [];
+            if (!Array.isArray(catalogoActual.faq)) catalogoActual.faq = [];
 
-                const lista = JSON.parse(localStorage.getItem("dv_solicitudes_pendientes") || "[]");
-                lista.unshift(solObj);
-                localStorage.setItem("dv_solicitudes_pendientes", JSON.stringify(lista));
-                renderizarSolicitudesPendientes();
-                alert(`✅ Solicitud de "${solObj.anunciante.nombre}" importada correctamente. Ya puedes autorizarla y publicarla.`);
-            } catch (e) {
-                alert("❌ No se pudo leer el código de solicitud. Verifica que esté completo.");
-            }
+            document.getElementById("badgeAnunciantes").textContent = catalogoActual.anunciantes.length;
+            document.getElementById("badgeOfertas").textContent = catalogoActual.ofertas.length;
+
+            // 1. Portada y Revista
+            const rev = configActual.revistaEditorial || {};
+            document.getElementById("revTopBarActivo").checked = Boolean(configActual.topBarActivo);
+            document.getElementById("revTopBarTexto").value = configActual.topBarTexto || "";
+            document.getElementById("revDisclaimerTexto").value = rev.disclaimerTexto || "Promocionamos los servicios, paquetes y promociones de anunciantes en México. Todas las cotizaciones y pagos se realizan directamente con cada proveedor.";
+            document.getElementById("revKickerTexto").value = rev.kickerTexto || "✨ EDICIÓN MÉXICO 2026 • REVISTA DE ANUNCIANTES VERIFICADOS";
+            document.getElementById("revHeroTitle").value = rev.heroTitle || "Descubre Paquetes, Hoteles, Lugares y Experiencias en un Solo Catálogo";
+            document.getElementById("revHeroSubtitle").value = rev.heroSubtitle || "Explora cada anuncio como revista de productos: revisa fotos reales, tarifas, duración, promociones vigentes y tipos de cobro aceptados antes de contactar.";
+            document.getElementById("revMostrarSpotlight").checked = rev.mostrarSpotlight !== false;
+            document.getElementById("revMostrarOfertas").checked = rev.mostrarOfertas !== false;
+            document.getElementById("revMostrarCta").checked = rev.mostrarCta !== false;
+            document.getElementById("revMostrarGuias").checked = rev.mostrarGuias !== false;
+            document.getElementById("revMostrarFaq").checked = rev.mostrarFaq !== false;
+            document.getElementById("revTemaDefault").value = rev.temaDefault || "oceano";
+
+            const selSpot = document.getElementById("revSpotlightId");
+            selSpot.innerHTML = `<option value="">✨ Automático (Primer anunciante destacado)</option>` +
+                catalogoActual.anunciantes.map(a => `<option value="${escaparHTML(a.id)}">${a.destacada ? "⭐ " : ""}${escaparHTML(a.nombre)} (${escaparHTML(a.categoriaNombre || "")})</option>`).join("");
+            selSpot.value = rev.spotlightId || "";
+
+            // 2. Comercial y Pagos
+            const b2b = configActual.comercialB2B || {};
+            const pag = configActual.pagosB2B || {};
+            document.getElementById("cfgWaAdmin").value = b2b.whatsappAdmin || "525652415593";
+            document.getElementById("cfgCorreoAdmin").value = b2b.correoAdmin || "";
+            document.getElementById("cfgEstPrecio").value = b2b.planEstandarPrecio || "$100 MXN";
+            document.getElementById("cfgEstNota").value = b2b.planEstandarNota || "/ mes";
+            document.getElementById("cfgDestPrecio").value = b2b.planDestacadoPrecio || "$499 MXN";
+            document.getElementById("cfgDestNota").value = b2b.planDestacadoNota || "/ mes";
+            document.getElementById("cfgOfertaPrecio").value = b2b.ofertaTemporadaPrecio || "$499 MXN / mes";
+            document.getElementById("cfgBannerPrecio").value = b2b.bannerPatrocinadoPrecio || "$899 MXN / mes";
+
+            document.getElementById("cfgMostrarPagos").checked = pag.mostrarModuloPagos !== false;
+            document.getElementById("cfgModoDemoPago").checked = pag.modoDemoVisual !== false;
+            document.getElementById("cfgMpLinkEst").value = pag.mpLinkEstandar || "https://www.mercadopago.com.mx";
+            document.getElementById("cfgMpLinkDest").value = pag.mpLinkDestacado || "https://www.mercadopago.com.mx";
+            document.getElementById("cfgSpeiBanco").value = pag.speiBanco || "Mercado Pago / STP";
+            document.getElementById("cfgSpeiClabe").value = pag.speiClabe || "0000 0000 0000 0000 00";
+            document.getElementById("cfgSpeiBenef").value = pag.speiBeneficiario || "Directorio Viajero México";
+
+            renderizarSolicitudesPendientes();
+            renderizarListaAnunciantes();
+            renderizarListaOfertas();
+            renderizarGuiasYFaqAdmin();
+            renderizarProspectosAdmin();
         }
-        // Opiniones
-        function renderizarOpinionesAdmin() {
-            const cont = document.getElementById("listaOpinionesAdmin");
+
+        function aplicarCambiosRevistaLocal(silencioso) {
+            configActual.topBarActivo = document.getElementById("revTopBarActivo").checked;
+            configActual.topBarTexto = document.getElementById("revTopBarTexto").value.trim();
+            configActual.revistaEditorial = {
+                disclaimerTexto: document.getElementById("revDisclaimerTexto").value.trim(),
+                kickerTexto: document.getElementById("revKickerTexto").value.trim(),
+                heroTitle: document.getElementById("revHeroTitle").value.trim(),
+                heroSubtitle: document.getElementById("revHeroSubtitle").value.trim(),
+                mostrarSpotlight: document.getElementById("revMostrarSpotlight").checked,
+                spotlightId: document.getElementById("revSpotlightId").value,
+                mostrarOfertas: document.getElementById("revMostrarOfertas").checked,
+                mostrarCta: document.getElementById("revMostrarCta").checked,
+                mostrarGuias: document.getElementById("revMostrarGuias").checked,
+                mostrarFaq: document.getElementById("revMostrarFaq").checked,
+                temaDefault: document.getElementById("revTemaDefault").value
+            };
+            if (!silencioso) marcarCambiosSinPublicar("Diseño de portada guardado. Presiona 'Publicar Todos los Cambios en Vivo'.");
+        }
+
+        function guardarComercialLocal(silencioso) {
+            const wa = document.getElementById("cfgWaAdmin").value.replace(/\D/g, "");
+            configActual.comercialB2B = Object.assign({}, configActual.comercialB2B || {}, {
+                whatsappAdmin: wa.length === 10 ? "52" + wa : wa,
+                correoAdmin: document.getElementById("cfgCorreoAdmin").value.trim(),
+                planEstandarPrecio: document.getElementById("cfgEstPrecio").value.trim(),
+                planEstandarNota: document.getElementById("cfgEstNota").value.trim(),
+                planDestacadoPrecio: document.getElementById("cfgDestPrecio").value.trim(),
+                planDestacadoNota: document.getElementById("cfgDestNota").value.trim(),
+                ofertaTemporadaPrecio: document.getElementById("cfgOfertaPrecio").value.trim(),
+                bannerPatrocinadoPrecio: document.getElementById("cfgBannerPrecio").value.trim()
+            });
+            configActual.pagosB2B = {
+                mostrarModuloPagos: document.getElementById("cfgMostrarPagos").checked,
+                modoDemoVisual: document.getElementById("cfgModoDemoPago").checked,
+                mpLinkEstandar: validarUrlSegura(document.getElementById("cfgMpLinkEst").value) || "https://www.mercadopago.com.mx",
+                mpLinkDestacado: validarUrlSegura(document.getElementById("cfgMpLinkDest").value) || "https://www.mercadopago.com.mx",
+                speiBanco: document.getElementById("cfgSpeiBanco").value.trim(),
+                speiClabe: document.getElementById("cfgSpeiClabe").value.trim(),
+                speiBeneficiario: document.getElementById("cfgSpeiBenef").value.trim()
+            };
+            if (!silencioso) marcarCambiosSinPublicar("Tarifas y datos de pago guardados. Presiona 'Publicar Todos los Cambios en Vivo'.");
+        }
+
+        // ======================================================================
+        // CRUD ANUNCIANTES
+        // ======================================================================
+        function renderizarListaAnunciantes() {
+            const cont = document.getElementById("listaAnunciantesAdmin");
+            const q = (document.getElementById("filtroAdminAnun")?.value || "").toLowerCase().trim();
             cont.innerHTML = "";
-            (catalogoActual.opiniones || []).forEach((op, idx) => {
+            catalogoActual.anunciantes.forEach((a, idx) => {
+                if (q && !`${a.nombre} ${a.categoriaNombre} ${a.salidaDesde}`.toLowerCase().includes(q)) return;
                 const row = document.createElement("div");
                 row.className = "item-row";
                 row.innerHTML = `
-                    <div>
-                        <strong>${escaparHTML(op.nombre)}</strong> <span style="font-size:0.78rem; color:var(--text-soft);">(${escaparHTML(op.detalle)})</span>
-                        <div style="font-size:0.82rem; color:var(--text-soft);">"${escaparHTML(op.texto)}"</div>
+                    <div style="flex:1; min-width:200px;">
+                        <strong>${a.destacada ? "⭐ " : ""}${escaparHTML(a.nombre)}</strong>
+                        <div style="font-size:0.76rem; color:var(--text-soft);">${escaparHTML(a.categoriaNombre || "")} &bull; ${escaparHTML(a.rangoPrecio || "")} &bull; ${escaparHTML(a.duracion || "")}</div>
                     </div>
-                    <button type="button" class="btn-mini btn-del" onclick="eliminarOpinion(${idx})">🗑️</button>
+                    <div style="display:flex; gap:0.35rem;">
+                        <button type="button" class="btn-mini" onclick="editarAnunciante(${idx})">✏️ Editar</button>
+                        <button type="button" class="btn-mini" onclick="subirPosicionAnunciante(${idx})" title="Subir al inicio">⬆️</button>
+                        <button type="button" class="btn-mini btn-del" onclick="eliminarAnunciante(${idx})">🗑️</button>
+                    </div>
                 `;
                 cont.appendChild(row);
             });
         }
 
-        function agregarOpinionForm(e) {
-            e.preventDefault();
-            const nombre = document.getElementById("opNombre").value.trim();
-            const partes = nombre.split(" ").filter(Boolean);
-            const ini = partes.length >= 2 ? (partes[0][0] + partes[1][0]).toUpperCase() : nombre.substring(0, 2).toUpperCase();
-            catalogoActual.opiniones.unshift({
-                iniciales: ini,
-                nombre: nombre,
-                detalle: document.getElementById("opDetalle").value.trim(),
-                texto: document.getElementById("opTexto").value.trim()
+        function cargarAnuncianteEnFormulario(a, editIdx, origenSolIdx) {
+            document.getElementById("anunEditIdx").value = String(editIdx);
+            document.getElementById("anunOrigenSolIdx").value = String(origenSolIdx);
+            document.getElementById("anunNombre").value = a.nombre || "";
+            document.getElementById("anunCategoria").value = `${a.categoria || "viajes"}|${a.categoriaNombre || "Viajes y Turismo"}`;
+            document.getElementById("anunRangoPrecio").value = a.rangoPrecio || "";
+            document.getElementById("anunDuracion").value = a.duracion || "";
+            document.getElementById("anunSalidaDesde").value = a.salidaDesde || "";
+            document.getElementById("anunWhatsapp").value = a.whatsappNumero || "";
+            document.getElementById("anunPromocion").value = a.promocion || a.cuponBeneficio || "";
+            document.getElementById("anunTiposCobro").value = Array.isArray(a.tiposCobro) ? a.tiposCobro.join(", ") : "";
+            document.getElementById("anunEspecialidad").value = a.especialidad || "";
+            document.getElementById("anunDescripcion").value = a.descripcion || "";
+            document.getElementById("anunGaleria").value = Array.isArray(a.galeria) ? a.galeria.join(", ") : "";
+            document.getElementById("anunAmenidades").value = Array.isArray(a.amenidades) ? a.amenidades.join(", ") : "";
+            document.getElementById("anunWeb").value = a.web || "";
+            document.getElementById("anunCuponCod").value = a.cuponCodigo || "";
+            document.getElementById("anunEtiqueta").value = a.etiquetaEstado || "✔ Anunciante Verificado";
+            document.getElementById("anunDestacada").checked = Boolean(a.destacada);
+        }
+
+        function editarAnunciante(idx) {
+            const a = catalogoActual.anunciantes[idx];
+            if (!a) return;
+            cargarAnuncianteEnFormulario(a, idx, -1);
+            document.getElementById("tituloFormAnun").textContent = "✏️ Editando: " + a.nombre;
+        }
+
+        function limpiarFormAnunciante() {
+            document.getElementById("anunEditIdx").value = "-1";
+            document.getElementById("anunOrigenSolIdx").value = "-1";
+            document.getElementById("tituloFormAnun").textContent = "➕ Agregar / Editar Anunciante";
+            ["anunNombre","anunRangoPrecio","anunDuracion","anunSalidaDesde","anunWhatsapp","anunPromocion","anunTiposCobro","anunEspecialidad","anunDescripcion","anunGaleria","anunAmenidades","anunWeb","anunCuponCod"].forEach(id => {
+                document.getElementById(id).value = "";
             });
-            e.target.reset();
-                            const b2b = configActual.comercialB2B || {};
-                document.getElementById("cfgWaAdmin").value = b2b.whatsappAdmin || "";
-                document.getElementById("cfgCorreoAdmin").value = b2b.correoAdmin || "";
-                document.getElementById("cfgB2BTitulo").value = b2b.tituloB2BPortada || "";
-                document.getElementById("cfgB2BSubtitulo").value = b2b.subtituloB2BPortada || "";
-                document.getElementById("cfgPlanEstPrecio").value = b2b.planEstandarPrecio || "renderizarGuiasAdmin(); MXN";
-                document.getElementById("cfgPlanEstNota").value = b2b.planEstandarNota || "/ lanzamiento";
-                document.getElementById("cfgPlanDestPrecio").value = b2b.planDestacadoPrecio || "Gratis 3 meses";
-                document.getElementById("cfgPlanDestNota").value = b2b.planDestacadoNota || "/ primeros 50 registros";
-                document.getElementById("cfgPlanDestPost").value = b2b.planDestacadoPost || "Después $399 MXN/mes";
-                document.getElementById("cfgOfertaPrecio").value = b2b.ofertaTemporadaPrecio || "$499 MXN / mes";
-                document.getElementById("cfgBannerPrecio").value = b2b.bannerPatrocinadoPrecio || "$899 MXN / mes";
-                renderizarGuiasAdmin();
-                renderizarOpinionesAdmin();
+            document.getElementById("anunEtiqueta").value = "✔ Anunciante Verificado";
+            document.getElementById("anunDestacada").checked = false;
         }
 
-        function eliminarOpinion(idx) {
-            catalogoActual.opiniones.splice(idx, 1);
-                            const b2b = configActual.comercialB2B || {};
-                document.getElementById("cfgWaAdmin").value = b2b.whatsappAdmin || "";
-                document.getElementById("cfgCorreoAdmin").value = b2b.correoAdmin || "";
-                document.getElementById("cfgB2BTitulo").value = b2b.tituloB2BPortada || "";
-                document.getElementById("cfgB2BSubtitulo").value = b2b.subtituloB2BPortada || "";
-                document.getElementById("cfgPlanEstPrecio").value = b2b.planEstandarPrecio || "renderizarGuiasAdmin(); MXN";
-                document.getElementById("cfgPlanEstNota").value = b2b.planEstandarNota || "/ lanzamiento";
-                document.getElementById("cfgPlanDestPrecio").value = b2b.planDestacadoPrecio || "Gratis 3 meses";
-                document.getElementById("cfgPlanDestNota").value = b2b.planDestacadoNota || "/ primeros 50 registros";
-                document.getElementById("cfgPlanDestPost").value = b2b.planDestacadoPost || "Después $399 MXN/mes";
-                document.getElementById("cfgOfertaPrecio").value = b2b.ofertaTemporadaPrecio || "$499 MXN / mes";
-                document.getElementById("cfgBannerPrecio").value = b2b.bannerPatrocinadoPrecio || "$899 MXN / mes";
-                renderizarGuiasAdmin();
-                renderizarOpinionesAdmin();
+        function guardarAnuncianteLocal() {
+            const nombre = document.getElementById("anunNombre").value.trim();
+            if (!nombre) { alert("Escribe el nombre comercial."); return; }
+            const [catId, catNombre] = document.getElementById("anunCategoria").value.split("|");
+            const editIdx = parseInt(document.getElementById("anunEditIdx").value, 10);
+            const origenSolIdx = parseInt(document.getElementById("anunOrigenSolIdx").value, 10);
+            const wa = document.getElementById("anunWhatsapp").value.replace(/\D/g, "");
+            const palabras = nombre.split(/\s+/).filter(Boolean);
+            const iniciales = palabras.length >= 2 ? (palabras[0][0] + palabras[1][0]).toUpperCase() : nombre.slice(0, 2).toUpperCase();
+
+            const previo = editIdx >= 0 ? catalogoActual.anunciantes[editIdx] : {};
+            const obj = Object.assign({}, previo, {
+                id: previo.id || (nombre.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") + "-" + Math.floor(100 + Math.random() * 900)),
+                categoria: catId,
+                categoriaNombre: catNombre,
+                nombre,
+                iniciales: iniciales || "DV",
+                destacada: document.getElementById("anunDestacada").checked,
+                rating: previo.rating || "5.0",
+                etiquetaEstado: document.getElementById("anunEtiqueta").value.trim() || "✔ Anunciante Verificado",
+                rangoPrecio: document.getElementById("anunRangoPrecio").value.trim() || "$$ • Cotización directa",
+                duracion: document.getElementById("anunDuracion").value.trim() || "Flexible",
+                salidaDesde: document.getElementById("anunSalidaDesde").value.trim() || "México",
+                estadosSalida: previo.estadosSalida || ["cdmx", "monterrey", "guadalajara", "puebla", "bajio"],
+                whatsappNumero: wa.length === 10 ? "52" + wa : wa,
+                promocion: document.getElementById("anunPromocion").value.trim(),
+                tiposCobro: document.getElementById("anunTiposCobro").value.split(",").map(x => x.trim()).filter(Boolean),
+                especialidad: document.getElementById("anunEspecialidad").value.trim(),
+                descripcion: document.getElementById("anunDescripcion").value.trim(),
+                galeria: document.getElementById("anunGaleria").value.split(",").map(validarUrlSegura).filter(Boolean),
+                amenidades: document.getElementById("anunAmenidades").value.split(",").map(x => x.trim()).filter(Boolean),
+                web: validarUrlSegura(document.getElementById("anunWeb").value),
+                cuponCodigo: document.getElementById("anunCuponCod").value.trim().toUpperCase(),
+                cuponBeneficio: document.getElementById("anunPromocion").value.trim()
+            });
+
+            if (editIdx >= 0) {
+                catalogoActual.anunciantes[editIdx] = obj;
+            } else {
+                catalogoActual.anunciantes.unshift(obj);
+            }
+
+            if (origenSolIdx >= 0) {
+                const cola = leerColaSolicitudes();
+                cola.splice(origenSolIdx, 1);
+                localStorage.setItem("dv_solicitudes_pendientes", JSON.stringify(cola));
+            }
+
+            limpiarFormAnunciante();
+            hidratarTodoElPanel();
+            marcarCambiosSinPublicar(`Anunciante "${nombre}" guardado. Presiona 'Publicar Todos los Cambios en Vivo'.`);
         }
 
-        function descargarRespaldo() {
-            const backup = { fecha: new Date().toISOString(), config: configActual, catalogo: catalogoActual };
-            const blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" });
+        function subirPosicionAnunciante(idx) {
+            if (idx <= 0) return;
+            const [item] = catalogoActual.anunciantes.splice(idx, 1);
+            catalogoActual.anunciantes.unshift(item);
+            hidratarTodoElPanel();
+            marcarCambiosSinPublicar(`"${item.nombre}" movido al primer lugar.`);
+        }
+
+        function eliminarAnunciante(idx) {
+            const a = catalogoActual.anunciantes[idx];
+            if (!a || !confirm(`¿Eliminar "${a.nombre}" del catálogo?`)) return;
+            catalogoActual.anunciantes.splice(idx, 1);
+            hidratarTodoElPanel();
+            marcarCambiosSinPublicar(`Anunciante "${a.nombre}" eliminado.`);
+        }
+
+        function eliminarTodosLosDemo() {
+            const demos = catalogoActual.anunciantes.filter(a => String(a.id || "").endsWith("-demo"));
+            if (!demos.length) { alert("No hay anunciantes '-demo' actualmente."); return; }
+            if (!confirm(`¿Eliminar los ${demos.length} anunciantes simulados (-demo)?`)) return;
+            catalogoActual.anunciantes = catalogoActual.anunciantes.filter(a => !String(a.id || "").endsWith("-demo"));
+            hidratarTodoElPanel();
+            marcarCambiosSinPublicar(`Se limpiaron ${demos.length} anunciantes demo.`);
+        }
+
+        // ======================================================================
+        // OFERTAS, GUÍAS, FAQ, CRM Y RESPALDO
+        // ======================================================================
+        function renderizarListaOfertas() {
+            const cont = document.getElementById("listaOfertasAdmin");
+            cont.innerHTML = catalogoActual.ofertas.map((o, idx) => `
+                <div class="item-row">
+                    <div>
+                        <strong>${escaparHTML(o.titulo || "")}</strong>
+                        <div style="font-size:0.76rem; color:var(--text-soft);">${escaparHTML(o.agencia || "")} &bull; ${escaparHTML(o.precio || "")}</div>
+                    </div>
+                    <button type="button" class="btn-mini btn-del" onclick="eliminarOferta(${idx})">🗑️</button>
+                </div>
+            `).join("");
+        }
+
+        function agregarOfertaLocal() {
+            const titulo = document.getElementById("ofTitulo").value.trim();
+            if (!titulo) return;
+            const wa = document.getElementById("ofWa").value.replace(/\D/g, "");
+            catalogoActual.ofertas.unshift({
+                agencia: document.getElementById("ofAgencia").value.trim(),
+                titulo,
+                precio: document.getElementById("ofPrecio").value.trim(),
+                etiqueta: document.getElementById("ofEtiqueta").value.trim() || "🔥 Promo",
+                detalle: document.getElementById("ofDetalle").value.trim(),
+                whatsappNumero: wa.length === 10 ? "52" + wa : wa,
+                imagen: validarUrlSegura(document.getElementById("ofImg").value),
+                textoBoton: "💬 Solicitar Promoción"
+            });
+            ["ofAgencia","ofTitulo","ofPrecio","ofDetalle","ofWa","ofImg"].forEach(id => document.getElementById(id).value = "");
+            hidratarTodoElPanel();
+            marcarCambiosSinPublicar("Promoción agregada.");
+        }
+
+        function eliminarOferta(idx) {
+            catalogoActual.ofertas.splice(idx, 1);
+            hidratarTodoElPanel();
+            marcarCambiosSinPublicar("Promoción eliminada.");
+        }
+
+        function renderizarGuiasYFaqAdmin() {
+            document.getElementById("listaGuiasAdmin").innerHTML = catalogoActual.guias.map((g, idx) => `
+                <div class="item-row">
+                    <div><strong>${escaparHTML(g.titulo || "")}</strong> <span class="pill-mini">${escaparHTML(g.categoria || "")}</span></div>
+                    <button type="button" class="btn-mini btn-del" onclick="eliminarGuia(${idx})">🗑️</button>
+                </div>
+            `).join("");
+
+            document.getElementById("listaFaqAdmin").innerHTML = catalogoActual.faq.map((f, idx) => `
+                <div class="item-row">
+                    <div><strong>${escaparHTML(f.pregunta || "")}</strong></div>
+                    <button type="button" class="btn-mini btn-del" onclick="eliminarFaq(${idx})">🗑️</button>
+                </div>
+            `).join("");
+        }
+
+        function agregarGuiaLocal() {
+            const titulo = document.getElementById("guiaTitulo").value.trim();
+            if (!titulo) return;
+            catalogoActual.guias.unshift({
+                categoria: document.getElementById("guiaCat").value.trim() || "Guía",
+                titulo,
+                resumen: document.getElementById("guiaResumen").value.trim(),
+                contenido: document.getElementById("guiaContenido").value.trim()
+            });
+            ["guiaCat","guiaTitulo","guiaResumen","guiaContenido"].forEach(id => document.getElementById(id).value = "");
+            hidratarTodoElPanel();
+            marcarCambiosSinPublicar("Guía editorial agregada.");
+        }
+
+        function eliminarGuia(idx) {
+            catalogoActual.guias.splice(idx, 1);
+            hidratarTodoElPanel();
+            marcarCambiosSinPublicar("Guía eliminada.");
+        }
+
+        function agregarFaqLocal() {
+            const pregunta = document.getElementById("faqPregunta").value.trim();
+            if (!pregunta) return;
+            catalogoActual.faq.push({ pregunta, respuesta: document.getElementById("faqRespuesta").value.trim() });
+            ["faqPregunta","faqRespuesta"].forEach(id => document.getElementById(id).value = "");
+            hidratarTodoElPanel();
+            marcarCambiosSinPublicar("Pregunta frecuente agregada.");
+        }
+
+        function eliminarFaq(idx) {
+            catalogoActual.faq.splice(idx, 1);
+            hidratarTodoElPanel();
+            marcarCambiosSinPublicar("FAQ eliminada.");
+        }
+
+        function renderizarProspectosAdmin() {
+            const lista = JSON.parse(localStorage.getItem("dv_crm_prospectos") || "[]");
+            document.getElementById("countProspectos").textContent = lista.length;
+            const cont = document.getElementById("listaProspectosAdmin");
+            if (!lista.length) {
+                cont.innerHTML = `<p style="font-size:0.84rem; color:var(--text-soft);">Sin prospectos registrados todavía.</p>`;
+                return;
+            }
+            cont.innerHTML = lista.map((p, idx) => `
+                <div class="item-row">
+                    <div>
+                        <strong>${escaparHTML(p.nombre)}</strong> (${escaparHTML(p.giro)})
+                        <div style="font-size:0.76rem; color:var(--text-soft);">+${escaparHTML(p.wa)} &bull; ${escaparHTML(p.estado)}</div>
+                    </div>
+                    <div style="display:flex; gap:0.35rem;">
+                        <select onchange="cambiarEstadoProspecto(${idx}, this.value)" style="padding:0.25rem; font-size:0.76rem; border-radius:0.4rem;">
+                            <option value="Contactado" ${p.estado === "Contactado" ? "selected" : ""}>📩 Contactado</option>
+                            <option value="Media Kit Enviado" ${p.estado === "Media Kit Enviado" ? "selected" : ""}>📄 Media Kit</option>
+                            <option value="Cerrado / Publicado" ${p.estado === "Cerrado / Publicado" ? "selected" : ""}>✅ Cerrado</option>
+                        </select>
+                        <button type="button" class="btn-mini btn-del" onclick="eliminarProspecto(${idx})">🗑️</button>
+                    </div>
+                </div>
+            `).join("");
+        }
+
+        function enviarProspeccionWhatsApp() {
+            const nombre = document.getElementById("prosNombre").value.trim();
+            let wa = document.getElementById("prosWhatsApp").value.replace(/\D/g, "");
+            const giro = document.getElementById("prosGiro").value;
+            if (!nombre || wa.length < 10) { alert("Escribe el nombre del negocio y WhatsApp de 10 dígitos."); return; }
+            if (wa.length === 10) wa = "52" + wa;
+
+            const lista = JSON.parse(localStorage.getItem("dv_crm_prospectos") || "[]");
+            lista.unshift({ nombre, wa, giro, estado: "Contactado", fecha: new Date().toLocaleDateString("es-MX") });
+            localStorage.setItem("dv_crm_prospectos", JSON.stringify(lista));
+            renderizarProspectosAdmin();
+
+            const msg = `Hola equipo de *${nombre}* 👋\n\n` +
+                        `Les escribo de la revista digital *Directorio Viajero México* (https://luisfgarciae.github.io/directorio-agencias/).\n` +
+                        `Estamos sumando proveedores destacados en *${giro}* para promocionar sus fotos, tarifas, duración y promociones directo al WhatsApp del cliente sin comisiones por venta.\n\n` +
+                        `Pueden revisar planes y Media Kit aquí: https://luisfgarciae.github.io/directorio-agencias/pages/media-kit.html\n\n` +
+                        `¿Les gustaría aparecer en nuestra edición actual?`;
+            window.open(`https://wa.me/${wa}?text=${encodeURIComponent(msg)}`, "_blank", "noopener,noreferrer");
+        }
+
+        function cambiarEstadoProspecto(idx, est) {
+            const lista = JSON.parse(localStorage.getItem("dv_crm_prospectos") || "[]");
+            if (lista[idx]) { lista[idx].estado = est; localStorage.setItem("dv_crm_prospectos", JSON.stringify(lista)); renderizarProspectosAdmin(); }
+        }
+
+        function eliminarProspecto(idx) {
+            const lista = JSON.parse(localStorage.getItem("dv_crm_prospectos") || "[]");
+            lista.splice(idx, 1); localStorage.setItem("dv_crm_prospectos", JSON.stringify(lista)); renderizarProspectosAdmin();
+        }
+
+        function descargarRespaldo(filename, obj) {
+            const blob = new Blob([JSON.stringify(obj, null, 2)], { type: "application/json" });
             const a = document.createElement("a");
             a.href = URL.createObjectURL(blob);
-            a.download = "respaldo-directorio-" + new Date().toISOString().slice(0, 10) + ".json";
+            a.download = filename;
             a.click();
+            URL.revokeObjectURL(a.href);
         }
 
-        // Publicar configuracion + catalogo en GitHub
-        async function publicarTodoEnVivo() {
-            configActual.MODO_MULTISECTOR = document.getElementById("cfgMultisector").checked;
-            configActual.apariencia = {
-                paletaDefault: document.getElementById("cfgPaleta").value,
-                temaDefault: document.getElementById("cfgTema").value
-            };
-            configActual.hero = {
-                badge: document.getElementById("cfgHeroBadge").value.trim(),
-                titulo: document.getElementById("cfgHeroTitulo").value.trim(),
-                subtitulo: document.getElementById("cfgHeroSubtitulo").value.trim()
-            };
-            configActual.bannerPatrocinado = {
-                visible: document.getElementById("cfgBannerVisible").checked,
-                titulo: document.getElementById("cfgBannerTitulo").value.trim(),
-                descripcion: document.getElementById("cfgBannerDesc").value.trim(),
-                textoBoton: document.getElementById("cfgBannerTextoBtn").value.trim(),
-                urlBoton: document.getElementById("cfgBannerUrl").value.trim()
-            };
+        // ======================================================================
+        // ARRANQUE INMEDIATO + SINCRONIZACIÓN EN VIVO DE SOLICITUDES
+        // ======================================================================
+        document.addEventListener("DOMContentLoaded", () => {
+            if (localStorage.getItem("dv_dark_mode") === "dark") {
+                document.documentElement.setAttribute("data-theme", "dark");
+                document.getElementById("btnDarkMode").textContent = "☀️";
+            }
 
-            setStatus("Publicando diseño y catálogo en GitHub Pages...", "#0284c7");
+            // Cargar solicitudes pendientes inmediatamente antes de conectar token
+            renderizarSolicitudesPendientes();
+            cargarDatosSoloLectura();
 
+            const savedTk = sessionStorage.getItem("dv_gh_token_session");
+            if (savedTk) {
+                document.getElementById("githubTokenInput").value = savedTk;
+                conectarEditorGithub();
+            }
+
+            // Escuchar solicitudes nuevas desde otra pestaña en tiempo real
+            window.addEventListener("storage", (e) => {
+                if (e.key === "dv_solicitudes_pendientes") renderizarSolicitudesPendientes();
+            });
+            window.addEventListener("focus", renderizarSolicitudesPendientes);
             try {
-                const resConf = await githubApi("data/config.json", "PUT", {
-                    message: "Actualizar diseño y configuración desde Panel Maestro",
-                    content: utf8ToBase64(JSON.stringify(configActual, null, 4)),
-                    sha: configSha
-                });
-                configSha = resConf.content.sha;
-
-                const resCat = await githubApi("data/agencias.json", "PUT", {
-                    message: "Actualizar catálogo, ofertas y opiniones desde Panel Maestro",
-                    content: utf8ToBase64(JSON.stringify(catalogoActual, null, 4)),
-                    sha: catalogoSha
-                });
-                catalogoSha = resCat.content.sha;
-
-                setStatus("✅ ¡Todo publicado con éxito! Recarga el sitio público en ~10 segundos para ver los cambios.", "#16a34a");
-            } catch (e) {
-                setStatus("❌ Error al publicar: " + e.message, "#dc2626");
-            }
-        }
-            // Refresco garantizado de Solicitudes por Autorizar en el Panel de Control
-        function sincronizarBandejaSolicitudes() {
-            if (typeof renderizarSolicitudesPendientes === "function") {
-                renderizarSolicitudesPendientes();
-            }
-        }
-        document.addEventListener("DOMContentLoaded", sincronizarBandejaSolicitudes);
-        window.addEventListener("focus", sincronizarBandejaSolicitudes);
-        window.addEventListener("storage", function(e) {
-            if (e.key === "dv_solicitudes_pendientes") sincronizarBandejaSolicitudes();
+                const bc = new BroadcastChannel("dv_solicitudes_channel");
+                bc.onmessage = () => renderizarSolicitudesPendientes();
+            } catch (e) {}
+            setInterval(renderizarSolicitudesPendientes, 2500);
         });
-        setInterval(sincronizarBandejaSolicitudes, 2500);
     </script>
 </body>
 </html>
