@@ -365,6 +365,37 @@
             </div>
         </div>
     </div>
+        <!-- Modal de Contacto Comercial (Pestaña superior Contacto) -->
+    <div id="modalContactoDirectorio" class="modal-backdrop" onclick="cerrarModalContacto(event)">
+        <div class="modal-card" style="max-width: 460px;">
+            <button type="button" class="modal-close" onclick="cerrarModalContacto()">✕</button>
+            <span style="display:inline-block; background:var(--primary-soft); color:var(--primary-dark); font-size:0.74rem; font-weight:800; padding:0.25rem 0.7rem; border-radius:9999px; margin-bottom:0.6rem;">
+                ATENCIÓN DIRECTA
+            </span>
+            <h3 style="font-size: 1.3rem; color: var(--secondary); margin-bottom: 0.35rem;">📞 Contacto Directorio Viajero</h3>
+            <p style="font-size: 0.86rem; color: var(--text-soft); margin-bottom: 1.15rem;">
+                ¿Tienes dudas sobre cómo anunciar tu agencia, hotel, jardín o servicio, o buscas soporte sobre una cotización? Escríbenos directo:
+            </p>
+            <div style="background: var(--bg-muted); border: 1px solid var(--border); border-radius: 0.8rem; padding: 1rem; display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1rem;">
+                <div>
+                    <div style="font-size: 0.74rem; font-weight: 700; color: var(--text-soft);">WHATSAPP COMERCIAL Y SOPORTE</div>
+                    <strong id="contactoModalWaTxt" style="font-size: 1rem; color: var(--secondary);">+52 56 5241 5593</strong>
+                </div>
+                <div>
+                    <div style="font-size: 0.74rem; font-weight: 700; color: var(--text-soft);">CORREO ELECTRÓNICO OFICIAL</div>
+                    <strong id="contactoModalMailTxt" style="font-size: 0.95rem; color: var(--secondary);">contacto@directorioviajero.mx</strong>
+                </div>
+            </div>
+            <div style="display: flex; gap: 0.65rem; flex-wrap: wrap;">
+                <a id="btnContactoModalWa" href="https://wa.me/525652415593" target="_blank" rel="noopener noreferrer" class="btn-action btn-whatsapp" style="flex: 1;">
+                    💬 Abrir WhatsApp
+                </a>
+                <a id="btnContactoModalMail" href="mailto:contacto@directorioviajero.mx" class="btn-action btn-primary" style="flex: 1;">
+                    📩 Enviar Correo
+                </a>
+            </div>
+        </div>
+    </div>
     <footer>
         <p><strong>Directorio Viajero</strong> &copy; 2026. Todos los derechos reservados.</p>
         <div class="footer-links">
@@ -377,6 +408,6 @@
         </p>
     </footer>
 
-    <script src="js/app.js?v=20261117final"></script>
+    <script src="js/app.js?v=20261118contacto"></script>
 </body>
 </html>

@@ -1233,3 +1233,30 @@ function contactarVentasB2B() {
     const msg = 'Hola, vi *Directorio Viajero* y me interesa conocer los beneficios y planes para anunciar mi negocio en la plataforma.';
     window.open(`https://wa.me/${num}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
 }
+function abrirModalContacto(e) {
+    if (e) e.preventDefault();
+    const modal = document.getElementById("modalContactoDirectorio");
+    if (!modal) return;
+    const b2b = (typeof CONFIG_SITE !== "undefined" && CONFIG_SITE && CONFIG_SITE.comercialB2B) ? CONFIG_SITE.comercialB2B : {};
+    const waRaw = normalizarTelefonoWa(b2b.whatsappAdmin || CONFIG_SITE?.whatsappConcierge || "525652415593");
+    const mailRaw = (b2b.correoAdmin || "contacto@directorioviajero.mx").trim();
+
+    const waTxt = document.getElementById("contactoModalWaTxt");
+    const mailTxt = document.getElementById("contactoModalMailTxt");
+    const btnWa = document.getElementById("btnContactoModalWa");
+    const btnMail = document.getElementById("btnContactoModalMail");
+
+    if (waTxt) waTxt.textContent = "+" + waRaw;
+    if (mailTxt) mailTxt.textContent = mailRaw;
+    if (btnWa) btnWa.href = `https://wa.me/${waRaw}?text=${encodeURIComponent("Hola, me comunico desde la pestaña Contacto de Directorio Viajero.")}`;
+    if (btnMail) btnMail.href = `mailto:${encodeURIComponent(mailRaw)}?subject=${encodeURIComponent("Contacto desde Directorio Viajero")}`;
+
+    modal.classList.add("open");
+}
+
+function cerrarModalContacto(e) {
+    if (!e || e.target.id === "modalContactoDirectorio" || e.target.classList.contains("modal-close")) {
+        const modal = document.getElementById("modalContactoDirectorio");
+        if (modal) modal.classList.remove("open");
+    }
+}

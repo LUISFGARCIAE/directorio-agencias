@@ -256,13 +256,27 @@
                         <textarea id="descAgencia" rows="3" maxlength="140" required placeholder="Especialistas en paquetes familiares todo incluido y salidas grupales..."></textarea>
                     </div>
 
-                    <div style="display: flex; flex-direction: column; gap: 0.65rem; margin-top: 1.25rem;">
-                        <button type="submit" class="btn-action btn-primary" style="width: 100%; padding: 0.85rem;">
-                            📩 Enviar Solicitud por Correo
+                    <div style="margin-top: 1.25rem;">
+                        <button type="submit" id="btnEnviarSolicitudPanel" class="btn-action btn-primary" style="width: 100%; padding: 0.9rem; font-size: 0.98rem;">
+                            🚀 Enviar Solicitud para Autorización
                         </button>
-                        <button type="button" id="btnEnviarWaAlta" class="btn-action btn-whatsapp" style="width: 100%; padding: 0.85rem;">
-                            💬 Enviar Datos Directo por WhatsApp
-                        </button>
+                        <p style="font-size: 0.76rem; color: var(--text-soft); text-align: center; margin-top: 0.55rem;">
+                            🛡️ Tu anuncio pasará directamente a la bandeja de revisión del administrador antes de publicarse en la portada.
+                        </p>
+                    </div>
+                    <div id="confirmacionEnvioPanel" style="display:none; margin-top:1.1rem; background:#eff6ff; border:1px solid #93c5fd; border-radius:0.75rem; padding:1rem;">
+                        <strong style="color:#1e40af; font-size:0.95rem; display:block; margin-bottom:0.35rem;">✅ ¡Solicitud enviada al Panel de Control!</strong>
+                        <p style="font-size:0.82rem; color:#1e3a8a; line-height:1.5; margin-bottom:0.65rem;">
+                            Tu ficha quedó registrada en estado <strong>Pendiente de Autorización</strong>. No aparecerá en la página principal hasta que el administrador la apruebe.
+                        </p>
+                        <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+                            <button type="button" id="btnCopiarCodigoSol" class="btn-action btn-outline" style="font-size:0.78rem; padding:0.45rem 0.75rem;">
+                                📋 Copiar Código de Solicitud
+                            </button>
+                            <a href="../index.html" class="btn-action btn-primary" style="font-size:0.78rem; padding:0.45rem 0.75rem;">
+                                Volver a la Página Principal
+                            </a>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -568,31 +582,84 @@
                 if (el) el.addEventListener("change", actualizarVistaPrevia);
             });
 
-            // Envio por Correo tras pago
+            // Envio directo a la Bandeja de Autorizacion del Panel de Control
             document.getElementById("formRegistroAgencia").addEventListener("submit", (e) => {
                 e.preventDefault();
                 if (!FOLIO_AUTORIZADO) {
                     abrirModalPagoPlan("Plan Destacado");
                     return;
                 }
-                const cuerpo = construirResumenSolicitud();
-                const asunto = encodeURIComponent("Alta Directorio Viajero - Folio " + FOLIO_AUTORIZADO);
-                window.location.href = `mailto:${encodeURIComponent(CORREO_DESTINO)}?subject=${asunto}&body=${encodeURIComponent(cuerpo)}`;
-            });
 
-            // Envio por WhatsApp tras pago
-            document.getElementById("btnEnviarWaAlta").addEventListener("click", () => {
-                const form = document.getElementById("formRegistroAgencia");
-                if (!form.checkValidity()) {
-                    form.reportValidity();
-                    return;
-                }
-                if (!FOLIO_AUTORIZADO) {
-                    abrirModalPagoPlan("Plan Destacado");
-                    return;
-                }
-                const mensaje = construirResumenSolicitud();
-                window.open(`https://wa.me/${WHATSAPP_ADMIN}?text=${encodeURIComponent(mensaje)}`, "_blank", "noopener,noreferrer");
+                const [catId, catNombre] = document.getElementById("catAgencia").value.split("|");
+                const plan = document.getElementById("planAgencia").value;
+                const nombre = limpiarTextoPlano(document.getElementById("nombreAgencia").value, 80);
+                const ciudad = limpiarTextoPlano(document.getElementById("ciudadAgencia").value, 80);
+                const correo = limpiarTextoPlano(document.getElementById("correoAgencia").value, 100);
+                const wa = String(document.getElementById("waAgencia").value || "").replace(/\D/g, "").slice(0, 15);
+                const web = validarUrlHttpSegura(document.getElementById("webAgencia").value);
+                const destinosRaw = limpiarTextoPlano(document.getElementById("destinosAgencia").value, 120);
+                const desc = limpiarTextoPlano(document.getElementById("descAgencia").value, 140);
+
+                const palabras = nombre.split(/\s+/).filter(Boolean);
+                const iniciales = palabras.length >= 2
+                    ? (palabras[0][0] + palabras[1][0]).toUpperCase()
+                    : nombre.slice(0, 2).toUpperCase();
+
+                const tags = destinosRaw.split(",").map(t => limpiarTextoPlano(t, 25)).filter(Boolean).map(t => "#" + t.replace(/\s+/g, ""));
+
+                const solicitudObj = {
+                    solicitudId: FOLIO_AUTORIZADO,
+                    fecha: new Date().toLocaleString("es-MX"),
+                    estado: "Pendiente de Autorización",
+                    terminacionTarjeta: TERMINACION_TARJETA,
+                    plan: plan,
+                    correoContacto: correo,
+                    anunciante: {
+                        id: nombre.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") + "-" + Math.floor(100 + Math.random() * 900),
+                        categoria: catId,
+                        categoriaNombre: catNombre,
+                        nombre: nombre,
+                        iniciales: iniciales || "DV",
+                        colorTexto: plan === "Plan Destacado" ? "#0284c7" : "#059669",
+                        colorFondo: plan === "Plan Destacado" ? "#e0f2fe" : "#d1fae5",
+                        destacada: plan === "Plan Destacado",
+                        rnt: "",
+                        rating: "5.0",
+                        etiquetaEstado: "✔ Verificado",
+                        salidaDesde: ciudad,
+                        estadosSalida: ["cdmx", "monterrey", "guadalajara", "puebla", "bajio"],
+                        rangoPrecio: "$$ • Cotización directa",
+                        especialidad: destinosRaw,
+                        descripcion: desc,
+                        destinos: ["cancun", "acapulco", "pueblos-magicos"],
+                        tags: tags.length ? tags : ["#Verificado"],
+                        web: web,
+                        whatsappNumero: wa.length === 10 ? "52" + wa : wa,
+                        ubicacionMaps: ciudad + ", Mexico"
+                    }
+                };
+
+                // Guardar en la cola local del Panel de Control
+                const cola = JSON.parse(localStorage.getItem("dv_solicitudes_pendientes") || "[]");
+                cola.unshift(solicitudObj);
+                localStorage.setItem("dv_solicitudes_pendientes", JSON.stringify(cola));
+
+                // Generar codigo compacto por si el cliente lo envia desde otro navegador/dispositivo
+                const codigoTransferencia = "DVSOL:" + btoa(unescape(encodeURIComponent(JSON.stringify(solicitudObj))));
+
+                document.getElementById("btnEnviarSolicitudPanel").disabled = true;
+                document.getElementById("btnEnviarSolicitudPanel").textContent = "✔ Solicitud en Bandeja de Revisión";
+                const boxConf = document.getElementById("confirmacionEnvioPanel");
+                boxConf.style.display = "block";
+                boxConf.scrollIntoView({ behavior: "smooth", block: "nearest" });
+
+                document.getElementById("btnCopiarCodigoSol").onclick = () => {
+                    if (navigator.clipboard) {
+                        navigator.clipboard.writeText(codigoTransferencia).then(() => {
+                            alert("✅ Código de solicitud copiado. Puedes pegarlo en el Panel de Control desde cualquier equipo.");
+                        });
+                    }
+                };
             });
         });
     </script>

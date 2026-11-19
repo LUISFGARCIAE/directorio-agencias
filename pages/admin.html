@@ -64,6 +64,7 @@
         <div id="workspace" style="display: none;">
             <div class="cms-tabs">
                 <button type="button" class="cms-tab active" onclick="cambiarTab('tab-diseno', this)">🎨 Modo Edición y Diseño</button>
+                <button type="button" class="cms-tab" onclick="cambiarTab('tab-solicitudes', this)">📥 Solicitudes por Autorizar (<span id="badgeSolPendientes">0</span>)</button>
                 <button type="button" class="cms-tab" onclick="cambiarTab('tab-anunciantes', this)">🏢 Anunciantes (<span id="badgeCountAnun">0</span>)</button>
                 <button type="button" class="cms-tab" onclick="cambiarTab('tab-ofertas', this)">🔥 Ofertas y Banners</button>
                 <button type="button" class="cms-tab" onclick="cambiarTab('tab-guias', this)">📖 Guías SEO</button>
@@ -975,6 +976,96 @@
                 document.getElementById("cfgOfertaPrecio").value = b2b.ofertaTemporadaPrecio || "$499 MXN / mes";
                 document.getElementById("cfgBannerPrecio").value = b2b.bannerPatrocinadoPrecio || "$899 MXN / mes";
                 renderizarGuiasAdmin();
+        }
+                function renderizarSolicitudesPendientes() {
+            const cont = document.getElementById("listaSolicitudesPendientes");
+            const badge = document.getElementById("badgeSolPendientes");
+            if (!cont) return;
+
+            const lista = JSON.parse(localStorage.getItem("dv_solicitudes_pendientes") || "[]");
+            if (badge) badge.textContent = lista.length;
+            cont.innerHTML = "";
+
+            if (lista.length === 0) {
+                cont.innerHTML = `<p style="font-size:0.86rem; color:var(--text-soft); padding:1rem; background:var(--bg-muted); border-radius:0.65rem;">No hay solicitudes pendientes en este momento. Cuando un anunciante envíe su solicitud en <strong>Anúnciate</strong>, aparecerá aquí para tu aprobación.</p>`;
+                return;
+            }
+
+            lista.forEach((sol, idx) => {
+                const a = sol.anunciante || {};
+                const card = document.createElement("div");
+                card.style.cssText = "border:1px solid var(--border); background:var(--bg-muted); border-radius:0.85rem; padding:1.1rem; margin-bottom:0.85rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;";
+                card.innerHTML = `
+                    <div style="flex:1; min-width:250px;">
+                        <div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.35rem;">
+                            <strong style="font-size:1.02rem; color:var(--secondary);">${escaparHTML(a.nombre || "Sin nombre")}</strong>
+                            <span style="background:#dcfce7; color:#166534; font-size:0.72rem; font-weight:800; padding:0.18rem 0.55rem; border-radius:9999px;">Folio ${escaparHTML(sol.solicitudId || "")} (**** ${escaparHTML(sol.terminacionTarjeta || "0000")})</span>
+                            <span style="background:var(--primary-soft); color:var(--primary-dark); font-size:0.72rem; font-weight:800; padding:0.18rem 0.55rem; border-radius:9999px;">${escaparHTML(sol.plan || "")}</span>
+                        </div>
+                        <div style="font-size:0.82rem; color:var(--text-soft); margin-bottom:0.3rem;">
+                            <strong>Sector:</strong> ${escaparHTML(a.categoriaNombre || "")} &bull; <strong>Cobertura:</strong> ${escaparHTML(a.salidaDesde || "")} &bull; <strong>WhatsApp:</strong> +${escaparHTML(a.whatsappNumero || "")}
+                        </div>
+                        <p style="font-size:0.83rem; color:var(--text-main); margin:0;">${escaparHTML(a.descripcion || "")}</p>
+                    </div>
+                    <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+                        <button type="button" class="btn-action btn-whatsapp" style="padding:0.6rem 1rem; font-size:0.84rem;" onclick="autorizarYPublicarSolicitud(${idx})">
+                            ✅ Autorizar y Publicar en Portada
+                        </button>
+                        <button type="button" class="btn-mini btn-del" style="padding:0.6rem 0.8rem;" onclick="rechazarSolicitud(${idx})">
+                            🗑️ Rechazar
+                        </button>
+                    </div>
+                `;
+                cont.appendChild(card);
+            });
+        }
+
+        async function autorizarYPublicarSolicitud(idx) {
+            const lista = JSON.parse(localStorage.getItem("dv_solicitudes_pendientes") || "[]");
+            const sol = lista[idx];
+            if (!sol || !sol.anunciante) return;
+
+            if (!confirm(`¿Autorizar y publicar "${sol.anunciante.nombre}" en la página principal ahora mismo?`)) return;
+
+            catalogoActual.anunciantes.unshift(sol.anunciante);
+            lista.splice(idx, 1);
+            localStorage.setItem("dv_solicitudes_pendientes", JSON.stringify(lista));
+            renderizarSolicitudesPendientes();
+            if (typeof renderizarListasAdmin === "function") renderizarListasAdmin();
+
+            if (typeof guardarEnGitHub === "function") {
+                await guardarEnGitHub("data/agencias.json", catalogoActual, `Autorizar y publicar anunciante: ${sol.anunciante.nombre}`);
+            }
+        }
+
+        function rechazarSolicitud(idx) {
+            if (!confirm("¿Eliminar esta solicitud pendiente?")) return;
+            const lista = JSON.parse(localStorage.getItem("dv_solicitudes_pendientes") || "[]");
+            lista.splice(idx, 1);
+            localStorage.setItem("dv_solicitudes_pendientes", JSON.stringify(lista));
+            renderizarSolicitudesPendientes();
+        }
+
+        function importarCodigoSolicitud() {
+            const raw = prompt("Pega aquí el Código de Solicitud (inicia con DVSOL:) que generó el cliente:");
+            if (!raw || !raw.trim().startsWith("DVSOL:")) {
+                if (raw) alert("El código ingresado no es válido. Debe comenzar con DVSOL:");
+                return;
+            }
+            try {
+                const b64 = raw.trim().slice(6);
+                const jsonStr = decodeURIComponent(escape(atob(b64)));
+                const solObj = JSON.parse(jsonStr);
+                if (!solObj || !solObj.anunciante) throw new Error("Formato inválido");
+
+                const lista = JSON.parse(localStorage.getItem("dv_solicitudes_pendientes") || "[]");
+                lista.unshift(solObj);
+                localStorage.setItem("dv_solicitudes_pendientes", JSON.stringify(lista));
+                renderizarSolicitudesPendientes();
+                alert(`✅ Solicitud de "${solObj.anunciante.nombre}" importada correctamente. Ya puedes autorizarla y publicarla.`);
+            } catch (e) {
+                alert("❌ No se pudo leer el código de solicitud. Verifica que esté completo.");
+            }
         }
         // Opiniones
         function renderizarOpinionesAdmin() {
