@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://api.github.com; object-src 'none'; base-uri 'self';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://api.github.com https://script.google.com https://script.googleusercontent.com; object-src 'none'; base-uri 'self';">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>Panel Maestro CMS | Revista Directorio Viajero</title>
@@ -58,6 +58,11 @@
                 <input type="password" id="githubTokenInput" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx o github_pat_..." style="flex: 1; min-width: 240px; padding: 0.68rem 0.85rem; border: 1px solid var(--border); border-radius: 0.6rem; background: var(--bg-muted); color: var(--text-main);">
                 <button type="button" id="btnConectarGithub" class="btn-action btn-primary" onclick="conectarEditorGithub()" style="padding: 0.68rem 1.35rem;">Conectar al Editor</button>
             </div>
+                        <div style="display: flex; gap: 0.65rem; flex-wrap: wrap; margin-top: 0.65rem;">
+                <input type="password" id="buzonKeyInput" placeholder="Clave secreta de tu Buzón en la Nube (Google Sheets)" style="flex: 1; min-width: 240px; padding: 0.65rem 0.85rem; border: 1px solid var(--border); border-radius: 0.6rem; background: var(--bg-muted); color: var(--text-main);">
+                <button type="button" class="btn-action btn-outline" onclick="conectarBuzonNube()" style="padding: 0.65rem 1.2rem;">☁️ Sincronizar Buzón Nube</button>
+            </div>
+            <div id="statusBuzonNube" style="font-size: 0.8rem; font-weight: 600; margin-top: 0.45rem; color: var(--text-soft);"></div>
             <div id="statusConexion" style="font-size: 0.84rem; font-weight: 700; margin-top: 0.65rem; color: var(--text-soft);">
                 ⏳ Modo lectura cargado. Conecta tu token para publicar cambios en GitHub Pages.
             </div>
@@ -96,7 +101,7 @@
                         <h3 style="font-size: 1.15rem; color: var(--secondary); margin: 0 0 0.2rem;">📥 Solicitudes Recibidas Esperando Autorización</h3>
                         <p style="font-size: 0.84rem; color: var(--text-soft); margin: 0;">Ningún anuncio se muestra en la revista pública hasta que tú presiones <strong>Autorizar y Publicar</strong>.</p>
                     </div>
-                    <button type="button" class="btn-mini" onclick="renderizarSolicitudesPendientes()">🔄 Actualizar Bandeja</button>
+                    <button type="button" class="btn-mini" onclick="sincronizarSolicitudesNube(true)">🔄 Actualizar Bandeja (Nube + Local)</button>
                 </div>
                 <div id="listaSolicitudesPendientes"></div>
             </div>
@@ -388,7 +393,8 @@
                         <div class="form-group"><label>Banco SPEI</label><input type="text" id="cfgSpeiBanco"></div>
                         <div class="form-group"><label>CLABE Interbancaria</label><input type="text" id="cfgSpeiClabe"></div>
                     </div>
-                    <div class="form-group"><label>Beneficiario SPEI</label><input type="text" id="cfgSpeiBenef"></div>
+                                        <div class="form-group"><label>Beneficiario SPEI</label><input type="text" id="cfgSpeiBenef"></div>
+                    <div class="form-group"><label>☁️ URL del Buzón en la Nube (Google Apps Script /exec)</label><input type="url" id="cfgBuzonNubeUrl" placeholder="https://script.google.com/macros/s/.../exec"></div>
                     <button type="button" class="btn-action btn-primary" style="width:100%;" onclick="guardarComercialLocal()">💾 Guardar Tarifas y Pagos</button>
                 </div>
             </div>
@@ -450,6 +456,9 @@
         let configActual = {};
         let catalogoActual = { anunciantes: [], ofertas: [], guias: [], faq: [] };
         let cambiosPendientes = false;
+        let solicitudesNubeCache = [];
+        let buzonAdminKey = "";
+        let solicitudEnEdicionId = "";
 
         function escaparHTML(str) {
             return String(str || "")
@@ -616,17 +625,108 @@
             }
         }
 
+                // ======================================================================
+        // BANDEJA DE SOLICITUDES POR AUTORIZAR (NUBE GOOGLE SHEETS + LOCAL)
         // ======================================================================
-        // BANDEJA DE SOLICITUDES POR AUTORIZAR (SIEMPRE ACTIVA)
-        // ======================================================================
+        function conectarBuzonNube() {
+            const k = document.getElementById("buzonKeyInput").value.trim();
+            if (!k) {
+                alert("Ingresa la clave secreta que configuraste en ADMIN_KEY de tu Google Apps Script.");
+                return;
+            }
+            buzonAdminKey = k;
+            sessionStorage.setItem("dv_buzon_key_session", k);
+            sincronizarSolicitudesNube(true);
+        }
+
+        async function sincronizarSolicitudesNube(mostrarEstado) {
+            const url = validarUrlSegura(configActual.buzonNubeUrl || "");
+            const st = document.getElementById("statusBuzonNube");
+            if (!url) {
+                if (st && mostrarEstado) {
+                    st.textContent = "ℹ️ Aún no hay URL de Buzón en la Nube en config.json (pégala en '💼 Tarifas y Mercado Pago').";
+                    st.style.color = "#d97706";
+                }
+                renderizarSolicitudesPendientes();
+                return;
+            }
+            if (!buzonAdminKey) {
+                if (st && mostrarEstado) {
+                    st.textContent = "🔑 Pega tu Clave Secreta del Buzón arriba y pulsa 'Sincronizar Buzón Nube' para recibir solicitudes de otros dispositivos.";
+                    st.style.color = "#0284c7";
+                }
+                renderizarSolicitudesPendientes();
+                return;
+            }
+
+            if (st && mostrarEstado) {
+                st.textContent = "⏳ Consultando solicitudes en la nube...";
+                st.style.color = "#0284c7";
+            }
+            try {
+                const res = await fetch(`${url}?key=${encodeURIComponent(buzonAdminKey)}&t=${Date.now()}`);
+                const data = await res.json();
+                if (!data.ok) throw new Error(data.error || "Clave incorrecta");
+                solicitudesNubeCache = Array.isArray(data.solicitudes) ? data.solicitudes : [];
+                if (st) {
+                    st.textContent = `☁️ Buzón en la nube sincronizado (${solicitudesNubeCache.length} pendiente${solicitudesNubeCache.length === 1 ? "" : "s"} remota${solicitudesNubeCache.length === 1 ? "" : "s"}).`;
+                    st.style.color = "#16a34a";
+                }
+            } catch (e) {
+                if (st) {
+                    st.textContent = "❌ Error al leer Buzón Nube: " + e.message;
+                    st.style.color = "#dc2626";
+                }
+            }
+            renderizarSolicitudesPendientes();
+        }
+
+        async function actualizarEstadoSolicitudNube(solicitudId, nuevoEstado) {
+            const url = validarUrlSegura(configActual.buzonNubeUrl || "");
+            if (!url || !buzonAdminKey || !solicitudId) return;
+            try {
+                await fetch(url, {
+                    method: "POST",
+                    headers: { "Content-Type": "text/plain;charset=utf-8" },
+                    body: JSON.stringify({
+                        action: "actualizarEstado",
+                        adminKey: buzonAdminKey,
+                        solicitudId,
+                        nuevoEstado
+                    })
+                });
+            } catch (e) {
+                console.warn("No se pudo actualizar estado en nube:", e);
+            }
+        }
+
+        function eliminarDeColasPorId(solicitudId) {
+            solicitudesNubeCache = solicitudesNubeCache.filter(s => s.solicitudId !== solicitudId);
+            try {
+                const locales = JSON.parse(localStorage.getItem("dv_solicitudes_pendientes") || "[]");
+                const filtradas = locales.filter(s => s.solicitudId !== solicitudId);
+                localStorage.setItem("dv_solicitudes_pendientes", JSON.stringify(filtradas));
+            } catch (e) {}
+        }
+
         function leerColaSolicitudes() {
+            let locales = [];
             try {
                 const raw = localStorage.getItem("dv_solicitudes_pendientes");
                 const arr = raw ? JSON.parse(raw) : [];
-                return Array.isArray(arr) ? arr : [];
-            } catch (e) {
-                return [];
-            }
+                if (Array.isArray(arr)) locales = arr;
+            } catch (e) {}
+
+            const mapa = new Map();
+            solicitudesNubeCache.forEach(s => {
+                if (s && s.solicitudId) mapa.set(s.solicitudId, Object.assign({}, s, { _origen: "nube" }));
+            });
+            locales.forEach(s => {
+                if (s && s.solicitudId && !mapa.has(s.solicitudId)) {
+                    mapa.set(s.solicitudId, Object.assign({}, s, { _origen: "local" }));
+                }
+            });
+            return Array.from(mapa.values());
         }
 
         function renderizarSolicitudesPendientes() {
@@ -642,9 +742,9 @@
             if (lista.length === 0) {
                 cont.innerHTML = `
                     <div style="padding:1.25rem; background:var(--bg-muted); border-radius:0.75rem; border:1px dashed var(--border);">
-                        <strong style="color:var(--secondary); display:block; margin-bottom:0.3rem;">No hay solicitudes pendientes en este navegador.</strong>
+                        <strong style="color:var(--secondary); display:block; margin-bottom:0.3rem;">No hay solicitudes pendientes en este momento.</strong>
                         <p style="font-size:0.84rem; color:var(--text-soft); margin:0;">
-                            Cuando envíes una solicitud desde <a href="anunciate.html" target="_blank" style="color:var(--primary); font-weight:700;">Anúnciate</a> en este mismo navegador (mismo perfil, normal o incógnito), aparecerá aquí al instante para autorizarla.
+                            Las solicitudes enviadas desde cualquier celular o computadora llegarán aquí automáticamente al tener conectado tu <strong>Buzón en la Nube</strong>.
                         </p>
                     </div>`;
                 return;
@@ -654,12 +754,16 @@
                 const a = sol.anunciante || {};
                 const fotos = Array.isArray(a.galeria) ? a.galeria.map(validarUrlSegura).filter(Boolean) : [];
                 const cobros = Array.isArray(a.tiposCobro) ? a.tiposCobro : [];
+                const badgeOrigen = sol._origen === "nube"
+                    ? `<span class="pill-mini" style="background:#e0f2fe; color:#0369a1; border-color:#7dd3fc;">☁️ Nube</span>`
+                    : `<span class="pill-mini">💻 Local</span>`;
                 return `
                     <div class="sol-card">
                         <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.75rem; margin-bottom:0.65rem;">
                             <div>
                                 <div style="display:flex; gap:0.45rem; flex-wrap:wrap; align-items:center; margin-bottom:0.3rem;">
                                     <strong style="font-size:1.08rem; color:var(--secondary);">${escaparHTML(a.nombre || "Sin nombre")}</strong>
+                                    ${badgeOrigen}
                                     <span class="pill-mini" style="background:#dcfce7; color:#166534; border-color:#86efac;">Folio ${escaparHTML(sol.solicitudId || "SIM")} • **** ${escaparHTML(sol.terminacionTarjeta || "0000")}</span>
                                     <span class="pill-mini" style="background:var(--primary-soft); color:var(--primary-dark);">${escaparHTML(sol.plan || "")}</span>
                                 </div>
@@ -708,8 +812,7 @@
             if (!confirm(`¿Autorizar y publicar "${sol.anunciante.nombre}" en la revista principal ahora mismo?`)) return;
 
             catalogoActual.anunciantes.unshift(sol.anunciante);
-            lista.splice(idx, 1);
-            localStorage.setItem("dv_solicitudes_pendientes", JSON.stringify(lista));
+            eliminarDeColasPorId(sol.solicitudId);
             hidratarTodoElPanel();
 
             const st = document.getElementById("statusPublicacion");
@@ -717,6 +820,7 @@
             st.style.color = "#7dd3fc";
             try {
                 await guardarArchivoGithub("data/agencias.json", catalogoActual, `Autorizar y publicar anunciante: ${sol.anunciante.nombre}`);
+                await actualizarEstadoSolicitudNube(sol.solicitudId, "Autorizada");
                 st.textContent = `✅ "${sol.anunciante.nombre}" autorizado y publicado. Recarga la portada en ~10 segundos.`;
                 st.style.color = "#4ade80";
             } catch (e) {
@@ -729,18 +833,20 @@
             const lista = leerColaSolicitudes();
             const sol = lista[idx];
             if (!sol || !sol.anunciante) return;
+            solicitudEnEdicionId = sol.solicitudId || "";
             cargarAnuncianteEnFormulario(sol.anunciante, -1, idx);
             const btnTabAnun = Array.from(document.querySelectorAll(".cms-tab")).find(b => b.textContent.includes("Anunciantes"));
             cambiarTab("tab-anunciantes", btnTabAnun);
             document.getElementById("tituloFormAnun").textContent = "✏️ Revisando Solicitud Pendiente (al guardar se agregará al catálogo)";
         }
 
-        function rechazarSolicitud(idx) {
-            if (!confirm("¿Rechazar y eliminar esta solicitud pendiente?")) return;
+        async function rechazarSolicitud(idx) {
             const lista = leerColaSolicitudes();
-            lista.splice(idx, 1);
-            localStorage.setItem("dv_solicitudes_pendientes", JSON.stringify(lista));
+            const sol = lista[idx];
+            if (!sol || !confirm(`¿Rechazar y eliminar la solicitud de "${sol.anunciante?.nombre || sol.solicitudId}"?`)) return;
+            eliminarDeColasPorId(sol.solicitudId);
             renderizarSolicitudesPendientes();
+            await actualizarEstadoSolicitudNube(sol.solicitudId, "Rechazada");
         }
 
         // ======================================================================
@@ -794,6 +900,7 @@
             document.getElementById("cfgSpeiBanco").value = pag.speiBanco || "Mercado Pago / STP";
             document.getElementById("cfgSpeiClabe").value = pag.speiClabe || "0000 0000 0000 0000 00";
             document.getElementById("cfgSpeiBenef").value = pag.speiBeneficiario || "Directorio Viajero México";
+            const elBuzonUrl = document.getElementById("cfgBuzonNubeUrl"); if (elBuzonUrl) elBuzonUrl.value = configActual.buzonNubeUrl || "";
 
             renderizarSolicitudesPendientes();
             renderizarListaAnunciantes();
@@ -842,6 +949,8 @@
                 speiClabe: document.getElementById("cfgSpeiClabe").value.trim(),
                 speiBeneficiario: document.getElementById("cfgSpeiBenef").value.trim()
             };
+            const elUrl = document.getElementById("cfgBuzonNubeUrl"); if (elUrl) configActual.buzonNubeUrl = validarUrlSegura(elUrl.value);
+            
             if (!silencioso) marcarCambiosSinPublicar("Tarifas y datos de pago guardados. Presiona 'Publicar Todos los Cambios en Vivo'.");
         }
 
@@ -1158,6 +1267,10 @@
             renderizarSolicitudesPendientes();
             cargarDatosSoloLectura();
 
+            const savedBuzonKey = sessionStorage.getItem("dv_buzon_key_session");
+            if (savedBuzonKey) { buzonAdminKey = savedBuzonKey; document.getElementById("buzonKeyInput").value = savedBuzonKey; }
+            setTimeout(() => sincronizarSolicitudesNube(false), 800);
+            setInterval(() => sincronizarSolicitudesNube(false), 30000);
             const savedTk = sessionStorage.getItem("dv_gh_token_session");
             if (savedTk) {
                 document.getElementById("githubTokenInput").value = savedTk;

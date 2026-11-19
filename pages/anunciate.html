@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>Anúnciate en Directorio Viajero | Planes y Registro</title>
@@ -442,6 +442,7 @@
         let PRECIO_DESTACADO = "$499 MXN / mes";
         let FOLIO_AUTORIZADO = "";
         let TERMINACION_TARJETA = "";
+        let BUZON_NUBE_URL = "";
 
         // Temas visuales
         function cambiarTemaColor(tema) {
@@ -547,6 +548,7 @@
                 if (res.ok) {
                     const cfg = await res.json();
                     const b2b = cfg.comercialB2B || {};
+                    if (cfg.buzonNubeUrl) BUZON_NUBE_URL = validarUrlHttpSegura(cfg.buzonNubeUrl);
                     if (b2b.correoAdmin) CORREO_DESTINO = limpiarTextoPlano(b2b.correoAdmin, 100);
                     if (b2b.whatsappAdmin) {
                         let d = String(b2b.whatsappAdmin).replace(/\D/g, "");
@@ -628,7 +630,7 @@
             });
 
             // Envio directo a la Bandeja de Autorizacion del Panel de Control
-            document.getElementById("formRegistroAgencia").addEventListener("submit", (e) => {
+            document.getElementById("formRegistroAgencia").addEventListener("submit", async (e) => {
                 e.preventDefault();
                 if (!FOLIO_AUTORIZADO) {
                     abrirModalPagoPlan("Plan Destacado");
@@ -689,8 +691,23 @@
                 cola.unshift(solicitudObj);
                 localStorage.setItem("dv_solicitudes_pendientes", JSON.stringify(cola)); try { const bc = new BroadcastChannel("dv_solicitudes_channel"); bc.postMessage("nueva_solicitud"); bc.close(); } catch (err) {}
 
-                document.getElementById("btnEnviarSolicitudPanel").disabled = true;
-                document.getElementById("btnEnviarSolicitudPanel").textContent = "✔ Solicitud Enviada";
+                                const btnEnv = document.getElementById("btnEnviarSolicitudPanel");
+                btnEnv.disabled = true;
+                btnEnv.textContent = "⏳ Enviando al Panel de Control...";
+
+                if (BUZON_NUBE_URL) {
+                    try {
+                        await fetch(BUZON_NUBE_URL, {
+                            method: "POST",
+                            headers: { "Content-Type": "text/plain;charset=utf-8" },
+                            body: JSON.stringify(solicitudObj)
+                        });
+                    } catch (errNube) {
+                        console.warn("Respaldo local usado; error enviando a nube:", errNube);
+                    }
+                }
+
+                btnEnv.textContent = "✔ Solicitud Enviada";
                 const boxConf = document.getElementById("confirmacionEnvioPanel");
                 if (boxConf) boxConf.style.display = "block";
 
