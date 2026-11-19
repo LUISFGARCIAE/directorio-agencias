@@ -337,12 +337,12 @@
         </section>
     </main>
 
-    <!-- Modal Simulación de Cobro con Tarjeta (Crédito / Débito) -->
+    <!-- Modal  con Tarjeta (Crédito / Débito) -->
     <div id="checkoutTarjetaModal" class="modal-backdrop">
         <div class="modal-card" style="max-width: 470px;">
             <button type="button" class="modal-close" id="btnCerrarModalPago">✕</button>
             <div style="display:flex; align-items:center; justify-content:space-between; gap:0.5rem; margin-bottom:0.6rem; padding-right:1.8rem;">
-                <span style="background:#009ee3; color:#fff; font-size:0.74rem; font-weight:800; padding:0.25rem 0.65rem; border-radius:0.4rem;">SIMULACIÓN DE COBRO</span>
+                
                 <span style="font-size:0.74rem; font-weight:700; color:var(--text-soft);">VISA &bull; MC &bull; AMEX</span>
             </div>
             <h3 style="font-size: 1.25rem; color: var(--secondary); margin-bottom: 0.25rem;">💳 Pago con Tarjeta de Crédito o Débito</h3>
@@ -508,7 +508,20 @@
             const modal = document.getElementById("modalPago");
             if (!modal) return;
 
-            const linkMp = obtenerLinkMercadoPagoPorPlan(cfg, planTexto);
+            // Ocultar cualquier badge o texto residual de simulacion dentro del modal
+            modal.querySelectorAll("span, div, p").forEach(el => {
+                const txt = (el.textContent || "").trim();
+                if (/^SIMULACI[ÓO]N DE COBRO$/i.test(txt) || /Simulaci[oó]n de prueba segura/i.test(txt)) {
+                    el.style.display = "none";
+                }
+            });
+
+            const esDest = /destac/i.test(String(planTexto || ""));
+            const rawLink = esDest
+                ? (p.mpLinkDestacado || p.mpLinkEstandar || "https://www.mercadopago.com.mx/")
+                : (p.mpLinkEstandar || p.mpLinkDestacado || "https://www.mercadopago.com.mx/");
+            const linkMp = /^https?:\/\//i.test(String(rawLink || "").trim()) ? String(rawLink).trim() : "https://www.mercadopago.com.mx/";
+
             const banco = p.speiBanco || "Mercado Pago / STP";
             const clabe = p.speiClabe || "0000 0000 0000 0000 00";
             const benef = p.speiBeneficiario || "Directorio Viajero México";
@@ -517,41 +530,51 @@
             if (!cajaDobleVia) {
                 cajaDobleVia = document.createElement("div");
                 cajaDobleVia.id = "dvMetodosCobroReales";
-                cajaDobleVia.style.cssText = "margin:0.85rem 0 1rem; padding:0.9rem; border-radius:10px; border:1px solid rgba(148,163,184,0.35); background:rgba(15,23,42,0.55); color:#e2e8f0; font-size:0.9rem;";
-                const cuerpoModal = modal.querySelector("form") || modal.querySelector(".modal-body") || modal;
-                cuerpoModal.insertBefore(cajaDobleVia, cuerpoModal.firstChild);
+                cajaDobleVia.style.cssText = "margin:0.85rem 0 1rem; padding:0.9rem; border-radius:10px; border:1px solid rgba(148,163,184,0.35); background:rgba(15,23,42,0.65); color:#e2e8f0; font-size:0.88rem;";
+                const tarjetaPlan = Array.from(modal.querySelectorAll("div")).find(d => /PLAN ELEGIDO/i.test(d.textContent || "") && d.children.length >= 2);
+                if (tarjetaPlan && tarjetaPlan.parentNode) {
+                    tarjetaPlan.parentNode.insertBefore(cajaDobleVia, tarjetaPlan.nextSibling);
+                } else {
+                    const primerHijo = modal.firstElementChild && modal.firstElementChild.children.length > 1
+                        ? modal.firstElementChild
+                        : modal;
+                    primerHijo.appendChild(cajaDobleVia);
+                }
             }
 
             cajaDobleVia.innerHTML = `
-                <div style="font-weight:700; margin-bottom:0.6rem; color:#38bdf8;">Selecciona cómo realizarás tu pago:</div>
-                <div style="display:flex; flex-wrap:wrap; gap:0.75rem; margin-bottom:0.75rem;">
-                    <label style="display:inline-flex; align-items:center; gap:0.4rem; cursor:pointer; font-weight:600;">
+                <div style="font-weight:700; margin-bottom:0.55rem; color:#38bdf8;">Selecciona tu vía de pago:</div>
+                <div style="display:flex; flex-wrap:wrap; gap:0.85rem; margin-bottom:0.7rem;">
+                    <label style="display:inline-flex; align-items:center; gap:0.35rem; cursor:pointer; font-weight:600;">
                         <input type="radio" name="metodoCobroReal" id="rbCobroMP" value="Mercado Pago" checked>
                         <span>💳 Mercado Pago</span>
                     </label>
-                    <label style="display:inline-flex; align-items:center; gap:0.4rem; cursor:pointer; font-weight:600;">
+                    <label style="display:inline-flex; align-items:center; gap:0.35rem; cursor:pointer; font-weight:600;">
                         <input type="radio" name="metodoCobroReal" id="rbCobroSPEI" value="Transferencia SPEI">
                         <span>🏦 Transferencia SPEI</span>
                     </label>
                 </div>
-                <div id="panelCobroMP" style="padding:0.65rem; border-radius:8px; background:rgba(0,158,227,0.12); border:1px solid rgba(0,158,227,0.35); margin-bottom:0.65rem;">
-                    <div style="margin-bottom:0.45rem;">Abre el checkout oficial de Mercado Pago para tu plan:</div>
+                <div id="panelCobroMP" style="padding:0.65rem; border-radius:8px; background:rgba(0,158,227,0.14); border:1px solid rgba(0,158,227,0.4); margin-bottom:0.65rem;">
+                    <div style="margin-bottom:0.45rem;">Realiza el cobro en tu enlace de Mercado Pago:</div>
                     <a id="enlaceCheckoutMP" href="${linkMp}" target="_blank" rel="noopener noreferrer"
-                       style="display:inline-block; background:#009ee3; color:#fff; font-weight:700; text-decoration:none; padding:0.45rem 0.85rem; border-radius:6px;">
-                        ↗ Ir a pagar en Mercado Pago
+                       style="display:inline-block; background:#009ee3; color:#fff; font-weight:700; text-decoration:none; padding:0.42rem 0.85rem; border-radius:6px;">
+                        ↗ Abrir Mercado Pago
                     </a>
                 </div>
-                <div id="panelCobroSPEI" style="display:none; padding:0.65rem; border-radius:8px; background:rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.35); margin-bottom:0.65rem;">
+                <div id="panelCobroSPEI" style="display:none; padding:0.65rem; border-radius:8px; background:rgba(16,185,129,0.14); border:1px solid rgba(16,185,129,0.4); margin-bottom:0.65rem;">
                     <div><strong>Banco:</strong> <span id="lblSpeiBanco">${banco}</span></div>
-                    <div><strong>CLABE:</strong> <span id="lblSpeiClabe" style="font-family:monospace; user-select:all;">${clabe}</span> <button type="button" id="btnCopiarClabeSpei" onclick="copiarClabeSpei(this)" style="margin-left:0.4rem; padding:0.2rem 0.55rem; font-size:0.78rem; font-weight:700; border-radius:6px; border:1px solid rgba(16,185,129,0.5); background:rgba(16,185,129,0.22); color:#ecfdf5; cursor:pointer;">📋 Copiar CLABE</button></div>
-                    <div><strong>Beneficiario:</strong> <span id="lblSpeiBenef">${benef}</span></div>
+                    <div style="margin-top:0.25rem;">
+                        <strong>CLABE:</strong> <span id="lblSpeiClabe" style="font-family:monospace; user-select:all;">${clabe}</span>
+                        <button type="button" id="btnCopiarClabeSpei" onclick="copiarClabeSpei(this)" style="margin-left:0.4rem; padding:0.2rem 0.55rem; font-size:0.76rem; font-weight:700; border-radius:6px; border:1px solid rgba(16,185,129,0.55); background:rgba(16,185,129,0.25); color:#ecfdf5; cursor:pointer;">📋 Copiar CLABE</button>
+                    </div>
+                    <div style="margin-top:0.25rem;"><strong>Beneficiario:</strong> <span id="lblSpeiBenef">${benef}</span></div>
                 </div>
                 <div>
                     <label for="inputComprobanteCobroReal" style="display:block; font-weight:600; margin-bottom:0.3rem;">
-                        Folio / Clave de rastreo o comprobante de pago:
+                        Folio de operación MP o clave de rastreo SPEI:
                     </label>
                     <input type="text" id="inputComprobanteCobroReal" placeholder="Ej. MP-98451230 o clave SPEI"
-                           style="width:100%; padding:0.5rem 0.65rem; border-radius:6px; border:1px solid #475569; background:#0f172a; color:#f8fafc;">
+                           style="width:100%; padding:0.48rem 0.65rem; border-radius:6px; border:1px solid #475569; background:#0f172a; color:#f8fafc;">
                 </div>
             `;
 
