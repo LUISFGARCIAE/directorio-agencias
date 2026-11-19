@@ -72,11 +72,11 @@
     "pagosB2B":  {
                      "mostrarModuloPagos":  true,
                      "modoDemoVisual":  true,
-                     "mpLinkEstandar":  "https://www.mercadopago.com.mx/",
-                     "mpLinkDestacado":  "https://www.mercadopago.com.mx/",
                      "speiBanco":  "Mercado Pago / STP",
                      "speiClabe":  "0000 0000 0000 0000 00",
-                     "speiBeneficiario":  "Directorio Viajero México"
+                     "speiBeneficiario":  "Directorio Viajero México",
+                     "mpLinkEstandar":  "https://mpago.la/1nyBEsB",
+                     "mpLinkDestacado":  "https://mpago.la/1nyBEsB"
                  },
     "revistaEditorial":  {
                              "disclaimerTexto":  "Promocionamos los servicios, paquetes y promociones de anunciantes en México. Todas las cotizaciones y pagos se realizan directamente con cada proveedor.",
