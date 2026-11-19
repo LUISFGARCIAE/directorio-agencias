@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/styles.css?v=20261117">
+    <link rel="stylesheet" href="../css/styles.css?v=20261118spei">
 </head>
 <body>
 
@@ -228,7 +228,7 @@
         </div>
     </footer>
 
-    <script src="../js/app.js?v=20261117b2b"></script>
+    <script src="../js/app.js?v=20261118spei"></script>
     <script>
                 let CORREO_DESTINO = "tu-correo@gmail.com";
         let WHATSAPP_ADMIN = "525500000000";
@@ -502,7 +502,65 @@
         let MP_LINK_DESTACADO = "https://www.mercadopago.com.mx";
         let ACCION_ENVIO_PENDIENTE = null;
 
+                function seleccionarMetodoCheckout(metodo) {
+            const formTarjeta = document.getElementById('formPagoTarjeta');
+            const formSpei = document.getElementById('formPagoSpei');
+            const btnT = document.getElementById('btnTabPagoTarjeta');
+            const btnS = document.getElementById('btnTabPagoSpei');
+            const esTarjeta = metodo === 'tarjeta';
+
+            if (formTarjeta) formTarjeta.style.display = esTarjeta ? 'block' : 'none';
+            if (formSpei) formSpei.style.display = esTarjeta ? 'none' : 'block';
+
+            if (btnT) {
+                btnT.style.border = esTarjeta ? '2px solid #009ee3' : '1px solid var(--border)';
+                btnT.style.background = esTarjeta ? 'rgba(0, 158, 227, 0.12)' : 'var(--bg-muted)';
+                btnT.style.color = esTarjeta ? 'var(--secondary)' : 'var(--text-soft)';
+            }
+            if (btnS) {
+                btnS.style.border = !esTarjeta ? '2px solid var(--primary)' : '1px solid var(--border)';
+                btnS.style.background = !esTarjeta ? 'var(--primary-soft)' : 'var(--bg-muted)';
+                btnS.style.color = !esTarjeta ? 'var(--secondary)' : 'var(--text-soft)';
+            }
+
+            // Sincronizar datos SPEI visibles desde la configuracion cargada
+            const bTxt = document.getElementById('speiBancoTxt');
+            const benTxt = document.getElementById('speiBenefTxt');
+            const clabeTxt = document.getElementById('speiClabeTxt');
+            if (bTxt && document.getElementById('chkSpeiBanco')) document.getElementById('chkSpeiBanco').textContent = bTxt.textContent;
+            if (benTxt && document.getElementById('chkSpeiBenef')) document.getElementById('chkSpeiBenef').textContent = benTxt.textContent;
+            if (clabeTxt && document.getElementById('chkSpeiClabe')) document.getElementById('chkSpeiClabe').textContent = clabeTxt.textContent;
+        }
+
+        function copiarClabeModal() {
+            const clabe = (document.getElementById('chkSpeiClabe')?.textContent || '').replace(/\s+/g, '');
+            if (navigator.clipboard && clabe) {
+                navigator.clipboard.writeText(clabe).then(() => alert('✅ CLABE interbancaria copiada al portapapeles.'));
+            }
+        }
+
+        function procesarSpeiYEnviarSolicitud(e) {
+            e.preventDefault();
+            const ref = document.getElementById('speiReferenciaInput').value.trim();
+            if (ref.length < 4) {
+                alert('Por favor ingresa la clave de rastreo o referencia de tu transferencia SPEI.');
+                return;
+            }
+            const folioSpei = 'SPEI-' + ref.toUpperCase();
+            document.getElementById('checkoutTarjetaModal').classList.remove('open');
+
+            alert(`✅ Transferencia SPEI registrada (Referencia: ${folioSpei})\n\nEnviando tu Solicitud de Alta ahora. Recuerda adjuntar tu comprobante en el chat de WhatsApp.`);
+
+            if (ACCION_ENVIO_PENDIENTE === 'correo' && typeof enviarRegistroCorreoDirecto === 'function') {
+                enviarRegistroCorreoDirecto(folioSpei, 'SPEI');
+            } else if (typeof enviarRegistroWhatsAppDirecto === 'function') {
+                enviarRegistroWhatsAppDirecto(folioSpei, 'SPEI');
+            } else if (typeof enviarRegistroWhatsApp === 'function') {
+                enviarRegistroWhatsApp();
+            }
+        }
         function abrirPasarelaAntesDeEnviar(tipoEnvio) {
+            seleccionarMetodoCheckout('tarjeta');
             const form = document.getElementById('formRegistroAgencia');
             if (form && !form.checkValidity()) {
                 form.reportValidity();
