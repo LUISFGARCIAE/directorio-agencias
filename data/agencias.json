@@ -36,7 +36,7 @@
             "id": "hotel-danys-837",
             "categoria": "viajes",
             "categoriaNombre": "Viajes y Turismo",
-            "nombre": "Hotel DANYS",
+            "nombre": "Hotel roba se la come completa",
             "iniciales": "HO",
             "colorTexto": "#0284c7",
             "colorFondo": "#e0f2fe",
@@ -56,6 +56,8 @@
             "rangoPrecio": "10,000",
             "cuponCodigo": "",
             "cuponBeneficio": "",
+            "galeria": [],
+            "amenidades": [],
             "especialidad": "Viajes y Turismo",
             "descripcion": "Hotel",
             "destinos": [
