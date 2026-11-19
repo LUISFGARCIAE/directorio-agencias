@@ -455,7 +455,82 @@
             if (btn) btn.textContent = actual === "dark" ? "☀️" : "🌙";
         }
 
-        // Funciones del Embudo de Contratacion y Validacion de Pago
+        // Funciones del Embudo de Contratacion y Cobro Mercado Pago + SPEI
+        function obtenerLinkMercadoPagoPorPlan(cfg, planTexto) {
+            const p = cfg && cfg.pagosB2B ? cfg.pagosB2B : {};
+            const esDest = /destac/i.test(String(planTexto || ""));
+            const candidato = esDest
+                ? (p.mpLinkDestacado || p.mpLinkEstandar || "https://www.mercadopago.com.mx/")
+                : (p.mpLinkEstandar || p.mpLinkDestacado || "https://www.mercadopago.com.mx/");
+            return /^https?:\/\//i.test(candidato.trim()) ? candidato.trim() : "https://www.mercadopago.com.mx/";
+        }
+
+        function hidratarOpcionesPagoReales(cfg, planTexto) {
+            const p = cfg && cfg.pagosB2B ? cfg.pagosB2B : {};
+            const modal = document.getElementById("modalPago");
+            if (!modal) return;
+
+            const linkMp = obtenerLinkMercadoPagoPorPlan(cfg, planTexto);
+            const banco = p.speiBanco || "Mercado Pago / STP";
+            const clabe = p.speiClabe || "0000 0000 0000 0000 00";
+            const benef = p.speiBeneficiario || "Directorio Viajero México";
+
+            let cajaDobleVia = document.getElementById("dvMetodosCobroReales");
+            if (!cajaDobleVia) {
+                cajaDobleVia = document.createElement("div");
+                cajaDobleVia.id = "dvMetodosCobroReales";
+                cajaDobleVia.style.cssText = "margin:0.85rem 0 1rem; padding:0.9rem; border-radius:10px; border:1px solid rgba(148,163,184,0.35); background:rgba(15,23,42,0.55); color:#e2e8f0; font-size:0.9rem;";
+                const cuerpoModal = modal.querySelector("form") || modal.querySelector(".modal-body") || modal;
+                cuerpoModal.insertBefore(cajaDobleVia, cuerpoModal.firstChild);
+            }
+
+            cajaDobleVia.innerHTML = `
+                <div style="font-weight:700; margin-bottom:0.6rem; color:#38bdf8;">Selecciona cómo realizarás tu pago:</div>
+                <div style="display:flex; flex-wrap:wrap; gap:0.75rem; margin-bottom:0.75rem;">
+                    <label style="display:inline-flex; align-items:center; gap:0.4rem; cursor:pointer; font-weight:600;">
+                        <input type="radio" name="metodoCobroReal" id="rbCobroMP" value="Mercado Pago" checked>
+                        <span>💳 Mercado Pago</span>
+                    </label>
+                    <label style="display:inline-flex; align-items:center; gap:0.4rem; cursor:pointer; font-weight:600;">
+                        <input type="radio" name="metodoCobroReal" id="rbCobroSPEI" value="Transferencia SPEI">
+                        <span>🏦 Transferencia SPEI</span>
+                    </label>
+                </div>
+                <div id="panelCobroMP" style="padding:0.65rem; border-radius:8px; background:rgba(0,158,227,0.12); border:1px solid rgba(0,158,227,0.35); margin-bottom:0.65rem;">
+                    <div style="margin-bottom:0.45rem;">Abre el checkout oficial de Mercado Pago para tu plan:</div>
+                    <a id="enlaceCheckoutMP" href="${linkMp}" target="_blank" rel="noopener noreferrer"
+                       style="display:inline-block; background:#009ee3; color:#fff; font-weight:700; text-decoration:none; padding:0.45rem 0.85rem; border-radius:6px;">
+                        ↗ Ir a pagar en Mercado Pago
+                    </a>
+                </div>
+                <div id="panelCobroSPEI" style="display:none; padding:0.65rem; border-radius:8px; background:rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.35); margin-bottom:0.65rem;">
+                    <div><strong>Banco:</strong> <span id="lblSpeiBanco">${banco}</span></div>
+                    <div><strong>CLABE:</strong> <span id="lblSpeiClabe" style="font-family:monospace; user-select:all;">${clabe}</span></div>
+                    <div><strong>Beneficiario:</strong> <span id="lblSpeiBenef">${benef}</span></div>
+                </div>
+                <div>
+                    <label for="inputComprobanteCobroReal" style="display:block; font-weight:600; margin-bottom:0.3rem;">
+                        Folio / Clave de rastreo o comprobante de pago:
+                    </label>
+                    <input type="text" id="inputComprobanteCobroReal" placeholder="Ej. MP-98451230 o clave SPEI"
+                           style="width:100%; padding:0.5rem 0.65rem; border-radius:6px; border:1px solid #475569; background:#0f172a; color:#f8fafc;">
+                </div>
+            `;
+
+            const rbMp = document.getElementById("rbCobroMP");
+            const rbSpei = document.getElementById("rbCobroSPEI");
+            const pMp = document.getElementById("panelCobroMP");
+            const pSpei = document.getElementById("panelCobroSPEI");
+
+            function alternarPanel() {
+                const esSpei = rbSpei && rbSpei.checked;
+                if (pMp) pMp.style.display = esSpei ? "none" : "block";
+                if (pSpei) pSpei.style.display = esSpei ? "block" : "none";
+            }
+
+            if (rbMp) rbMp.addEventListener("change", alternarPanel);
+            if (rbSpei) rbSpei.addEventListener("change", alternarPanel);
+        }
         function validarAlgoritmoLuhn(numLimpio) {
             if (!/^\d{13,19}$/.test(numLimpio)) return false;
             let suma = 0;
