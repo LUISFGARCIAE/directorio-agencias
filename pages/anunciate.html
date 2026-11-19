@@ -465,6 +465,44 @@
             return /^https?:\/\//i.test(candidato.trim()) ? candidato.trim() : "https://www.mercadopago.com.mx/";
         }
 
+                async function copiarClabeSpei(btnEl) {
+            const spanClabe = document.getElementById("lblSpeiClabe");
+            const textoClabe = spanClabe ? spanClabe.textContent.trim() : "";
+            if (!textoClabe) return;
+
+            let copiado = false;
+            if (navigator.clipboard && window.isSecureContext) {
+                try {
+                    await navigator.clipboard.writeText(textoClabe);
+                    copiado = true;
+                } catch (e) {}
+            }
+            if (!copiado) {
+                const aux = document.createElement("textarea");
+                aux.value = textoClabe;
+                aux.setAttribute("readonly", "");
+                aux.style.position = "fixed";
+                aux.style.opacity = "0";
+                document.body.appendChild(aux);
+                aux.select();
+                try {
+                    copiado = document.execCommand("copy");
+                } catch (e) {
+                    copiado = false;
+                }
+                document.body.removeChild(aux);
+            }
+
+            if (btnEl) {
+                const textoOriginal = btnEl.dataset.labelOriginal || btnEl.textContent;
+                btnEl.dataset.labelOriginal = textoOriginal;
+                btnEl.textContent = copiado ? "✅ Copiada" : "⚠️ Selecciona la CLABE";
+                setTimeout(() => {
+                    btnEl.textContent = textoOriginal;
+                }, 1800);
+            }
+        }
+
         function hidratarOpcionesPagoReales(cfg, planTexto) {
             const p = cfg && cfg.pagosB2B ? cfg.pagosB2B : {};
             const modal = document.getElementById("modalPago");
@@ -505,7 +543,7 @@
                 </div>
                 <div id="panelCobroSPEI" style="display:none; padding:0.65rem; border-radius:8px; background:rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.35); margin-bottom:0.65rem;">
                     <div><strong>Banco:</strong> <span id="lblSpeiBanco">${banco}</span></div>
-                    <div><strong>CLABE:</strong> <span id="lblSpeiClabe" style="font-family:monospace; user-select:all;">${clabe}</span></div>
+                    <div><strong>CLABE:</strong> <span id="lblSpeiClabe" style="font-family:monospace; user-select:all;">${clabe}</span> <button type="button" id="btnCopiarClabeSpei" onclick="copiarClabeSpei(this)" style="margin-left:0.4rem; padding:0.2rem 0.55rem; font-size:0.78rem; font-weight:700; border-radius:6px; border:1px solid rgba(16,185,129,0.5); background:rgba(16,185,129,0.22); color:#ecfdf5; cursor:pointer;">📋 Copiar CLABE</button></div>
                     <div><strong>Beneficiario:</strong> <span id="lblSpeiBenef">${benef}</span></div>
                 </div>
                 <div>
