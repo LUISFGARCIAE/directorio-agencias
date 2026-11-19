@@ -9,7 +9,7 @@
     <title>Directorio Viajero | Revista Publicitaria de Viajes, Hoteles y Eventos en México</title>
     <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
     <meta name="description" content="Revista publicitaria de viajes, hoteles, quintas, bodas, restaurantes, transporte y experiencias en México. Consulta tarifas, duración, promociones, fotos y tipos de cobro directo con cada anunciante.">
-    <link rel="stylesheet" href="css/styles.css?v=20261119nav">
+    <link rel="stylesheet" href="css/styles.css?v=20261119darkonly">
 </head>
 <body>
     <!-- Barra Promocional Superior -->
@@ -27,12 +27,7 @@
             <a href="#seccionGuias">Guías</a>
             <a href="#contacto" onclick="abrirModalContacto(event)">📞 Contacto</a>
             <a href="pages/anunciate.html" class="btn-action btn-primary" style="padding: 0.45rem 0.9rem; font-size: 0.84rem; color:#fff;">📢 Anúnciate</a>
-            <div class="theme-switcher">
-                <button type="button" class="theme-dot" style="background:#0284c7" onclick="cambiarTemaColor('oceano')" title="Océano"></button>
-                <button type="button" class="theme-dot" style="background:#e11d48" onclick="cambiarTemaColor('bodas')" title="Bodas"></button>
-                <button type="button" class="theme-dot" style="background:#059669" onclick="cambiarTemaColor('natura')" title="Natura"></button>
-                <button type="button" class="dark-toggle" id="btnDarkMode" onclick="toggleModoOscuro()">🌙</button>
-            </div>
+            <button type="button" class="dark-toggle" id="btnDarkMode" onclick="toggleModoOscuro()" title="Cambiar modo claro / oscuro">🌙</button>
         </nav>
     </header>
 
