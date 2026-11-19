@@ -121,102 +121,18 @@
         .btn-mercadopago:hover {
             background: #0082bd;
         }
-    
-/* === RESPONSIVE MOVIL REFINADO === */
-html, body {
-    max-width: 100%;
-    overflow-x: hidden;
-}
-*, *::before, *::after {
-    box-sizing: border-box;
-}
-img, svg, video {
-    max-width: 100%;
-    height: auto;
-}
-
+    /* === RESPONSIVE MOVIL LIMPIO === */
+html, body { max-width: 100%; overflow-x: hidden; }
 @media (max-width: 768px) {
-    /* Encabezado y navegacion compactos */
-    header, .navbar, .top-bar {
-        padding: 0.65rem 0.9rem !important;
-        gap: 0.5rem !important;
-    }
-    header nav, .nav-links, .menu-links, .header-actions {
-        display: flex !important;
+    .nav-container, .top-nav, header nav {
         flex-wrap: wrap !important;
-        align-items: center !important;
-        gap: 0.4rem !important;
-        width: 100%;
-    }
-    header nav a, header nav button, .nav-links a, .nav-links button, .header-actions a, .header-actions button {
-        width: auto !important;
-        flex: 0 1 auto !important;
-        padding: 0.42rem 0.72rem !important;
-        font-size: 0.82rem !important;
-        border-radius: 8px;
-        white-space: nowrap;
-    }
-
-    /* Pestanas del Panel Maestro deslizables horizontalmente sin apilarse en exceso */
-    .tabs, .nav-tabs {
-        display: flex !important;
-        flex-wrap: nowrap !important;
-        overflow-x: auto !important;
-        -webkit-overflow-scrolling: touch;
         gap: 0.45rem !important;
-        padding-bottom: 0.35rem;
-        scrollbar-width: thin;
     }
-    .tabs button, .nav-tabs button {
-        flex: 0 0 auto !important;
-        white-space: nowrap !important;
-        font-size: 0.84rem !important;
-        padding: 0.5rem 0.8rem !important;
-    }
-
-    /* Contenedores principales y rejillas de tarjetas */
-    main, .container, .main-content, .wrapper {
-        padding-left: 0.85rem !important;
-        padding-right: 0.85rem !important;
-    }
-    .catalogo-grid, .agencias-grid, .ofertas-grid, .planes-grid, .cards-grid, .form-grid {
+    .plans-grid, .register-grid, .cards-grid, .catalogo-grid, .agencias-grid {
         grid-template-columns: 1fr !important;
-        gap: 0.9rem !important;
     }
-
-    /* Inputs a 16px para evitar zoom automatico en iOS/Android */
-    input[type="text"], input[type="email"], input[type="tel"], input[type="url"], input[type="password"], input[type="number"], select, textarea {
-        font-size: 16px !important;
-    }
-
-    /* Modal de pago comodo en pantalla de celular */
-    #modalPago {
-        padding: 0.6rem !important;
-        align-items: flex-start !important;
-        overflow-y: auto !important;
-    }
-    #modalPago > div {
-        width: 100% !important;
-        max-width: 100% !important;
-        margin: 0.5rem auto !important;
-        padding: 1rem !important;
-        border-radius: 14px !important;
-    }
-    #dvBloqueCobroCompleto {
-        padding: 0.75rem !important;
-        font-size: 0.85rem !important;
-    }
-    #btnCopiarClabeSpei {
-        display: inline-block !important;
-        margin-top: 0.35rem !important;
-        margin-left: 0 !important;
-    }
-}
-
-@media (max-width: 420px) {
-    h1 { font-size: 1.35rem !important; line-height: 1.25 !important; }
-    h2 { font-size: 1.15rem !important; line-height: 1.28 !important; }
-    h3 { font-size: 1.02rem !important; }
+    input, select, textarea { font-size: 16px !important; }
+    .modal-card { width: 95vw !important; padding: 1.15rem !important; }
 }
 </style>
 </head>
@@ -434,87 +350,82 @@ img, svg, video {
         </section>
     </main>
 
-    <!-- Modal  con Tarjeta (Crédito / Débito) -->
+        <!-- Modal de Pago Real (Mercado Pago Checkout Pro / Link Directo / SPEI) -->
     <div id="checkoutTarjetaModal" class="modal-backdrop">
-        <div class="modal-card" style="max-width: 470px;">
+        <div class="modal-card" style="max-width: 490px; max-height: 92vh; overflow-y: auto;">
             <button type="button" class="modal-close" id="btnCerrarModalPago">✕</button>
             <div style="display:flex; align-items:center; justify-content:space-between; gap:0.5rem; margin-bottom:0.6rem; padding-right:1.8rem;">
-                
-                <span style="font-size:0.74rem; font-weight:700; color:var(--text-soft);">VISA &bull; MC &bull; AMEX</span>
+                <span style="background:#009ee3; color:#fff; font-size:0.74rem; font-weight:800; padding:0.25rem 0.65rem; border-radius:0.4rem;">PAGO SEGURO</span>
+                <span style="font-size:0.74rem; font-weight:700; color:var(--text-soft);">MERCADO PAGO &bull; SPEI</span>
             </div>
-            <h3 style="font-size: 1.25rem; color: var(--secondary); margin-bottom: 0.25rem;">💳 Pago por Mercado Libre / Mercado Pago o SPEI</h3>
-            <p style="font-size: 0.82rem; color: var(--text-soft); margin-bottom: 0.9rem;">Elige Mercado Libre / Mercado Pago o Transferencia SPEI. Tras pagar, envía tu comprobante por WhatsApp para continuar y habilitar el formulario de ingreso.</p>
+            <h3 style="font-size: 1.22rem; color: var(--secondary); margin-bottom: 0.25rem;">💳 Completa tu Pago para Activar el Alta</h3>
+            <p style="font-size: 0.82rem; color: var(--text-soft); margin-bottom: 0.85rem;">Elige Mercado Pago o Transferencia SPEI. Tras realizar tu pago, envía tu comprobante por WhatsApp para continuar y habilitar tu formulario.</p>
 
-            <div style="background: var(--bg-muted); border: 1px solid var(--border); border-radius: 0.75rem; padding: 0.8rem 1rem; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
+            <div style="background: var(--bg-muted); border: 1px solid var(--border); border-radius: 0.75rem; padding: 0.75rem 1rem; margin-bottom: 0.9rem; display: flex; justify-content: space-between; align-items: center;">
                 <div>
                     <div style="font-size: 0.72rem; color: var(--text-soft); font-weight: 700;">PLAN ELEGIDO</div>
                     <strong id="chkPlanNombre" style="font-size: 0.96rem; color: var(--secondary);">Plan Destacado</strong>
                 </div>
                 <div style="text-align: right;">
                     <div style="font-size: 0.72rem; color: var(--text-soft); font-weight: 700;">MONTO A COBRAR</div>
-                    <strong id="chkPlanMonto" style="font-size: 1.2rem; color: #009ee3;">$499 MXN</strong>
+                    <strong id="chkPlanMonto" style="font-size: 1.18rem; color: #009ee3;">$499 MXN</strong>
                 </div>
             </div>
 
             <form id="formPagoTarjeta">
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem;">
+                <div style="display:flex; flex-wrap:wrap; gap:0.85rem; margin-bottom:0.75rem; font-size:0.86rem;">
+                    <label style="display:inline-flex; align-items:center; gap:0.35rem; cursor:pointer; font-weight:700; color:var(--secondary);">
+                        <input type="radio" name="metodoPagoReal" id="rbPagoMP" value="Mercado Pago" checked onchange="alternarMetodoPagoModal()">
+                        <span>🛒 Mercado Pago / Mercado Libre</span>
+                    </label>
+                    <label style="display:inline-flex; align-items:center; gap:0.35rem; cursor:pointer; font-weight:700; color:var(--secondary);">
+                        <input type="radio" name="metodoPagoReal" id="rbPagoSPEI" value="Transferencia SPEI" onchange="alternarMetodoPagoModal()">
+                        <span>🏦 Transferencia SPEI</span>
+                    </label>
+                </div>
+
+                <div id="bloqueMetodoMP" style="background:var(--bg-muted); border:1px solid var(--border); border-radius:0.7rem; padding:0.75rem; margin-bottom:0.75rem;">
+                    <div style="font-size:0.8rem; color:var(--text-soft); margin-bottom:0.5rem;">Opción automática (regresa solo y abre tu formulario al aprobarse) o enlace directo:</div>
+                    <div style="display:flex; flex-wrap:wrap; gap:0.5rem;">
+                        <button type="button" id="btnCheckoutAutoMP" onclick="iniciarCheckoutProMP(this)" style="flex:1 1 210px; background:#10b981; color:#052e16; font-weight:800; border:none; border-radius:0.55rem; padding:0.58rem 0.8rem; font-size:0.84rem; cursor:pointer;">
+                            ⚡ Pagar con Checkout Automático
+                        </button>
+                        <a id="enlaceDirectoMP" href="https://mpago.la/1nyBEsB" target="_blank" rel="noopener noreferrer" style="flex:1 1 170px; text-align:center; background:#009ee3; color:#fff; font-weight:700; text-decoration:none; border-radius:0.55rem; padding:0.58rem 0.8rem; font-size:0.84rem;">
+                            ↗ Link Directo MP
+                        </a>
                     </div>
-                <div id="dvBloqueCobroCompleto" style="margin:0.85rem 0 1rem; padding:0.9rem; border-radius:10px; border:1px solid rgba(56,189,248,0.45); background:rgba(15,23,42,0.78); color:#f1f5f9; font-size:0.88rem; text-align:left;">
-    <div style="font-weight:700; color:#38bdf8; margin-bottom:0.55rem;">Selecciona cómo realizarás tu pago:</div>
-    <div style="display:flex; flex-wrap:wrap; gap:0.75rem; margin-bottom:0.7rem;">
-        <label style="display:inline-flex; align-items:center; gap:0.35rem; cursor:pointer; font-weight:600;">
-            <input type="radio" name="viaCobroDirecto" id="viaML" value="Mercado Libre / Mercado Pago" checked onchange="dvCambiarViaCobro()">
-            <span>🛒 Mercado Libre / Mercado Pago</span>
-        </label>
-        <label style="display:inline-flex; align-items:center; gap:0.35rem; cursor:pointer; font-weight:600;">
-            <input type="radio" name="viaCobroDirecto" id="viaSPEI" value="Transferencia SPEI" onchange="dvCambiarViaCobro()">
-            <span>🏦 Transferencia SPEI</span>
-        </label>
-    </div>
+                </div>
 
-    <div id="boxViaML" style="padding:0.65rem; border-radius:8px; background:rgba(0,158,227,0.15); border:1px solid rgba(0,158,227,0.45); margin-bottom:0.7rem;">
-        <div style="margin-bottom:0.45rem;">Abre el enlace o ventana de pago de Mercado Libre / Mercado Pago:</div>
-        <a id="linkCobroExternoML" href="https://mpago.la/1nyBEsB" target="_blank" rel="noopener noreferrer"
-           style="display:inline-block; background:#009ee3; color:#fff; font-weight:700; text-decoration:none; padding:0.45rem 0.85rem; border-radius:6px;">
-            ↗ Ir a Mercado Libre / Mercado Pago
-        </a>
-    </div>
+                <div id="bloqueMetodoSPEI" style="display:none; background:var(--bg-muted); border:1px solid var(--border); border-radius:0.7rem; padding:0.75rem; margin-bottom:0.75rem; font-size:0.83rem;">
+                    <div><strong>Banco:</strong> <span id="modalSpeiBanco">Mercado Pago / STP</span></div>
+                    <div style="margin-top:0.3rem;">
+                        <strong>CLABE:</strong> <span id="modalSpeiClabe" style="font-family:monospace; user-select:all;">0000 0000 0000 0000 00</span>
+                        <button type="button" id="btnCopiarClabeModal" onclick="copiarClabeSpeiModal(this)" style="margin-left:0.35rem; padding:0.22rem 0.55rem; font-size:0.76rem; font-weight:700; border-radius:0.45rem; border:1px solid #10b981; background:#dcfce7; color:#166534; cursor:pointer;">📋 Copiar CLABE</button>
+                    </div>
+                    <div style="margin-top:0.3rem;"><strong>Beneficiario:</strong> <span id="modalSpeiBenef">Directorio Viajero México</span></div>
+                </div>
 
-    <div id="boxViaSPEI" style="display:none; padding:0.65rem; border-radius:8px; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.45); margin-bottom:0.7rem;">
-        <div><strong>Banco:</strong> <span id="lblSpeiBanco">Mercado Pago / STP</span></div>
-        <div style="margin-top:0.25rem;">
-            <strong>CLABE:</strong> <span id="lblSpeiClabe" style="font-family:monospace; user-select:all;">0000 0000 0000 0000 00</span>
-            <button type="button" id="btnCopiarClabeSpei" onclick="copiarClabeSpei(this)" style="margin-left:0.4rem; padding:0.2rem 0.55rem; font-size:0.76rem; font-weight:700; border-radius:6px; border:1px solid rgba(16,185,129,0.55); background:rgba(16,185,129,0.25); color:#ecfdf5; cursor:pointer;">📋 Copiar CLABE</button>
-        </div>
-        <div style="margin-top:0.25rem;"><strong>Beneficiario:</strong> <span id="lblSpeiBenef">Directorio Viajero México</span></div>
-    </div>
+                <div style="background:#fef9c3; border:1px solid #facc15; color:#713f12; border-radius:0.7rem; padding:0.65rem 0.75rem; font-size:0.8rem; line-height:1.4; margin-bottom:0.75rem;">
+                    <strong>📲 Envío de comprobante por WhatsApp:</strong> Una vez realizado tu pago, envía el comprobante al WhatsApp de contacto (<strong id="modalWaNum">525652415593</strong>) para validar tu solicitud y continuar con el formulario de ingreso.
+                    <div style="margin-top:0.4rem;">
+                        <a id="modalBtnWaComprobante" href="https://wa.me/525652415593" target="_blank" rel="noopener noreferrer" style="display:inline-block; background:#16a34a; color:#fff; font-weight:700; text-decoration:none; padding:0.35rem 0.7rem; border-radius:0.45rem; font-size:0.78rem;">
+                            💬 Mandar comprobante por WhatsApp
+                        </a>
+                    </div>
+                </div>
 
-    <div id="avisoComprobanteWhatsApp" style="padding:0.65rem; border-radius:8px; background:rgba(250,204,21,0.14); border:1px solid rgba(250,204,21,0.45); color:#fef08a; margin-bottom:0.7rem; line-height:1.38;">
-        <strong>📲 Comprobante obligatorio por WhatsApp:</strong> Una vez realizado el pago, manda tu comprobante al WhatsApp de contacto (<strong id="lblWaContacto">525652415593</strong>) para continuar con tu solicitud y que se te otorgue el formulario de ingreso a la plataforma.
-        <div style="margin-top:0.45rem;">
-            <a id="linkWaComprobante" href="https://wa.me/525652415593?text=Hola%2C%20realiz%C3%A9%20el%20pago%20y%20env%C3%ADo%20mi%20comprobante%20para%20continuar%20con%20la%20solicitud%20y%20el%20formulario%20de%20ingreso." target="_blank" rel="noopener noreferrer"
-               style="display:inline-block; background:#16a34a; color:#fff; font-weight:700; text-decoration:none; padding:0.35rem 0.7rem; border-radius:6px; font-size:0.82rem;">
-                💬 Mandar comprobante por WhatsApp
-            </a>
-        </div>
-    </div>
+                <div class="form-group" style="margin-bottom:0.8rem;">
+                    <label for="inputReferenciaPago">Folio de Operación MP o Clave de Rastreo SPEI *</label>
+                    <input type="text" id="inputReferenciaPago" maxlength="45" placeholder="Ej. 14982345612 o clave SPEI">
+                </div>
 
-    <div>
-        <label for="inputFolioCobroExterno" style="display:block; font-weight:600; margin-bottom:0.3rem;">
-            Folio / Clave de rastreo o comprobante:
-        </label>
-        <input type="text" id="inputFolioCobroExterno" placeholder="Ej. ML-984512 o clave SPEI"
-               style="width:100%; padding:0.48rem 0.65rem; border-radius:6px; border:1px solid #475569; background:#0f172a; color:#f8fafc;">
-    </div>
-</div>
-<button type="button" onclick="(function(){ const sp=document.getElementById(\x27viaSPEI\x27)?.checked; const via=sp?\x27Transferencia SPEI\x27:\x27Mercado Libre / Mercado Pago\x27; const fol=(document.getElementById(\x27inputFolioCobroExterno\x27)?.value||\x27\x27).trim().toUpperCase(); const wa=(document.getElementById(\x27lblWaContacto\x27)?.textContent||\x27525652415593\x27).trim(); if(!window._mlAbierto && via===\x27Mercado Libre / Mercado Pago\x27){ window._mlAbierto=true; const hrefMl=document.getElementById(\x27linkCobroExternoML\x27)?.href||\x27https://mpago.la/1nyBEsB\x27; window.open(hrefMl,\x27_blank\x27,\x27noopener,noreferrer\x27); alert(\x27Se abrió Mercado Libre / Mercado Pago para realizar el pago.\\n\\nUna vez realizado el pago, manda tu comprobante al WhatsApp +\x27 + wa + \x27 para continuar con la solicitud y dar el formulario de ingreso.\x27); return; } if(!/^[A-Z0-9\\-]{5,40}$/.test(fol)){ alert(\x27Ingresa el folio/referencia de tu pago y recuerda mandar tu comprobante al WhatsApp +\x27 + wa + \x27 para continuar con la solicitud y abrir el formulario de ingreso.\x27); return; } window.METODO_PAGO_VALIDADO=via; window.REFERENCIA_PAGO_VALIDADA=fol; if(typeof FOLIO_AUTORIZADO!==\x27undefined\x27) FOLIO_AUTORIZADO=fol; if(typeof TERMINACION_TARJETA!==\x27undefined\x27) TERMINACION_TARJETA=fol.slice(-4); })()" type="submit" class="btn-mercadopago" style="width: 100%; padding: 0.85rem; font-size: 0.95rem;">
-                    🔒 Autorizar Pago y Abrir Formulario de Registro
+                <button type="submit" class="btn-mercadopago" style="width: 100%; padding: 0.85rem; font-size: 0.94rem;">
+                    🔓 Confirmar Folio y Abrir Formulario de Registro
                 </button>
-                </form>
+            </form>
         </div>
     </div>
-
-        <!-- Modal Pop-up de Contratacion Exitosa -->
+<!-- Modal Pop-up de Contratacion Exitosa -->
     <div id="modalContratacionExitosa" class="modal-backdrop">
         <div class="modal-card" style="max-width: 450px; text-align: center; padding: 2rem 1.75rem;">
             <div style="width: 64px; height: 64px; border-radius: 9999px; background: #dcfce7; color: #16a34a; font-size: 2rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
@@ -584,330 +495,7 @@ img, svg, video {
             if (btn) btn.textContent = actual === "dark" ? "☀️" : "🌙";
         }
 
-        // Funciones del Embudo de Contratacion y Cobro Mercado Pago + SPEI
-        function obtenerWhatsappContacto(cfg) {
-            const b2b = (cfg && cfg.comercialB2B) ? cfg.comercialB2B : {};
-            const raw = String(b2b.whatsappAdmin || "525652415593").replace(/\D/g, "");
-            return raw || "525652415593";
-        }
-
-        function obtenerEnlaceCobroExterno(cfg, planTexto) {
-            const p = (cfg && cfg.pagosB2B) ? cfg.pagosB2B : {};
-            const esDest = /destac/i.test(String(planTexto || ""));
-            const urlElegida = esDest
-                ? (p.mpLinkDestacado || p.mpLinkEstandar || "https://mpago.la/1nyBEsB")
-                : (p.mpLinkEstandar || p.mpLinkDestacado || "https://mpago.la/1nyBEsB");
-            return /^https?:\/\//i.test(String(urlElegida || "").trim())
-                ? String(urlElegida).trim()
-                : "https://mpago.la/1nyBEsB";
-        }
-
-        function prepararModalCobroDirecto(cfg, planTexto) {
-            const modal = document.getElementById("modalPago");
-            if (!modal) return;
-
-            const p = (cfg && cfg.pagosB2B) ? cfg.pagosB2B : {};
-            const waNum = obtenerWhatsappContacto(cfg);
-            const urlCobro = obtenerEnlaceCobroExterno(cfg, planTexto);
-            const banco = p.speiBanco || "Mercado Pago / STP";
-            const clabe = p.speiClabe || "0000 0000 0000 0000 00";
-            const benef = p.speiBeneficiario || "Directorio Viajero México";
-
-            // Ocultar bloques de captura de tarjeta o etiquetas de simulacion dentro del modal
-            modal.querySelectorAll("div, label, p, span").forEach(el => {
-                if (el.id === "dvFlujoCobroDirecto" || el.closest("#dvFlujoCobroDirecto")) return;
-                const t = (el.textContent || "").trim();
-                if (/^SIMULACI[ÓO]N DE COBRO$/i.test(t) || /^VISA\s*•\s*MC\s*•\s*AMEX$/i.test(t) || /Pago con Tarjeta de Cr[ée]dito o D[ée]bito/i.test(t) || /Ingresa los datos de tu tarjeta/i.test(t)) {
-                    el.style.display = "none";
-                }
-                const tieneInputTarjeta = el.querySelector && el.querySelector('input[placeholder*="0000"], input[placeholder*="12/29"], input[placeholder*="123"], input[placeholder*="LUIS FERNANDO"]');
-                if (tieneInputTarjeta && el.children.length <= 3) {
-                    el.style.display = "none";
-                }
-            });
-
-            let box = document.getElementById("dvFlujoCobroDirecto");
-            if (!box) {
-                box = document.createElement("div");
-                box.id = "dvFlujoCobroDirecto";
-                box.style.cssText = "margin:0.85rem 0 1rem; padding:0.9rem; border-radius:10px; border:1px solid rgba(56,189,248,0.4); background:rgba(15,23,42,0.72); color:#f1f5f9; font-size:0.88rem;";
-
-                const bloquePlan = Array.from(modal.querySelectorAll("div")).find(d =>
-                    /PLAN ELEGIDO/i.test(d.textContent || "") && /MONTO A COBRAR/i.test(d.textContent || "")
-                );
-                if (bloquePlan && bloquePlan.parentNode) {
-                    bloquePlan.parentNode.insertBefore(box, bloquePlan.nextSibling);
-                } else {
-                    const cont = modal.firstElementChild || modal;
-                    cont.appendChild(box);
-                }
-            }
-
-            const msgWa = encodeURIComponent(`Hola, realicé el pago para mi anuncio en Directorio Viajero (${planTexto || "Plan seleccionado"}) y envío mi comprobante para continuar con la solicitud y el formulario de ingreso.`);
-            const waUrl = `https://wa.me/${waNum}?text=${msgWa}`;
-
-            box.innerHTML = `
-                <div style="font-weight:700; color:#38bdf8; margin-bottom:0.55rem;">Elige cómo realizarás tu pago:</div>
-                <div style="display:flex; flex-wrap:wrap; gap:0.75rem; margin-bottom:0.75rem;">
-                    <label style="display:inline-flex; align-items:center; gap:0.35rem; cursor:pointer; font-weight:600;">
-                        <input type="radio" name="viaCobroDirecto" id="viaML" value="Mercado Libre / Mercado Pago" checked>
-                        <span>🛒 Mercado Libre / Mercado Pago</span>
-                    </label>
-                    <label style="display:inline-flex; align-items:center; gap:0.35rem; cursor:pointer; font-weight:600;">
-                        <input type="radio" name="viaCobroDirecto" id="viaSPEI" value="Transferencia SPEI">
-                        <span>🏦 Transferencia SPEI</span>
-                    </label>
-                </div>
-
-                <div id="boxViaML" style="padding:0.7rem; border-radius:8px; background:rgba(0,158,227,0.14); border:1px solid rgba(0,158,227,0.45); margin-bottom:0.7rem;">
-                    <div style="margin-bottom:0.45rem;">Se abrirá la página/ventana de pago externa para completar el cobro:</div>
-                    <a id="linkCobroExternoML" href="${urlCobro}" target="_blank" rel="noopener noreferrer"
-                       style="display:inline-block; background:#009ee3; color:#fff; font-weight:700; text-decoration:none; padding:0.45rem 0.85rem; border-radius:6px;">
-                        ↗ Ir a pagar en Mercado Libre / Mercado Pago
-                    </a>
-                </div>
-
-                <div id="boxViaSPEI" style="display:none; padding:0.7rem; border-radius:8px; background:rgba(16,185,129,0.14); border:1px solid rgba(16,185,129,0.45); margin-bottom:0.7rem;">
-                    <div><strong>Banco:</strong> <span>${banco}</span></div>
-                    <div style="margin-top:0.25rem;">
-                        <strong>CLABE:</strong> <span id="lblSpeiClabe" style="font-family:monospace; user-select:all;">${clabe}</span>
-                        <button type="button" id="btnCopiarClabeSpei" onclick="copiarClabeSpei(this)" style="margin-left:0.4rem; padding:0.2rem 0.55rem; font-size:0.76rem; font-weight:700; border-radius:6px; border:1px solid rgba(16,185,129,0.55); background:rgba(16,185,129,0.25); color:#ecfdf5; cursor:pointer;">📋 Copiar CLABE</button>
-                    </div>
-                    <div style="margin-top:0.25rem;"><strong>Beneficiario:</strong> <span>${benef}</span></div>
-                </div>
-
-                <div style="padding:0.65rem; border-radius:8px; background:rgba(250,204,21,0.12); border:1px solid rgba(250,204,21,0.4); color:#fef08a; margin-bottom:0.7rem; line-height:1.38;">
-                    <strong>📲 Paso obligatorio tras pagar:</strong> Una vez realizado el pago, envía tu <strong>comprobante de pago</strong> al WhatsApp de contacto (<strong>+${waNum}</strong>) para continuar con la solicitud y que se te otorgue el formulario de ingreso a la plataforma.
-                    <div style="margin-top:0.45rem;">
-                        <a href="${waUrl}" target="_blank" rel="noopener noreferrer" style="display:inline-block; background:#16a34a; color:#fff; font-weight:700; text-decoration:none; padding:0.35rem 0.7rem; border-radius:6px; font-size:0.82rem;">
-                            💬 Enviar comprobante por WhatsApp
-                        </a>
-                    </div>
-                </div>
-
-                <div>
-                    <label for="inputFolioCobroExterno" style="display:block; font-weight:600; margin-bottom:0.3rem;">
-                        Folio / Referencia o clave de rastreo del pago:
-                    </label>
-                    <input type="text" id="inputFolioCobroExterno" placeholder="Ej. ML-123456 o clave rastreo SPEI"
-                           style="width:100%; padding:0.48rem 0.65rem; border-radius:6px; border:1px solid #475569; background:#0f172a; color:#f8fafc;">
-                </div>
-            `;
-
-            const rMl = document.getElementById("viaML");
-            const rSp = document.getElementById("viaSPEI");
-            const bMl = document.getElementById("boxViaML");
-            const bSp = document.getElementById("boxViaSPEI");
-
-            function toggleVia() {
-                const isSpei = rSp && rSp.checked;
-                if (bMl) bMl.style.display = isSpei ? "none" : "block";
-                if (bSp) bSp.style.display = isSpei ? "block" : "none";
-            }
-            if (rMl) rMl.addEventListener("change", toggleVia);
-            if (rSp) rSp.addEventListener("change", toggleVia);
-        }
-
-        function procesarAutorizacionCobroDirecto(cfg, planTexto) {
-            const rSp = document.getElementById("viaSPEI");
-            const viaElegida = (rSp && rSp.checked) ? "Transferencia SPEI" : "Mercado Libre / Mercado Pago";
-            const inputFolio = document.getElementById("inputFolioCobroExterno");
-            const folio = inputFolio ? inputFolio.value.trim().toUpperCase() : "";
-            const waNum = obtenerWhatsappContacto(cfg);
-
-            if (!window._abrioPopCobroML && viaElegida === "Mercado Libre / Mercado Pago") {
-                const urlCobro = obtenerEnlaceCobroExterno(cfg, planTexto);
-                window._abrioPopCobroML = true;
-                window.open(urlCobro, "_blank", "noopener,noreferrer");
-                alert(`Se abrió la página/ventana de Mercado Libre / Mercado Pago para completar el pago.\n\nUna vez realizado el pago, envía tu comprobante al WhatsApp +${waNum} para continuar con la solicitud, ingresa aquí tu folio/referencia y vuelve a pulsar Autorizar Pago para dar el formulario de ingreso.`);
-                return false;
-            }
-
-            if (!/^[A-Z0-9\-]{5,40}$/.test(folio) || /^(.)\1+$/.test(folio.replace(/-/g, ""))) {
-                alert(`Ingresa tu folio o clave de rastreo del pago y recuerda enviar tu comprobante al WhatsApp +${waNum} para continuar con la solicitud y abrir el formulario de ingreso.`);
-                if (inputFolio) inputFolio.focus();
-                return false;
-            }
-
-            window.METODO_PAGO_VALIDADO = viaElegida;
-            window.REFERENCIA_PAGO_VALIDADA = folio;
-            if (typeof FOLIO_AUTORIZADO !== "undefined") FOLIO_AUTORIZADO = folio;
-            if (typeof TERMINACION_TARJETA !== "undefined") TERMINACION_TARJETA = folio.slice(-4);
-            return true;
-        }
-        function obtenerLinkMercadoPagoPorPlan(cfg, planTexto) {
-            const p = cfg && cfg.pagosB2B ? cfg.pagosB2B : {};
-            const esDest = /destac/i.test(String(planTexto || ""));
-            const candidato = esDest
-                ? (p.mpLinkDestacado || p.mpLinkEstandar || "https://mpago.la/1nyBEsB")
-                : (p.mpLinkEstandar || p.mpLinkDestacado || "https://mpago.la/1nyBEsB");
-            return /^https?:\/\//i.test(candidato.trim()) ? candidato.trim() : "https://mpago.la/1nyBEsB";
-        }
-
-                async function copiarClabeSpei(btnEl) {
-            const spanClabe = document.getElementById("lblSpeiClabe");
-            const textoClabe = spanClabe ? spanClabe.textContent.trim() : "";
-            if (!textoClabe) return;
-
-            let copiado = false;
-            if (navigator.clipboard && window.isSecureContext) {
-                try {
-                    await navigator.clipboard.writeText(textoClabe);
-                    copiado = true;
-                } catch (e) {}
-            }
-            if (!copiado) {
-                const aux = document.createElement("textarea");
-                aux.value = textoClabe;
-                aux.setAttribute("readonly", "");
-                aux.style.position = "fixed";
-                aux.style.opacity = "0";
-                document.body.appendChild(aux);
-                aux.select();
-                try {
-                    copiado = document.execCommand("copy");
-                } catch (e) {
-                    copiado = false;
-                }
-                document.body.removeChild(aux);
-            }
-
-            if (btnEl) {
-                const textoOriginal = btnEl.dataset.labelOriginal || btnEl.textContent;
-                btnEl.dataset.labelOriginal = textoOriginal;
-                btnEl.textContent = copiado ? "✅ Copiada" : "⚠️ Selecciona la CLABE";
-                setTimeout(() => {
-                    btnEl.textContent = textoOriginal;
-                }, 1800);
-            }
-        }
-
-        function hidratarOpcionesPagoReales(cfg, planTexto) {
-            const p = cfg && cfg.pagosB2B ? cfg.pagosB2B : {};
-            const modal = document.getElementById("modalPago");
-            if (!modal) return;
-
-            // Ocultar cualquier badge o texto residual de simulacion dentro del modal
-            modal.querySelectorAll("span, div, p").forEach(el => {
-                const txt = (el.textContent || "").trim();
-                if (/^SIMULACI[ÓO]N DE COBRO$/i.test(txt) || /Simulaci[oó]n de prueba segura/i.test(txt)) {
-                    el.style.display = "none";
-                }
-            });
-
-            const esDest = /destac/i.test(String(planTexto || ""));
-            const rawLink = esDest
-                ? (p.mpLinkDestacado || p.mpLinkEstandar || "https://mpago.la/1nyBEsB")
-                : (p.mpLinkEstandar || p.mpLinkDestacado || "https://mpago.la/1nyBEsB");
-            const linkMp = /^https?:\/\//i.test(String(rawLink || "").trim()) ? String(rawLink).trim() : "https://mpago.la/1nyBEsB";
-
-            const banco = p.speiBanco || "Mercado Pago / STP";
-            const clabe = p.speiClabe || "0000 0000 0000 0000 00";
-            const benef = p.speiBeneficiario || "Directorio Viajero México";
-
-            let cajaDobleVia = document.getElementById("dvMetodosCobroReales");
-            if (!cajaDobleVia) {
-                cajaDobleVia = document.createElement("div");
-                cajaDobleVia.id = "dvMetodosCobroReales";
-                cajaDobleVia.style.cssText = "margin:0.85rem 0 1rem; padding:0.9rem; border-radius:10px; border:1px solid rgba(148,163,184,0.35); background:rgba(15,23,42,0.65); color:#e2e8f0; font-size:0.88rem;";
-                const tarjetaPlan = Array.from(modal.querySelectorAll("div")).find(d => /PLAN ELEGIDO/i.test(d.textContent || "") && d.children.length >= 2);
-                if (tarjetaPlan && tarjetaPlan.parentNode) {
-                    tarjetaPlan.parentNode.insertBefore(cajaDobleVia, tarjetaPlan.nextSibling);
-                } else {
-                    const primerHijo = modal.firstElementChild && modal.firstElementChild.children.length > 1
-                        ? modal.firstElementChild
-                        : modal;
-                    primerHijo.appendChild(cajaDobleVia);
-                }
-            }
-
-            cajaDobleVia.innerHTML = `
-                <div style="font-weight:700; margin-bottom:0.55rem; color:#38bdf8;">Selecciona tu vía de pago:</div>
-                <div style="display:flex; flex-wrap:wrap; gap:0.85rem; margin-bottom:0.7rem;">
-                    <label style="display:inline-flex; align-items:center; gap:0.35rem; cursor:pointer; font-weight:600;">
-                        <input type="radio" name="metodoCobroReal" id="rbCobroMP" value="Mercado Pago" checked>
-                        <span>💳 Mercado Pago</span>
-                    </label>
-                    <label style="display:inline-flex; align-items:center; gap:0.35rem; cursor:pointer; font-weight:600;">
-                        <input type="radio" name="metodoCobroReal" id="rbCobroSPEI" value="Transferencia SPEI">
-                        <span>🏦 Transferencia SPEI</span>
-                    </label>
-                </div>
-                <div id="panelCobroMP" style="padding:0.65rem; border-radius:8px; background:rgba(0,158,227,0.14); border:1px solid rgba(0,158,227,0.4); margin-bottom:0.65rem;">
-                    <div style="margin-bottom:0.45rem;">Realiza el cobro en tu enlace de Mercado Pago:</div>
-                    <a id="enlaceCheckoutMP" href="${linkMp}" target="_blank" rel="noopener noreferrer"
-                       style="display:inline-block; background:#009ee3; color:#fff; font-weight:700; text-decoration:none; padding:0.42rem 0.85rem; border-radius:6px;">
-                        ↗ Abrir Mercado Pago
-                    </a>
-                </div>
-                <div id="panelCobroSPEI" style="display:none; padding:0.65rem; border-radius:8px; background:rgba(16,185,129,0.14); border:1px solid rgba(16,185,129,0.4); margin-bottom:0.65rem;">
-                    <div><strong>Banco:</strong> <span id="lblSpeiBanco">${banco}</span></div>
-                    <div style="margin-top:0.25rem;">
-                        <strong>CLABE:</strong> <span id="lblSpeiClabe" style="font-family:monospace; user-select:all;">${clabe}</span>
-                        <button type="button" id="btnCopiarClabeSpei" onclick="copiarClabeSpei(this)" style="margin-left:0.4rem; padding:0.2rem 0.55rem; font-size:0.76rem; font-weight:700; border-radius:6px; border:1px solid rgba(16,185,129,0.55); background:rgba(16,185,129,0.25); color:#ecfdf5; cursor:pointer;">📋 Copiar CLABE</button>
-                    </div>
-                    <div style="margin-top:0.25rem;"><strong>Beneficiario:</strong> <span id="lblSpeiBenef">${benef}</span></div>
-                </div>
-                <div>
-                    <label for="inputComprobanteCobroReal" style="display:block; font-weight:600; margin-bottom:0.3rem;">
-                        Folio de operación MP o clave de rastreo SPEI:
-                    </label>
-                    <input type="text" id="inputComprobanteCobroReal" placeholder="Ej. MP-98451230 o clave SPEI"
-                           style="width:100%; padding:0.48rem 0.65rem; border-radius:6px; border:1px solid #475569; background:#0f172a; color:#f8fafc;">
-                </div>
-            `;
-
-            const rbMp = document.getElementById("rbCobroMP");
-            const rbSpei = document.getElementById("rbCobroSPEI");
-            const pMp = document.getElementById("panelCobroMP");
-            const pSpei = document.getElementById("panelCobroSPEI");
-
-            function alternarPanel() {
-                const esSpei = rbSpei && rbSpei.checked;
-                if (pMp) pMp.style.display = esSpei ? "none" : "block";
-                if (pSpei) pSpei.style.display = esSpei ? "block" : "none";
-            }
-
-            if (rbMp) rbMp.addEventListener("change", alternarPanel);
-            if (rbSpei) rbSpei.addEventListener("change", alternarPanel);
-        }
-        function validarAlgoritmoLuhn(numLimpio) {
-            if (!/^\d{13,19}$/.test(numLimpio)) return false;
-            let suma = 0;
-            let alternar = false;
-            for (let i = numLimpio.length - 1; i >= 0; i--) {
-                let n = parseInt(numLimpio.charAt(i), 10);
-                if (alternar) {
-                    n *= 2;
-                    if (n > 9) n -= 9;
-                }
-                suma += n;
-                alternar = !alternar;
-            }
-            return (suma % 10) === 0;
-        }
-
-        function validarVigenciaMMAA(valor) {
-            const m = String(valor || "").trim().match(/^(0[1-9]|1[0-2])\s*\/\s*(\d{2})$/);
-            if (!m) return false;
-            const mes = parseInt(m[1], 10);
-            const anio = 2000 + parseInt(m[2], 10);
-            const ahora = new Date();
-            const mesActual = ahora.getMonth() + 1;
-            const anioActual = ahora.getFullYear();
-            if (anio < anioActual || anio > anioActual + 15) return false;
-            if (anio === anioActual && mes < mesActual) return false;
-            return true;
-        }
-
-        function validarReferenciaComprobante(ref) {
-            const limpia = String(ref || "").trim();
-            // Evita letras repetidas o cadenas sin estructura de folio/referencia real (min 6 chars alfanumericos con al menos 1 digito)
-            if (!/^[A-Za-z0-9\-]{6,32}$/.test(limpia)) return false;
-            if (!/\d/.test(limpia)) return false;
-            if (/^(.)\1+$/.test(limpia.replace(/-/g, ""))) return false;
-            return true;
-        }
+        // Funciones del Embudo de Contratacion y Pago Simulado
         function abrirModalPagoPlan(planNombre) {
             const planElegido = planNombre === "Plan Estándar" ? "Plan Estándar" : "Plan Destacado";
             const selectPlan = document.getElementById("planAgencia");
@@ -1027,51 +615,146 @@ img, svg, video {
                 if (e.target.id === "checkoutTarjetaModal") cerrarModalPago();
             });
 
-            // Formateo seguro de campos de tarjeta (solo digitos)
-            document.getElementById("cardNumber").addEventListener("input", (e) => {
-                const v = e.target.value.replace(/\D/g, "").slice(0, 16);
-                e.target.value = v.replace(/(\d{4})(?=\d)/g, "$1 ");
-            });
+            // Configuracion dinamica del modal de pago real
+            window.alternarMetodoPagoModal = function() {
+                const esSpei = document.getElementById("rbPagoSPEI")?.checked;
+                const bMp = document.getElementById("bloqueMetodoMP");
+                const bSp = document.getElementById("bloqueMetodoSPEI");
+                if (bMp) bMp.style.display = esSpei ? "none" : "block";
+                if (bSp) bSp.style.display = esSpei ? "block" : "none";
+            };
 
-            document.getElementById("cardExpiry").addEventListener("input", (e) => {
-                let v = e.target.value.replace(/\D/g, "").slice(0, 4);
-                if (v.length >= 3) v = v.slice(0, 2) + "/" + v.slice(2);
-                e.target.value = v;
-            });
+            window.copiarClabeSpeiModal = async function(btnEl) {
+                const txt = document.getElementById("modalSpeiClabe")?.textContent?.trim() || "";
+                if (!txt) return;
+                let ok = false;
+                if (navigator.clipboard && window.isSecureContext) {
+                    try { await navigator.clipboard.writeText(txt); ok = true; } catch (e) {}
+                }
+                if (!ok) {
+                    const ta = document.createElement("textarea");
+                    ta.value = txt;
+                    ta.style.position = "fixed";
+                    ta.style.opacity = "0";
+                    document.body.appendChild(ta);
+                    ta.select();
+                    try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+                    document.body.removeChild(ta);
+                }
+                if (btnEl) {
+                    const orig = btnEl.dataset.orig || btnEl.textContent;
+                    btnEl.dataset.orig = orig;
+                    btnEl.textContent = ok ? "✅ Copiada" : "⚠️ Copia manual";
+                    setTimeout(() => { btnEl.textContent = orig; }, 1800);
+                }
+            };
 
-            document.getElementById("cardCvv").addEventListener("input", (e) => {
-                e.target.value = e.target.value.replace(/\D/g, "").slice(0, 4);
-            });
+            window.iniciarCheckoutProMP = async function(btnEl) {
+                const planNombre = document.getElementById("chkPlanNombre")?.textContent?.trim() || "Plan Destacado";
+                const montoTxt = document.getElementById("chkPlanMonto")?.textContent || "100";
+                const precioNum = parseFloat(montoTxt.replace(/[^\d.]/g, "")) || 100;
+                const origTxt = btnEl ? btnEl.textContent : "";
 
-            // Procesar simulacion de cobro y desbloquear formulario de registro
+                if (btnEl) { btnEl.disabled = true; btnEl.textContent = "⏳ Abriendo Mercado Pago..."; }
+                try {
+                    const resCfg = await fetch(`../data/config.json?t=${Date.now()}`);
+                    const cfg = await resCfg.json();
+                    const apiUrl = (cfg.buzonNubeUrl || "").trim();
+                    if (!apiUrl) {
+                        alert("⚠️ Falta configurar buzonNubeUrl en data/config.json.");
+                        return;
+                    }
+                    const returnUrl = window.location.href.split("?")[0];
+                    const endpoint = `${apiUrl}?accion=crear_mp&titulo=${encodeURIComponent("Directorio Viajero - " + planNombre)}&precio=${encodeURIComponent(precioNum)}&returnUrl=${encodeURIComponent(returnUrl)}&t=${Date.now()}`;
+                    const resp = await fetch(endpoint);
+                    const data = await resp.json();
+                    if (data && data.ok && data.init_point) {
+                        window.location.href = data.init_point;
+                        return;
+                    }
+                    alert("⛔ No se pudo iniciar Checkout Pro: " + (data.error || "Revisa tu implementación en Apps Script."));
+                } catch (err) {
+                    alert("⛔ Error de conexión con el servidor de pagos: " + err.message);
+                } finally {
+                    if (btnEl) { btnEl.disabled = false; btnEl.textContent = origTxt; }
+                }
+            };
+
+            // Cargar datos de config.json al modal (CLABE, Link MP, WhatsApp)
+            fetch(`../data/config.json?t=${Date.now()}`).then(r => r.json()).then(cfg => {
+                const p = cfg.pagosB2B || {};
+                const b2b = cfg.comercialB2B || {};
+                const wa = String(b2b.whatsappAdmin || "525652415593").replace(/\D/g, "") || "525652415593";
+                if (document.getElementById("modalSpeiBanco")) document.getElementById("modalSpeiBanco").textContent = p.speiBanco || "Mercado Pago / STP";
+                if (document.getElementById("modalSpeiClabe")) document.getElementById("modalSpeiClabe").textContent = p.speiClabe || "0000 0000 0000 0000 00";
+                if (document.getElementById("modalSpeiBenef")) document.getElementById("modalSpeiBenef").textContent = p.speiBeneficiario || "Directorio Viajero México";
+                if (document.getElementById("enlaceDirectoMP") && p.mpLinkEstandar) document.getElementById("enlaceDirectoMP").href = p.mpLinkEstandar;
+                if (document.getElementById("modalWaNum")) document.getElementById("modalWaNum").textContent = wa;
+                if (document.getElementById("modalBtnWaComprobante")) {
+                    const msg = encodeURIComponent("Hola, realicé el pago de mi anuncio en Directorio Viajero y envío mi comprobante para continuar con la solicitud y el formulario de ingreso.");
+                    document.getElementById("modalBtnWaComprobante").href = `https://wa.me/${wa}?text=${msg}`;
+                }
+            }).catch(() => {});
+
+            // Verificar regreso automatico de Mercado Pago Checkout Pro (?payment_id=...&status=approved)
+            (async function verificarRetornoMP() {
+                const params = new URLSearchParams(window.location.search);
+                const paymentId = params.get("payment_id") || params.get("collection_id");
+                const status = params.get("status") || params.get("collection_status");
+                if (!paymentId || status !== "approved") return;
+
+                try {
+                    const resCfg = await fetch(`../data/config.json?t=${Date.now()}`);
+                    const cfg = await resCfg.json();
+                    const apiUrl = (cfg.buzonNubeUrl || "").trim();
+                    if (!apiUrl) return;
+
+                    const resVer = await fetch(`${apiUrl}?accion=verificar_mp&payment_id=${encodeURIComponent(paymentId)}&t=${Date.now()}`);
+                    const ver = await resVer.json();
+                    if (ver && ver.ok && ver.approved) {
+                        FOLIO_AUTORIZADO = "MP-" + ver.payment_id;
+                        TERMINACION_TARJETA = String(ver.payment_id).slice(-4);
+                        cerrarModalPago();
+
+                        const boxForm = document.getElementById("contenedorFormularioAlta");
+                        const banner = document.getElementById("bannerComprobantePago");
+                        if (banner) {
+                            banner.textContent = `✅ Pago Aprobado por Mercado Pago (Folio: ${FOLIO_AUTORIZADO} • $${ver.amount} MXN). Ahora llena los datos de tu negocio:`;
+                        }
+                        if (boxForm) {
+                            boxForm.style.display = "grid";
+                            boxForm.scrollIntoView({ behavior: "smooth", block: "start" });
+                        }
+                        window.history.replaceState({}, document.title, window.location.pathname);
+                    }
+                } catch (e) {}
+            })();
+
+            // Confirmar folio manual (Link Directo MP o SPEI) y desbloquear formulario
             document.getElementById("formPagoTarjeta").addEventListener("submit", (e) => {
                 e.preventDefault();
-                const titular = limpiarTextoPlano(document.getElementById("cardHolder").value, 60);
-                const num = document.getElementById("cardNumber").value.replace(/\D/g, "");
-                const exp = document.getElementById("cardExpiry").value.trim();
-                const cvv = document.getElementById("cardCvv").value.replace(/\D/g, "");
+                const esSpei = document.getElementById("rbPagoSPEI")?.checked;
+                const metodoTxt = esSpei ? "Transferencia SPEI" : "Mercado Pago";
+                const refInput = document.getElementById("inputReferenciaPago");
+                const refValor = (refInput ? refInput.value : "").trim().toUpperCase();
 
-                if (titular.length < 3 || num.length < 15 || exp.length < 5 || cvv.length < 3) {
-                    alert("Verifica que el titular, número de tarjeta (15-16 dígitos), vencimiento (MM/AA) y CCV sean válidos.");
+                if (!/^[A-Z0-9\-]{5,45}$/.test(refValor) || /^(.)\1+$/.test(refValor.replace(/-/g, ""))) {
+                    alert("⛔ Ingresa el folio de operación de Mercado Pago o la clave de rastreo SPEI (mínimo 5 caracteres) y recuerda enviar tu comprobante por WhatsApp.");
+                    if (refInput) refInput.focus();
                     return;
                 }
 
-                TERMINACION_TARJETA = num.slice(-4);
-                FOLIO_AUTORIZADO = "SIM-" + Math.floor(100000 + Math.random() * 900000);
-
-                // Limpiar inmediatamente datos sensibles del DOM
-                document.getElementById("cardNumber").value = "";
-                document.getElementById("cardCvv").value = "";
+                FOLIO_AUTORIZADO = refValor;
+                TERMINACION_TARJETA = refValor.slice(-4);
                 cerrarModalPago();
 
                 const boxForm = document.getElementById("contenedorFormularioAlta");
                 const banner = document.getElementById("bannerComprobantePago");
-                banner.textContent = `✅ Pago Registrado (Folio: ${window.REFERENCIA_PAGO_VALIDADA} • Método: ${window.METODO_PAGO_VALIDADO || "Mercado Pago"}). Ahora llena los datos de tu negocio:`;
+                banner.textContent = `✅ Pago Registrado (${metodoTxt} • Folio: ${FOLIO_AUTORIZADO}). Recuerda mandar tu comprobante por WhatsApp y llena los datos de tu negocio:`;
                 boxForm.style.display = "grid";
                 boxForm.scrollIntoView({ behavior: "smooth", block: "start" });
             });
-
-            // Vista previa reactiva
+// Vista previa reactiva
             ["nombreAgencia", "ciudadAgencia", "descAgencia", "planAgencia", "destinosAgencia"].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) el.addEventListener("input", actualizarVistaPrevia);
@@ -1108,8 +791,6 @@ img, svg, video {
                     fecha: new Date().toLocaleString("es-MX"),
                     estado: "Pendiente de Autorización",
                     terminacionTarjeta: TERMINACION_TARJETA,
-                        metodoPago: window.METODO_PAGO_VALIDADO || "Validado",
-                        referenciaPago: window.REFERENCIA_PAGO_VALIDADA || TERMINACION_TARJETA,
                     plan: plan,
                     correoContacto: correo,
                     anunciante: {
@@ -1168,79 +849,6 @@ img, svg, video {
                 document.getElementById("modalContratacionExitosa").classList.add("open");
             });
         });
-            function dvCambiarViaCobro() {
-            const isSpei = document.getElementById("viaSPEI")?.checked;
-            const bMl = document.getElementById("boxViaML");
-            const bSp = document.getElementById("boxViaSPEI");
-            if (bMl) bMl.style.display = isSpei ? "none" : "block";
-            if (bSp) bSp.style.display = isSpei ? "block" : "none";
-        }
-
-        function dvSincronizarDatosCobro() {
-            const cfg = (typeof configActual !== "undefined" && configActual) ? configActual : {};
-            const pag = cfg.pagosB2B || {};
-            const b2b = cfg.comercialB2B || {};
-            const planTxt = (typeof planSeleccionado !== "undefined" && planSeleccionado) ? String(planSeleccionado) : "";
-            const esDest = /destac/i.test(planTxt);
-            const rawUrl = esDest
-                ? (pag.mpLinkDestacado || pag.mpLinkEstandar || "https://mpago.la/1nyBEsB")
-                : (pag.mpLinkEstandar || pag.mpLinkDestacado || "https://mpago.la/1nyBEsB");
-            const urlFinal = /^https?:\/\//i.test(String(rawUrl || "").trim()) ? String(rawUrl).trim() : "https://mpago.la/1nyBEsB";
-            const waDigits = String(b2b.whatsappAdmin || "525652415593").replace(/\D/g, "") || "525652415593";
-
-            const aMl = document.getElementById("linkCobroExternoML");
-            if (aMl) aMl.href = (urlFinal && urlFinal !== "https://www.mercadopago.com.mx/" && urlFinal !== "https://www.mercadolibre.com.mx/") ? urlFinal : "https://mpago.la/1nyBEsB";
-
-            const spBanco = document.getElementById("lblSpeiBanco");
-            const spClabe = document.getElementById("lblSpeiClabe");
-            const spBenef = document.getElementById("lblSpeiBenef");
-            if (spBanco) spBanco.textContent = pag.speiBanco || "Mercado Pago / STP";
-            if (spClabe) spClabe.textContent = pag.speiClabe || "0000 0000 0000 0000 00";
-            if (spBenef) spBenef.textContent = pag.speiBeneficiario || "Directorio Viajero México";
-
-            const lblWa = document.getElementById("lblWaContacto");
-            const aWa = document.getElementById("linkWaComprobante");
-            if (lblWa) lblWa.textContent = waDigits;
-            if (aWa) {
-                const textoWa = encodeURIComponent(`Hola, ya realicé el pago (${planTxt || "Plan"}) y envío mi comprobante para continuar con mi solicitud y recibir el formulario de ingreso.`);
-                aWa.href = `https://wa.me/${waDigits}?text=${textoWa}`;
-            }
-
-            // Ocultar inputs de tarjeta si quedaron visibles
-            const modal = document.getElementById("modalPago");
-            if (modal) {
-                modal.querySelectorAll('input[type="tel"], input[placeholder*="0000"], input[placeholder*="12/29"], input[placeholder*="123"], input[placeholder*="LUIS FERNANDO"]').forEach(inp => {
-                    const wrap = inp.closest("div");
-                    if (wrap && !wrap.closest("#dvBloqueCobroCompleto")) wrap.style.display = "none";
-                });
-            }
-            dvCambiarViaCobro();
-        }
-
-        async function copiarClabeSpei(btnEl) {
-            const textoClabe = document.getElementById("lblSpeiClabe")?.textContent?.trim() || "";
-            if (!textoClabe) return;
-            let ok = false;
-            if (navigator.clipboard && window.isSecureContext) {
-                try { await navigator.clipboard.writeText(textoClabe); ok = true; } catch (e) {}
-            }
-            if (!ok) {
-                const ta = document.createElement("textarea");
-                ta.value = textoClabe;
-                ta.style.position = "fixed";
-                ta.style.opacity = "0";
-                document.body.appendChild(ta);
-                ta.select();
-                try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
-                document.body.removeChild(ta);
-            }
-            if (btnEl) {
-                const orig = btnEl.dataset.orig || btnEl.textContent;
-                btnEl.dataset.orig = orig;
-                btnEl.textContent = ok ? "✅ Copiada" : "⚠️ Copia manual";
-                setTimeout(() => { btnEl.textContent = orig; }, 1800);
-            }
-        }
-</script>
+    </script>
 </body>
 </html>
