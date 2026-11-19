@@ -270,9 +270,7 @@
                             Tu ficha quedó registrada en estado <strong>Pendiente de Autorización</strong>. No aparecerá en la página principal hasta que el administrador la apruebe.
                         </p>
                         <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-                            <button type="button" id="btnCopiarCodigoSol" class="btn-action btn-outline" style="font-size:0.78rem; padding:0.45rem 0.75rem;">
-                                📋 Copiar Código de Solicitud
-                            </button>
+                            
                             <a href="../index.html" class="btn-action btn-primary" style="font-size:0.78rem; padding:0.45rem 0.75rem;">
                                 Volver a la Página Principal
                             </a>
@@ -364,6 +362,27 @@
         </div>
     </div>
 
+        <!-- Modal Pop-up de Contratacion Exitosa -->
+    <div id="modalContratacionExitosa" class="modal-backdrop">
+        <div class="modal-card" style="max-width: 450px; text-align: center; padding: 2rem 1.75rem;">
+            <div style="width: 64px; height: 64px; border-radius: 9999px; background: #dcfce7; color: #16a34a; font-size: 2rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                ✅
+            </div>
+            <span style="display:inline-block; background:#dcfce7; color:#166534; font-size:0.74rem; font-weight:800; padding:0.25rem 0.75rem; border-radius:9999px; margin-bottom:0.6rem;">
+                REGISTRO COMPLETADO
+            </span>
+            <h3 style="font-size: 1.4rem; color: var(--secondary); margin-bottom: 0.45rem;">¡Contratación Exitosa!</h3>
+            <p style="font-size: 0.9rem; color: var(--text-soft); line-height: 1.55; margin-bottom: 1rem;">
+                Hemos recibido los datos de <strong id="popExitoNegocio" style="color: var(--secondary);">tu negocio</strong> con el folio <strong id="popExitoFolio" style="color: #0284c7;">SIM-000000</strong>.
+            </p>
+            <div style="background: var(--bg-muted); border: 1px solid var(--border); border-radius: 0.75rem; padding: 0.85rem; font-size: 0.82rem; color: var(--text-main); margin-bottom: 1.35rem;">
+                🛡️ Tu anuncio ya está en el <strong>Panel de Control</strong> en espera de autorización del administrador para publicarse en la página principal.
+            </div>
+            <a href="../index.html" class="btn-action btn-primary" style="width: 100%; padding: 0.85rem; font-size: 0.95rem; justify-content: center;">
+                Volver a la Página Principal
+            </a>
+        </div>
+    </div>
     <footer>
         <p>© 2026 Directorio Viajero México &bull; Plataforma de Proveedores Verificados</p>
     </footer>
@@ -644,22 +663,15 @@
                 cola.unshift(solicitudObj);
                 localStorage.setItem("dv_solicitudes_pendientes", JSON.stringify(cola));
 
-                // Generar codigo compacto por si el cliente lo envia desde otro navegador/dispositivo
-                const codigoTransferencia = "DVSOL:" + btoa(unescape(encodeURIComponent(JSON.stringify(solicitudObj))));
-
                 document.getElementById("btnEnviarSolicitudPanel").disabled = true;
-                document.getElementById("btnEnviarSolicitudPanel").textContent = "✔ Solicitud en Bandeja de Revisión";
+                document.getElementById("btnEnviarSolicitudPanel").textContent = "✔ Solicitud Enviada";
                 const boxConf = document.getElementById("confirmacionEnvioPanel");
-                boxConf.style.display = "block";
-                boxConf.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                if (boxConf) boxConf.style.display = "block";
 
-                document.getElementById("btnCopiarCodigoSol").onclick = () => {
-                    if (navigator.clipboard) {
-                        navigator.clipboard.writeText(codigoTransferencia).then(() => {
-                            alert("✅ Código de solicitud copiado. Puedes pegarlo en el Panel de Control desde cualquier equipo.");
-                        });
-                    }
-                };
+                // Mostrar Pop-up de Contratacion Exitosa
+                document.getElementById("popExitoNegocio").textContent = nombre;
+                document.getElementById("popExitoFolio").textContent = FOLIO_AUTORIZADO;
+                document.getElementById("modalContratacionExitosa").classList.add("open");
             });
         });
     </script>

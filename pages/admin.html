@@ -587,7 +587,19 @@
             el.textContent = texto;
         }
 
+                // Sincronizacion automatica de Solicitudes Pendientes al cargar, al hacer clic o desde otra pestaña
+        document.addEventListener("DOMContentLoaded", () => {
+            if (typeof renderizarSolicitudesPendientes === "function") {
+                renderizarSolicitudesPendientes();
+            }
+        });
+        window.addEventListener("storage", (e) => {
+            if (e.key === "dv_solicitudes_pendientes" && typeof renderizarSolicitudesPendientes === "function") {
+                renderizarSolicitudesPendientes();
+            }
+        });
         function cambiarTab(tabId, btn) {
+            if (tabId === 'tab-solicitudes' && typeof renderizarSolicitudesPendientes === 'function') renderizarSolicitudesPendientes();
             document.querySelectorAll('.cms-panel').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.cms-tab').forEach(b => b.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
