@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/styles.css?v=20261118spei">
+    <link rel="stylesheet" href="../css/styles.css?v=20261118funnel">
 </head>
 <body>
 
@@ -35,7 +35,27 @@
     </section>
 
     <main class="container">
-        <div class="plans-grid">
+                <!-- Paso 0: Boton Principal de Contratacion -->
+        <div id="bloqueInicioContratar" style="text-align: center; background: var(--bg-card); border: 1px solid var(--border); border-radius: 1rem; padding: 2.25rem 1.5rem; margin-bottom: 2rem; box-shadow: var(--shadow-sm);">
+            <span style="display: inline-block; background: var(--primary-soft); color: var(--primary-dark); font-size: 0.78rem; font-weight: 800; padding: 0.3rem 0.85rem; border-radius: 9999px; margin-bottom: 0.75rem;">
+                ALTA DE ANUNCIANTES VERIFICADOS
+            </span>
+            <h2 style="font-size: 1.5rem; color: var(--secondary); margin-bottom: 0.5rem;">Haz visible tu negocio ante miles de viajeros y organizadores</h2>
+            <p style="font-size: 0.92rem; color: var(--text-soft); max-width: 580px; margin: 0 auto 1.35rem;">
+                Elige tu plan de suscripción, realiza el pago seguro con tarjeta de crédito o débito y registra los datos de tu anuncio al instante.
+            </p>
+            <button type="button" onclick="mostrarPlanesDisponibles()" class="btn-action btn-primary" style="padding: 0.9rem 2rem; font-size: 1.02rem; border-radius: 9999px; box-shadow: 0 10px 25px rgba(2, 132, 199, 0.28);">
+                🚀 Contratar Plan ahora
+            </button>
+        </div>
+
+        <!-- Paso 1: Planes Disponibles (Ocultos hasta presionar Contratar) -->
+        <div id="contenedorPlanesB2B" style="display: none; margin-bottom: 2rem;">
+            <div style="text-align: center; margin-bottom: 1.25rem;">
+                <span style="background: #009ee3; color: #fff; font-size: 0.74rem; font-weight: 800; padding: 0.25rem 0.75rem; border-radius: 9999px;">PASO 1 DE 3</span>
+                <h3 style="font-size: 1.3rem; color: var(--secondary); margin-top: 0.45rem;">Selecciona el plan que deseas contratar</h3>
+            </div>
+            <div class="plans-grid" style="margin-bottom: 0;">
             <div class="plan-card">
                 <div>
                     <h3>Plan Estándar</h3>
@@ -47,7 +67,7 @@
                         <li>✔ 1 botón directo (WhatsApp o Sitio Web)</li>
                     </ul>
                 </div>
-                <a href="#registro" onclick="seleccionarPlan('Plan Estándar')" class="btn-action btn-primary">Seleccionar Estándar</a>
+                <a href="#registro" onclick="iniciarPagoPlan('Plan Estándar')" class="btn-action btn-primary">Seleccionar Estándar</a>
             </div>
 
             <div class="plan-card popular">
@@ -62,7 +82,7 @@
                         <li>✔ Ficha ampliada con ciudad de salida</li>
                     </ul>
                 </div>
-                <a href="#registro" onclick="seleccionarPlan('Plan Destacado')" class="btn-action btn-whatsapp">Apartar Lugar Destacado</a>
+                <a href="#registro" onclick="iniciarPagoPlan('Plan Destacado')" class="btn-action btn-whatsapp">Apartar Lugar Destacado</a>
             </div>
         </div>
 
@@ -228,7 +248,7 @@
         </div>
     </footer>
 
-    <script src="../js/app.js?v=20261118spei"></script>
+    <script src="../js/app.js?v=20261118funnel"></script>
     <script>
                 let CORREO_DESTINO = "tu-correo@gmail.com";
         let WHATSAPP_ADMIN = "525500000000";
@@ -497,6 +517,81 @@
             }
         }
             let PRECIO_ESTANDAR_ACTUAL = "$100 MXN / mes";
+        let FOLIO_PAGO_AUTORIZADO = "";
+        let TERMINACION_TARJETA_PAGO = "";
+
+        function mostrarPlanesDisponibles() {
+            const boxPlanes = document.getElementById('contenedorPlanesB2B');
+            if (boxPlanes) {
+                boxPlanes.style.display = 'block';
+                boxPlanes.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function iniciarPagoPlan(planNombre) {
+            const esDestacado = planNombre === 'Plan Destacado';
+            const selectPlan = document.getElementById('planAgencia');
+            if (selectPlan) {
+                selectPlan.value = planNombre;
+                if (typeof actualizarVistaPrevia === 'function') actualizarVistaPrevia();
+            }
+            document.getElementById('chkPlanNombre').textContent = planNombre;
+            document.getElementById('chkPlanMonto').textContent = esDestacado ? PRECIO_DESTACADO_ACTUAL : PRECIO_ESTANDAR_ACTUAL;
+            document.getElementById('checkoutTarjetaModal').classList.add('open');
+        }
+
+        function confirmarSimulacionPago(e) {
+            e.preventDefault();
+            const num = document.getElementById('cardNumber').value.replace(/\s+/g, '');
+            const exp = document.getElementById('cardExpiry').value.trim();
+            const cvv = document.getElementById('cardCvv').value.trim();
+
+            if (num.length < 15 || exp.length < 5 || cvv.length < 3) {
+                alert('Por favor completa un número de tarjeta válido, fecha de vencimiento (MM/AA) y código CCV.');
+                return;
+            }
+
+            TERMINACION_TARJETA_PAGO = num.slice(-4);
+            FOLIO_PAGO_AUTORIZADO = 'SIM-' + Math.floor(100000 + Math.random() * 900000);
+
+            // Limpiar campos de tarjeta inmediatamente
+            document.getElementById('cardNumber').value = '';
+            document.getElementById('cardCvv').value = '';
+            document.getElementById('checkoutTarjetaModal').classList.remove('open');
+
+            alert(`✅ Cobro Simulado Autorizado\n• Folio: ${FOLIO_PAGO_AUTORIZADO}\n• Tarjeta: **** ${TERMINACION_TARJETA_PAGO}\n\nAhora llena los datos de tu negocio en el formulario inferior para publicarte.`);
+
+            // Mostrar el recuadro de Solicitud de Alta en el Directorio
+            const boxForm = document.getElementById('contenedorFormularioAlta');
+            if (boxForm) {
+                boxForm.style.display = 'grid';
+                if (!document.getElementById('bannerComprobantePago')) {
+                    const cardForm = boxForm.querySelector('.register-card');
+                    if (cardForm) {
+                        const aviso = document.createElement('div');
+                        aviso.id = 'bannerComprobantePago';
+                        aviso.style.cssText = 'background:#dcfce7; color:#166534; border:1px solid #86efac; padding:0.75rem 1rem; border-radius:0.65rem; font-size:0.84rem; font-weight:700; margin-bottom:1rem;';
+                        aviso.innerHTML = `✅ PASO 3 DE 3: Pago verificado (Folio ${FOLIO_PAGO_AUTORIZADO} • Tarjeta **** ${TERMINACION_TARJETA_PAGO}). Completa los datos de tu anuncio:`;
+                        cardForm.insertBefore(aviso, cardForm.firstChild);
+                    }
+                }
+                boxForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function enviarRegistroConFolio(e, canal) {
+            if (e) e.preventDefault();
+            if (!FOLIO_PAGO_AUTORIZADO) {
+                alert('Primero selecciona un plan y completa el paso de pago.');
+                mostrarPlanesDisponibles();
+                return;
+            }
+            if (canal === 'whatsapp' && typeof enviarRegistroWhatsAppDirecto === 'function') {
+                enviarRegistroWhatsAppDirecto(FOLIO_PAGO_AUTORIZADO, TERMINACION_TARJETA_PAGO);
+            } else if (typeof enviarRegistroCorreoDirecto === 'function') {
+                enviarRegistroCorreoDirecto(FOLIO_PAGO_AUTORIZADO, TERMINACION_TARJETA_PAGO);
+            }
+        }
         let PRECIO_DESTACADO_ACTUAL = "$499 MXN / mes";
         let MP_LINK_ESTANDAR = "https://www.mercadopago.com.mx";
         let MP_LINK_DESTACADO = "https://www.mercadopago.com.mx";
