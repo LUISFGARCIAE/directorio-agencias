@@ -173,6 +173,61 @@ img, svg, iframe, video {
                 margin-left: 0 !important;
             }
         }
+/* === ADAPTACION MOVIL DE MENUS Y VISTAS === */
+html, body {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+}
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+img, svg, iframe, video {
+    max-width: 100%;
+    height: auto;
+}
+@media (max-width: 768px) {
+    header, nav, .navbar, .nav, .header, .top-bar, .menu-bar {
+        height: auto !important;
+        min-height: 0 !important;
+        padding: 0.65rem 0.85rem !important;
+        flex-wrap: wrap !important;
+        gap: 0.5rem !important;
+    }
+    header nav, .nav-links, .menu-links, .header-actions, .nav-actions {
+        width: 100% !important;
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 0.45rem !important;
+        justify-content: flex-start !important;
+    }
+    header nav a, header nav button, .nav-links a, .nav-links button, .menu-links a, .menu-links button {
+        flex: 1 1 calc(50% - 0.35rem);
+        text-align: center !important;
+        justify-content: center !important;
+        padding: 0.52rem 0.6rem !important;
+        font-size: 0.84rem !important;
+        white-space: normal !important;
+        line-height: 1.25 !important;
+    }
+    .grid, .cards-grid, .catalogo-grid, .agencias-grid, .planes-grid, .form-grid, .row, [class*="grid"] {
+        grid-template-columns: 1fr !important;
+        gap: 0.85rem !important;
+    }
+    table {
+        display: block !important;
+        width: 100% !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+@media (max-width: 480px) {
+    header nav a, header nav button, .nav-links a, .nav-links button {
+        flex: 1 1 100% !important;
+    }
+    h1 { font-size: 1.4rem !important; line-height: 1.25 !important; }
+    h2 { font-size: 1.18rem !important; line-height: 1.28 !important; }
+    h3 { font-size: 1.02rem !important; }
+}
 </style>
 </head>
 <body>
@@ -492,6 +547,156 @@ img, svg, iframe, video {
         }
 
         // Funciones del Embudo de Contratacion y Cobro Mercado Pago + SPEI
+        function obtenerWhatsappContacto(cfg) {
+            const b2b = (cfg && cfg.comercialB2B) ? cfg.comercialB2B : {};
+            const raw = String(b2b.whatsappAdmin || "525652415593").replace(/\D/g, "");
+            return raw || "525652415593";
+        }
+
+        function obtenerEnlaceCobroExterno(cfg, planTexto) {
+            const p = (cfg && cfg.pagosB2B) ? cfg.pagosB2B : {};
+            const esDest = /destac/i.test(String(planTexto || ""));
+            const urlElegida = esDest
+                ? (p.mpLinkDestacado || p.mpLinkEstandar || "https://www.mercadolibre.com.mx/")
+                : (p.mpLinkEstandar || p.mpLinkDestacado || "https://www.mercadolibre.com.mx/");
+            return /^https?:\/\//i.test(String(urlElegida || "").trim())
+                ? String(urlElegida).trim()
+                : "https://www.mercadolibre.com.mx/";
+        }
+
+        function prepararModalCobroDirecto(cfg, planTexto) {
+            const modal = document.getElementById("modalPago");
+            if (!modal) return;
+
+            const p = (cfg && cfg.pagosB2B) ? cfg.pagosB2B : {};
+            const waNum = obtenerWhatsappContacto(cfg);
+            const urlCobro = obtenerEnlaceCobroExterno(cfg, planTexto);
+            const banco = p.speiBanco || "Mercado Pago / STP";
+            const clabe = p.speiClabe || "0000 0000 0000 0000 00";
+            const benef = p.speiBeneficiario || "Directorio Viajero México";
+
+            // Ocultar bloques de captura de tarjeta o etiquetas de simulacion dentro del modal
+            modal.querySelectorAll("div, label, p, span").forEach(el => {
+                if (el.id === "dvFlujoCobroDirecto" || el.closest("#dvFlujoCobroDirecto")) return;
+                const t = (el.textContent || "").trim();
+                if (/^SIMULACI[ÓO]N DE COBRO$/i.test(t) || /^VISA\s*•\s*MC\s*•\s*AMEX$/i.test(t) || /Pago con Tarjeta de Cr[ée]dito o D[ée]bito/i.test(t) || /Ingresa los datos de tu tarjeta/i.test(t)) {
+                    el.style.display = "none";
+                }
+                const tieneInputTarjeta = el.querySelector && el.querySelector('input[placeholder*="0000"], input[placeholder*="12/29"], input[placeholder*="123"], input[placeholder*="LUIS FERNANDO"]');
+                if (tieneInputTarjeta && el.children.length <= 3) {
+                    el.style.display = "none";
+                }
+            });
+
+            let box = document.getElementById("dvFlujoCobroDirecto");
+            if (!box) {
+                box = document.createElement("div");
+                box.id = "dvFlujoCobroDirecto";
+                box.style.cssText = "margin:0.85rem 0 1rem; padding:0.9rem; border-radius:10px; border:1px solid rgba(56,189,248,0.4); background:rgba(15,23,42,0.72); color:#f1f5f9; font-size:0.88rem;";
+
+                const bloquePlan = Array.from(modal.querySelectorAll("div")).find(d =>
+                    /PLAN ELEGIDO/i.test(d.textContent || "") && /MONTO A COBRAR/i.test(d.textContent || "")
+                );
+                if (bloquePlan && bloquePlan.parentNode) {
+                    bloquePlan.parentNode.insertBefore(box, bloquePlan.nextSibling);
+                } else {
+                    const cont = modal.firstElementChild || modal;
+                    cont.appendChild(box);
+                }
+            }
+
+            const msgWa = encodeURIComponent(`Hola, realicé el pago para mi anuncio en Directorio Viajero (${planTexto || "Plan seleccionado"}) y envío mi comprobante para continuar con la solicitud y el formulario de ingreso.`);
+            const waUrl = `https://wa.me/${waNum}?text=${msgWa}`;
+
+            box.innerHTML = `
+                <div style="font-weight:700; color:#38bdf8; margin-bottom:0.55rem;">Elige cómo realizarás tu pago:</div>
+                <div style="display:flex; flex-wrap:wrap; gap:0.75rem; margin-bottom:0.75rem;">
+                    <label style="display:inline-flex; align-items:center; gap:0.35rem; cursor:pointer; font-weight:600;">
+                        <input type="radio" name="viaCobroDirecto" id="viaML" value="Mercado Libre / Mercado Pago" checked>
+                        <span>🛒 Mercado Libre / Mercado Pago</span>
+                    </label>
+                    <label style="display:inline-flex; align-items:center; gap:0.35rem; cursor:pointer; font-weight:600;">
+                        <input type="radio" name="viaCobroDirecto" id="viaSPEI" value="Transferencia SPEI">
+                        <span>🏦 Transferencia SPEI</span>
+                    </label>
+                </div>
+
+                <div id="boxViaML" style="padding:0.7rem; border-radius:8px; background:rgba(0,158,227,0.14); border:1px solid rgba(0,158,227,0.45); margin-bottom:0.7rem;">
+                    <div style="margin-bottom:0.45rem;">Se abrirá la página/ventana de pago externa para completar el cobro:</div>
+                    <a id="linkCobroExternoML" href="${urlCobro}" target="_blank" rel="noopener noreferrer"
+                       style="display:inline-block; background:#009ee3; color:#fff; font-weight:700; text-decoration:none; padding:0.45rem 0.85rem; border-radius:6px;">
+                        ↗ Ir a pagar en Mercado Libre / Mercado Pago
+                    </a>
+                </div>
+
+                <div id="boxViaSPEI" style="display:none; padding:0.7rem; border-radius:8px; background:rgba(16,185,129,0.14); border:1px solid rgba(16,185,129,0.45); margin-bottom:0.7rem;">
+                    <div><strong>Banco:</strong> <span>${banco}</span></div>
+                    <div style="margin-top:0.25rem;">
+                        <strong>CLABE:</strong> <span id="lblSpeiClabe" style="font-family:monospace; user-select:all;">${clabe}</span>
+                        <button type="button" id="btnCopiarClabeSpei" onclick="copiarClabeSpei(this)" style="margin-left:0.4rem; padding:0.2rem 0.55rem; font-size:0.76rem; font-weight:700; border-radius:6px; border:1px solid rgba(16,185,129,0.55); background:rgba(16,185,129,0.25); color:#ecfdf5; cursor:pointer;">📋 Copiar CLABE</button>
+                    </div>
+                    <div style="margin-top:0.25rem;"><strong>Beneficiario:</strong> <span>${benef}</span></div>
+                </div>
+
+                <div style="padding:0.65rem; border-radius:8px; background:rgba(250,204,21,0.12); border:1px solid rgba(250,204,21,0.4); color:#fef08a; margin-bottom:0.7rem; line-height:1.38;">
+                    <strong>📲 Paso obligatorio tras pagar:</strong> Una vez realizado el pago, envía tu <strong>comprobante de pago</strong> al WhatsApp de contacto (<strong>+${waNum}</strong>) para continuar con la solicitud y que se te otorgue el formulario de ingreso a la plataforma.
+                    <div style="margin-top:0.45rem;">
+                        <a href="${waUrl}" target="_blank" rel="noopener noreferrer" style="display:inline-block; background:#16a34a; color:#fff; font-weight:700; text-decoration:none; padding:0.35rem 0.7rem; border-radius:6px; font-size:0.82rem;">
+                            💬 Enviar comprobante por WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="inputFolioCobroExterno" style="display:block; font-weight:600; margin-bottom:0.3rem;">
+                        Folio / Referencia o clave de rastreo del pago:
+                    </label>
+                    <input type="text" id="inputFolioCobroExterno" placeholder="Ej. ML-123456 o clave rastreo SPEI"
+                           style="width:100%; padding:0.48rem 0.65rem; border-radius:6px; border:1px solid #475569; background:#0f172a; color:#f8fafc;">
+                </div>
+            `;
+
+            const rMl = document.getElementById("viaML");
+            const rSp = document.getElementById("viaSPEI");
+            const bMl = document.getElementById("boxViaML");
+            const bSp = document.getElementById("boxViaSPEI");
+
+            function toggleVia() {
+                const isSpei = rSp && rSp.checked;
+                if (bMl) bMl.style.display = isSpei ? "none" : "block";
+                if (bSp) bSp.style.display = isSpei ? "block" : "none";
+            }
+            if (rMl) rMl.addEventListener("change", toggleVia);
+            if (rSp) rSp.addEventListener("change", toggleVia);
+        }
+
+        function procesarAutorizacionCobroDirecto(cfg, planTexto) {
+            const rSp = document.getElementById("viaSPEI");
+            const viaElegida = (rSp && rSp.checked) ? "Transferencia SPEI" : "Mercado Libre / Mercado Pago";
+            const inputFolio = document.getElementById("inputFolioCobroExterno");
+            const folio = inputFolio ? inputFolio.value.trim().toUpperCase() : "";
+            const waNum = obtenerWhatsappContacto(cfg);
+
+            if (!window._abrioPopCobroML && viaElegida === "Mercado Libre / Mercado Pago") {
+                const urlCobro = obtenerEnlaceCobroExterno(cfg, planTexto);
+                window._abrioPopCobroML = true;
+                window.open(urlCobro, "_blank", "noopener,noreferrer");
+                alert(`Se abrió la página/ventana de Mercado Libre / Mercado Pago para completar el pago.\n\nUna vez realizado el pago, envía tu comprobante al WhatsApp +${waNum} para continuar con la solicitud, ingresa aquí tu folio/referencia y vuelve a pulsar Autorizar Pago para dar el formulario de ingreso.`);
+                return false;
+            }
+
+            if (!/^[A-Z0-9\-]{5,40}$/.test(folio) || /^(.)\1+$/.test(folio.replace(/-/g, ""))) {
+                alert(`Ingresa tu folio o clave de rastreo del pago y recuerda enviar tu comprobante al WhatsApp +${waNum} para continuar con la solicitud y abrir el formulario de ingreso.`);
+                if (inputFolio) inputFolio.focus();
+                return false;
+            }
+
+            window.METODO_PAGO_VALIDADO = viaElegida;
+            window.REFERENCIA_PAGO_VALIDADA = folio;
+            if (typeof FOLIO_AUTORIZADO !== "undefined") FOLIO_AUTORIZADO = folio;
+            if (typeof TERMINACION_TARJETA !== "undefined") TERMINACION_TARJETA = folio.slice(-4);
+            return true;
+        }
         function obtenerLinkMercadoPagoPorPlan(cfg, planTexto) {
             const p = cfg && cfg.pagosB2B ? cfg.pagosB2B : {};
             const esDest = /destac/i.test(String(planTexto || ""));
