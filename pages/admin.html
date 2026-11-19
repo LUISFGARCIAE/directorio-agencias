@@ -385,8 +385,7 @@
                     <h3 style="font-size: 1.08rem; color: #009ee3; margin: 0 0 0.85rem;">💳 Mercado Pago y Transferencia SPEI</h3>
                     <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:0.85rem; font-size:0.84rem; font-weight:700;">
                         <label style="display:flex; align-items:center; gap:0.4rem;"><input type="checkbox" id="cfgMostrarPagos" style="width:auto;"> Mostrar pagos</label>
-                        <label style="display:flex; align-items:center; gap:0.4rem;"><input type="checkbox" id="cfgModoDemoPago" style="width:auto;"> Modo simulación</label>
-                    </div>
+                        </div>
                     <div class="form-group"><label>Link Mercado Pago — Plan Estándar</label><input type="url" id="cfgMpLinkEst" placeholder="https://mpago.la/..."></div>
                     <div class="form-group"><label>Link Mercado Pago — Plan Destacado</label><input type="url" id="cfgMpLinkDest" placeholder="https://mpago.la/..."></div>
                     <div class="grid-2">
@@ -884,6 +883,7 @@
             // 2. Comercial y Pagos
             const b2b = configActual.comercialB2B || {};
             const pag = configActual.pagosB2B || {};
+            configActual.pagosB2B.modoDemoVisual = true;
             document.getElementById("cfgWaAdmin").value = b2b.whatsappAdmin || "525652415593";
             document.getElementById("cfgCorreoAdmin").value = b2b.correoAdmin || "";
             document.getElementById("cfgEstPrecio").value = b2b.planEstandarPrecio || "$100 MXN";
@@ -894,7 +894,7 @@
             document.getElementById("cfgBannerPrecio").value = b2b.bannerPatrocinadoPrecio || "$899 MXN / mes";
 
             document.getElementById("cfgMostrarPagos").checked = pag.mostrarModuloPagos !== false;
-            document.getElementById("cfgModoDemoPago").checked = pag.modoDemoVisual !== false;
+            /* Modo simulacion activo por defecto durante pruebas */
             document.getElementById("cfgMpLinkEst").value = pag.mpLinkEstandar || "https://www.mercadopago.com.mx";
             document.getElementById("cfgMpLinkDest").value = pag.mpLinkDestacado || "https://www.mercadopago.com.mx";
             document.getElementById("cfgSpeiBanco").value = pag.speiBanco || "Mercado Pago / STP";
@@ -942,7 +942,7 @@
             });
             configActual.pagosB2B = {
                 mostrarModuloPagos: document.getElementById("cfgMostrarPagos").checked,
-                modoDemoVisual: document.getElementById("cfgModoDemoPago").checked,
+                modoDemoVisual: true,
                 mpLinkEstandar: validarUrlSegura(document.getElementById("cfgMpLinkEst").value) || "https://www.mercadopago.com.mx",
                 mpLinkDestacado: validarUrlSegura(document.getElementById("cfgMpLinkDest").value) || "https://www.mercadopago.com.mx",
                 speiBanco: document.getElementById("cfgSpeiBanco").value.trim(),

@@ -381,10 +381,7 @@
                 <button type="submit" class="btn-mercadopago" style="width: 100%; padding: 0.85rem; font-size: 0.95rem;">
                     🔒 Autorizar Pago y Abrir Formulario de Registro
                 </button>
-                <p style="font-size: 0.72rem; color: #0284c7; text-align: center; margin-top: 0.65rem; font-weight: 600;">
-                    🧪 Simulación de prueba segura: no almacena datos bancarios y desbloquea tu ficha al instante.
-                </p>
-            </form>
+                </form>
         </div>
     </div>
 
@@ -617,7 +614,7 @@
 
                 const boxForm = document.getElementById("contenedorFormularioAlta");
                 const banner = document.getElementById("bannerComprobantePago");
-                banner.textContent = `✅ Pago Simulado Autorizado (Folio: ${FOLIO_AUTORIZADO} • Tarjeta **** ${TERMINACION_TARJETA}). Ahora llena los datos de tu negocio:`;
+                banner.textContent = `✅ Pago Autorizado (Folio: ${FOLIO_AUTORIZADO} • Tarjeta **** ${TERMINACION_TARJETA}). Ahora llena los datos de tu negocio:`;
                 boxForm.style.display = "grid";
                 boxForm.scrollIntoView({ behavior: "smooth", block: "start" });
             });
