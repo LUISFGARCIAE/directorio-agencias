@@ -121,7 +121,8 @@
         .btn-mercadopago:hover {
             background: #0082bd;
         }
-    /* === ADAPTACION MOVIL LIMPIA (DIRECTORIO VIAJERO) === */
+    
+/* === RESPONSIVE MOVIL REFINADO === */
 html, body {
     max-width: 100%;
     overflow-x: hidden;
@@ -129,103 +130,92 @@ html, body {
 *, *::before, *::after {
     box-sizing: border-box;
 }
-img, svg, iframe, video {
+img, svg, video {
     max-width: 100%;
     height: auto;
 }
+
 @media (max-width: 768px) {
-    body {
-        font-size: 15px;
-    }
-    .container, .main-content, .wrapper, main, section {
-        max-width: 100%;
-    }
-    table {
-        display: block;
-        width: 100%;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-    button, .btn, a.btn, input, select, textarea {
-        max-width: 100%;
-    }
-}
-@media (max-width: 480px) {
-    h1 { font-size: 1.45rem !important; line-height: 1.25 !important; }
-    h2 { font-size: 1.22rem !important; line-height: 1.28 !important; }
-    h3 { font-size: 1.05rem !important; }
-}
-        @media (max-width: 640px) {
-            #modalPago > div, #modalPago .modal-content, #modalPago .modal-box {
-                width: 95vw !important;
-                max-width: 95vw !important;
-                max-height: 90vh !important;
-                overflow-y: auto !important;
-                padding: 1rem !important;
-            }
-            #dvMetodosCobroReales > div:first-of-type {
-                flex-direction: column !important;
-                gap: 0.5rem !important;
-            }
-            #btnCopiarClabeSpei {
-                display: inline-block;
-                margin-top: 0.35rem;
-                margin-left: 0 !important;
-            }
-        }
-/* === ADAPTACION MOVIL DE MENUS Y VISTAS === */
-html, body {
-    max-width: 100% !important;
-    overflow-x: hidden !important;
-}
-*, *::before, *::after {
-    box-sizing: border-box;
-}
-img, svg, iframe, video {
-    max-width: 100%;
-    height: auto;
-}
-@media (max-width: 768px) {
-    header, nav, .navbar, .nav, .header, .top-bar, .menu-bar {
-        height: auto !important;
-        min-height: 0 !important;
-        padding: 0.65rem 0.85rem !important;
-        flex-wrap: wrap !important;
+    /* Encabezado y navegacion compactos */
+    header, .navbar, .top-bar {
+        padding: 0.65rem 0.9rem !important;
         gap: 0.5rem !important;
     }
-    header nav, .nav-links, .menu-links, .header-actions, .nav-actions {
-        width: 100% !important;
+    header nav, .nav-links, .menu-links, .header-actions {
         display: flex !important;
         flex-wrap: wrap !important;
-        gap: 0.45rem !important;
-        justify-content: flex-start !important;
+        align-items: center !important;
+        gap: 0.4rem !important;
+        width: 100%;
     }
-    header nav a, header nav button, .nav-links a, .nav-links button, .menu-links a, .menu-links button {
-        flex: 1 1 calc(50% - 0.35rem);
-        text-align: center !important;
-        justify-content: center !important;
-        padding: 0.52rem 0.6rem !important;
-        font-size: 0.84rem !important;
-        white-space: normal !important;
-        line-height: 1.25 !important;
+    header nav a, header nav button, .nav-links a, .nav-links button, .header-actions a, .header-actions button {
+        width: auto !important;
+        flex: 0 1 auto !important;
+        padding: 0.42rem 0.72rem !important;
+        font-size: 0.82rem !important;
+        border-radius: 8px;
+        white-space: nowrap;
     }
-    .grid, .cards-grid, .catalogo-grid, .agencias-grid, .planes-grid, .form-grid, .row, [class*="grid"] {
-        grid-template-columns: 1fr !important;
-        gap: 0.85rem !important;
-    }
-    table {
-        display: block !important;
-        width: 100% !important;
+
+    /* Pestanas del Panel Maestro deslizables horizontalmente sin apilarse en exceso */
+    .tabs, .nav-tabs {
+        display: flex !important;
+        flex-wrap: nowrap !important;
         overflow-x: auto !important;
         -webkit-overflow-scrolling: touch;
+        gap: 0.45rem !important;
+        padding-bottom: 0.35rem;
+        scrollbar-width: thin;
+    }
+    .tabs button, .nav-tabs button {
+        flex: 0 0 auto !important;
+        white-space: nowrap !important;
+        font-size: 0.84rem !important;
+        padding: 0.5rem 0.8rem !important;
+    }
+
+    /* Contenedores principales y rejillas de tarjetas */
+    main, .container, .main-content, .wrapper {
+        padding-left: 0.85rem !important;
+        padding-right: 0.85rem !important;
+    }
+    .catalogo-grid, .agencias-grid, .ofertas-grid, .planes-grid, .cards-grid, .form-grid {
+        grid-template-columns: 1fr !important;
+        gap: 0.9rem !important;
+    }
+
+    /* Inputs a 16px para evitar zoom automatico en iOS/Android */
+    input[type="text"], input[type="email"], input[type="tel"], input[type="url"], input[type="password"], input[type="number"], select, textarea {
+        font-size: 16px !important;
+    }
+
+    /* Modal de pago comodo en pantalla de celular */
+    #modalPago {
+        padding: 0.6rem !important;
+        align-items: flex-start !important;
+        overflow-y: auto !important;
+    }
+    #modalPago > div {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0.5rem auto !important;
+        padding: 1rem !important;
+        border-radius: 14px !important;
+    }
+    #dvBloqueCobroCompleto {
+        padding: 0.75rem !important;
+        font-size: 0.85rem !important;
+    }
+    #btnCopiarClabeSpei {
+        display: inline-block !important;
+        margin-top: 0.35rem !important;
+        margin-left: 0 !important;
     }
 }
-@media (max-width: 480px) {
-    header nav a, header nav button, .nav-links a, .nav-links button {
-        flex: 1 1 100% !important;
-    }
-    h1 { font-size: 1.4rem !important; line-height: 1.25 !important; }
-    h2 { font-size: 1.18rem !important; line-height: 1.28 !important; }
+
+@media (max-width: 420px) {
+    h1 { font-size: 1.35rem !important; line-height: 1.25 !important; }
+    h2 { font-size: 1.15rem !important; line-height: 1.28 !important; }
     h3 { font-size: 1.02rem !important; }
 }
 </style>
