@@ -539,7 +539,7 @@
             <div class="publish-bar">
                 <div>
                     <strong>¿Terminaste tus cambios?</strong>
-                    <span style="font-size: 0.85rem; color: #cbd5e1; display: block;">Se actualizarán los archivos en GitHub y el sitio en vivo en ~40 segundos.</span>
+                    <span style="font-size: 0.85rem; color: #cbd5e1; display: block;">Se actualizarán los archivos en GitHub y el sitio en vivo en ~10 segundos.</span>
                 </div>
                 <button type="button" onclick="publicarTodoEnVivo()" class="btn-action btn-whatsapp" style="flex: 0 0 auto; padding: 0.8rem 1.75rem; font-size: 0.95rem;">
                     🚀 Publicar Todos los Cambios en Vivo
@@ -1086,7 +1086,7 @@
                 });
                 catalogoSha = resCat.content.sha;
 
-                setStatus("✅ ¡Todo publicado con éxito! Recarga el sitio público en ~40 segundos para ver los cambios.", "#16a34a");
+                setStatus("✅ ¡Todo publicado con éxito! Recarga el sitio público en ~10 segundos para ver los cambios.", "#16a34a");
             } catch (e) {
                 setStatus("❌ Error al publicar: " + e.message, "#dc2626");
             }
