@@ -455,7 +455,44 @@
             if (btn) btn.textContent = actual === "dark" ? "☀️" : "🌙";
         }
 
-        // Funciones del Embudo de Contratacion y Pago Simulado
+        // Funciones del Embudo de Contratacion y Validacion de Pago
+        function validarAlgoritmoLuhn(numLimpio) {
+            if (!/^\d{13,19}$/.test(numLimpio)) return false;
+            let suma = 0;
+            let alternar = false;
+            for (let i = numLimpio.length - 1; i >= 0; i--) {
+                let n = parseInt(numLimpio.charAt(i), 10);
+                if (alternar) {
+                    n *= 2;
+                    if (n > 9) n -= 9;
+                }
+                suma += n;
+                alternar = !alternar;
+            }
+            return (suma % 10) === 0;
+        }
+
+        function validarVigenciaMMAA(valor) {
+            const m = String(valor || "").trim().match(/^(0[1-9]|1[0-2])\s*\/\s*(\d{2})$/);
+            if (!m) return false;
+            const mes = parseInt(m[1], 10);
+            const anio = 2000 + parseInt(m[2], 10);
+            const ahora = new Date();
+            const mesActual = ahora.getMonth() + 1;
+            const anioActual = ahora.getFullYear();
+            if (anio < anioActual || anio > anioActual + 15) return false;
+            if (anio === anioActual && mes < mesActual) return false;
+            return true;
+        }
+
+        function validarReferenciaComprobante(ref) {
+            const limpia = String(ref || "").trim();
+            // Evita letras repetidas o cadenas sin estructura de folio/referencia real (min 6 chars alfanumericos con al menos 1 digito)
+            if (!/^[A-Za-z0-9\-]{6,32}$/.test(limpia)) return false;
+            if (!/\d/.test(limpia)) return false;
+            if (/^(.)\1+$/.test(limpia.replace(/-/g, ""))) return false;
+            return true;
+        }
         function abrirModalPagoPlan(planNombre) {
             const planElegido = planNombre === "Plan Estándar" ? "Plan Estándar" : "Plan Destacado";
             const selectPlan = document.getElementById("planAgencia");
@@ -656,6 +693,8 @@
                     fecha: new Date().toLocaleString("es-MX"),
                     estado: "Pendiente de Autorización",
                     terminacionTarjeta: TERMINACION_TARJETA,
+                        metodoPago: window.METODO_PAGO_VALIDADO || "Validado",
+                        referenciaPago: window.REFERENCIA_PAGO_VALIDADA || TERMINACION_TARJETA,
                     plan: plan,
                     correoContacto: correo,
                     anunciante: {
