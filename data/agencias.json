@@ -33,6 +33,426 @@
                   ],
     "anunciantes":  [
                         {
+                            "colorTexto":  "#0284c7",
+                            "rating":  "4.9",
+                            "promocion":  "2x1 en tour a Isla Mujeres + traslado aeropuerto-hotel gratis",
+                            "destacada":  true,
+                            "cuponCodigo":  "CARIBE2X1",
+                            "nombre":  "Caribe Azul Experiencias",
+                            "duracion":  "4 Días / 3 Noches Todo Incluido",
+                            "tags":  [
+                                         "#CancúnTodoIncluido",
+                                         "#RivieraMaya",
+                                         "#MSI"
+                                     ],
+                            "web":  "https://www.google.com/search?q=paquetes+cancun+todo+incluido",
+                            "categoriaNombre":  "Viajes y Turismo",
+                            "destinos":  [
+                                             "cancun"
+                                         ],
+                            "rnt":  "01230450112",
+                            "id":  "caribe-azul-experiencias-demo",
+                            "estadosSalida":  [
+                                                  "cdmx",
+                                                  "monterrey",
+                                                  "guadalajara",
+                                                  "puebla",
+                                                  "bajio"
+                                              ],
+                            "ubicacionMaps":  "Zona Hotelera, Cancun, Quintana Roo, Mexico",
+                            "iniciales":  "CA",
+                            "amenidades":  [
+                                               "✈️ Vuelo Redondo",
+                                               "🍹 Todo Incluido",
+                                               "🚐 Traslados Aeropuerto"
+                                           ],
+                            "salidaDesde":  "CDMX, Monterrey y Guadalajara hacia Cancún",
+                            "etiquetaEstado":  "✔ Anunciante Verificado",
+                            "tiposCobro":  [
+                                               "Tarjeta Crédito/Débito",
+                                               "3, 6 y 12 MSI",
+                                               "Transferencia SPEI",
+                                               "Efectivo"
+                                           ],
+                            "cuponBeneficio":  "2x1 en tour en catamarán a Isla Mujeres reservando este mes",
+                            "colorFondo":  "#e0f2fe",
+                            "categoria":  "viajes",
+                            "especialidad":  "Paquetes todo incluido a Cancún y Riviera Maya con vuelo redondo",
+                            "rangoPrecio":  "$$ • $8,990 MXN / persona",
+                            "descripcion":  "Vuelo redondo desde CDMX, MTY o GDL, resort frente al mar con alimentos y bebidas ilimitadas, impuestos incluidos y atención personalizada 24/7.",
+                            "galeria":  [
+                                            "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format\u0026fit=crop\u0026w=1000\u0026q=80",
+                                            "https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format\u0026fit=crop\u0026w=1000\u0026q=80",
+                                            "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format\u0026fit=crop\u0026w=1000\u0026q=80"
+                                        ],
+                            "whatsappNumero":  "525512345701"
+                        },
+                        {
+                            "colorTexto":  "#0f766e",
+                            "rating":  "5.0",
+                            "promocion":  "Masaje relajante en pareja gratis al reservar 2 noches o más",
+                            "destacada":  true,
+                            "cuponCodigo":  "TEPOZSPA",
+                            "nombre":  "Hotel Boutique Casa Tepoz",
+                            "duracion":  "Estancia por noche (Check-in 15:00 / Out 13:00)",
+                            "tags":  [
+                                         "#Tepoztlán",
+                                         "#HotelBoutique",
+                                         "#SpaParejas"
+                                     ],
+                            "web":  "https://www.google.com/search?q=hotel+boutique+tepoztlan",
+                            "categoriaNombre":  "Hoteles y Hostales",
+                            "destinos":  [
+                                             "pueblos-magicos"
+                                         ],
+                            "rnt":  "01170330089",
+                            "id":  "hotel-boutique-casa-tepoz-demo",
+                            "estadosSalida":  [
+                                                  "cdmx",
+                                                  "puebla"
+                                              ],
+                            "ubicacionMaps":  "Tepoztlan, Morelos, Mexico",
+                            "iniciales":  "CT",
+                            "amenidades":  [
+                                               "🍳 Desayuno Americano",
+                                               "🏊 Alberca Climatizada",
+                                               "🧖 Temazcal y Spa"
+                                           ],
+                            "salidaDesde":  "Tepoztlán, Morelos (a 1 hr de CDMX)",
+                            "etiquetaEstado":  "✔ Hotel Verificado",
+                            "tiposCobro":  [
+                                               "Tarjeta Crédito/Débito",
+                                               "6 MSI",
+                                               "Transferencia SPEI"
+                                           ],
+                            "cuponBeneficio":  "Masaje relajante de 45 min para 2 personas en estancias de 2+ noches",
+                            "colorFondo":  "#ccfbf1",
+                            "categoria":  "hoteles",
+                            "especialidad":  "Suites con vista al Tepozteco, alberca climatizada y temazcal",
+                            "rangoPrecio":  "$$$ • $3,450 MXN / noche",
+                            "descripcion":  "Escapada boutique rodeada de naturaleza con 14 suites privadas, restaurante de cocina de autor, spa con temazcal tradicional y fogatero nocturno.",
+                            "galeria":  [
+                                            "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format\u0026fit=crop\u0026w=1000\u0026q=80",
+                                            "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format\u0026fit=crop\u0026w=1000\u0026q=80",
+                                            "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format\u0026fit=crop\u0026w=1000\u0026q=80"
+                                        ],
+                            "whatsappNumero":  "527771234702"
+                        },
+                        {
+                            "colorTexto":  "#be123c",
+                            "rating":  "4.9",
+                            "promocion":  "Barra libre nacional de cortesía para 100 invitados apartando fecha",
+                            "destacada":  true,
+                            "cuponCodigo":  "BODA2026",
+                            "nombre":  "Hacienda San Gabriel de las Flores",
+                            "duracion":  "Evento completo (10 horas + montaje)",
+                            "tags":  [
+                                         "#BodasCuernavaca",
+                                         "#HaciendaBodas",
+                                         "#TodoIncluido"
+                                     ],
+                            "web":  "https://www.google.com/search?q=haciendas+para+bodas+cuernavaca",
+                            "categoriaNombre":  "Bodas y Eventos",
+                            "destinos":  [
+                                             "pueblos-magicos"
+                                         ],
+                            "rnt":  "",
+                            "id":  "hacienda-san-gabriel-bodas-demo",
+                            "estadosSalida":  [
+                                                  "cdmx",
+                                                  "puebla"
+                                              ],
+                            "ubicacionMaps":  "Cuernavaca, Morelos, Mexico",
+                            "iniciales":  "SG",
+                            "amenidades":  [
+                                               "⛪ Capilla Consagrada",
+                                               "🍽️ Banquete 4 Tiempos",
+                                               "🚗 Valet Parking"
+                                           ],
+                            "salidaDesde":  "Cuernavaca y Jiutepec, Morelos",
+                            "etiquetaEstado":  "✔ Recinto Verificado",
+                            "tiposCobro":  [
+                                               "Transferencia SPEI",
+                                               "Plan de Pagos Mensuales",
+                                               "Tarjeta Crédito/Débito"
+                                           ],
+                            "cuponBeneficio":  "Barra libre nacional incluida para 100 personas al apartar con 20%",
+                            "colorFondo":  "#ffe4e6",
+                            "categoria":  "bodas",
+                            "especialidad":  "Bodas destino todo incluido con banquete de 4 tiempos y capilla",
+                            "rangoPrecio":  "$$$ • Paquetes desde $145,000 MXN",
+                            "descripcion":  "Jardines monumentales para 100 a 450 invitados, capilla consagrada, suite nupcial, mobiliario de lujo, coordinación integral y estacionamiento privado.",
+                            "galeria":  [
+                                            "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format\u0026fit=crop\u0026w=1000\u0026q=80",
+                                            "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format\u0026fit=crop\u0026w=1000\u0026q=80",
+                                            "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format\u0026fit=crop\u0026w=1000\u0026q=80"
+                                        ],
+                            "whatsappNumero":  "527771234703"
+                        },
+                        {
+                            "colorTexto":  "#059669",
+                            "rating":  "4.8",
+                            "promocion":  "Noche de domingo al 50% + carga de leña para chimenea y fogata",
+                            "destacada":  false,
+                            "cuponCodigo":  "VALLE50",
+                            "nombre":  "Quinta Los Cedros Valle de Bravo",
+                            "duracion":  "Renta por noche o fin de semana (Vie-Dom)",
+                            "tags":  [
+                                         "#ValleDeBravo",
+                                         "#QuintaPrivada",
+                                         "#PetFriendly"
+                                     ],
+                            "web":  "",
+                            "categoriaNombre":  "Quintas y Estancias",
+                            "destinos":  [
+                                             "pueblos-magicos"
+                                         ],
+                            "rnt":  "",
+                            "id":  "quinta-los-cedros-valle-demo",
+                            "estadosSalida":  [
+                                                  "cdmx",
+                                                  "bajio"
+                                              ],
+                            "ubicacionMaps":  "Avandaro, Valle de Bravo, Estado de Mexico",
+                            "iniciales":  "QC",
+                            "amenidades":  [
+                                               "🐾 Pet Friendly",
+                                               "🔥 Chimenea y Asador",
+                                               "📶 Wi-Fi Alta Velocidad"
+                                           ],
+                            "salidaDesde":  "Avándaro, Valle de Bravo, Edo. Mex.",
+                            "etiquetaEstado":  "✔ Propiedad Verificada",
+                            "tiposCobro":  [
+                                               "Transferencia SPEI",
+                                               "Depósito Bancario",
+                                               "Efectivo"
+                                           ],
+                            "cuponBeneficio":  "50% de descuento en la noche de domingo en reservas de viernes a lunes",
+                            "colorFondo":  "#d1fae5",
+                            "categoria":  "hospedaje",
+                            "especialidad":  "Casa de descanso en el bosque con jacuzzi exterior, asador y jardín",
+                            "rangoPrecio":  "$$ • $6,800 MXN / noche (hasta 12 pers.)",
+                            "descripcion":  "Cabaña moderna de 5 recámaras a 5 minutos del lago, cocina equipada, terraza con asador argentino, Wi-Fi de fibra óptica y área pet-friendly.",
+                            "galeria":  [
+                                            "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format\u0026fit=crop\u0026w=1000\u0026q=80",
+                                            "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format\u0026fit=crop\u0026w=1000\u0026q=80",
+                                            "https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format\u0026fit=crop\u0026w=1000\u0026q=80"
+                                        ],
+                            "whatsappNumero":  "527261234704"
+                        },
+                        {
+                            "colorTexto":  "#d97706",
+                            "rating":  "4.9",
+                            "promocion":  "Botella de vino espumoso de cortesía en mesas de 6 o más personas",
+                            "destacada":  false,
+                            "cuponCodigo":  "BRINDISROMA",
+                            "nombre":  "Terraza Mirador Roma",
+                            "duracion":  "Reserva de mesa (3 hrs) o terraza privada",
+                            "tags":  [
+                                         "#RooftopCDMX",
+                                         "#RomaNorte",
+                                         "#CenasPrivadas"
+                                     ],
+                            "web":  "",
+                            "categoriaNombre":  "Restaurantes y Terrazas",
+                            "destinos":  [
+                                             "pueblos-magicos"
+                                         ],
+                            "rnt":  "",
+                            "id":  "terraza-mirador-roma-demo",
+                            "estadosSalida":  [
+                                                  "cdmx"
+                                              ],
+                            "ubicacionMaps":  "Roma Norte, Ciudad de Mexico, CDMX",
+                            "iniciales":  "MR",
+                            "amenidades":  [
+                                               "🍸 Mixología de Autor",
+                                               "🌆 Vista Panorámica",
+                                               "🧾 Facturación Inmediata"
+                                           ],
+                            "salidaDesde":  "Col. Roma Norte, Cuauhtémoc, CDMX",
+                            "etiquetaEstado":  "✔ Restaurante Verificado",
+                            "tiposCobro":  [
+                                               "Tarjeta Crédito/Débito",
+                                               "AMEX",
+                                               "Transferencia SPEI",
+                                               "Efectivo"
+                                           ],
+                            "cuponBeneficio":  "Botella de vino espumoso de regalo para celebraciones de 6+ invitados",
+                            "colorFondo":  "#fef3c7",
+                            "categoria":  "gastronomia",
+                            "especialidad":  "Cocina mexicana contemporánea, mixología de autor y cenas privadas",
+                            "rangoPrecio":  "$$ • Menús desde $690 MXN / persona",
+                            "descripcion":  "Rooftop panorámico ideal para cumpleaños, pedidas de mano, cenas corporativas y brunch dominical con música en vivo y menú de temporada.",
+                            "galeria":  [
+                                            "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format\u0026fit=crop\u0026w=1000\u0026q=80",
+                                            "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format\u0026fit=crop\u0026w=1000\u0026q=80",
+                                            "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format\u0026fit=crop\u0026w=1000\u0026q=80"
+                                        ],
+                            "whatsappNumero":  "525512345705"
+                        },
+                        {
+                            "colorTexto":  "#334155",
+                            "rating":  "4.9",
+                            "promocion":  "10% de descuento en traslados grupales mayores a 15 pasajeros",
+                            "destacada":  false,
+                            "cuponCodigo":  "GRUPO10",
+                            "nombre":  "Rutas Ejecutivas Sprinter MX",
+                            "duracion":  "Viaje redondo o renta por jornada (12 hrs)",
+                            "tags":  [
+                                         "#SprinterVIP",
+                                         "#TransporteBodas",
+                                         "#ViajesGrupales"
+                                     ],
+                            "web":  "",
+                            "categoriaNombre":  "Transporte Turístico",
+                            "destinos":  [
+                                             "acapulco",
+                                             "pueblos-magicos"
+                                         ],
+                            "rnt":  "02090180044",
+                            "id":  "rutas-ejecutivas-sprinter-demo",
+                            "estadosSalida":  [
+                                                  "cdmx",
+                                                  "puebla",
+                                                  "bajio"
+                                              ],
+                            "ubicacionMaps":  "Benito Juarez, Ciudad de Mexico, CDMX",
+                            "iniciales":  "RE",
+                            "amenidades":  [
+                                               "🛡️ Seguro de Viajero",
+                                               "❄️ Aire Acondicionado",
+                                               "🔌 Puertos USB"
+                                           ],
+                            "salidaDesde":  "CDMX, Puebla, Querétaro y Toluca",
+                            "etiquetaEstado":  "✔ Flotilla Asegurada SCT",
+                            "tiposCobro":  [
+                                               "Transferencia SPEI",
+                                               "Tarjeta Crédito/Débito",
+                                               "Factura Fiscal",
+                                               "Efectivo"
+                                           ],
+                            "cuponBeneficio":  "10% de descuento directo en renta de Sprinter de 20 plazas",
+                            "colorFondo":  "#e2e8f0",
+                            "categoria":  "transporte",
+                            "especialidad":  "Camionetas Mercedes Sprinter VIP de 17 y 20 plazas con operador",
+                            "rangoPrecio":  "$$ • Traslados desde $4,200 MXN",
+                            "descripcion":  "Unidades modelo reciente con aire acondicionado, asientos reclinables, cargadores USB, seguro de viajero y casetas cotizadas en paquete transparente.",
+                            "galeria":  [
+                                            "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format\u0026fit=crop\u0026w=1000\u0026q=80",
+                                            "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?auto=format\u0026fit=crop\u0026w=1000\u0026q=80"
+                                        ],
+                            "whatsappNumero":  "525512345706"
+                        },
+                        {
+                            "colorTexto":  "#ea580c",
+                            "rating":  "5.0",
+                            "promocion":  "Brindis con vino espumoso + certificado de vuelo y fotos gratis",
+                            "destacada":  true,
+                            "cuponCodigo":  "AMANECER26",
+                            "nombre":  "Globos del Alba Teotihuacán",
+                            "duracion":  "4 horas totales (Vuelo 45-60 min + desayuno)",
+                            "tags":  [
+                                         "#GloboTeotihuacán",
+                                         "#Amanecer",
+                                         "#AventuraCDMX"
+                                     ],
+                            "web":  "https://www.google.com/search?q=vuelo+en+globo+teotihuacan",
+                            "categoriaNombre":  "Parques y Aventura",
+                            "destinos":  [
+                                             "pueblos-magicos"
+                                         ],
+                            "rnt":  "02150220061",
+                            "id":  "globos-del-alba-teotihuacan-demo",
+                            "estadosSalida":  [
+                                                  "cdmx",
+                                                  "puebla"
+                                              ],
+                            "ubicacionMaps":  "Teotihuacan, Estado de Mexico, Mexico",
+                            "iniciales":  "GA",
+                            "amenidades":  [
+                                               "🥂 Brindis Incluido",
+                                               "🍳 Desayuno Buffet",
+                                               "🚐 Pickup CDMX Opcional"
+                                           ],
+                            "salidaDesde":  "San Juan Teotihuacán (con pickup en CDMX)",
+                            "etiquetaEstado":  "✔ Pilotos Certificados AFAC",
+                            "tiposCobro":  [
+                                               "Tarjeta Crédito/Débito",
+                                               "3 MSI",
+                                               "Transferencia SPEI",
+                                               "Efectivo"
+                                           ],
+                            "cuponBeneficio":  "Paquete de fotos digitales en vuelo sin costo adicional",
+                            "colorFondo":  "#ffedd5",
+                            "categoria":  "aventura",
+                            "especialidad":  "Vuelos compartidos y privados en globo aerostático al amanecer",
+                            "rangoPrecio":  "$ • $2,150 MXN / persona",
+                            "descripcion":  "Sobrevuela las Pirámides de Teotihuacán al amanecer con coffee break de bienvenida, brindis al aterrizar, desayuno buffet y transporte opcional desde CDMX.",
+                            "galeria":  [
+                                            "https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?auto=format\u0026fit=crop\u0026w=1000\u0026q=80",
+                                            "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format\u0026fit=crop\u0026w=1000\u0026q=80",
+                                            "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format\u0026fit=crop\u0026w=1000\u0026q=80"
+                                        ],
+                            "whatsappNumero":  "525512345707"
+                        },
+                        {
+                            "colorTexto":  "#4f46e5",
+                            "rating":  "4.9",
+                            "promocion":  "Sesión Save the Date + tomas aéreas con Drone 4K sin costo extra",
+                            "destacada":  false,
+                            "cuponCodigo":  "DRONEGRATIS",
+                            "nombre":  "Lente Vivo Fotografía \u0026 Drone 4K",
+                            "duracion":  "8 a 10 horas de cobertura continua",
+                            "tags":  [
+                                         "#FotoBodas",
+                                         "#VideoDrone4K",
+                                         "#SaveTheDate"
+                                     ],
+                            "web":  "",
+                            "categoriaNombre":  "Fotografía y Experiencias",
+                            "destinos":  [
+                                             "cancun",
+                                             "acapulco",
+                                             "pueblos-magicos"
+                                         ],
+                            "rnt":  "",
+                            "id":  "lente-vivo-foto-drone-demo",
+                            "estadosSalida":  [
+                                                  "cdmx",
+                                                  "guadalajara",
+                                                  "monterrey",
+                                                  "puebla",
+                                                  "bajio"
+                                              ],
+                            "ubicacionMaps":  "Condesa, Ciudad de Mexico, CDMX",
+                            "iniciales":  "LV",
+                            "amenidades":  [
+                                               "🚁 Drone 4K",
+                                               "📸 Galería Digital HD",
+                                               "🎬 Video Resumen 5 min"
+                                           ],
+                            "salidaDesde":  "CDMX, Cuernavaca, Querétaro y Bodas Destino",
+                            "etiquetaEstado":  "✔ Estudio Verificado",
+                            "tiposCobro":  [
+                                               "Tarjeta Crédito/Débito",
+                                               "3 y 6 MSI",
+                                               "Transferencia SPEI"
+                                           ],
+                            "cuponBeneficio":  "Tomas aéreas con Drone 4K y sesión pre-boda incluidas al contratar",
+                            "colorFondo":  "#e0e7ff",
+                            "categoria":  "servicios",
+                            "especialidad":  "Fotografía documental de bodas, XV años, hoteles y video cinematográfico",
+                            "rangoPrecio":  "$$ • Cobertura desde $12,500 MXN",
+                            "descripcion":  "Entrega en galería digital privada en alta resolución, resumen cinematográfico de 5 minutos, 2 fotógrafos en evento y respaldo en la nube por 1 año.",
+                            "galeria":  [
+                                            "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format\u0026fit=crop\u0026w=1000\u0026q=80",
+                                            "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format\u0026fit=crop\u0026w=1000\u0026q=80",
+                                            "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format\u0026fit=crop\u0026w=1000\u0026q=80"
+                                        ],
+                            "whatsappNumero":  "525512345708"
+                        },
+                        {
                             "id":  "hotel-danys-837",
                             "categoria":  "viajes",
                             "categoriaNombre":  "Viajes y Turismo",
