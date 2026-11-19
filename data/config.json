@@ -68,5 +68,15 @@
                          "planDestacadoPost":  "Después $399 MXN/mes",
                          "correoAdmin":  "tu-correo@gmail.com",
                          "whatsappAdmin":  "525652415593"
-                     }
+                     },
+    "pagosB2B":  {
+                     "mostrarModuloPagos":  true,
+                     "speiBeneficiario":  "Directorio Viajero México",
+                     "speiBanco":  "Mercado Pago / STP",
+                     "mpLinkBanner":  "https://www.mercadopago.com.mx",
+                     "mpLinkDestacado":  "https://www.mercadopago.com.mx",
+                     "modoDemoVisual":  true,
+                     "speiClabe":  "0000 0000 0000 0000 00",
+                     "mpLinkOferta":  "https://www.mercadopago.com.mx"
+                 }
 }

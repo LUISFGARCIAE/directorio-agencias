@@ -189,6 +189,23 @@
                 if (res.ok) {
                     const cfg = await res.json();
                     const b2b = cfg.comercialB2B || {};
+                    const pagos = cfg.pagosB2B || {};
+                    const secPagos = document.getElementById('seccionPagosB2B');
+                    if (secPagos && pagos.mostrarModuloPagos === false) {
+                        secPagos.style.display = 'none';
+                    }
+                    if (pagos.mpLinkDestacado) {
+                        const btnMp = document.getElementById('btnPagarMPDestacado');
+                        if (btnMp) btnMp.href = pagos.mpLinkDestacado;
+                    }
+                    const badgeDemo = document.getElementById('badgeDemoPago');
+                    if (badgeDemo && pagos.modoDemoVisual === false) {
+                        badgeDemo.textContent = '🔒 Pago cifrado en línea • Envía tu comprobante por WhatsApp al finalizar';
+                    }
+                    if (pagos.speiBanco) document.getElementById('speiBancoTxt').textContent = pagos.speiBanco;
+                    if (pagos.speiBeneficiario) document.getElementById('speiBenefTxt').textContent = pagos.speiBeneficiario;
+                    if (pagos.speiClabe) document.getElementById('speiClabeTxt').textContent = pagos.speiClabe;
+                    window.__MODO_DEMO_PAGO = pagos.modoDemoVisual !== false;
                     if (b2b.correoAdmin) CORREO_DESTINO = b2b.correoAdmin;
                     if (b2b.whatsappAdmin) { let d = String(b2b.whatsappAdmin).replace(/\D/g, ""); WHATSAPP_ADMIN = d.length === 10 ? "52" + d : d; }
 
@@ -410,6 +427,19 @@
                             "Descripcion: " + encodeURIComponent(desc);
 
             window.open("https://wa.me/" + WHATSAPP_ADMIN + "?text=" + mensaje, "_blank", "noopener,noreferrer");
+        }
+            function manejarClicPagoDemo(e, planNombre) {
+            if (window.__MODO_DEMO_PAGO) {
+                e.preventDefault();
+                alert(`💳 Vista previa de Mercado Pago (${planNombre})\n\nActualmente la plataforma está en modo demostrativo / lanzamiento gratuito.\nCuando pegues tu Link de Pago real de Mercado Pago en el Panel Maestro, este botón llevará directo al checkout con tarjeta.`);
+            }
+        }
+
+        function copiarClabeSpei() {
+            const clabe = document.getElementById('speiClabeTxt').textContent.replace(/\s+/g, '');
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(clabe).then(() => alert('✅ CLABE interbancaria copiada al portapapeles.'));
+            }
         }
     </script>
 </body>

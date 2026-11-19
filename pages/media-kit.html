@@ -465,6 +465,8 @@
                 if (!res.ok) return;
                 const cfg = await res.json();
                 const b2b = cfg.comercialB2B || {};
+                const pagos = cfg.pagosB2B || {};
+                if (pagos.speiClabe) { document.getElementById('mkSpeiInfo').textContent = CLABE (): ; }
 
                 if (b2b.planEstandarPrecio) {
                     document.getElementById('mkPrecioEstandar').innerHTML = `${b2b.planEstandarPrecio}<div><span class="promo-tag">${b2b.planEstandarNota || 'Acceso Base'}</span></div>`;

@@ -1637,3 +1637,109 @@ footer a:hover { text-decoration: underline; }
     text-align: center;
     margin-top: 1rem;
 }
+
+/* Modulo visual de Pagos con Tarjeta (Mercado Pago) y SPEI */
+.payment-box-b2b {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-top: 1.75rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.payment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.85rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.card-brands-row {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex-wrap: wrap;
+}
+
+.brand-pill {
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 0.22rem 0.6rem;
+    border-radius: 0.35rem;
+    border: 1px solid var(--border);
+    background: var(--bg-muted);
+    color: var(--text-main);
+    letter-spacing: 0.03em;
+}
+
+.mp-brand-badge {
+    background: #009ee3;
+    color: #ffffff;
+    border-color: #009ee3;
+}
+
+.payment-methods-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.15rem;
+}
+
+.pay-method-card {
+    background: var(--bg-muted);
+    border: 1px solid var(--border);
+    border-radius: 0.85rem;
+    padding: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.85rem;
+}
+
+.btn-mercadopago {
+    background: #009ee3;
+    color: #ffffff;
+    border: none;
+    padding: 0.72rem 1.1rem;
+    border-radius: 0.6rem;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.btn-mercadopago:hover {
+    background: #0082bd;
+    transform: translateY(-1px);
+}
+
+.spei-clabe-box {
+    background: var(--bg-card);
+    border: 1px dashed var(--primary);
+    padding: 0.55rem 0.75rem;
+    border-radius: 0.5rem;
+    font-family: monospace;
+    font-size: 0.92rem;
+    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.crm-status-badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.18rem 0.55rem;
+    border-radius: 9999px;
+}

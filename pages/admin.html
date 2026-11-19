@@ -67,7 +67,8 @@
                 <button type="button" class="cms-tab" onclick="cambiarTab('tab-anunciantes', this)">🏢 Anunciantes (<span id="badgeCountAnun">0</span>)</button>
                 <button type="button" class="cms-tab" onclick="cambiarTab('tab-ofertas', this)">🔥 Ofertas y Banners</button>
                 <button type="button" class="cms-tab" onclick="cambiarTab('tab-guias', this)">📖 Guías SEO</button>
-                <button type="button" class="cms-tab" onclick="cambiarTab('tab-comercial', this)">💼 Tarifas y Contacto</button>
+                <button type="button" class="cms-tab" onclick="cambiarTab('tab-prospeccion', this)">🎯 Prospección y Cierre</button>
+                <button type="button" class="cms-tab" onclick="cambiarTab('tab-comercial', this)">💼 Tarifas y Mercado Pago</button>
                 <button type="button" class="cms-tab" onclick="cambiarTab('tab-opiniones', this)">💬 Opiniones y Respaldo</button>
             </div>
 
@@ -369,7 +370,46 @@
                     </div>
                 </div>
             </div>
-                        <!-- PESTAÑA COMERCIAL: CONTACTO Y TARIFAS B2B -->
+                                    <!-- PESTAÑA PROSPECCION Y CIERRE DE PRIMEROS CLIENTES -->
+            <div id="tab-prospeccion" class="cms-panel">
+                <div class="admin-grid">
+                    <div class="admin-card">
+                        <h3 style="font-size: 1.08rem; margin-bottom: 0.4rem;">🚀 Generador de Mensaje de Prospección (WhatsApp)</h3>
+                        <p style="font-size: 0.84rem; color: var(--text-soft); margin-bottom: 1rem;">Contacta agencias, haciendas, hoteles o proveedores en 1 clic con el speech personalizado y tu Media Kit.</p>
+                        <div class="form-group">
+                            <label>Nombre del Negocio Prospecto *</label>
+                            <input type="text" id="prosNombre" placeholder="Ej. Jardín Las Bugambilias">
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                            <div class="form-group">
+                                <label>WhatsApp del Prospecto (10 dígitos o con 52)</label>
+                                <input type="tel" id="prosWhatsApp" placeholder="5512345678">
+                            </div>
+                            <div class="form-group">
+                                <label>Giro del Negocio</label>
+                                <select id="prosGiro">
+                                    <option value="Agencia de Viajes">✈️ Agencia de Viajes</option>
+                                    <option value="Jardín o Hacienda de Bodas">💍 Jardín / Hacienda de Bodas</option>
+                                    <option value="Quinta o Casa de Descanso">🏡 Quinta / Casa de Descanso</option>
+                                    <option value="Hotel Boutique u Hostal">🏨 Hotel Boutique / Hostal</option>
+                                    <option value="Grupo Musical o DJ">🎶 Grupo Musical / DJ</option>
+                                    <option value="Tour de Aventura o Fotografía">📸 Aventura / Fotografía</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 0.65rem; flex-wrap: wrap;">
+                            <button type="button" class="btn-action btn-whatsapp" onclick="enviarProspeccionWhatsApp()">💬 Abrir WhatsApp y Registrar Prospecto</button>
+                        </div>
+                    </div>
+
+                    <div class="admin-card">
+                        <h3 style="font-size: 1.08rem; margin-bottom: 0.4rem;">📋 Seguimiento de Prospectos (<span id="countProspectos">0</span>)</h3>
+                        <p style="font-size: 0.82rem; color: var(--text-soft); margin-bottom: 0.85rem;">Guarda aquí los negocios que vas contactando para darles seguimiento hasta publicarlos.</p>
+                        <div id="listaProspectosAdmin"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- PESTAÑA COMERCIAL: CONTACTO Y TARIFAS B2B -->
             <div id="tab-comercial" class="cms-panel">
                 <div class="admin-grid">
                     <div class="admin-card">
@@ -429,6 +469,34 @@
                                 <label>Banner Patrocinado (Media Kit)</label>
                                 <input type="text" id="cfgBannerPrecio" placeholder="$899 MXN / mes">
                             </div>
+                        <hr style="border: 0; border-top: 1px solid var(--border); margin: 1.1rem 0;">
+                        <h4 style="font-size: 0.96rem; color: #009ee3; margin-bottom: 0.65rem;">💳 Pasarela de Pagos (Mercado Pago / Tarjetas y SPEI)</h4>
+                        <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 0.85rem;">
+                            <label style="font-size: 0.82rem; font-weight: 700; display: flex; align-items: center; gap: 0.4rem;">
+                                <input type="checkbox" id="cfgMostrarPagos" checked> Mostrar bloque de pagos en Anúnciate
+                            </label>
+                            <label style="font-size: 0.82rem; font-weight: 700; display: flex; align-items: center; gap: 0.4rem;">
+                                <input type="checkbox" id="cfgModoDemoPago" checked> Modo visual estático (aviso de demo al hacer clic)
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>Link de Pago Mercado Pago (Plan Destacado)</label>
+                            <input type="url" id="cfgMpLinkDestacado" placeholder="https://mpago.la/xxxxxxx">
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                            <div class="form-group">
+                                <label>Banco SPEI</label>
+                                <input type="text" id="cfgSpeiBanco" placeholder="Mercado Pago / STP">
+                            </div>
+                            <div class="form-group">
+                                <label>CLABE Interbancaria (18 dígitos)</label>
+                                <input type="text" id="cfgSpeiClabe" placeholder="0000 0000 0000 0000 00">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Nombre del Beneficiario SPEI</label>
+                            <input type="text" id="cfgSpeiBenef" placeholder="Tu nombre o razón social">
+                        </div>
                         </div>
                     </div>
                 </div>
