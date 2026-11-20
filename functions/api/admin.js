@@ -28,7 +28,7 @@ export async function onRequestGet({ request, env }) {
     return jsonRes({
       ok: true,
       admin: { email: sesion.email, nombre: sesion.nombre, rol: sesion.rol },
-      config: Object.assign({}, CONFIG_BASE, config, { buzonNubeUrl: "/api/solicitudes" }),
+      config: Object.assign({}, CONFIG_BASE, config, { buzonNubeUrl: new URL("/api/solicitudes", request.url).href }),
       catalogo,
       agencias: catalogo.anunciantes,
       solicitudes: (solRes.results || []).map(r => {
@@ -65,7 +65,7 @@ export async function onRequestPost({ request, env }) {
         bannerPatrocinado: Object.assign({}, CONFIG_BASE.bannerPatrocinado, actual.bannerPatrocinado || {}, entrada.bannerPatrocinado || {}),
         comercialB2B: Object.assign({}, CONFIG_BASE.comercialB2B, actual.comercialB2B || {}, entrada.comercialB2B || {}),
         pagosB2B: Object.assign({}, CONFIG_BASE.pagosB2B, actual.pagosB2B || {}, entrada.pagosB2B || {}),
-        buzonNubeUrl: "/api/solicitudes"
+        buzonNubeUrl: new URL("/api/solicitudes", request.url).href
       });
       await guardarEstado(env, "config", fusionado, sesion.email);
       await auditar(env, sesion.email, "EDITAR_CONFIG", body.detalle || "Actualizó configuración en vivo");

@@ -1,4 +1,1308 @@
-<!DOCTYPE html> <html lang="es-MX"> <head>
-    <script src="../js/seguridad-vayora.js"></script>     <meta charset="UTF-8">     <meta name="viewport" content="width=device-width, initial-scale=1.0">     <meta http-equiv="X-Content-Type-Options" content="nosniff">     <meta name="referrer" content="strict-origin-when-cross-origin">     <title>Gu├¡as Vayora ÔÇö El mundo tiene m├ís por descubrir</title>     <link rel="icon" type="image/svg+xml" href="../assets/logo.svg">     <link rel="stylesheet" href="../css/styles.css?v=20261119nav">     <style>         .admin-wrap { max-width: 1220px; margin: 0 auto; padding: 1.5rem 1.25rem 4rem; }         .admin-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 1rem; padding: 1.35rem; box-shadow: var(--shadow-sm); margin-bottom: 1.25rem; }         .admin-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 1.25rem; align-items: start; }         @media (max-width: 920px) { .admin-grid { grid-template-columns: 1fr; } }         .cms-tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1.15rem 0; }         .cms-tab { background: var(--bg-card); border: 1px solid var(--border); color: var(--text-main); padding: 0.58rem 0.95rem; border-radius: 0.7rem; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.15s ease; }         .cms-tab:hover { border-color: var(--primary); }         .cms-tab.active { background: var(--primary); color: #ffffff; border-color: var(--primary); }         .cms-tab.has-pending { border-color: #f59e0b; background: rgba(245, 158, 11, 0.14); color: var(--secondary); }         .cms-tab.active.has-pending { background: #d97706; color: #ffffff; border-color: #d97706; }         .cms-panel { display: none; }         .cms-panel.active { display: block; }         .form-group { margin-bottom: 0.85rem; }         .form-group label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--secondary); margin-bottom: 0.3rem; }         .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.62rem 0.8rem; border: 1px solid var(--border); border-radius: 0.55rem; background: var(--bg-muted); color: var(--text-main); font-size: 0.88rem; font-family: inherit; }         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }         @media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }         .item-row { display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; padding: 0.8rem; border: 1px solid var(--border); border-radius: 0.7rem; background: var(--bg-muted); margin-bottom: 0.6rem; flex-wrap: wrap; }         .btn-mini { padding: 0.38rem 0.65rem; border-radius: 0.45rem; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-main); font-size: 0.78rem; font-weight: 700; cursor: pointer; }         .btn-mini:hover { border-color: var(--primary); }         .btn-del { color: #dc2626; border-color: rgba(220, 38, 38, 0.3); }         .publish-bar { background: #0f172a; color: #ffffff; border-radius: 1rem; padding: 1.1rem 1.4rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin: 1.25rem 0; }         .sol-card { border: 1px solid var(--border); border-left: 4px solid #f59e0b; background: var(--bg-muted); border-radius: 0.85rem; padding: 1.15rem; margin-bottom: 0.9rem; }         .pill-mini { display: inline-block; font-size: 0.72rem; font-weight: 700; padding: 0.18rem 0.55rem; border-radius: 9999px; background: var(--bg-card); border: 1px solid var(--border); color: var(--text-main); }         .thumb-strip { display: flex; gap: 0.45rem; flex-wrap: wrap; margin-top: 0.5rem; }         .thumb-strip img { width: 72px; height: 50px; object-fit: cover; border-radius: 0.4rem; border: 1px solid var(--border); }     /* === RESPONSIVE MOVIL LIMPIO === */ html, body { max-width: 100%; overflow-x: hidden; } @media (max-width: 768px) {     .nav-container, .top-nav, header nav {         flex-wrap: wrap !important;         gap: 0.45rem !important;     }     .plans-grid, .register-grid, .cards-grid, .catalogo-grid, .agencias-grid {         grid-template-columns: 1fr !important;     }     input, select, textarea { font-size: 16px !important; }     .modal-card { width: 95vw !important; padding: 1.15rem !important; } } </style> </head> <body>     <header class="navbar">
-    <script src="../js/seguridad-vayora.js"></script>         <a href="../index.html" class="brand"><img src="../assets/logo.svg" alt="Panel Maestro" class="brand-icon">Panel Maestro <span>Revista</span></a>         <nav class="nav-links">             <a href="../index.html" target="_blank" rel="noopener noreferrer">­ƒæü´©Å Ver Revista en Vivo</a>             <a href="anunciate.html" target="_blank" rel="noopener noreferrer">­ƒôó Probar Alta</a>             <a href="media-kit.html" target="_blank" rel="noopener noreferrer">­ƒôä Media Kit</a>             <button type="button" class="dark-toggle" id="btnDarkMode" onclick="toggleModoOscuro()">­ƒîÖ</button>         </nav>     </header>      <main class="admin-wrap">         <!-- Conexi├│n GitHub -->         <section class="admin-card">             <h2 style="font-size: 1.18rem; color: var(--secondary); margin: 0 0 0.25rem;">Conexi├│n con Repositorio (LUISFGARCIAE/directorio-agencias)</h2>             <p style="font-size: 0.84rem; color: var(--text-soft); margin: 0 0 0.85rem;">Pega tu Personal Access Token de GitHub para publicar cambios en vivo. Solo vive en esta pesta├▒a mientras trabajas.</p>             <div style="display: flex; gap: 0.65rem; flex-wrap: wrap;">                 <input type="password" id="githubTokenInput" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx o github_pat_..." style="flex: 1; min-width: 240px; padding: 0.68rem 0.85rem; border: 1px solid var(--border); border-radius: 0.6rem; background: var(--bg-muted); color: var(--text-main);">                 <button type="button" id="btnConectarGithub" class="btn-action btn-primary" onclick="conectarEditorGithub()" style="padding: 0.68rem 1.35rem;">Conectar al Editor</button>             </div>                         <div style="display: flex; gap: 0.65rem; flex-wrap: wrap; margin-top: 0.65rem;">                 <input type="password" id="buzonKeyInput" placeholder="Clave secreta de tu Buz├│n en la Nube (Google Sheets)" style="flex: 1; min-width: 240px; padding: 0.65rem 0.85rem; border: 1px solid var(--border); border-radius: 0.6rem; background: var(--bg-muted); color: var(--text-main);">                 <button type="button" class="btn-action btn-outline" onclick="conectarBuzonNube()" style="padding: 0.65rem 1.2rem;">Ôÿü´©Å Sincronizar Buz├│n Nube</button>             </div>             <div id="statusBuzonNube" style="font-size: 0.8rem; font-weight: 600; margin-top: 0.45rem; color: var(--text-soft);"></div>             <div id="statusConexion" style="font-size: 0.84rem; font-weight: 700; margin-top: 0.65rem; color: var(--text-soft);">                 ÔÅ│ Modo lectura cargado. Conecta tu token para publicar cambios en GitHub Pages.             </div>         </section>          <!-- Barra de Pesta├▒as -->         <div class="cms-tabs">             <button type="button" id="btnTabSolicitudes" class="cms-tab active" onclick="cambiarTab('tab-solicitudes', this)">­ƒôÑ Solicitudes por Autorizar (<span id="badgeSolPendientes">0</span>)</button>             <button type="button" class="cms-tab" onclick="cambiarTab('tab-revista', this)">­ƒÄ¿ Portada y Revista</button>             <button type="button" class="cms-tab" onclick="cambiarTab('tab-anunciantes', this)">­ƒô░ Anunciantes (<span id="badgeAnunciantes">0</span>)</button>             <button type="button" class="cms-tab" onclick="cambiarTab('tab-ofertas', this)">­ƒöÑ Ofertas (<span id="badgeOfertas">0</span>)</button>             <button type="button" class="cms-tab" onclick="cambiarTab('tab-guias', this)">­ƒº¡ Gu├¡as y FAQ</button>             <button type="button" class="cms-tab" onclick="cambiarTab('tab-comercial', this)">­ƒÆ╝ Tarifas y Mercado Pago</button>             <button type="button" class="cms-tab" onclick="cambiarTab('tab-prospeccion', this)">­ƒÄ» Prospecci├│n CRM</button>             <button type="button" class="cms-tab" onclick="cambiarTab('tab-respaldo', this)">­ƒÆ¥ Respaldo</button>         </div>          <!-- Barra de Publicaci├│n Global -->         <div class="publish-bar">             <div>                 <strong style="font-size: 1rem; display: block;">┬┐Terminaste tus cambios manuales?</strong>                 <span id="statusPublicacion" style="font-size: 0.82rem; color: #cbd5e1;">Se actualizar├ín los archivos en GitHub y el sitio en vivo en ~10 segundos.</span>             </div>             <button type="button" id="btnPublicarTodo" class="btn-action btn-whatsapp" onclick="publicarTodoEnVivo()" style="padding: 0.78rem 1.4rem; font-size: 0.92rem;">                 ­ƒÜÇ Publicar Todos los Cambios en Vivo             </button>         </div>          <!-- ================================================================ -->         <!-- TAB 1: SOLICITUDES POR AUTORIZAR                                 -->         <!-- ================================================================ -->         <section id="tab-solicitudes" class="cms-panel active">             <div class="admin-card">                 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem; margin-bottom:0.85rem;">                     <div>                         <h3 style="font-size: 1.15rem; color: var(--secondary); margin: 0 0 0.2rem;">­ƒôÑ Solicitudes Recibidas Esperando Autorizaci├│n</h3>                         <p style="font-size: 0.84rem; color: var(--text-soft); margin: 0;">Ning├║n anuncio se muestra en la revista p├║blica hasta que t├║ presiones <strong>Autorizar y Publicar</strong>.</p>                     </div>                     <button type="button" class="btn-mini" onclick="sincronizarSolicitudesNube(true)">­ƒöä Actualizar Bandeja (Nube + Local)</button>                 </div>                 <div id="listaSolicitudesPendientes"></div>             </div>         </section>          <!-- ================================================================ -->         <!-- TAB 2: PORTADA Y REVISTA (CONTROL MANUAL)                        -->         <!-- ================================================================ -->         <section id="tab-revista" class="cms-panel">             <div class="admin-grid">                 <div class="admin-card">                     <h3 style="font-size: 1.1rem; color: var(--secondary); margin: 0 0 0.9rem;">Ô£Å´©Å Textos y Encabezado de la Revista</h3>                     <div class="form-group">                         <label style="display:flex; align-items:center; gap:0.5rem;">                             <input type="checkbox" id="revTopBarActivo" style="width:auto;"> Mostrar Barra Promocional Superior                         </label>                     </div>                     <div class="form-group">                         <label>Texto de Barra Promocional Superior</label>                         <input type="text" id="revTopBarTexto" placeholder="Ej. ­ƒôó Espacios disponibles edici├│n Noviembre 2026">                     </div>                     <div class="form-group">                         <label>Aviso de Plataforma Publicitaria (Franja Superior)</label>                         <textarea id="revDisclaimerTexto" rows="2"></textarea>                     </div>                     <div class="form-group">                         <label>Etiqueta de Edici├│n (Kicker)</label>                         <input type="text" id="revKickerTexto">                     </div>                     <div class="form-group">                         <label>T├¡tulo Principal de Portada</label>                         <input type="text" id="revHeroTitle">                     </div>                     <div class="form-group">                         <label>Subt├¡tulo de Portada</label>                         <textarea id="revHeroSubtitle" rows="2"></textarea>                     </div>                 </div>                  <div class="admin-card">                     <h3 style="font-size: 1.1rem; color: var(--secondary); margin: 0 0 0.9rem;">Ô¡É Portada Destacada y Secciones Visibles</h3>                     <div class="form-group">                         <label style="display:flex; align-items:center; gap:0.5rem;">                             <input type="checkbox" id="revMostrarSpotlight" style="width:auto;"> Mostrar bloque gigante "Portada de la Edici├│n"                         </label>                     </div>                     <div class="form-group">                         <label>Elegir Anunciante en Portada de la Edici├│n</label>                         <select id="revSpotlightId">                             <option value="">Ô£¿ Autom├ítico (Primer anunciante destacado)</option>                         </select>                     </div>                     <div class="form-group">                         <label>Tema de Color Predeterminado</label>                         <select id="revTemaDefault">                             <option value="oceano">­ƒöÁ Oc├®ano (Turismo / Revista)</option>                             <option value="bodas">­ƒî╣ Bodas y Eventos</option>                             <option value="natura">­ƒƒó Natura y Aventura</option>                         </select>                     </div>                     <hr style="border:0; border-top:1px solid var(--border); margin:1rem 0;">                     <div style="display:flex; flex-direction:column; gap:0.55rem; font-size:0.86rem; font-weight:700;">                         <label style="display:flex; align-items:center; gap:0.5rem;"><input type="checkbox" id="revMostrarOfertas" style="width:auto;"> Mostrar secci├│n "­ƒöÑ Promociones de Temporada"</label>                         <label style="display:flex; align-items:center; gap:0.5rem;"><input type="checkbox" id="revMostrarCta" style="width:auto;"> Mostrar banner "┬┐Quieres anunciar tus servicios aqu├¡?"</label>                         <label style="display:flex; align-items:center; gap:0.5rem;"><input type="checkbox" id="revMostrarGuias" style="width:auto;"> Mostrar secci├│n "­ƒº¡ Gu├¡as Editoriales"</label>                         <label style="display:flex; align-items:center; gap:0.5rem;"><input type="checkbox" id="revMostrarFaq" style="width:auto;"> Mostrar secci├│n "ÔØô Preguntas Frecuentes"</label>                     </div>                     <button type="button" class="btn-action btn-primary" style="width:100%; margin-top:1.2rem;" onclick="aplicarCambiosRevistaLocal()">                         ­ƒÆ¥ Guardar Cambios de Portada (Listo para Publicar)                     </button>                 </div>             </div>         </section>          <!-- ================================================================ -->         <!-- TAB 3: ANUNCIANTES (CAT├üLOGO REVISTA)                            -->         <!-- ================================================================ -->         <section id="tab-anunciantes" class="cms-panel">             <div class="admin-grid">                 <div class="admin-card">                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.85rem;">                         <h3 id="tituloFormAnun" style="font-size: 1.08rem; color: var(--secondary); margin: 0;">Ô×ò Agregar / Editar Anunciante</h3>                         <button type="button" class="btn-mini" onclick="limpiarFormAnunciante()">Limpiar</button>                     </div>                     <input type="hidden" id="anunEditIdx" value="-1">                     <input type="hidden" id="anunOrigenSolIdx" value="-1">                      <div class="grid-2">                         <div class="form-group">                             <label>Nombre Comercial *</label>                             <input type="text" id="anunNombre" placeholder="Ej. Caribe Azul Experiencias">                         </div>                         <div class="form-group">                             <label>Sector / Categor├¡a *</label>                             <select id="anunCategoria">                                 <option value="viajes|Viajes y Turismo">Ô£ê´©Å Viajes y Turismo</option>                                 <option value="hoteles|Hoteles y Hostales">­ƒÅ¿ Hoteles y Hostales</option>                                 <option value="bodas|Bodas y Eventos">­ƒÆì Bodas y Eventos</option>                                 <option value="hospedaje|Quintas y Estancias">­ƒÅí Quintas y Estancias</option>                                 <option value="gastronomia|Restaurantes y Terrazas">­ƒì¢´©Å Restaurantes y Terrazas</option>                                 <option value="transporte|Transporte Tur├¡stico">­ƒÜÉ Transporte Tur├¡stico</option>                                 <option value="musica|M├║sica, DJs y Grupos">­ƒÄÂ M├║sica, DJs y Grupos</option>                                 <option value="aventura|Parques y Aventura">­ƒºùÔÇìÔÖé´©Å Parques y Aventura</option>                                 <option value="servicios|Fotograf├¡a y Experiencias">­ƒô© Fotograf├¡a y Experiencias</option>                             </select>                         </div>                     </div>                      <div class="grid-2">                         <div class="form-group">                             <label>Cobro / Tarifa Visible *</label>                             <input type="text" id="anunRangoPrecio" placeholder="Ej. $$ ÔÇó $3,450 MXN / noche">                         </div>                         <div class="form-group">                             <label>Duraci├│n del Servicio / Estancia *</label>                             <input type="text" id="anunDuracion" placeholder="Ej. 4 D├¡as / 3 Noches o 5 hrs">                         </div>                     </div>                      <div class="grid-2">                         <div class="form-group">                             <label>Lugar / Cobertura *</label>                             <input type="text" id="anunSalidaDesde" placeholder="Ej. Tepoztl├ín, Morelos / CDMX">                         </div>                         <div class="form-group">                             <label>WhatsApp de Ventas (con 52) *</label>                             <input type="tel" id="anunWhatsapp" placeholder="525512345678">                         </div>                     </div>                      <div class="form-group">                         <label>Promoci├│n Vigente en Tarjeta</label>                         <input type="text" id="anunPromocion" placeholder="Ej. 15% OFF reservando directo + desayuno incluido">                     </div>                      <div class="grid-2">                         <div class="form-group">                             <label>Tipos de Cobro (separados por coma)</label>                             <input type="text" id="anunTiposCobro" placeholder="Tarjeta Cr├®dito/D├®bito, 3 y 6 MSI, Transferencia SPEI, Efectivo">                         </div>                         <div class="form-group">                             <label>Especialidad breve</label>                             <input type="text" id="anunEspecialidad" placeholder="Ej. Paquetes todo incluido con vuelo">                         </div>                     </div>                      <div class="form-group">                         <label>Descripci├│n de la Oferta / Producto *</label>                         <textarea id="anunDescripcion" rows="2" placeholder="Describe qu├® incluye, beneficios y condiciones principales..."></textarea>                     </div>                      <div class="form-group">                         <label>Galer├¡a de Fotos (URLs https:// separadas por coma)</label>                         <textarea id="anunGaleria" rows="2" placeholder="https://foto1.jpg, https://foto2.jpg, https://foto3.jpg"></textarea>                     </div>                      <div class="grid-2">                         <div class="form-group">                             <label>Amenidades / Incluye (separadas por coma)</label>                             <input type="text" id="anunAmenidades" placeholder="­ƒì│ Desayuno, ­ƒÜù Estacionamiento, ­ƒôÂ Wi-Fi">                         </div>                         <div class="form-group">                             <label>Sitio Web / Red Social (https://)</label>                             <input type="url" id="anunWeb" placeholder="https://tunegocio.com">                         </div>                     </div>                      <div class="grid-2">                         <div class="form-group">                             <label>C├│digo de Cup├│n (opcional)</label>                             <input type="text" id="anunCuponCod" placeholder="Ej. VERANO15">                         </div>                         <div class="form-group">                             <label>Etiqueta de Verificaci├│n / Rating</label>                             <input type="text" id="anunEtiqueta" value="Ô£ö Anunciante Verificado">                         </div>                     </div>                      <div style="display:flex; gap:1rem; align-items:center; flex-wrap:wrap; margin-bottom:1rem;">                         <label style="font-size:0.84rem; font-weight:700; display:flex; align-items:center; gap:0.4rem;">                             <input type="checkbox" id="anunDestacada" style="width:auto;"> Ô¡É Anunciante Destacado (Plan $499)                         </label>                     </div>                      <button type="button" class="btn-action btn-primary" style="width:100%;" onclick="guardarAnuncianteLocal()">                         ­ƒÆ¥ Guardar Anunciante en Cat├ílogo                     </button>                 </div>                  <div class="admin-card">                     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.85rem;">                         <h3 style="font-size: 1.08rem; color: var(--secondary); margin: 0;">­ƒôï Anunciantes Publicados</h3>                         <button type="button" class="btn-mini btn-del" onclick="eliminarTodosLosDemo()">­ƒº╣ Limpiar "-demo"</button>                     </div>                     <input type="search" id="filtroAdminAnun" placeholder="­ƒöì Filtrar anunciante por nombre o sector..." oninput="renderizarListaAnunciantes()" style="width:100%; padding:0.58rem 0.8rem; border:1px solid var(--border); border-radius:0.55rem; background:var(--bg-muted); color:var(--text-main); margin-bottom:0.85rem;">                     <div id="listaAnunciantesAdmin" style="max-height: 680px; overflow-y: auto;"></div>                 </div>             </div>         </section>          <!-- ================================================================ -->         <!-- TAB 4: OFERTAS Y PROMOCIONES                                     -->         <!-- ================================================================ -->         <section id="tab-ofertas" class="cms-panel">             <div class="admin-grid">                 <div class="admin-card">                     <h3 style="font-size: 1.08rem; color: var(--secondary); margin: 0 0 0.85rem;">­ƒöÑ Nueva Promoci├│n de Temporada</h3>                     <div class="form-group"><label>Nombre del Anunciante *</label><input type="text" id="ofAgencia" placeholder="Ej. Caribe Azul Experiencias"></div>                     <div class="form-group"><label>T├¡tulo de la Promoci├│n *</label><input type="text" id="ofTitulo" placeholder="Ej. Paquete 4 D├¡as Todo Incluido"></div>                     <div class="grid-2">                         <div class="form-group"><label>Precio Visible *</label><input type="text" id="ofPrecio" placeholder="$8,990 MXN"></div>                         <div class="form-group"><label>Etiqueta</label><input type="text" id="ofEtiqueta" value="­ƒöÑ Promo Vigente"></div>                     </div>                     <div class="form-group"><label>Detalle breve *</label><textarea id="ofDetalle" rows="2"></textarea></div>                     <div class="grid-2">                         <div class="form-group"><label>WhatsApp (con 52)</label><input type="tel" id="ofWa" placeholder="525512345678"></div>                         <div class="form-group"><label>URL de Imagen (https://)</label><input type="url" id="ofImg" placeholder="https://images.unsplash.com/..."></div>                     </div>                     <button type="button" class="btn-action btn-primary" style="width:100%;" onclick="agregarOfertaLocal()">Ô×ò Agregar Promoci├│n</button>                 </div>                 <div class="admin-card">                     <h3 style="font-size: 1.08rem; color: var(--secondary); margin: 0 0 0.85rem;">­ƒôï Promociones Activas</h3>                     <div id="listaOfertasAdmin"></div>                 </div>             </div>         </section>          <!-- ================================================================ -->         <!-- TAB 5: GU├ìAS Y FAQ                                               -->         <!-- ================================================================ -->         <section id="tab-guias" class="cms-panel">             <div class="admin-grid">                 <div class="admin-card">                     <h3 style="font-size: 1.08rem; color: var(--secondary); margin: 0 0 0.85rem;">­ƒº¡ Agregar Gu├¡a Editorial</h3>                     <div class="grid-2">                         <div class="form-group"><label>Categor├¡a</label><input type="text" id="guiaCat" placeholder="Viajes / Bodas / Consejos"></div>                         <div class="form-group"><label>T├¡tulo *</label><input type="text" id="guiaTitulo"></div>                     </div>                     <div class="form-group"><label>Resumen corto *</label><input type="text" id="guiaResumen"></div>                     <div class="form-group"><label>Contenido completo *</label><textarea id="guiaContenido" rows="3"></textarea></div>                     <button type="button" class="btn-action btn-primary" style="width:100%; margin-bottom:1rem;" onclick="agregarGuiaLocal()">Ô×ò Guardar Gu├¡a</button>                     <div id="listaGuiasAdmin"></div>                 </div>                  <div class="admin-card">                     <h3 style="font-size: 1.08rem; color: var(--secondary); margin: 0 0 0.85rem;">ÔØô Preguntas Frecuentes (FAQ)</h3>                     <div class="form-group"><label>Pregunta *</label><input type="text" id="faqPregunta" placeholder="Ej. ┬┐Cobran comisi├│n por reservar?"></div>                     <div class="form-group"><label>Respuesta *</label><textarea id="faqRespuesta" rows="2"></textarea></div>                     <button type="button" class="btn-action btn-primary" style="width:100%; margin-bottom:1rem;" onclick="agregarFaqLocal()">Ô×ò Guardar Pregunta</button>                     <div id="listaFaqAdmin"></div>                 </div>             </div>         </section>          <!-- ================================================================ -->         <!-- TAB 6: TARIFAS, CONTACTO Y MERCADO PAGO                          -->         <!-- ================================================================ -->         <section id="tab-comercial" class="cms-panel">             <div class="admin-grid">                 <div class="admin-card">                     <h3 style="font-size: 1.08rem; color: var(--secondary); margin: 0 0 0.85rem;">­ƒÆ╝ Contacto Comercial y Planes</h3>                     <div class="grid-2">                         <div class="form-group"><label>WhatsApp Comercial (con 52)</label><input type="tel" id="cfgWaAdmin"></div>                         <div class="form-group"><label>Correo Oficial</label><input type="email" id="cfgCorreoAdmin"></div>                     </div>                     <div class="grid-2">                         <div class="form-group"><label>Precio Plan Est├índar</label><input type="text" id="cfgEstPrecio"></div>                         <div class="form-group"><label>Nota Plan Est├índar</label><input type="text" id="cfgEstNota"></div>                     </div>                     <div class="grid-2">                         <div class="form-group"><label>Precio Plan Destacado</label><input type="text" id="cfgDestPrecio"></div>                         <div class="form-group"><label>Nota Plan Destacado</label><input type="text" id="cfgDestNota"></div>                     </div>                     <div class="grid-2">                         <div class="form-group"><label>Precio Oferta Temporada (Media Kit)</label><input type="text" id="cfgOfertaPrecio"></div>                         <div class="form-group"><label>Precio Banner Patrocinado (Media Kit)</label><input type="text" id="cfgBannerPrecio"></div>                     </div>                 </div>                  <div class="admin-card">                     <h3 style="font-size: 1.08rem; color: #009ee3; margin: 0 0 0.85rem;">­ƒÆ│ Mercado Pago y Transferencia SPEI</h3>                     <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:0.85rem; font-size:0.84rem; font-weight:700;">                         <label style="display:flex; align-items:center; gap:0.4rem;"><input type="checkbox" id="cfgMostrarPagos" style="width:auto;"> Mostrar pagos</label>                         <label style="display:flex; align-items:center; gap:0.4rem;"><input type="checkbox" id="cfgModoDemoPago" style="width:auto;"> Modo simulaci├│n</label>                     </div>                     <div class="form-group"><label>Link Mercado Pago ÔÇö Plan Est├índar</label><input type="url" id="cfgMpLinkEst" placeholder="https://mpago.la/..."></div>                     <div class="form-group"><label>Link Mercado Pago ÔÇö Plan Destacado</label><input type="url" id="cfgMpLinkDest" placeholder="https://mpago.la/..."></div>                     <div class="grid-2">                         <div class="form-group"><label>Banco SPEI</label><input type="text" id="cfgSpeiBanco"></div>                         <div class="form-group"><label>CLABE Interbancaria</label><input type="text" id="cfgSpeiClabe"></div>                     </div>                                         <div class="form-group"><label>Beneficiario SPEI</label><input type="text" id="cfgSpeiBenef"></div>                     <div class="form-group"><label>Ôÿü´©Å URL del Buz├│n en la Nube (Google Apps Script /exec)</label><input type="url" id="cfgBuzonNubeUrl" placeholder="https://script.google.com/macros/s/.../exec"></div>                     <button type="button" class="btn-action btn-primary" style="width:100%;" onclick="guardarComercialLocal()">­ƒÆ¥ Guardar Tarifas y Pagos</button>                 </div>             </div>         </section>          <!-- ================================================================ -->         <!-- TAB 7: PROSPECCI├ôN CRM                                           -->         <!-- ================================================================ -->         <section id="tab-prospeccion" class="cms-panel">             <div class="admin-grid">                 <div class="admin-card">                     <h3 style="font-size: 1.08rem; color: var(--secondary); margin: 0 0 0.65rem;">­ƒÜÇ Prospecci├│n en 1 Clic (WhatsApp)</h3>                     <div class="form-group"><label>Nombre del Negocio Prospecto *</label><input type="text" id="prosNombre" placeholder="Ej. Hotel Boutique Vista Azul"></div>                     <div class="grid-2">                         <div class="form-group"><label>WhatsApp (10 d├¡gitos o 52)</label><input type="tel" id="prosWhatsApp" placeholder="5512345678"></div>                         <div class="form-group">                             <label>Sector</label>                             <select id="prosGiro">                                 <option value="Agencia de Viajes">Ô£ê´©Å Agencia de Viajes</option>                                 <option value="Hotel o Boutique">­ƒÅ¿ Hotel / Hostal</option>                                 <option value="Jard├¡n o Hacienda de Bodas">­ƒÆì Bodas y Eventos</option>                                 <option value="Quinta o Estancia">­ƒÅí Quinta / Estancia</option>                                 <option value="Restaurante o Terraza">­ƒì¢´©Å Gastronom├¡a</option>                                 <option value="Transporte o Tour">­ƒÜÉ Transporte / Aventura</option>                             </select>                         </div>                     </div>                     <button type="button" class="btn-action btn-whatsapp" style="width:100%;" onclick="enviarProspeccionWhatsApp()">­ƒÆ¼ Enviar Invitaci├│n por WhatsApp y Registrar</button>                 </div>                 <div class="admin-card">                     <h3 style="font-size: 1.08rem; color: var(--secondary); margin: 0 0 0.75rem;">­ƒôï Prospectos (<span id="countProspectos">0</span>)</h3>                     <div id="listaProspectosAdmin"></div>                 </div>             </div>         </section>          <!-- ================================================================ -->         <!-- TAB 8: RESPALDO JSON                                             -->         <!-- ================================================================ -->         <section id="tab-respaldo" class="cms-panel">             <div class="admin-card">                 <h3 style="font-size: 1.1rem; color: var(--secondary); margin: 0 0 0.5rem;">­ƒÆ¥ Respaldo Local de Datos</h3>                 <p style="font-size: 0.86rem; color: var(--text-soft); margin-bottom: 1rem;">Descarga en cualquier momento una copia ├¡ntegra de tus archivos JSON actuales.</p>                 <div style="display:flex; gap:0.75rem; flex-wrap:wrap;">                     <button type="button" class="btn-action btn-primary" onclick="descargarRespaldo('agencias.json', catalogoActual)">Ô¼ç´©Å Descargar agencias.json</button>                     <button type="button" class="btn-action btn-outline" onclick="descargarRespaldo('config.json', configActual)">Ô¼ç´©Å Descargar config.json</button>                 </div>             </div>         </section>     </main>      <script>         const GH_OWNER = "LUISFGARCIAE";         const GH_REPO  = "directorio-agencias";         const GH_BRANCH = "main";          let githubToken = "";         let editorConectado = false;         let configActual = {};         let catalogoActual = { anunciantes: [], ofertas: [], guias: [], faq: [] };         let cambiosPendientes = false;         let solicitudesNubeCache = [];         let buzonAdminKey = "";         let solicitudEnEdicionId = "";          function escaparHTML(str) {             return String(str || "")                 .replace(/&/g, "&amp;")                 .replace(/</g, "&lt;")                 .replace(/>/g, "&gt;")                 .replace(/"/g, "&quot;")                 .replace(/'/g, "&#39;");         }          function validarUrlSegura(urlRaw) {             const limpio = String(urlRaw || "").trim();             if (!limpio) return "";             try {                 const u = new URL(limpio);                 if (u.protocol === "https:" || u.protocol === "http:") return u.href;             } catch (e) {}             return "";         }          function decodeBase64UTF8(b64) {             const bin = atob(b64.replace(/\n/g, ""));             const bytes = Uint8Array.from(bin, c => c.charCodeAt(0));             return new TextDecoder("utf-8").decode(bytes);         }          function encodeBase64UTF8(str) {             const bytes = new TextEncoder().encode(str);             let bin = "";             for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);             return btoa(bin);         }          function toggleModoOscuro() {             const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";             document.documentElement.setAttribute("data-theme", next);             localStorage.setItem("dv_dark_mode", next);             document.getElementById("btnDarkMode").textContent = next === "dark" ? "ÔÿÇ´©Å" : "­ƒîÖ";         }          function marcarCambiosSinPublicar(msg) {             cambiosPendientes = true;             const st = document.getElementById("statusPublicacion");             if (st) {                 st.textContent = "ÔÜá´©Å " + (msg || "Tienes cambios guardados localmente. Presiona 'Publicar Todos los Cambios en Vivo' para subirlos.");                 st.style.color = "#fde047";             }         }          function cambiarTab(tabId, btn) {             document.querySelectorAll(".cms-panel").forEach(p => p.classList.remove("active"));             document.querySelectorAll(".cms-tab").forEach(b => b.classList.remove("active"));             const panel = document.getElementById(tabId);             if (panel) panel.classList.add("active");             if (btn) btn.classList.add("active");             if (tabId === "tab-solicitudes") renderizarSolicitudesPendientes();         }          // ======================================================================         // CONEXI├ôN GITHUB Y CARGA DE ARCHIVOS         // ======================================================================         async function leerArchivoGithub(path) {             const res = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${path}?ref=${GH_BRANCH}&t=${Date.now()}`, {                 headers: {                     "Authorization": `Bearer ${githubToken}`,                     "Accept": "application/vnd.github+json"                 }             });             if (!res.ok) throw new Error(`HTTP ${res.status} leyendo ${path}`);             const data = await res.json();             return { json: JSON.parse(decodeBase64UTF8(data.content)), sha: data.sha };         }          async function guardarArchivoGithub(path, obj, mensaje) {             if (!githubToken) throw new Error("Primero conecta tu Personal Access Token de GitHub.");             const actual = await leerArchivoGithub(path);             const res = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${path}`, {                 method: "PUT",                 headers: {                     "Authorization": `Bearer ${githubToken}`,                     "Accept": "application/vnd.github+json",                     "Content-Type": "application/json"                 },                 body: JSON.stringify({                     message: mensaje,                     content: encodeBase64UTF8(JSON.stringify(obj, null, 2)),                     sha: actual.sha,                     branch: GH_BRANCH                 })             });             if (!res.ok) {                 const errTxt = await res.text();                 throw new Error(`Error al guardar ${path}: ${res.status} ${errTxt}`);             }             return await res.json();         }          async function conectarEditorGithub() {             const tk = document.getElementById("githubTokenInput").value.trim();             const st = document.getElementById("statusConexion");             if (!tk) {                 alert("Pega tu Personal Access Token de GitHub.");                 return;             }             githubToken = tk;             sessionStorage.setItem("dv_gh_token_session", tk);             st.textContent = "ÔÅ│ Conectando con GitHub...";             st.style.color = "#0284c7";             try {                 const [cfgRes, catRes] = await Promise.all([                     leerArchivoGithub("data/config.json"),                     leerArchivoGithub("data/agencias.json")                 ]);                 configActual = cfgRes.json || {};                 catalogoActual = catRes.json || { anunciantes: [], ofertas: [], guias: [], faq: [] };                 editorConectado = true;                 st.textContent = "Ô£à Editor conectado. Ya puedes autorizar solicitudes, editar la portada de la revista y publicar cambios.";                 st.style.color = "#16a34a";                 hidratarTodoElPanel();             } catch (e) {                 editorConectado = false;                 st.textContent = "ÔØî No se pudo conectar: verifica que el token tenga permiso 'Contents: Read and write'. (" + e.message + ")";                 st.style.color = "#dc2626";             }         }          async function cargarDatosSoloLectura() {             try {                 const [rCfg, rCat] = await Promise.all([                     fetch("../data/config.json?t=" + Date.now()),                     fetch("../data/agencias.json?t=" + Date.now())                 ]);                 if (rCfg.ok) configActual = await rCfg.json();                 if (rCat.ok) catalogoActual = await rCat.json();                 hidratarTodoElPanel();             } catch (e) {}         }          async function publicarTodoEnVivo() {             if (!editorConectado) {                 alert("Primero pega tu token de GitHub arriba y haz clic en 'Conectar al Editor'.");                 return;             }             aplicarCambiosRevistaLocal(true);             guardarComercialLocal(true);              const st = document.getElementById("statusPublicacion");             const btn = document.getElementById("btnPublicarTodo");             btn.disabled = true;             st.textContent = "ÔÅ│ Publicando config.json y agencias.json en GitHub Pages...";             st.style.color = "#7dd3fc";              try {                 await guardarArchivoGithub("data/config.json", configActual, "Actualizar configuracion manual de Revista desde Panel Maestro");                 await guardarArchivoGithub("data/agencias.json", catalogoActual, "Actualizar catalogo de anunciantes desde Panel Maestro");                 cambiosPendientes = false;                 st.textContent = "Ô£à ┬íTodo publicado con ├®xito! Recarga el sitio p├║blico en ~10 segundos para ver los cambios.";                 st.style.color = "#4ade80";             } catch (e) {                 st.textContent = "ÔØî Error al publicar: " + e.message;                 st.style.color = "#fca5a5";             } finally {                 btn.disabled = false;             }         }                  // ======================================================================         // BANDEJA DE SOLICITUDES POR AUTORIZAR (NUBE GOOGLE SHEETS + LOCAL)         // ======================================================================         function conectarBuzonNube() {             const k = document.getElementById("buzonKeyInput").value.trim();             if (!k) {                 alert("Ingresa la clave secreta que configuraste en ADMIN_KEY de tu Google Apps Script.");                 return;             }             buzonAdminKey = k;             sessionStorage.setItem("dv_buzon_key_session", k);             sincronizarSolicitudesNube(true);         }          async function sincronizarSolicitudesNube(mostrarEstado) {             const url = validarUrlSegura(configActual.buzonNubeUrl || "");             const st = document.getElementById("statusBuzonNube");             if (!url) {                 if (st && mostrarEstado) {                     st.textContent = "Ôä╣´©Å A├║n no hay URL de Buz├│n en la Nube en config.json (p├®gala en '­ƒÆ╝ Tarifas y Mercado Pago').";                     st.style.color = "#d97706";                 }                 renderizarSolicitudesPendientes();                 return;             }             if (!buzonAdminKey) {                 if (st && mostrarEstado) {                     st.textContent = "­ƒöæ Pega tu Clave Secreta del Buz├│n arriba y pulsa 'Sincronizar Buz├│n Nube' para recibir solicitudes de otros dispositivos.";                     st.style.color = "#0284c7";                 }                 renderizarSolicitudesPendientes();                 return;             }              if (st && mostrarEstado) {                 st.textContent = "ÔÅ│ Consultando solicitudes en la nube...";                 st.style.color = "#0284c7";             }             try {                 const res = await fetch(`${url}?key=${encodeURIComponent(buzonAdminKey)}&t=${Date.now()}`);                 const data = await res.json();                 if (!data.ok) throw new Error(data.error || "Clave incorrecta");                 solicitudesNubeCache = Array.isArray(data.solicitudes) ? data.solicitudes : [];                 if (st) {                     st.textContent = `Ôÿü´©Å Buz├│n en la nube sincronizado (${solicitudesNubeCache.length} pendiente${solicitudesNubeCache.length === 1 ? "" : "s"} remota${solicitudesNubeCache.length === 1 ? "" : "s"}).`;                     st.style.color = "#16a34a";                 }             } catch (e) {                 if (st) {                     st.textContent = "ÔØî Error al leer Buz├│n Nube: " + e.message;                     st.style.color = "#dc2626";                 }             }             renderizarSolicitudesPendientes();         }          async function actualizarEstadoSolicitudNube(solicitudId, nuevoEstado) {             const url = validarUrlSegura(configActual.buzonNubeUrl || "");             if (!url || !buzonAdminKey || !solicitudId) return;             try {                 await fetch(url, {                     method: "POST",                     headers: { "Content-Type": "text/plain;charset=utf-8" },                     body: JSON.stringify({                         action: "actualizarEstado",                         adminKey: buzonAdminKey,                         solicitudId,                         nuevoEstado                     })                 });             } catch (e) {                 console.warn("No se pudo actualizar estado en nube:", e);             }         }          function eliminarDeColasPorId(solicitudId) {             solicitudesNubeCache = solicitudesNubeCache.filter(s => s.solicitudId !== solicitudId);             try {                 const locales = JSON.parse(localStorage.getItem("dv_solicitudes_pendientes") || "[]");                 const filtradas = locales.filter(s => s.solicitudId !== solicitudId);                 localStorage.setItem("dv_solicitudes_pendientes", JSON.stringify(filtradas));             } catch (e) {}         }          function leerColaSolicitudes() {             let locales = [];             try {                 const raw = localStorage.getItem("dv_solicitudes_pendientes");                 const arr = raw ? JSON.parse(raw) : [];                 if (Array.isArray(arr)) locales = arr;             } catch (e) {}              const mapa = new Map();             solicitudesNubeCache.forEach(s => {                 if (s && s.solicitudId) mapa.set(s.solicitudId, Object.assign({}, s, { _origen: "nube" }));             });             locales.forEach(s => {                 if (s && s.solicitudId && !mapa.has(s.solicitudId)) {                     mapa.set(s.solicitudId, Object.assign({}, s, { _origen: "local" }));                 }             });             return Array.from(mapa.values());         }          function renderizarSolicitudesPendientes() {             const lista = leerColaSolicitudes();             const badge = document.getElementById("badgeSolPendientes");             const tabBtn = document.getElementById("btnTabSolicitudes");             const cont = document.getElementById("listaSolicitudesPendientes");              if (badge) badge.textContent = String(lista.length);             if (tabBtn) tabBtn.classList.toggle("has-pending", lista.length > 0);             if (!cont) return;              if (lista.length === 0) {                 cont.innerHTML = `                     <div style="padding:1.25rem; background:var(--bg-muted); border-radius:0.75rem; border:1px dashed var(--border);">                         <strong style="color:var(--secondary); display:block; margin-bottom:0.3rem;">No hay solicitudes pendientes en este momento.</strong>                         <p style="font-size:0.84rem; color:var(--text-soft); margin:0;">                             Las solicitudes enviadas desde cualquier celular o computadora llegar├ín aqu├¡ autom├íticamente al tener conectado tu <strong>Buz├│n en la Nube</strong>.                         </p>                     </div>`;                 return;             }              cont.innerHTML = lista.map((sol, idx) => {                 const a = sol.anunciante || {};                 const fotos = Array.isArray(a.galeria) ? a.galeria.map(validarUrlSegura).filter(Boolean) : [];                 const cobros = Array.isArray(a.tiposCobro) ? a.tiposCobro : [];                 const badgeOrigen = sol._origen === "nube"                     ? `<span class="pill-mini" style="background:#e0f2fe; color:#0369a1; border-color:#7dd3fc;">Ôÿü´©Å Nube</span>`                     : `<span class="pill-mini">­ƒÆ╗ Local</span>`;                 return `                     <div class="sol-card">                         <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.75rem; margin-bottom:0.65rem;">                             <div>                                 <div style="display:flex; gap:0.45rem; flex-wrap:wrap; align-items:center; margin-bottom:0.3rem;">                                     <strong style="font-size:1.08rem; color:var(--secondary);">${escaparHTML(a.nombre || "Sin nombre")}</strong>                                     ${badgeOrigen}                                     <span class="pill-mini" style="background:#dcfce7; color:#166534; border-color:#86efac;">Folio ${escaparHTML(sol.solicitudId || "SIM")} ÔÇó **** ${escaparHTML(sol.terminacionTarjeta || "0000")}</span>                                     <span class="pill-mini" style="background:var(--primary-soft); color:var(--primary-dark);">${escaparHTML(sol.plan || "")}</span>                                 </div>                                 <div style="font-size:0.8rem; color:var(--text-soft);">                                     ­ƒôà ${escaparHTML(sol.fecha || "")} &bull; <strong>Sector:</strong> ${escaparHTML(a.categoriaNombre || "")} &bull; <strong>Lugar:</strong> ${escaparHTML(a.salidaDesde || "")}                                 </div>                             </div>                             <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">                                 <button type="button" class="btn-action btn-whatsapp" style="padding:0.55rem 0.95rem; font-size:0.82rem;" onclick="autorizarYPublicarSolicitud(${idx})">                                     Ô£à Autorizar y Publicar                                 </button>                                 <button type="button" class="btn-mini" onclick="editarSolicitudAntesDePublicar(${idx})">                                     Ô£Å´©Å Revisar / Editar                                 </button>                                 <button type="button" class="btn-mini btn-del" onclick="rechazarSolicitud(${idx})">                                     ­ƒùæ´©Å Rechazar                                 </button>                             </div>                         </div>                          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:0.5rem; background:var(--bg-card); padding:0.7rem; border-radius:0.6rem; border:1px solid var(--border); font-size:0.8rem; margin-bottom:0.6rem;">                             <div><strong>­ƒÆ░ Cobro:</strong> ${escaparHTML(a.rangoPrecio || "N/A")}</div>                             <div><strong>ÔÅ▒´©Å Duraci├│n:</strong> ${escaparHTML(a.duracion || "N/A")}</div>                             <div><strong>­ƒÆ¼ WhatsApp:</strong> +${escaparHTML(a.whatsappNumero || "N/A")}</div>                             <div><strong>­ƒô® Correo:</strong> ${escaparHTML(sol.correoContacto || "N/A")}</div>                         </div>                          ${a.promocion ? `<div style="font-size:0.82rem; margin-bottom:0.4rem;"><strong>­ƒÄü Promoci├│n:</strong> ${escaparHTML(a.promocion)}</div>` : ""}                         ${cobros.length ? `<div style="font-size:0.8rem; margin-bottom:0.4rem;"><strong>­ƒÆ│ Tipos de cobro:</strong> ${escaparHTML(cobros.join(", "))}</div>` : ""}                         <p style="font-size:0.84rem; color:var(--text-main); margin:0;">${escaparHTML(a.descripcion || "")}</p>                         ${fotos.length ? `<div class="thumb-strip">${fotos.map(f => `<img src="${escaparHTML(f)}" alt="Foto">`).join("")}</div>` : ""}                     </div>                 `;             }).join("");         }          async function autorizarYPublicarSolicitud(idx) {             const lista = leerColaSolicitudes();             const sol = lista[idx];             if (!sol || !sol.anunciante) return;              if (!editorConectado) {                 alert("Para autorizar y publicar en la revista en vivo, primero pega tu token de GitHub arriba y haz clic en 'Conectar al Editor'.");                 return;             }             if (!confirm(`┬┐Autorizar y publicar "${sol.anunciante.nombre}" en la revista principal ahora mismo?`)) return;              catalogoActual.anunciantes.unshift(sol.anunciante);             eliminarDeColasPorId(sol.solicitudId);             hidratarTodoElPanel();              const st = document.getElementById("statusPublicacion");             st.textContent = `ÔÅ│ Publicando "${sol.anunciante.nombre}" en GitHub Pages...`;             st.style.color = "#7dd3fc";             try {                 await guardarArchivoGithub("data/agencias.json", catalogoActual, `Autorizar y publicar anunciante: ${sol.anunciante.nombre}`);                 await actualizarEstadoSolicitudNube(sol.solicitudId, "Autorizada");                 st.textContent = `Ô£à "${sol.anunciante.nombre}" autorizado y publicado. Recarga la portada en ~10 segundos.`;                 st.style.color = "#4ade80";             } catch (e) {                 st.textContent = "ÔØî Error al subir a GitHub: " + e.message;                 st.style.color = "#fca5a5";             }         }          function editarSolicitudAntesDePublicar(idx) {             const lista = leerColaSolicitudes();             const sol = lista[idx];             if (!sol || !sol.anunciante) return;             solicitudEnEdicionId = sol.solicitudId || "";             cargarAnuncianteEnFormulario(sol.anunciante, -1, idx);             const btnTabAnun = Array.from(document.querySelectorAll(".cms-tab")).find(b => b.textContent.includes("Anunciantes"));             cambiarTab("tab-anunciantes", btnTabAnun);             document.getElementById("tituloFormAnun").textContent = "Ô£Å´©Å Revisando Solicitud Pendiente (al guardar se agregar├í al cat├ílogo)";         }          async function rechazarSolicitud(idx) {             const lista = leerColaSolicitudes();             const sol = lista[idx];             if (!sol || !confirm(`┬┐Rechazar y eliminar la solicitud de "${sol.anunciante?.nombre || sol.solicitudId}"?`)) return;             eliminarDeColasPorId(sol.solicitudId);             renderizarSolicitudesPendientes();             await actualizarEstadoSolicitudNube(sol.solicitudId, "Rechazada");         }          // ======================================================================         // HIDRATAR TODAS LAS PESTA├æAS DEL PANEL         // ======================================================================         function hidratarTodoElPanel() {             if (!Array.isArray(catalogoActual.anunciantes)) catalogoActual.anunciantes = [];             if (!Array.isArray(catalogoActual.ofertas)) catalogoActual.ofertas = [];             if (!Array.isArray(catalogoActual.guias)) catalogoActual.guias = [];             if (!Array.isArray(catalogoActual.faq)) catalogoActual.faq = [];              document.getElementById("badgeAnunciantes").textContent = catalogoActual.anunciantes.length;             document.getElementById("badgeOfertas").textContent = catalogoActual.ofertas.length;              // 1. Portada y Revista             const rev = configActual.revistaEditorial || {};             document.getElementById("revTopBarActivo").checked = Boolean(configActual.topBarActivo);             document.getElementById("revTopBarTexto").value = configActual.topBarTexto || "";             document.getElementById("revDisclaimerTexto").value = rev.disclaimerTexto || "Promocionamos los servicios, paquetes y promociones de anunciantes en M├®xico. Todas las cotizaciones y pagos se realizan directamente con cada proveedor.";             document.getElementById("revKickerTexto").value = rev.kickerTexto || "Ô£¿ EDICI├ôN M├ëXICO 2026 ÔÇó REVISTA DE ANUNCIANTES VERIFICADOS";             document.getElementById("revHeroTitle").value = rev.heroTitle || "Descubre Paquetes, Hoteles, Lugares y Experiencias en un Solo Cat├ílogo";             document.getElementById("revHeroSubtitle").value = rev.heroSubtitle || "Explora cada anuncio como revista de productos: revisa fotos reales, tarifas, duraci├│n, promociones vigentes y tipos de cobro aceptados antes de contactar.";             document.getElementById("revMostrarSpotlight").checked = rev.mostrarSpotlight !== false;             document.getElementById("revMostrarOfertas").checked = rev.mostrarOfertas !== false;             document.getElementById("revMostrarCta").checked = rev.mostrarCta !== false;             document.getElementById("revMostrarGuias").checked = rev.mostrarGuias !== false;             document.getElementById("revMostrarFaq").checked = rev.mostrarFaq !== false;             document.getElementById("revTemaDefault").value = rev.temaDefault || "oceano";              const selSpot = document.getElementById("revSpotlightId");             selSpot.innerHTML = `<option value="">Ô£¿ Autom├ítico (Primer anunciante destacado)</option>` +                 catalogoActual.anunciantes.map(a => `<option value="${escaparHTML(a.id)}">${a.destacada ? "Ô¡É " : ""}${escaparHTML(a.nombre)} (${escaparHTML(a.categoriaNombre || "")})</option>`).join("");             selSpot.value = rev.spotlightId || "";              // 2. Comercial y Pagos             const b2b = configActual.comercialB2B || {};             const pag = configActual.pagosB2B || {};             document.getElementById("cfgWaAdmin").value = b2b.whatsappAdmin || "525652415593";             document.getElementById("cfgCorreoAdmin").value = b2b.correoAdmin || "";             document.getElementById("cfgEstPrecio").value = b2b.planEstandarPrecio || "$100 MXN";             document.getElementById("cfgEstNota").value = b2b.planEstandarNota || "/ mes";             document.getElementById("cfgDestPrecio").value = b2b.planDestacadoPrecio || "$499 MXN";             document.getElementById("cfgDestNota").value = b2b.planDestacadoNota || "/ mes";             document.getElementById("cfgOfertaPrecio").value = b2b.ofertaTemporadaPrecio || "$499 MXN / mes";             document.getElementById("cfgBannerPrecio").value = b2b.bannerPatrocinadoPrecio || "$899 MXN / mes";              document.getElementById("cfgMostrarPagos").checked = pag.mostrarModuloPagos !== false;             document.getElementById("cfgModoDemoPago").checked = pag.modoDemoVisual !== false;             document.getElementById("cfgMpLinkEst").value = pag.mpLinkEstandar || "https://www.mercadopago.com.mx";             document.getElementById("cfgMpLinkDest").value = pag.mpLinkDestacado || "https://www.mercadopago.com.mx";             document.getElementById("cfgSpeiBanco").value = pag.speiBanco || "Mercado Pago / STP";             document.getElementById("cfgSpeiClabe").value = pag.speiClabe || "0000 0000 0000 0000 00";             document.getElementById("cfgSpeiBenef").value = pag.speiBeneficiario || "Gu├¡as Vayora";             const elBuzonUrl = document.getElementById("cfgBuzonNubeUrl"); if (elBuzonUrl) elBuzonUrl.value = configActual.buzonNubeUrl || "";              renderizarSolicitudesPendientes();             renderizarListaAnunciantes();             renderizarListaOfertas();             renderizarGuiasYFaqAdmin();             renderizarProspectosAdmin();         }          function aplicarCambiosRevistaLocal(silencioso) {             configActual.topBarActivo = document.getElementById("revTopBarActivo").checked;             configActual.topBarTexto = document.getElementById("revTopBarTexto").value.trim();             configActual.revistaEditorial = {                 disclaimerTexto: document.getElementById("revDisclaimerTexto").value.trim(),                 kickerTexto: document.getElementById("revKickerTexto").value.trim(),                 heroTitle: document.getElementById("revHeroTitle").value.trim(),                 heroSubtitle: document.getElementById("revHeroSubtitle").value.trim(),                 mostrarSpotlight: document.getElementById("revMostrarSpotlight").checked,                 spotlightId: document.getElementById("revSpotlightId").value,                 mostrarOfertas: document.getElementById("revMostrarOfertas").checked,                 mostrarCta: document.getElementById("revMostrarCta").checked,                 mostrarGuias: document.getElementById("revMostrarGuias").checked,                 mostrarFaq: document.getElementById("revMostrarFaq").checked,                 temaDefault: document.getElementById("revTemaDefault").value             };             if (!silencioso) marcarCambiosSinPublicar("Dise├▒o de portada guardado. Presiona 'Publicar Todos los Cambios en Vivo'.");         }          function guardarComercialLocal(silencioso) {             const wa = document.getElementById("cfgWaAdmin").value.replace(/\D/g, "");             configActual.comercialB2B = Object.assign({}, configActual.comercialB2B || {}, {                 whatsappAdmin: wa.length === 10 ? "52" + wa : wa,                 correoAdmin: document.getElementById("cfgCorreoAdmin").value.trim(),                 planEstandarPrecio: document.getElementById("cfgEstPrecio").value.trim(),                 planEstandarNota: document.getElementById("cfgEstNota").value.trim(),                 planDestacadoPrecio: document.getElementById("cfgDestPrecio").value.trim(),                 planDestacadoNota: document.getElementById("cfgDestNota").value.trim(),                 ofertaTemporadaPrecio: document.getElementById("cfgOfertaPrecio").value.trim(),                 bannerPatrocinadoPrecio: document.getElementById("cfgBannerPrecio").value.trim()             });             configActual.pagosB2B = {                 mostrarModuloPagos: document.getElementById("cfgMostrarPagos").checked,                 modoDemoVisual: document.getElementById("cfgModoDemoPago").checked,                 mpLinkEstandar: validarUrlSegura(document.getElementById("cfgMpLinkEst").value) || "https://www.mercadopago.com.mx",                 mpLinkDestacado: validarUrlSegura(document.getElementById("cfgMpLinkDest").value) || "https://www.mercadopago.com.mx",                 speiBanco: document.getElementById("cfgSpeiBanco").value.trim(),                 speiClabe: document.getElementById("cfgSpeiClabe").value.trim(),                 speiBeneficiario: document.getElementById("cfgSpeiBenef").value.trim()             };             const elUrl = document.getElementById("cfgBuzonNubeUrl"); if (elUrl) configActual.buzonNubeUrl = validarUrlSegura(elUrl.value);                          if (!silencioso) marcarCambiosSinPublicar("Tarifas y datos de pago guardados. Presiona 'Publicar Todos los Cambios en Vivo'.");         }          // ======================================================================         // CRUD ANUNCIANTES         // ======================================================================         function renderizarListaAnunciantes() {             const cont = document.getElementById("listaAnunciantesAdmin");             const q = (document.getElementById("filtroAdminAnun")?.value || "").toLowerCase().trim();             cont.innerHTML = "";             catalogoActual.anunciantes.forEach((a, idx) => {                 if (q && !`${a.nombre} ${a.categoriaNombre} ${a.salidaDesde}`.toLowerCase().includes(q)) return;                 const row = document.createElement("div");                 row.className = "item-row";                 row.innerHTML = `                     <div style="flex:1; min-width:200px;">                         <strong>${a.destacada ? "Ô¡É " : ""}${escaparHTML(a.nombre)}</strong>                         <div style="font-size:0.76rem; color:var(--text-soft);">${escaparHTML(a.categoriaNombre || "")} &bull; ${escaparHTML(a.rangoPrecio || "")} &bull; ${escaparHTML(a.duracion || "")}</div>                     </div>                     <div style="display:flex; gap:0.35rem;">                         <button type="button" class="btn-mini" onclick="editarAnunciante(${idx})">Ô£Å´©Å Editar</button>                         <button type="button" class="btn-mini" onclick="subirPosicionAnunciante(${idx})" title="Subir al inicio">Ô¼å´©Å</button>                         <button type="button" class="btn-mini btn-del" onclick="eliminarAnunciante(${idx})">­ƒùæ´©Å</button>                     </div>                 `;                 cont.appendChild(row);             });         }          function cargarAnuncianteEnFormulario(a, editIdx, origenSolIdx) {             document.getElementById("anunEditIdx").value = String(editIdx);             document.getElementById("anunOrigenSolIdx").value = String(origenSolIdx);             document.getElementById("anunNombre").value = a.nombre || "";             document.getElementById("anunCategoria").value = `${a.categoria || "viajes"}|${a.categoriaNombre || "Viajes y Turismo"}`;             document.getElementById("anunRangoPrecio").value = a.rangoPrecio || "";             document.getElementById("anunDuracion").value = a.duracion || "";             document.getElementById("anunSalidaDesde").value = a.salidaDesde || "";             document.getElementById("anunWhatsapp").value = a.whatsappNumero || "";             document.getElementById("anunPromocion").value = a.promocion || a.cuponBeneficio || "";             document.getElementById("anunTiposCobro").value = Array.isArray(a.tiposCobro) ? a.tiposCobro.join(", ") : "";             document.getElementById("anunEspecialidad").value = a.especialidad || "";             document.getElementById("anunDescripcion").value = a.descripcion || "";             document.getElementById("anunGaleria").value = Array.isArray(a.galeria) ? a.galeria.join(", ") : "";             document.getElementById("anunAmenidades").value = Array.isArray(a.amenidades) ? a.amenidades.join(", ") : "";             document.getElementById("anunWeb").value = a.web || "";             document.getElementById("anunCuponCod").value = a.cuponCodigo || "";             document.getElementById("anunEtiqueta").value = a.etiquetaEstado || "Ô£ö Anunciante Verificado";             document.getElementById("anunDestacada").checked = Boolean(a.destacada);         }          function editarAnunciante(idx) {             const a = catalogoActual.anunciantes[idx];             if (!a) return;             cargarAnuncianteEnFormulario(a, idx, -1);             document.getElementById("tituloFormAnun").textContent = "Ô£Å´©Å Editando: " + a.nombre;         }          function limpiarFormAnunciante() {             document.getElementById("anunEditIdx").value = "-1";             document.getElementById("anunOrigenSolIdx").value = "-1";             document.getElementById("tituloFormAnun").textContent = "Ô×ò Agregar / Editar Anunciante";             ["anunNombre","anunRangoPrecio","anunDuracion","anunSalidaDesde","anunWhatsapp","anunPromocion","anunTiposCobro","anunEspecialidad","anunDescripcion","anunGaleria","anunAmenidades","anunWeb","anunCuponCod"].forEach(id => {                 document.getElementById(id).value = "";             });             document.getElementById("anunEtiqueta").value = "Ô£ö Anunciante Verificado";             document.getElementById("anunDestacada").checked = false;         }          function guardarAnuncianteLocal() {             const nombre = document.getElementById("anunNombre").value.trim();             if (!nombre) { alert("Escribe el nombre comercial."); return; }             const [catId, catNombre] = document.getElementById("anunCategoria").value.split("|");             const editIdx = parseInt(document.getElementById("anunEditIdx").value, 10);             const origenSolIdx = parseInt(document.getElementById("anunOrigenSolIdx").value, 10);             const wa = document.getElementById("anunWhatsapp").value.replace(/\D/g, "");             const palabras = nombre.split(/\s+/).filter(Boolean);             const iniciales = palabras.length >= 2 ? (palabras[0][0] + palabras[1][0]).toUpperCase() : nombre.slice(0, 2).toUpperCase();              const previo = editIdx >= 0 ? catalogoActual.anunciantes[editIdx] : {};             const obj = Object.assign({}, previo, {                 id: previo.id || (nombre.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") + "-" + Math.floor(100 + Math.random() * 900)),                 categoria: catId,                 categoriaNombre: catNombre,                 nombre,                 iniciales: iniciales || "DV",                 destacada: document.getElementById("anunDestacada").checked,                 rating: previo.rating || "5.0",                 etiquetaEstado: document.getElementById("anunEtiqueta").value.trim() || "Ô£ö Anunciante Verificado",                 rangoPrecio: document.getElementById("anunRangoPrecio").value.trim() || "$$ ÔÇó Cotizaci├│n directa",                 duracion: document.getElementById("anunDuracion").value.trim() || "Flexible",                 salidaDesde: document.getElementById("anunSalidaDesde").value.trim() || "M├®xico",                 estadosSalida: previo.estadosSalida || ["cdmx", "monterrey", "guadalajara", "puebla", "bajio"],                 whatsappNumero: wa.length === 10 ? "52" + wa : wa,                 promocion: document.getElementById("anunPromocion").value.trim(),                 tiposCobro: document.getElementById("anunTiposCobro").value.split(",").map(x => x.trim()).filter(Boolean),                 especialidad: document.getElementById("anunEspecialidad").value.trim(),                 descripcion: document.getElementById("anunDescripcion").value.trim(),                 galeria: document.getElementById("anunGaleria").value.split(",").map(validarUrlSegura).filter(Boolean),                 amenidades: document.getElementById("anunAmenidades").value.split(",").map(x => x.trim()).filter(Boolean),                 web: validarUrlSegura(document.getElementById("anunWeb").value),                 cuponCodigo: document.getElementById("anunCuponCod").value.trim().toUpperCase(),                 cuponBeneficio: document.getElementById("anunPromocion").value.trim()             });              if (editIdx >= 0) {                 catalogoActual.anunciantes[editIdx] = obj;             } else {                 catalogoActual.anunciantes.unshift(obj);             }              if (origenSolIdx >= 0) {                 const cola = leerColaSolicitudes();                 cola.splice(origenSolIdx, 1);                 localStorage.setItem("dv_solicitudes_pendientes", JSON.stringify(cola));             }              limpiarFormAnunciante();             hidratarTodoElPanel();             marcarCambiosSinPublicar(`Anunciante "${nombre}" guardado. Presiona 'Publicar Todos los Cambios en Vivo'.`);         }          function subirPosicionAnunciante(idx) {             if (idx <= 0) return;             const [item] = catalogoActual.anunciantes.splice(idx, 1);             catalogoActual.anunciantes.unshift(item);             hidratarTodoElPanel();             marcarCambiosSinPublicar(`"${item.nombre}" movido al primer lugar.`);         }          function eliminarAnunciante(idx) {             const a = catalogoActual.anunciantes[idx];             if (!a || !confirm(`┬┐Eliminar "${a.nombre}" del cat├ílogo?`)) return;             catalogoActual.anunciantes.splice(idx, 1);             hidratarTodoElPanel();             marcarCambiosSinPublicar(`Anunciante "${a.nombre}" eliminado.`);         }          function eliminarTodosLosDemo() {             const demos = catalogoActual.anunciantes.filter(a => String(a.id || "").endsWith("-demo"));             if (!demos.length) { alert("No hay anunciantes '-demo' actualmente."); return; }             if (!confirm(`┬┐Eliminar los ${demos.length} anunciantes simulados (-demo)?`)) return;             catalogoActual.anunciantes = catalogoActual.anunciantes.filter(a => !String(a.id || "").endsWith("-demo"));             hidratarTodoElPanel();             marcarCambiosSinPublicar(`Se limpiaron ${demos.length} anunciantes demo.`);         }          // ======================================================================         // OFERTAS, GU├ìAS, FAQ, CRM Y RESPALDO         // ======================================================================         function renderizarListaOfertas() {             const cont = document.getElementById("listaOfertasAdmin");             cont.innerHTML = catalogoActual.ofertas.map((o, idx) => `                 <div class="item-row">                     <div>                         <strong>${escaparHTML(o.titulo || "")}</strong>                         <div style="font-size:0.76rem; color:var(--text-soft);">${escaparHTML(o.agencia || "")} &bull; ${escaparHTML(o.precio || "")}</div>                     </div>                     <button type="button" class="btn-mini btn-del" onclick="eliminarOferta(${idx})">­ƒùæ´©Å</button>                 </div>             `).join("");         }          function agregarOfertaLocal() {             const titulo = document.getElementById("ofTitulo").value.trim();             if (!titulo) return;             const wa = document.getElementById("ofWa").value.replace(/\D/g, "");             catalogoActual.ofertas.unshift({                 agencia: document.getElementById("ofAgencia").value.trim(),                 titulo,                 precio: document.getElementById("ofPrecio").value.trim(),                 etiqueta: document.getElementById("ofEtiqueta").value.trim() || "­ƒöÑ Promo",                 detalle: document.getElementById("ofDetalle").value.trim(),                 whatsappNumero: wa.length === 10 ? "52" + wa : wa,                 imagen: validarUrlSegura(document.getElementById("ofImg").value),                 textoBoton: "­ƒÆ¼ Solicitar Promoci├│n"             });             ["ofAgencia","ofTitulo","ofPrecio","ofDetalle","ofWa","ofImg"].forEach(id => document.getElementById(id).value = "");             hidratarTodoElPanel();             marcarCambiosSinPublicar("Promoci├│n agregada.");         }          function eliminarOferta(idx) {             catalogoActual.ofertas.splice(idx, 1);             hidratarTodoElPanel();             marcarCambiosSinPublicar("Promoci├│n eliminada.");         }          function renderizarGuiasYFaqAdmin() {             document.getElementById("listaGuiasAdmin").innerHTML = catalogoActual.guias.map((g, idx) => `                 <div class="item-row">                     <div><strong>${escaparHTML(g.titulo || "")}</strong> <span class="pill-mini">${escaparHTML(g.categoria || "")}</span></div>                     <button type="button" class="btn-mini btn-del" onclick="eliminarGuia(${idx})">­ƒùæ´©Å</button>                 </div>             `).join("");              document.getElementById("listaFaqAdmin").innerHTML = catalogoActual.faq.map((f, idx) => `                 <div class="item-row">                     <div><strong>${escaparHTML(f.pregunta || "")}</strong></div>                     <button type="button" class="btn-mini btn-del" onclick="eliminarFaq(${idx})">­ƒùæ´©Å</button>                 </div>             `).join("");         }          function agregarGuiaLocal() {             const titulo = document.getElementById("guiaTitulo").value.trim();             if (!titulo) return;             catalogoActual.guias.unshift({                 categoria: document.getElementById("guiaCat").value.trim() || "Gu├¡a",                 titulo,                 resumen: document.getElementById("guiaResumen").value.trim(),                 contenido: document.getElementById("guiaContenido").value.trim()             });             ["guiaCat","guiaTitulo","guiaResumen","guiaContenido"].forEach(id => document.getElementById(id).value = "");             hidratarTodoElPanel();             marcarCambiosSinPublicar("Gu├¡a editorial agregada.");         }          function eliminarGuia(idx) {             catalogoActual.guias.splice(idx, 1);             hidratarTodoElPanel();             marcarCambiosSinPublicar("Gu├¡a eliminada.");         }          function agregarFaqLocal() {             const pregunta = document.getElementById("faqPregunta").value.trim();             if (!pregunta) return;             catalogoActual.faq.push({ pregunta, respuesta: document.getElementById("faqRespuesta").value.trim() });             ["faqPregunta","faqRespuesta"].forEach(id => document.getElementById(id).value = "");             hidratarTodoElPanel();             marcarCambiosSinPublicar("Pregunta frecuente agregada.");         }          function eliminarFaq(idx) {             catalogoActual.faq.splice(idx, 1);             hidratarTodoElPanel();             marcarCambiosSinPublicar("FAQ eliminada.");         }          function renderizarProspectosAdmin() {             const lista = JSON.parse(localStorage.getItem("dv_crm_prospectos") || "[]");             document.getElementById("countProspectos").textContent = lista.length;             const cont = document.getElementById("listaProspectosAdmin");             if (!lista.length) {                 cont.innerHTML = `<p style="font-size:0.84rem; color:var(--text-soft);">Sin prospectos registrados todav├¡a.</p>`;                 return;             }             cont.innerHTML = lista.map((p, idx) => `                 <div class="item-row">                     <div>                         <strong>${escaparHTML(p.nombre)}</strong> (${escaparHTML(p.giro)})                         <div style="font-size:0.76rem; color:var(--text-soft);">+${escaparHTML(p.wa)} &bull; ${escaparHTML(p.estado)}</div>                     </div>                     <div style="display:flex; gap:0.35rem;">                         <select onchange="cambiarEstadoProspecto(${idx}, this.value)" style="padding:0.25rem; font-size:0.76rem; border-radius:0.4rem;">                             <option value="Contactado" ${p.estado === "Contactado" ? "selected" : ""}>­ƒô® Contactado</option>                             <option value="Media Kit Enviado" ${p.estado === "Media Kit Enviado" ? "selected" : ""}>­ƒôä Media Kit</option>                             <option value="Cerrado / Publicado" ${p.estado === "Cerrado / Publicado" ? "selected" : ""}>Ô£à Cerrado</option>                         </select>                         <button type="button" class="btn-mini btn-del" onclick="eliminarProspecto(${idx})">­ƒùæ´©Å</button>                     </div>                 </div>             `).join("");         }          function enviarProspeccionWhatsApp() {             const nombre = document.getElementById("prosNombre").value.trim();             let wa = document.getElementById("prosWhatsApp").value.replace(/\D/g, "");             const giro = document.getElementById("prosGiro").value;             if (!nombre || wa.length < 10) { alert("Escribe el nombre del negocio y WhatsApp de 10 d├¡gitos."); return; }             if (wa.length === 10) wa = "52" + wa;              const lista = JSON.parse(localStorage.getItem("dv_crm_prospectos") || "[]");             lista.unshift({ nombre, wa, giro, estado: "Contactado", fecha: new Date().toLocaleDateString("es-MX") });             localStorage.setItem("dv_crm_prospectos", JSON.stringify(lista));             renderizarProspectosAdmin();              const msg = `Hola equipo de *${nombre}* ­ƒæï\n\n` +                         `Les escribo de la revista digital *Gu├¡as Vayora* (https://luisfgarciae.github.io/directorio-agencias/).\n` +                         `Estamos sumando proveedores destacados en *${giro}* para promocionar sus fotos, tarifas, duraci├│n y promociones directo al WhatsApp del cliente sin comisiones por venta.\n\n` +                         `Pueden revisar planes y Media Kit aqu├¡: https://luisfgarciae.github.io/directorio-agencias/pages/media-kit.html\n\n` +                         `┬┐Les gustar├¡a aparecer en nuestra edici├│n actual?`;             window.open(`https://wa.me/${wa}?text=${encodeURIComponent(msg)}`, "_blank", "noopener,noreferrer");         }          function cambiarEstadoProspecto(idx, est) {             const lista = JSON.parse(localStorage.getItem("dv_crm_prospectos") || "[]");             if (lista[idx]) { lista[idx].estado = est; localStorage.setItem("dv_crm_prospectos", JSON.stringify(lista)); renderizarProspectosAdmin(); }         }          function eliminarProspecto(idx) {             const lista = JSON.parse(localStorage.getItem("dv_crm_prospectos") || "[]");             lista.splice(idx, 1); localStorage.setItem("dv_crm_prospectos", JSON.stringify(lista)); renderizarProspectosAdmin();         }          function descargarRespaldo(filename, obj) {             const blob = new Blob([JSON.stringify(obj, null, 2)], { type: "application/json" });             const a = document.createElement("a");             a.href = URL.createObjectURL(blob);             a.download = filename;             a.click();             URL.revokeObjectURL(a.href);         }          // ======================================================================         // ARRANQUE INMEDIATO + SINCRONIZACI├ôN EN VIVO DE SOLICITUDES         // ======================================================================         document.addEventListener("DOMContentLoaded", () => {             if (localStorage.getItem("dv_dark_mode") === "dark") {                 document.documentElement.setAttribute("data-theme", "dark");                 document.getElementById("btnDarkMode").textContent = "ÔÿÇ´©Å";             }              // Cargar solicitudes pendientes inmediatamente antes de conectar token             renderizarSolicitudesPendientes();             cargarDatosSoloLectura();              const savedBuzonKey = sessionStorage.getItem("dv_buzon_key_session");             if (savedBuzonKey) { buzonAdminKey = savedBuzonKey; document.getElementById("buzonKeyInput").value = savedBuzonKey; }             setTimeout(() => sincronizarSolicitudesNube(false), 800);             setInterval(() => sincronizarSolicitudesNube(false), 30000);             const savedTk = sessionStorage.getItem("dv_gh_token_session");             if (savedTk) {                 document.getElementById("githubTokenInput").value = savedTk;                 conectarEditorGithub();             }              // Escuchar solicitudes nuevas desde otra pesta├▒a en tiempo real             window.addEventListener("storage", (e) => {                 if (e.key === "dv_solicitudes_pendientes") renderizarSolicitudesPendientes();             });             window.addEventListener("focus", renderizarSolicitudesPendientes);             try {                 const bc = new BroadcastChannel("dv_solicitudes_channel");                 bc.onmessage = () => renderizarSolicitudesPendientes();             } catch (e) {}             setInterval(renderizarSolicitudesPendientes, 2500);         });     </script>     <script src="../js/admin-cloudflare-bridge.js"></script>
-</body> </html>
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+    <script src="../js/seguridad-vayora.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <title>Guías Vayora — El mundo tiene más por descubrir</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/logo.svg">
+    <link rel="stylesheet" href="../css/styles.css?v=20261119nav">
+    <style>
+        .admin-wrap { max-width: 1220px; margin: 0 auto; padding: 1.5rem 1.25rem 4rem; }
+        .admin-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 1rem; padding: 1.35rem; box-shadow: var(--shadow-sm); margin-bottom: 1.25rem; }
+        .admin-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 1.25rem; align-items: start; }
+        @media (max-width: 920px) { .admin-grid { grid-template-columns: 1fr; } }
+        .cms-tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1.15rem 0; }
+        .cms-tab { background: var(--bg-card); border: 1px solid var(--border); color: var(--text-main); padding: 0.58rem 0.95rem; border-radius: 0.7rem; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.15s ease; }
+        .cms-tab:hover { border-color: var(--primary); }
+        .cms-tab.active { background: var(--primary); color: #ffffff; border-color: var(--primary); }
+        .cms-tab.has-pending { border-color: #f59e0b; background: rgba(245, 158, 11, 0.14); color: var(--secondary); }
+        .cms-tab.active.has-pending { background: #d97706; color: #ffffff; border-color: #d97706; }
+        .cms-panel { display: none; }
+        .cms-panel.active { display: block; }
+        .form-group { margin-bottom: 0.85rem; }
+        .form-group label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--secondary); margin-bottom: 0.3rem; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.62rem 0.8rem; border: 1px solid var(--border); border-radius: 0.55rem; background: var(--bg-muted); color: var(--text-main); font-size: 0.88rem; font-family: inherit; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+        @media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
+        .item-row { display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; padding: 0.8rem; border: 1px solid var(--border); border-radius: 0.7rem; background: var(--bg-muted); margin-bottom: 0.6rem; flex-wrap: wrap; }
+        .btn-mini { padding: 0.38rem 0.65rem; border-radius: 0.45rem; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-main); font-size: 0.78rem; font-weight: 700; cursor: pointer; }
+        .btn-mini:hover { border-color: var(--primary); }
+        .btn-del { color: #dc2626; border-color: rgba(220, 38, 38, 0.3); }
+        .publish-bar { background: #0f172a; color: #ffffff; border-radius: 1rem; padding: 1.1rem 1.4rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin: 1.25rem 0; }
+        .sol-card { border: 1px solid var(--border); border-left: 4px solid #f59e0b; background: var(--bg-muted); border-radius: 0.85rem; padding: 1.15rem; margin-bottom: 0.9rem; }
+        .pill-mini { display: inline-block; font-size: 0.72rem; font-weight: 700; padding: 0.18rem 0.55rem; border-radius: 9999px; background: var(--bg-card); border: 1px solid var(--border); color: var(--text-main); }
+        .thumb-strip { display: flex; gap: 0.45rem; flex-wrap: wrap; margin-top: 0.5rem; }
+        .thumb-strip img { width: 72px; height: 50px; object-fit: cover; border-radius: 0.4rem; border: 1px solid var(--border); }
+    /* === RESPONSIVE MOVIL LIMPIO === */
+html, body { max-width: 100%; overflow-x: hidden; }
+@media (max-width: 768px) {
+    .nav-container, .top-nav, header nav {
+        flex-wrap: wrap !important;
+        gap: 0.45rem !important;
+    }
+    .plans-grid, .register-grid, .cards-grid, .catalogo-grid, .agencias-grid {
+        grid-template-columns: 1fr !important;
+    }
+    input, select, textarea { font-size: 16px !important; }
+    .modal-card { width: 95vw !important; padding: 1.15rem !important; }
+}
+</style>
+</head>
+<body>
+    <header class="navbar">
+    <script src="../js/seguridad-vayora.js"></script>
+        <a href="../index.html" class="brand"><img src="../assets/logo.svg" alt="Panel Maestro" class="brand-icon">Panel Maestro <span>Revista</span></a>
+        <nav class="nav-links">
+            <a href="../index.html" target="_blank" rel="noopener noreferrer">👁️ Ver Revista en Vivo</a>
+            <a href="anunciate.html" target="_blank" rel="noopener noreferrer">📢 Probar Alta</a>
+            <a href="media-kit.html" target="_blank" rel="noopener noreferrer">📄 Media Kit</a>
+            <button type="button" class="dark-toggle" id="btnDarkMode" onclick="toggleModoOscuro()">🌙</button>
+        </nav>
+    </header>
+
+    <main class="admin-wrap">
+        <!-- Conexión GitHub -->
+        <section class="admin-card">
+            <h2 style="font-size: 1.18rem; color: var(--secondary); margin: 0 0 0.25rem;">Conexión con Repositorio (LUISFGARCIAE/directorio-agencias)</h2>
+            <p style="font-size: 0.84rem; color: var(--text-soft); margin: 0 0 0.85rem;">Pega tu Personal Access Token de GitHub para publicar cambios en vivo. Solo vive en esta pestaña mientras trabajas.</p>
+            <div style="display: flex; gap: 0.65rem; flex-wrap: wrap;">
+                <input type="password" id="githubTokenInput" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx o github_pat_..." style="flex: 1; min-width: 240px; padding: 0.68rem 0.85rem; border: 1px solid var(--border); border-radius: 0.6rem; background: var(--bg-muted); color: var(--text-main);">
+                <button type="button" id="btnConectarGithub" class="btn-action btn-primary" onclick="conectarEditorGithub()" style="padding: 0.68rem 1.35rem;">Conectar al Editor</button>
+            </div>
+                        <div style="display: flex; gap: 0.65rem; flex-wrap: wrap; margin-top: 0.65rem;">
+                <input type="password" id="buzonKeyInput" placeholder="Clave secreta de tu Buzón en la Nube (Google Sheets)" style="flex: 1; min-width: 240px; padding: 0.65rem 0.85rem; border: 1px solid var(--border); border-radius: 0.6rem; background: var(--bg-muted); color: var(--text-main);">
+                <button type="button" class="btn-action btn-outline" onclick="conectarBuzonNube()" style="padding: 0.65rem 1.2rem;">☁️ Sincronizar Buzón Nube</button>
+            </div>
+            <div id="statusBuzonNube" style="font-size: 0.8rem; font-weight: 600; margin-top: 0.45rem; color: var(--text-soft);"></div>
+            <div id="statusConexion" style="font-size: 0.84rem; font-weight: 700; margin-top: 0.65rem; color: var(--text-soft);">
+                ⏳ Modo lectura cargado. Conecta tu token para publicar cambios en GitHub Pages.
+            </div>
+        </section>
+
+        <!-- Barra de Pestañas -->
+        <div class="cms-tabs">
+            <button type="button" id="btnTabSolicitudes" class="cms-tab active" onclick="cambiarTab('tab-solicitudes', this)">📥 Solicitudes por Autorizar (<span id="badgeSolPendientes">0</span>)</button>
+            <button type="button" class="cms-tab" onclick="cambiarTab('tab-revista', this)">🎨 Portada y Revista</button>
+            <button type="button" class="cms-tab" onclick="cambiarTab('tab-anunciantes', this)">📰 Anunciantes (<span id="badgeAnunciantes">0</span>)</button>
+            <button type="button" class="cms-tab" onclick="cambiarTab('tab-ofertas', this)">🔥 Ofertas (<span id="badgeOfertas">0</span>)</button>
+            <button type="button" class="cms-tab" onclick="cambiarTab('tab-guias', this)">🧭 Guías y FAQ</button>
+            <button type="button" class="cms-tab" onclick="cambiarTab('tab-comercial', this)">💼 Tarifas y Mercado Pago</button>
+            <button type="button" class="cms-tab" onclick="cambiarTab('tab-prospeccion', this)">🎯 Prospección CRM</button>
+            <button type="button" class="cms-tab" onclick="cambiarTab('tab-respaldo', this)">💾 Respaldo</button>
+        </div>
+
+        <!-- Barra de Publicación Global -->
+        <div class="publish-bar">
+            <div>
+                <strong style="font-size: 1rem; display: block;">¿Terminaste tus cambios manuales?</strong>
+                <span id="statusPublicacion" style="font-size: 0.82rem; color: #cbd5e1;">Se actualizarán los archivos en GitHub y el sitio en vivo en ~10 segundos.</span>
+            </div>
+            <button type="button" id="btnPublicarTodo" class="btn-action btn-whatsapp" onclick="publicarTodoEnVivo()" style="padding: 0.78rem 1.4rem; font-size: 0.92rem;">
+                🚀 Publicar Todos los Cambios en Vivo
+            </button>
+        </div>
+
+        <!-- ================================================================ -->
+        <!-- TAB 1: SOLICITUDES POR AUTORIZAR                                 -->
+        <!-- ================================================================ -->
+        <section id="tab-solicitudes" class="cms-panel active">
+            <div class="admin-card">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem; margin-bottom:0.85rem;">
+                    <div>
+                        <h3 style="font-size: 1.15rem; color: var(--secondary); margin: 0 0 0.2rem;">📥 Solicitudes Recibidas Esperando Autorización</h3>
+                        <p style="font-size: 0.84rem; color: var(--text-soft); margin: 0;">Ningún anuncio se muestra en la revista pública hasta que tú presiones <strong>Autorizar y Publicar</strong>.</p>
+                    </div>
+                    <button type="button" class="btn-mini" onclick="sincronizarSolicitudesNube(true)">🔄 Actualizar Bandeja (Nube + Local)</button>
+                </div>
+                <div id="listaSolicitudesPendientes"></div>
+            </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- TAB 2: PORTADA Y REVISTA (CONTROL MANUAL)                        -->
+        <!-- ================================================================ -->
+        <section id="tab-revista" class="cms-panel">
+            <div class="admin-grid">
+                <div class="admin-card">
+                    <h3 style="font-size: 1.1rem; color: var(--secondary); margin: 0 0 0.9rem;">✏️ Textos y Encabezado de la Revista</h3>
+                    <div class="form-group">
+                        <label style="display:flex; align-items:center; gap:0.5rem;">
+                            <input type="checkbox" id="revTopBarActivo" style="width:auto;"> Mostrar Barra Promocional Superior
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>Texto de Barra Promocional Superior</label>
+                        <input type="text" id="revTopBarTexto" placeholder="Ej. 📢 Espacios disponibles edición Noviembre 2026">
+                    </div>
+                    <div class="form-group">
+                        <label>Aviso de Plataforma Publicitaria (Franja Superior)</label>
+                        <textarea id="revDisclaimerTexto" rows="2"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Etiqueta de Edición (Kicker)</label>
+                        <input type="text" id="revKickerTexto">
+                    </div>
+                    <div class="form-group">
+                        <label>Título Principal de Portada</label>
+                        <input type="text" id="revHeroTitle">
+                    </div>
+                    <div class="form-group">
+                        <label>Subtítulo de Portada</label>
+                        <textarea id="revHeroSubtitle" rows="2"></textarea>
+                    </div>
+                </div>
+
+                <div class="admin-card">
+                    <h3 style="font-size: 1.1rem; color: var(--secondary); margin: 0 0 0.9rem;">⭐ Portada Destacada y Secciones Visibles</h3>
+                    <div class="form-group">
+                        <label style="display:flex; align-items:center; gap:0.5rem;">
+                            <input type="checkbox" id="revMostrarSpotlight" style="width:auto;"> Mostrar bloque gigante "Portada de la Edición"
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>Elegir Anunciante en Portada de la Edición</label>
+                        <select id="revSpotlightId">
+                            <option value="">✨ Automático (Primer anunciante destacado)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Tema de Color Predeterminado</label>
+                        <select id="revTemaDefault">
+                            <option value="oceano">🔵 Océano (Turismo / Revista)</option>
+                            <option value="bodas">🌹 Bodas y Eventos</option>
+                            <option value="natura">🟢 Natura y Aventura</option>
+                        </select>
+                    </div>
+                    <hr style="border:0; border-top:1px solid var(--border); margin:1rem 0;">
+                    <div style="display:flex; flex-direction:column; gap:0.55rem; font-size:0.86rem; font-weight:700;">
+                        <label style="display:flex; align-items:center; gap:0.5rem;"><input type="checkbox" id="revMostrarOfertas" style="width:auto;"> Mostrar sección "🔥 Promociones de Temporada"</label>
+                        <label style="display:flex; align-items:center; gap:0.5rem;"><input type="checkbox" id="revMostrarCta" style="width:auto;"> Mostrar banner "¿Quieres anunciar tus servicios aquí?"</label>
+                        <label style="display:flex; align-items:center; gap:0.5rem;"><input type="checkbox" id="revMostrarGuias" style="width:auto;"> Mostrar sección "🧭 Guías Editoriales"</label>
+                        <label style="display:flex; align-items:center; gap:0.5rem;"><input type="checkbox" id="revMostrarFaq" style="width:auto;"> Mostrar sección "❓ Preguntas Frecuentes"</label>
+                    </div>
+                    <button type="button" class="btn-action btn-primary" style="width:100%; margin-top:1.2rem;" onclick="aplicarCambiosRevistaLocal()">
+                        💾 Guardar Cambios de Portada (Listo para Publicar)
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- TAB 3: ANUNCIANTES (CATÁLOGO REVISTA)                            -->
+        <!-- ================================================================ -->
+        <section id="tab-anunciantes" class="cms-panel">
+            <div class="admin-grid">
+                <div class="admin-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.85rem;">
+                        <h3 id="tituloFormAnun" style="font-size: 1.08rem; color: var(--secondary); margin: 0;">➕ Agregar / Editar Anunciante</h3>
+                        <button type="button" class="btn-mini" onclick="limpiarFormAnunciante()">Limpiar</button>
+                    </div>
+                    <input type="hidden" id="anunEditIdx" value="-1">
+                    <input type="hidden" id="anunOrigenSolIdx" value="-1">
+
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Nombre Comercial *</label>
+                            <input type="text" id="anunNombre" placeholder="Ej. Caribe Azul Experiencias">
+                        </div>
+                        <div class="form-group">
+                            <label>Sector / Categoría *</label>
+                            <select id="anunCategoria">
+                                <option value="viajes|Viajes y Turismo">✈️ Viajes y Turismo</option>
+                                <option value="hoteles|Hoteles y Hostales">🏨 Hoteles y Hostales</option>
+                                <option value="bodas|Bodas y Eventos">💍 Bodas y Eventos</option>
+                                <option value="hospedaje|Quintas y Estancias">🏡 Quintas y Estancias</option>
+                                <option value="gastronomia|Restaurantes y Terrazas">🍽️ Restaurantes y Terrazas</option>
+                                <option value="transporte|Transporte Turístico">🚐 Transporte Turístico</option>
+                                <option value="musica|Música, DJs y Grupos">🎶 Música, DJs y Grupos</option>
+                                <option value="aventura|Parques y Aventura">🧗‍♂️ Parques y Aventura</option>
+                                <option value="servicios|Fotografía y Experiencias">📸 Fotografía y Experiencias</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Cobro / Tarifa Visible *</label>
+                            <input type="text" id="anunRangoPrecio" placeholder="Ej. $$ • $3,450 MXN / noche">
+                        </div>
+                        <div class="form-group">
+                            <label>Duración del Servicio / Estancia *</label>
+                            <input type="text" id="anunDuracion" placeholder="Ej. 4 Días / 3 Noches o 5 hrs">
+                        </div>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Lugar / Cobertura *</label>
+                            <input type="text" id="anunSalidaDesde" placeholder="Ej. Tepoztlán, Morelos / CDMX">
+                        </div>
+                        <div class="form-group">
+                            <label>WhatsApp de Ventas (con 52) *</label>
+                            <input type="tel" id="anunWhatsapp" placeholder="525512345678">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Promoción Vigente en Tarjeta</label>
+                        <input type="text" id="anunPromocion" placeholder="Ej. 15% OFF reservando directo + desayuno incluido">
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Tipos de Cobro (separados por coma)</label>
+                            <input type="text" id="anunTiposCobro" placeholder="Tarjeta Crédito/Débito, 3 y 6 MSI, Transferencia SPEI, Efectivo">
+                        </div>
+                        <div class="form-group">
+                            <label>Especialidad breve</label>
+                            <input type="text" id="anunEspecialidad" placeholder="Ej. Paquetes todo incluido con vuelo">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Descripción de la Oferta / Producto *</label>
+                        <textarea id="anunDescripcion" rows="2" placeholder="Describe qué incluye, beneficios y condiciones principales..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Galería de Fotos (URLs https:// separadas por coma)</label>
+                        <textarea id="anunGaleria" rows="2" placeholder="https://foto1.jpg, https://foto2.jpg, https://foto3.jpg"></textarea>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Amenidades / Incluye (separadas por coma)</label>
+                            <input type="text" id="anunAmenidades" placeholder="🍳 Desayuno, 🚗 Estacionamiento, 📶 Wi-Fi">
+                        </div>
+                        <div class="form-group">
+                            <label>Sitio Web / Red Social (https://)</label>
+                            <input type="url" id="anunWeb" placeholder="https://tunegocio.com">
+                        </div>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Código de Cupón (opcional)</label>
+                            <input type="text" id="anunCuponCod" placeholder="Ej. VERANO15">
+                        </div>
+                        <div class="form-group">
+                            <label>Etiqueta de Verificación / Rating</label>
+                            <input type="text" id="anunEtiqueta" value="✔ Anunciante Verificado">
+                        </div>
+                    </div>
+
+                    <div style="display:flex; gap:1rem; align-items:center; flex-wrap:wrap; margin-bottom:1rem;">
+                        <label style="font-size:0.84rem; font-weight:700; display:flex; align-items:center; gap:0.4rem;">
+                            <input type="checkbox" id="anunDestacada" style="width:auto;"> ⭐ Anunciante Destacado (Plan $499)
+                        </label>
+                    </div>
+
+                    <button type="button" class="btn-action btn-primary" style="width:100%;" onclick="guardarAnuncianteLocal()">
+                        💾 Guardar Anunciante en Catálogo
+                    </button>
+                </div>
+
+                <div class="admin-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.85rem;">
+                        <h3 style="font-size: 1.08rem; color: var(--secondary); margin: 0;">📋 Anunciantes Publicados</h3>
+                        <button type="button" class="btn-mini btn-del" onclick="eliminarTodosLosDemo()">🧹 Limpiar "-demo"</button>
+                    </div>
+                    <input type="search" id="filtroAdminAnun" placeholder="🔍 Filtrar anunciante por nombre o sector..." oninput="renderizarListaAnunciantes()" style="width:100%; padding:0.58rem 0.8rem; border:1px solid var(--border); border-radius:0.55rem; background:var(--bg-muted); color:var(--text-main); margin-bottom:0.85rem;">
+                    <div id="listaAnunciantesAdmin" style="max-height: 680px; overflow-y: auto;"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- TAB 4: OFERTAS Y PROMOCIONES                                     -->
+        <!-- ================================================================ -->
+        <section id="tab-ofertas" class="cms-panel">
+            <div class="admin-grid">
+                <div class="admin-card">
+                    <h3 style="font-size: 1.08rem; color: var(--secondary); margin: 0 0 0.85rem;">🔥 Nueva Promoción de Temporada</h3>
+                    <div class="form-group"><label>Nombre del Anunciante *</label><input type="text" id="ofAgencia" placeholder="Ej. Caribe Azul Experiencias"></div>
+                    <div class="form-group"><label>Título de la Promoción *</label><input type="text" id="ofTitulo" placeholder="Ej. Paquete 4 Días Todo Incluido"></div>
+                    <div class="grid-2">
+                        <div class="form-group"><label>Precio Visible *</label><input type="text" id="ofPrecio" placeholder="$8,990 MXN"></div>
+                        <div class="form-group"><label>Etiqueta</label><input type="text" id="ofEtiqueta" value="🔥 Promo Vigente"></div>
+                    </div>
+                    <div class="form-group"><label>Detalle breve *</label><textarea id="ofDetalle" rows="2"></textarea></div>
+                    <div class="grid-2">
+                        <div class="form-group"><label>WhatsApp (con 52)</label><input type="tel" id="ofWa" placeholder="525512345678"></div>
+                        <div class="form-group"><label>URL de Imagen (https://)</label><input type="url" id="ofImg" placeholder="https://images.unsplash.com/..."></div>
+                    </div>
+                    <button type="button" class="btn-action btn-primary" style="width:100%;" onclick="agregarOfertaLocal()">➕ Agregar Promoción</button>
+                </div>
+                <div class="admin-card">
+                    <h3 style="font-size: 1.08rem; color: var(--secondary); margin: 0 0 0.85rem;">📋 Promociones Activas</h3>
+                    <div id="listaOfertasAdmin"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- TAB 5: GUÍAS Y FAQ                                               -->
+        <!-- ================================================================ -->
+        <section id="tab-guias" class="cms-panel">
+            <div class="admin-grid">
+                <div class="admin-card">
+                    <h3 style="font-size: 1.08rem; color: var(--secondary); margin: 0 0 0.85rem;">🧭 Agregar Guía Editorial</h3>
+                    <div class="grid-2">
+                        <div class="form-group"><label>Categoría</label><input type="text" id="guiaCat" placeholder="Viajes / Bodas / Consejos"></div>
+                        <div class="form-group"><label>Título *</label><input type="text" id="guiaTitulo"></div>
+                    </div>
+                    <div class="form-group"><label>Resumen corto *</label><input type="text" id="guiaResumen"></div>
+                    <div class="form-group"><label>Contenido completo *</label><textarea id="guiaContenido" rows="3"></textarea></div>
+                    <button type="button" class="btn-action btn-primary" style="width:100%; margin-bottom:1rem;" onclick="agregarGuiaLocal()">➕ Guardar Guía</button>
+                    <div id="listaGuiasAdmin"></div>
+                </div>
+
+                <div class="admin-card">
+                    <h3 style="font-size: 1.08rem; color: var(--secondary); margin: 0 0 0.85rem;">❓ Preguntas Frecuentes (FAQ)</h3>
+                    <div class="form-group"><label>Pregunta *</label><input type="text" id="faqPregunta" placeholder="Ej. ¿Cobran comisión por reservar?"></div>
+                    <div class="form-group"><label>Respuesta *</label><textarea id="faqRespuesta" rows="2"></textarea></div>
+                    <button type="button" class="btn-action btn-primary" style="width:100%; margin-bottom:1rem;" onclick="agregarFaqLocal()">➕ Guardar Pregunta</button>
+                    <div id="listaFaqAdmin"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- TAB 6: TARIFAS, CONTACTO Y MERCADO PAGO                          -->
+        <!-- ================================================================ -->
+        <section id="tab-comercial" class="cms-panel">
+            <div class="admin-grid">
+                <div class="admin-card">
+                    <h3 style="font-size: 1.08rem; color: var(--secondary); margin: 0 0 0.85rem;">💼 Contacto Comercial y Planes</h3>
+                    <div class="grid-2">
+                        <div class="form-group"><label>WhatsApp Comercial (con 52)</label><input type="tel" id="cfgWaAdmin"></div>
+                        <div class="form-group"><label>Correo Oficial</label><input type="email" id="cfgCorreoAdmin"></div>
+                    </div>
+                    <div class="grid-2">
+                        <div class="form-group"><label>Precio Plan Estándar</label><input type="text" id="cfgEstPrecio"></div>
+                        <div class="form-group"><label>Nota Plan Estándar</label><input type="text" id="cfgEstNota"></div>
+                    </div>
+                    <div class="grid-2">
+                        <div class="form-group"><label>Precio Plan Destacado</label><input type="text" id="cfgDestPrecio"></div>
+                        <div class="form-group"><label>Nota Plan Destacado</label><input type="text" id="cfgDestNota"></div>
+                    </div>
+                    <div class="grid-2">
+                        <div class="form-group"><label>Precio Oferta Temporada (Media Kit)</label><input type="text" id="cfgOfertaPrecio"></div>
+                        <div class="form-group"><label>Precio Banner Patrocinado (Media Kit)</label><input type="text" id="cfgBannerPrecio"></div>
+                    </div>
+                </div>
+
+                <div class="admin-card">
+                    <h3 style="font-size: 1.08rem; color: #009ee3; margin: 0 0 0.85rem;">💳 Mercado Pago y Transferencia SPEI</h3>
+                    <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:0.85rem; font-size:0.84rem; font-weight:700;">
+                        <label style="display:flex; align-items:center; gap:0.4rem;"><input type="checkbox" id="cfgMostrarPagos" style="width:auto;"> Mostrar pagos</label>
+                        <label style="display:flex; align-items:center; gap:0.4rem;"><input type="checkbox" id="cfgModoDemoPago" style="width:auto;"> Modo simulación</label>
+                    </div>
+                    <div class="form-group"><label>Link Mercado Pago — Plan Estándar</label><input type="url" id="cfgMpLinkEst" placeholder="https://mpago.la/..."></div>
+                    <div class="form-group"><label>Link Mercado Pago — Plan Destacado</label><input type="url" id="cfgMpLinkDest" placeholder="https://mpago.la/..."></div>
+                    <div class="grid-2">
+                        <div class="form-group"><label>Banco SPEI</label><input type="text" id="cfgSpeiBanco"></div>
+                        <div class="form-group"><label>CLABE Interbancaria</label><input type="text" id="cfgSpeiClabe"></div>
+                    </div>
+                                        <div class="form-group"><label>Beneficiario SPEI</label><input type="text" id="cfgSpeiBenef"></div>
+                    <div class="form-group"><label>☁️ URL del Buzón en la Nube (Google Apps Script /exec)</label><input type="url" id="cfgBuzonNubeUrl" placeholder="https://script.google.com/macros/s/.../exec"></div>
+                    <button type="button" class="btn-action btn-primary" style="width:100%;" onclick="guardarComercialLocal()">💾 Guardar Tarifas y Pagos</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- TAB 7: PROSPECCIÓN CRM                                           -->
+        <!-- ================================================================ -->
+        <section id="tab-prospeccion" class="cms-panel">
+            <div class="admin-grid">
+                <div class="admin-card">
+                    <h3 style="font-size: 1.08rem; color: var(--secondary); margin: 0 0 0.65rem;">🚀 Prospección en 1 Clic (WhatsApp)</h3>
+                    <div class="form-group"><label>Nombre del Negocio Prospecto *</label><input type="text" id="prosNombre" placeholder="Ej. Hotel Boutique Vista Azul"></div>
+                    <div class="grid-2">
+                        <div class="form-group"><label>WhatsApp (10 dígitos o 52)</label><input type="tel" id="prosWhatsApp" placeholder="5512345678"></div>
+                        <div class="form-group">
+                            <label>Sector</label>
+                            <select id="prosGiro">
+                                <option value="Agencia de Viajes">✈️ Agencia de Viajes</option>
+                                <option value="Hotel o Boutique">🏨 Hotel / Hostal</option>
+                                <option value="Jardín o Hacienda de Bodas">💍 Bodas y Eventos</option>
+                                <option value="Quinta o Estancia">🏡 Quinta / Estancia</option>
+                                <option value="Restaurante o Terraza">🍽️ Gastronomía</option>
+                                <option value="Transporte o Tour">🚐 Transporte / Aventura</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-action btn-whatsapp" style="width:100%;" onclick="enviarProspeccionWhatsApp()">💬 Enviar Invitación por WhatsApp y Registrar</button>
+                </div>
+                <div class="admin-card">
+                    <h3 style="font-size: 1.08rem; color: var(--secondary); margin: 0 0 0.75rem;">📋 Prospectos (<span id="countProspectos">0</span>)</h3>
+                    <div id="listaProspectosAdmin"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- TAB 8: RESPALDO JSON                                             -->
+        <!-- ================================================================ -->
+        <section id="tab-respaldo" class="cms-panel">
+            <div class="admin-card">
+                <h3 style="font-size: 1.1rem; color: var(--secondary); margin: 0 0 0.5rem;">💾 Respaldo Local de Datos</h3>
+                <p style="font-size: 0.86rem; color: var(--text-soft); margin-bottom: 1rem;">Descarga en cualquier momento una copia íntegra de tus archivos JSON actuales.</p>
+                <div style="display:flex; gap:0.75rem; flex-wrap:wrap;">
+                    <button type="button" class="btn-action btn-primary" onclick="descargarRespaldo('agencias.json', catalogoActual)">⬇️ Descargar agencias.json</button>
+                    <button type="button" class="btn-action btn-outline" onclick="descargarRespaldo('config.json', configActual)">⬇️ Descargar config.json</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const GH_OWNER = "LUISFGARCIAE";
+        const GH_REPO  = "directorio-agencias";
+        const GH_BRANCH = "main";
+
+        let githubToken = "";
+        let editorConectado = false;
+        let configActual = {};
+        let catalogoActual = { anunciantes: [], ofertas: [], guias: [], faq: [] };
+        let cambiosPendientes = false;
+        let solicitudesNubeCache = [];
+        let buzonAdminKey = "";
+        let solicitudEnEdicionId = "";
+
+        function escaparHTML(str) {
+            return String(str || "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#39;");
+        }
+
+        function validarUrlSegura(urlRaw) {
+            const limpio = String(urlRaw || "").trim();
+            if (!limpio) return "";
+            try {
+                const u = new URL(limpio);
+                if (u.protocol === "https:" || u.protocol === "http:") return u.href;
+            } catch (e) {}
+            return "";
+        }
+
+        function decodeBase64UTF8(b64) {
+            const bin = atob(b64.replace(/\n/g, ""));
+            const bytes = Uint8Array.from(bin, c => c.charCodeAt(0));
+            return new TextDecoder("utf-8").decode(bytes);
+        }
+
+        function encodeBase64UTF8(str) {
+            const bytes = new TextEncoder().encode(str);
+            let bin = "";
+            for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+            return btoa(bin);
+        }
+
+        function toggleModoOscuro() {
+            const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+            document.documentElement.setAttribute("data-theme", next);
+            localStorage.setItem("dv_dark_mode", next);
+            document.getElementById("btnDarkMode").textContent = next === "dark" ? "☀️" : "🌙";
+        }
+
+        function marcarCambiosSinPublicar(msg) {
+            cambiosPendientes = true;
+            const st = document.getElementById("statusPublicacion");
+            if (st) {
+                st.textContent = "⚠️ " + (msg || "Tienes cambios guardados localmente. Presiona 'Publicar Todos los Cambios en Vivo' para subirlos.");
+                st.style.color = "#fde047";
+            }
+        }
+
+        function cambiarTab(tabId, btn) {
+            document.querySelectorAll(".cms-panel").forEach(p => p.classList.remove("active"));
+            document.querySelectorAll(".cms-tab").forEach(b => b.classList.remove("active"));
+            const panel = document.getElementById(tabId);
+            if (panel) panel.classList.add("active");
+            if (btn) btn.classList.add("active");
+            if (tabId === "tab-solicitudes") renderizarSolicitudesPendientes();
+        }
+
+        // ======================================================================
+        // CONEXIÓN GITHUB Y CARGA DE ARCHIVOS
+        // ======================================================================
+        async function leerArchivoGithub(path) {
+            const res = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${path}?ref=${GH_BRANCH}&t=${Date.now()}`, {
+                headers: {
+                    "Authorization": `Bearer ${githubToken}`,
+                    "Accept": "application/vnd.github+json"
+                }
+            });
+            if (!res.ok) throw new Error(`HTTP ${res.status} leyendo ${path}`);
+            const data = await res.json();
+            return { json: JSON.parse(decodeBase64UTF8(data.content)), sha: data.sha };
+        }
+
+        async function guardarArchivoGithub(path, obj, mensaje) {
+            if (!githubToken) throw new Error("Primero conecta tu Personal Access Token de GitHub.");
+            const actual = await leerArchivoGithub(path);
+            const res = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${path}`, {
+                method: "PUT",
+                headers: {
+                    "Authorization": `Bearer ${githubToken}`,
+                    "Accept": "application/vnd.github+json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    message: mensaje,
+                    content: encodeBase64UTF8(JSON.stringify(obj, null, 2)),
+                    sha: actual.sha,
+                    branch: GH_BRANCH
+                })
+            });
+            if (!res.ok) {
+                const errTxt = await res.text();
+                throw new Error(`Error al guardar ${path}: ${res.status} ${errTxt}`);
+            }
+            return await res.json();
+        }
+
+        async function conectarEditorGithub() {
+            const tk = document.getElementById("githubTokenInput").value.trim();
+            const st = document.getElementById("statusConexion");
+            if (!tk) {
+                alert("Pega tu Personal Access Token de GitHub.");
+                return;
+            }
+            githubToken = tk;
+            sessionStorage.setItem("dv_gh_token_session", tk);
+            st.textContent = "⏳ Conectando con GitHub...";
+            st.style.color = "#0284c7";
+            try {
+                const [cfgRes, catRes] = await Promise.all([
+                    leerArchivoGithub("data/config.json"),
+                    leerArchivoGithub("data/agencias.json")
+                ]);
+                configActual = cfgRes.json || {};
+                catalogoActual = catRes.json || { anunciantes: [], ofertas: [], guias: [], faq: [] };
+                editorConectado = true;
+                st.textContent = "✅ Editor conectado. Ya puedes autorizar solicitudes, editar la portada de la revista y publicar cambios.";
+                st.style.color = "#16a34a";
+                hidratarTodoElPanel();
+            } catch (e) {
+                editorConectado = false;
+                st.textContent = "❌ No se pudo conectar: verifica que el token tenga permiso 'Contents: Read and write'. (" + e.message + ")";
+                st.style.color = "#dc2626";
+            }
+        }
+
+        async function cargarDatosSoloLectura() {
+            try {
+                const [rCfg, rCat] = await Promise.all([
+                    fetch("../data/config.json?t=" + Date.now()),
+                    fetch("../data/agencias.json?t=" + Date.now())
+                ]);
+                if (rCfg.ok) configActual = await rCfg.json();
+                if (rCat.ok) catalogoActual = await rCat.json();
+                hidratarTodoElPanel();
+            } catch (e) {}
+        }
+
+        async function publicarTodoEnVivo() {
+            if (!editorConectado) {
+                alert("Primero pega tu token de GitHub arriba y haz clic en 'Conectar al Editor'.");
+                return;
+            }
+            aplicarCambiosRevistaLocal(true);
+            guardarComercialLocal(true);
+
+            const st = document.getElementById("statusPublicacion");
+            const btn = document.getElementById("btnPublicarTodo");
+            btn.disabled = true;
+            st.textContent = "⏳ Publicando config.json y agencias.json en GitHub Pages...";
+            st.style.color = "#7dd3fc";
+
+            try {
+                await guardarArchivoGithub("data/config.json", configActual, "Actualizar configuracion manual de Revista desde Panel Maestro");
+                await guardarArchivoGithub("data/agencias.json", catalogoActual, "Actualizar catalogo de anunciantes desde Panel Maestro");
+                cambiosPendientes = false;
+                st.textContent = "✅ ¡Todo publicado con éxito! Recarga el sitio público en ~10 segundos para ver los cambios.";
+                st.style.color = "#4ade80";
+            } catch (e) {
+                st.textContent = "❌ Error al publicar: " + e.message;
+                st.style.color = "#fca5a5";
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+                // ======================================================================
+        // BANDEJA DE SOLICITUDES POR AUTORIZAR (NUBE GOOGLE SHEETS + LOCAL)
+        // ======================================================================
+        function conectarBuzonNube() {
+            const k = document.getElementById("buzonKeyInput").value.trim();
+            if (!k) {
+                alert("Ingresa la clave secreta que configuraste en ADMIN_KEY de tu Google Apps Script.");
+                return;
+            }
+            buzonAdminKey = k;
+            sessionStorage.setItem("dv_buzon_key_session", k);
+            sincronizarSolicitudesNube(true);
+        }
+
+        async function sincronizarSolicitudesNube(mostrarEstado) {
+            const url = validarUrlSegura(configActual.buzonNubeUrl || "");
+            const st = document.getElementById("statusBuzonNube");
+            if (!url) {
+                if (st && mostrarEstado) {
+                    st.textContent = "ℹ️ Aún no hay URL de Buzón en la Nube en config.json (pégala en '💼 Tarifas y Mercado Pago').";
+                    st.style.color = "#d97706";
+                }
+                renderizarSolicitudesPendientes();
+                return;
+            }
+            if (!buzonAdminKey) {
+                if (st && mostrarEstado) {
+                    st.textContent = "🔑 Pega tu Clave Secreta del Buzón arriba y pulsa 'Sincronizar Buzón Nube' para recibir solicitudes de otros dispositivos.";
+                    st.style.color = "#0284c7";
+                }
+                renderizarSolicitudesPendientes();
+                return;
+            }
+
+            if (st && mostrarEstado) {
+                st.textContent = "⏳ Consultando solicitudes en la nube...";
+                st.style.color = "#0284c7";
+            }
+            try {
+                const res = await fetch(`${url}?key=${encodeURIComponent(buzonAdminKey)}&t=${Date.now()}`);
+                const data = await res.json();
+                if (!data.ok) throw new Error(data.error || "Clave incorrecta");
+                solicitudesNubeCache = Array.isArray(data.solicitudes) ? data.solicitudes : [];
+                if (st) {
+                    st.textContent = `☁️ Buzón en la nube sincronizado (${solicitudesNubeCache.length} pendiente${solicitudesNubeCache.length === 1 ? "" : "s"} remota${solicitudesNubeCache.length === 1 ? "" : "s"}).`;
+                    st.style.color = "#16a34a";
+                }
+            } catch (e) {
+                if (st) {
+                    st.textContent = "❌ Error al leer Buzón Nube: " + e.message;
+                    st.style.color = "#dc2626";
+                }
+            }
+            renderizarSolicitudesPendientes();
+        }
+
+        async function actualizarEstadoSolicitudNube(solicitudId, nuevoEstado) {
+            const url = validarUrlSegura(configActual.buzonNubeUrl || "");
+            if (!url || !buzonAdminKey || !solicitudId) return;
+            try {
+                await fetch(url, {
+                    method: "POST",
+                    headers: { "Content-Type": "text/plain;charset=utf-8" },
+                    body: JSON.stringify({
+                        action: "actualizarEstado",
+                        adminKey: buzonAdminKey,
+                        solicitudId,
+                        nuevoEstado
+                    })
+                });
+            } catch (e) {
+                console.warn("No se pudo actualizar estado en nube:", e);
+            }
+        }
+
+        function eliminarDeColasPorId(solicitudId) {
+            solicitudesNubeCache = solicitudesNubeCache.filter(s => s.solicitudId !== solicitudId);
+            try {
+                const locales = JSON.parse(localStorage.getItem("dv_solicitudes_pendientes") || "[]");
+                const filtradas = locales.filter(s => s.solicitudId !== solicitudId);
+                localStorage.setItem("dv_solicitudes_pendientes", JSON.stringify(filtradas));
+            } catch (e) {}
+        }
+
+        function leerColaSolicitudes() {
+            let locales = [];
+            try {
+                const raw = localStorage.getItem("dv_solicitudes_pendientes");
+                const arr = raw ? JSON.parse(raw) : [];
+                if (Array.isArray(arr)) locales = arr;
+            } catch (e) {}
+
+            const mapa = new Map();
+            solicitudesNubeCache.forEach(s => {
+                if (s && s.solicitudId) mapa.set(s.solicitudId, Object.assign({}, s, { _origen: "nube" }));
+            });
+            locales.forEach(s => {
+                if (s && s.solicitudId && !mapa.has(s.solicitudId)) {
+                    mapa.set(s.solicitudId, Object.assign({}, s, { _origen: "local" }));
+                }
+            });
+            return Array.from(mapa.values());
+        }
+
+        function renderizarSolicitudesPendientes() {
+            const lista = leerColaSolicitudes();
+            const badge = document.getElementById("badgeSolPendientes");
+            const tabBtn = document.getElementById("btnTabSolicitudes");
+            const cont = document.getElementById("listaSolicitudesPendientes");
+
+            if (badge) badge.textContent = String(lista.length);
+            if (tabBtn) tabBtn.classList.toggle("has-pending", lista.length > 0);
+            if (!cont) return;
+
+            if (lista.length === 0) {
+                cont.innerHTML = `
+                    <div style="padding:1.25rem; background:var(--bg-muted); border-radius:0.75rem; border:1px dashed var(--border);">
+                        <strong style="color:var(--secondary); display:block; margin-bottom:0.3rem;">No hay solicitudes pendientes en este momento.</strong>
+                        <p style="font-size:0.84rem; color:var(--text-soft); margin:0;">
+                            Las solicitudes enviadas desde cualquier celular o computadora llegarán aquí automáticamente al tener conectado tu <strong>Buzón en la Nube</strong>.
+                        </p>
+                    </div>`;
+                return;
+            }
+
+            cont.innerHTML = lista.map((sol, idx) => {
+                const a = sol.anunciante || {};
+                const fotos = Array.isArray(a.galeria) ? a.galeria.map(validarUrlSegura).filter(Boolean) : [];
+                const cobros = Array.isArray(a.tiposCobro) ? a.tiposCobro : [];
+                const badgeOrigen = sol._origen === "nube"
+                    ? `<span class="pill-mini" style="background:#e0f2fe; color:#0369a1; border-color:#7dd3fc;">☁️ Nube</span>`
+                    : `<span class="pill-mini">💻 Local</span>`;
+                return `
+                    <div class="sol-card">
+                        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.75rem; margin-bottom:0.65rem;">
+                            <div>
+                                <div style="display:flex; gap:0.45rem; flex-wrap:wrap; align-items:center; margin-bottom:0.3rem;">
+                                    <strong style="font-size:1.08rem; color:var(--secondary);">${escaparHTML(a.nombre || "Sin nombre")}</strong>
+                                    ${badgeOrigen}
+                                    <span class="pill-mini" style="background:#dcfce7; color:#166534; border-color:#86efac;">Folio ${escaparHTML(sol.solicitudId || "SIM")} • **** ${escaparHTML(sol.terminacionTarjeta || "0000")}</span>
+                                    <span class="pill-mini" style="background:var(--primary-soft); color:var(--primary-dark);">${escaparHTML(sol.plan || "")}</span>
+                                </div>
+                                <div style="font-size:0.8rem; color:var(--text-soft);">
+                                    📅 ${escaparHTML(sol.fecha || "")} &bull; <strong>Sector:</strong> ${escaparHTML(a.categoriaNombre || "")} &bull; <strong>Lugar:</strong> ${escaparHTML(a.salidaDesde || "")}
+                                </div>
+                            </div>
+                            <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">
+                                <button type="button" class="btn-action btn-whatsapp" style="padding:0.55rem 0.95rem; font-size:0.82rem;" onclick="autorizarYPublicarSolicitud(${idx})">
+                                    ✅ Autorizar y Publicar
+                                </button>
+                                <button type="button" class="btn-mini" onclick="editarSolicitudAntesDePublicar(${idx})">
+                                    ✏️ Revisar / Editar
+                                </button>
+                                <button type="button" class="btn-mini btn-del" onclick="rechazarSolicitud(${idx})">
+                                    🗑️ Rechazar
+                                </button>
+                            </div>
+                        </div>
+
+                        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:0.5rem; background:var(--bg-card); padding:0.7rem; border-radius:0.6rem; border:1px solid var(--border); font-size:0.8rem; margin-bottom:0.6rem;">
+                            <div><strong>💰 Cobro:</strong> ${escaparHTML(a.rangoPrecio || "N/A")}</div>
+                            <div><strong>⏱️ Duración:</strong> ${escaparHTML(a.duracion || "N/A")}</div>
+                            <div><strong>💬 WhatsApp:</strong> +${escaparHTML(a.whatsappNumero || "N/A")}</div>
+                            <div><strong>📩 Correo:</strong> ${escaparHTML(sol.correoContacto || "N/A")}</div>
+                        </div>
+
+                        ${a.promocion ? `<div style="font-size:0.82rem; margin-bottom:0.4rem;"><strong>🎁 Promoción:</strong> ${escaparHTML(a.promocion)}</div>` : ""}
+                        ${cobros.length ? `<div style="font-size:0.8rem; margin-bottom:0.4rem;"><strong>💳 Tipos de cobro:</strong> ${escaparHTML(cobros.join(", "))}</div>` : ""}
+                        <p style="font-size:0.84rem; color:var(--text-main); margin:0;">${escaparHTML(a.descripcion || "")}</p>
+                        ${fotos.length ? `<div class="thumb-strip">${fotos.map(f => `<img src="${escaparHTML(f)}" alt="Foto">`).join("")}</div>` : ""}
+                    </div>
+                `;
+            }).join("");
+        }
+
+        async function autorizarYPublicarSolicitud(idx) {
+            const lista = leerColaSolicitudes();
+            const sol = lista[idx];
+            if (!sol || !sol.anunciante) return;
+
+            if (!editorConectado) {
+                alert("Para autorizar y publicar en la revista en vivo, primero pega tu token de GitHub arriba y haz clic en 'Conectar al Editor'.");
+                return;
+            }
+            if (!confirm(`¿Autorizar y publicar "${sol.anunciante.nombre}" en la revista principal ahora mismo?`)) return;
+
+            catalogoActual.anunciantes.unshift(sol.anunciante);
+            eliminarDeColasPorId(sol.solicitudId);
+            hidratarTodoElPanel();
+
+            const st = document.getElementById("statusPublicacion");
+            st.textContent = `⏳ Publicando "${sol.anunciante.nombre}" en GitHub Pages...`;
+            st.style.color = "#7dd3fc";
+            try {
+                await guardarArchivoGithub("data/agencias.json", catalogoActual, `Autorizar y publicar anunciante: ${sol.anunciante.nombre}`);
+                await actualizarEstadoSolicitudNube(sol.solicitudId, "Autorizada");
+                st.textContent = `✅ "${sol.anunciante.nombre}" autorizado y publicado. Recarga la portada en ~10 segundos.`;
+                st.style.color = "#4ade80";
+            } catch (e) {
+                st.textContent = "❌ Error al subir a GitHub: " + e.message;
+                st.style.color = "#fca5a5";
+            }
+        }
+
+        function editarSolicitudAntesDePublicar(idx) {
+            const lista = leerColaSolicitudes();
+            const sol = lista[idx];
+            if (!sol || !sol.anunciante) return;
+            solicitudEnEdicionId = sol.solicitudId || "";
+            cargarAnuncianteEnFormulario(sol.anunciante, -1, idx);
+            const btnTabAnun = Array.from(document.querySelectorAll(".cms-tab")).find(b => b.textContent.includes("Anunciantes"));
+            cambiarTab("tab-anunciantes", btnTabAnun);
+            document.getElementById("tituloFormAnun").textContent = "✏️ Revisando Solicitud Pendiente (al guardar se agregará al catálogo)";
+        }
+
+        async function rechazarSolicitud(idx) {
+            const lista = leerColaSolicitudes();
+            const sol = lista[idx];
+            if (!sol || !confirm(`¿Rechazar y eliminar la solicitud de "${sol.anunciante?.nombre || sol.solicitudId}"?`)) return;
+            eliminarDeColasPorId(sol.solicitudId);
+            renderizarSolicitudesPendientes();
+            await actualizarEstadoSolicitudNube(sol.solicitudId, "Rechazada");
+        }
+
+        // ======================================================================
+        // HIDRATAR TODAS LAS PESTAÑAS DEL PANEL
+        // ======================================================================
+        function hidratarTodoElPanel() {
+            if (!Array.isArray(catalogoActual.anunciantes)) catalogoActual.anunciantes = [];
+            if (!Array.isArray(catalogoActual.ofertas)) catalogoActual.ofertas = [];
+            if (!Array.isArray(catalogoActual.guias)) catalogoActual.guias = [];
+            if (!Array.isArray(catalogoActual.faq)) catalogoActual.faq = [];
+
+            document.getElementById("badgeAnunciantes").textContent = catalogoActual.anunciantes.length;
+            document.getElementById("badgeOfertas").textContent = catalogoActual.ofertas.length;
+
+            // 1. Portada y Revista
+            const rev = configActual.revistaEditorial || {};
+            document.getElementById("revTopBarActivo").checked = Boolean(configActual.topBarActivo);
+            document.getElementById("revTopBarTexto").value = configActual.topBarTexto || "";
+            document.getElementById("revDisclaimerTexto").value = rev.disclaimerTexto || "Promocionamos los servicios, paquetes y promociones de anunciantes en México. Todas las cotizaciones y pagos se realizan directamente con cada proveedor.";
+            document.getElementById("revKickerTexto").value = rev.kickerTexto || "✨ EDICIÓN MÉXICO 2026 • REVISTA DE ANUNCIANTES VERIFICADOS";
+            document.getElementById("revHeroTitle").value = rev.heroTitle || "Descubre Paquetes, Hoteles, Lugares y Experiencias en un Solo Catálogo";
+            document.getElementById("revHeroSubtitle").value = rev.heroSubtitle || "Explora cada anuncio como revista de productos: revisa fotos reales, tarifas, duración, promociones vigentes y tipos de cobro aceptados antes de contactar.";
+            document.getElementById("revMostrarSpotlight").checked = rev.mostrarSpotlight !== false;
+            document.getElementById("revMostrarOfertas").checked = rev.mostrarOfertas !== false;
+            document.getElementById("revMostrarCta").checked = rev.mostrarCta !== false;
+            document.getElementById("revMostrarGuias").checked = rev.mostrarGuias !== false;
+            document.getElementById("revMostrarFaq").checked = rev.mostrarFaq !== false;
+            document.getElementById("revTemaDefault").value = rev.temaDefault || "oceano";
+
+            const selSpot = document.getElementById("revSpotlightId");
+            selSpot.innerHTML = `<option value="">✨ Automático (Primer anunciante destacado)</option>` +
+                catalogoActual.anunciantes.map(a => `<option value="${escaparHTML(a.id)}">${a.destacada ? "⭐ " : ""}${escaparHTML(a.nombre)} (${escaparHTML(a.categoriaNombre || "")})</option>`).join("");
+            selSpot.value = rev.spotlightId || "";
+
+            // 2. Comercial y Pagos
+            const b2b = configActual.comercialB2B || {};
+            const pag = configActual.pagosB2B || {};
+            document.getElementById("cfgWaAdmin").value = b2b.whatsappAdmin || "525652415593";
+            document.getElementById("cfgCorreoAdmin").value = b2b.correoAdmin || "";
+            document.getElementById("cfgEstPrecio").value = b2b.planEstandarPrecio || "$100 MXN";
+            document.getElementById("cfgEstNota").value = b2b.planEstandarNota || "/ mes";
+            document.getElementById("cfgDestPrecio").value = b2b.planDestacadoPrecio || "$499 MXN";
+            document.getElementById("cfgDestNota").value = b2b.planDestacadoNota || "/ mes";
+            document.getElementById("cfgOfertaPrecio").value = b2b.ofertaTemporadaPrecio || "$499 MXN / mes";
+            document.getElementById("cfgBannerPrecio").value = b2b.bannerPatrocinadoPrecio || "$899 MXN / mes";
+
+            document.getElementById("cfgMostrarPagos").checked = pag.mostrarModuloPagos !== false;
+            document.getElementById("cfgModoDemoPago").checked = pag.modoDemoVisual !== false;
+            document.getElementById("cfgMpLinkEst").value = pag.mpLinkEstandar || "https://www.mercadopago.com.mx";
+            document.getElementById("cfgMpLinkDest").value = pag.mpLinkDestacado || "https://www.mercadopago.com.mx";
+            document.getElementById("cfgSpeiBanco").value = pag.speiBanco || "Mercado Pago / STP";
+            document.getElementById("cfgSpeiClabe").value = pag.speiClabe || "0000 0000 0000 0000 00";
+            document.getElementById("cfgSpeiBenef").value = pag.speiBeneficiario || "Guías Vayora";
+            const elBuzonUrl = document.getElementById("cfgBuzonNubeUrl"); if (elBuzonUrl) elBuzonUrl.value = configActual.buzonNubeUrl || "";
+
+            renderizarSolicitudesPendientes();
+            renderizarListaAnunciantes();
+            renderizarListaOfertas();
+            renderizarGuiasYFaqAdmin();
+            renderizarProspectosAdmin();
+        }
+
+        function aplicarCambiosRevistaLocal(silencioso) {
+            configActual.topBarActivo = document.getElementById("revTopBarActivo").checked;
+            configActual.topBarTexto = document.getElementById("revTopBarTexto").value.trim();
+            configActual.revistaEditorial = {
+                disclaimerTexto: document.getElementById("revDisclaimerTexto").value.trim(),
+                kickerTexto: document.getElementById("revKickerTexto").value.trim(),
+                heroTitle: document.getElementById("revHeroTitle").value.trim(),
+                heroSubtitle: document.getElementById("revHeroSubtitle").value.trim(),
+                mostrarSpotlight: document.getElementById("revMostrarSpotlight").checked,
+                spotlightId: document.getElementById("revSpotlightId").value,
+                mostrarOfertas: document.getElementById("revMostrarOfertas").checked,
+                mostrarCta: document.getElementById("revMostrarCta").checked,
+                mostrarGuias: document.getElementById("revMostrarGuias").checked,
+                mostrarFaq: document.getElementById("revMostrarFaq").checked,
+                temaDefault: document.getElementById("revTemaDefault").value
+            };
+            if (!silencioso) marcarCambiosSinPublicar("Diseño de portada guardado. Presiona 'Publicar Todos los Cambios en Vivo'.");
+        }
+
+        function guardarComercialLocal(silencioso) {
+            const wa = document.getElementById("cfgWaAdmin").value.replace(/\D/g, "");
+            configActual.comercialB2B = Object.assign({}, configActual.comercialB2B || {}, {
+                whatsappAdmin: wa.length === 10 ? "52" + wa : wa,
+                correoAdmin: document.getElementById("cfgCorreoAdmin").value.trim(),
+                planEstandarPrecio: document.getElementById("cfgEstPrecio").value.trim(),
+                planEstandarNota: document.getElementById("cfgEstNota").value.trim(),
+                planDestacadoPrecio: document.getElementById("cfgDestPrecio").value.trim(),
+                planDestacadoNota: document.getElementById("cfgDestNota").value.trim(),
+                ofertaTemporadaPrecio: document.getElementById("cfgOfertaPrecio").value.trim(),
+                bannerPatrocinadoPrecio: document.getElementById("cfgBannerPrecio").value.trim()
+            });
+            configActual.pagosB2B = {
+                mostrarModuloPagos: document.getElementById("cfgMostrarPagos").checked,
+                modoDemoVisual: document.getElementById("cfgModoDemoPago").checked,
+                mpLinkEstandar: validarUrlSegura(document.getElementById("cfgMpLinkEst").value) || "https://www.mercadopago.com.mx",
+                mpLinkDestacado: validarUrlSegura(document.getElementById("cfgMpLinkDest").value) || "https://www.mercadopago.com.mx",
+                speiBanco: document.getElementById("cfgSpeiBanco").value.trim(),
+                speiClabe: document.getElementById("cfgSpeiClabe").value.trim(),
+                speiBeneficiario: document.getElementById("cfgSpeiBenef").value.trim()
+            };
+            const elUrl = document.getElementById("cfgBuzonNubeUrl"); if (elUrl) configActual.buzonNubeUrl = validarUrlSegura(elUrl.value);
+            
+            if (!silencioso) marcarCambiosSinPublicar("Tarifas y datos de pago guardados. Presiona 'Publicar Todos los Cambios en Vivo'.");
+        }
+
+        // ======================================================================
+        // CRUD ANUNCIANTES
+        // ======================================================================
+        function renderizarListaAnunciantes() {
+            const cont = document.getElementById("listaAnunciantesAdmin");
+            const q = (document.getElementById("filtroAdminAnun")?.value || "").toLowerCase().trim();
+            cont.innerHTML = "";
+            catalogoActual.anunciantes.forEach((a, idx) => {
+                if (q && !`${a.nombre} ${a.categoriaNombre} ${a.salidaDesde}`.toLowerCase().includes(q)) return;
+                const row = document.createElement("div");
+                row.className = "item-row";
+                row.innerHTML = `
+                    <div style="flex:1; min-width:200px;">
+                        <strong>${a.destacada ? "⭐ " : ""}${escaparHTML(a.nombre)}</strong>
+                        <div style="font-size:0.76rem; color:var(--text-soft);">${escaparHTML(a.categoriaNombre || "")} &bull; ${escaparHTML(a.rangoPrecio || "")} &bull; ${escaparHTML(a.duracion || "")}</div>
+                    </div>
+                    <div style="display:flex; gap:0.35rem;">
+                        <button type="button" class="btn-mini" onclick="editarAnunciante(${idx})">✏️ Editar</button>
+                        <button type="button" class="btn-mini" onclick="subirPosicionAnunciante(${idx})" title="Subir al inicio">⬆️</button>
+                        <button type="button" class="btn-mini btn-del" onclick="eliminarAnunciante(${idx})">🗑️</button>
+                    </div>
+                `;
+                cont.appendChild(row);
+            });
+        }
+
+        function cargarAnuncianteEnFormulario(a, editIdx, origenSolIdx) {
+            document.getElementById("anunEditIdx").value = String(editIdx);
+            document.getElementById("anunOrigenSolIdx").value = String(origenSolIdx);
+            document.getElementById("anunNombre").value = a.nombre || "";
+            document.getElementById("anunCategoria").value = `${a.categoria || "viajes"}|${a.categoriaNombre || "Viajes y Turismo"}`;
+            document.getElementById("anunRangoPrecio").value = a.rangoPrecio || "";
+            document.getElementById("anunDuracion").value = a.duracion || "";
+            document.getElementById("anunSalidaDesde").value = a.salidaDesde || "";
+            document.getElementById("anunWhatsapp").value = a.whatsappNumero || "";
+            document.getElementById("anunPromocion").value = a.promocion || a.cuponBeneficio || "";
+            document.getElementById("anunTiposCobro").value = Array.isArray(a.tiposCobro) ? a.tiposCobro.join(", ") : "";
+            document.getElementById("anunEspecialidad").value = a.especialidad || "";
+            document.getElementById("anunDescripcion").value = a.descripcion || "";
+            document.getElementById("anunGaleria").value = Array.isArray(a.galeria) ? a.galeria.join(", ") : "";
+            document.getElementById("anunAmenidades").value = Array.isArray(a.amenidades) ? a.amenidades.join(", ") : "";
+            document.getElementById("anunWeb").value = a.web || "";
+            document.getElementById("anunCuponCod").value = a.cuponCodigo || "";
+            document.getElementById("anunEtiqueta").value = a.etiquetaEstado || "✔ Anunciante Verificado";
+            document.getElementById("anunDestacada").checked = Boolean(a.destacada);
+        }
+
+        function editarAnunciante(idx) {
+            const a = catalogoActual.anunciantes[idx];
+            if (!a) return;
+            cargarAnuncianteEnFormulario(a, idx, -1);
+            document.getElementById("tituloFormAnun").textContent = "✏️ Editando: " + a.nombre;
+        }
+
+        function limpiarFormAnunciante() {
+            document.getElementById("anunEditIdx").value = "-1";
+            document.getElementById("anunOrigenSolIdx").value = "-1";
+            document.getElementById("tituloFormAnun").textContent = "➕ Agregar / Editar Anunciante";
+            ["anunNombre","anunRangoPrecio","anunDuracion","anunSalidaDesde","anunWhatsapp","anunPromocion","anunTiposCobro","anunEspecialidad","anunDescripcion","anunGaleria","anunAmenidades","anunWeb","anunCuponCod"].forEach(id => {
+                document.getElementById(id).value = "";
+            });
+            document.getElementById("anunEtiqueta").value = "✔ Anunciante Verificado";
+            document.getElementById("anunDestacada").checked = false;
+        }
+
+        function guardarAnuncianteLocal() {
+            const nombre = document.getElementById("anunNombre").value.trim();
+            if (!nombre) { alert("Escribe el nombre comercial."); return; }
+            const [catId, catNombre] = document.getElementById("anunCategoria").value.split("|");
+            const editIdx = parseInt(document.getElementById("anunEditIdx").value, 10);
+            const origenSolIdx = parseInt(document.getElementById("anunOrigenSolIdx").value, 10);
+            const wa = document.getElementById("anunWhatsapp").value.replace(/\D/g, "");
+            const palabras = nombre.split(/\s+/).filter(Boolean);
+            const iniciales = palabras.length >= 2 ? (palabras[0][0] + palabras[1][0]).toUpperCase() : nombre.slice(0, 2).toUpperCase();
+
+            const previo = editIdx >= 0 ? catalogoActual.anunciantes[editIdx] : {};
+            const obj = Object.assign({}, previo, {
+                id: previo.id || (nombre.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") + "-" + Math.floor(100 + Math.random() * 900)),
+                categoria: catId,
+                categoriaNombre: catNombre,
+                nombre,
+                iniciales: iniciales || "DV",
+                destacada: document.getElementById("anunDestacada").checked,
+                rating: previo.rating || "5.0",
+                etiquetaEstado: document.getElementById("anunEtiqueta").value.trim() || "✔ Anunciante Verificado",
+                rangoPrecio: document.getElementById("anunRangoPrecio").value.trim() || "$$ • Cotización directa",
+                duracion: document.getElementById("anunDuracion").value.trim() || "Flexible",
+                salidaDesde: document.getElementById("anunSalidaDesde").value.trim() || "México",
+                estadosSalida: previo.estadosSalida || ["cdmx", "monterrey", "guadalajara", "puebla", "bajio"],
+                whatsappNumero: wa.length === 10 ? "52" + wa : wa,
+                promocion: document.getElementById("anunPromocion").value.trim(),
+                tiposCobro: document.getElementById("anunTiposCobro").value.split(",").map(x => x.trim()).filter(Boolean),
+                especialidad: document.getElementById("anunEspecialidad").value.trim(),
+                descripcion: document.getElementById("anunDescripcion").value.trim(),
+                galeria: document.getElementById("anunGaleria").value.split(",").map(validarUrlSegura).filter(Boolean),
+                amenidades: document.getElementById("anunAmenidades").value.split(",").map(x => x.trim()).filter(Boolean),
+                web: validarUrlSegura(document.getElementById("anunWeb").value),
+                cuponCodigo: document.getElementById("anunCuponCod").value.trim().toUpperCase(),
+                cuponBeneficio: document.getElementById("anunPromocion").value.trim()
+            });
+
+            if (editIdx >= 0) {
+                catalogoActual.anunciantes[editIdx] = obj;
+            } else {
+                catalogoActual.anunciantes.unshift(obj);
+            }
+
+            if (origenSolIdx >= 0) {
+                const cola = leerColaSolicitudes();
+                cola.splice(origenSolIdx, 1);
+                localStorage.setItem("dv_solicitudes_pendientes", JSON.stringify(cola));
+            }
+
+            limpiarFormAnunciante();
+            hidratarTodoElPanel();
+            marcarCambiosSinPublicar(`Anunciante "${nombre}" guardado. Presiona 'Publicar Todos los Cambios en Vivo'.`);
+        }
+
+        function subirPosicionAnunciante(idx) {
+            if (idx <= 0) return;
+            const [item] = catalogoActual.anunciantes.splice(idx, 1);
+            catalogoActual.anunciantes.unshift(item);
+            hidratarTodoElPanel();
+            marcarCambiosSinPublicar(`"${item.nombre}" movido al primer lugar.`);
+        }
+
+        function eliminarAnunciante(idx) {
+            const a = catalogoActual.anunciantes[idx];
+            if (!a || !confirm(`¿Eliminar "${a.nombre}" del catálogo?`)) return;
+            catalogoActual.anunciantes.splice(idx, 1);
+            hidratarTodoElPanel();
+            marcarCambiosSinPublicar(`Anunciante "${a.nombre}" eliminado.`);
+        }
+
+        function eliminarTodosLosDemo() {
+            const demos = catalogoActual.anunciantes.filter(a => String(a.id || "").endsWith("-demo"));
+            if (!demos.length) { alert("No hay anunciantes '-demo' actualmente."); return; }
+            if (!confirm(`¿Eliminar los ${demos.length} anunciantes simulados (-demo)?`)) return;
+            catalogoActual.anunciantes = catalogoActual.anunciantes.filter(a => !String(a.id || "").endsWith("-demo"));
+            hidratarTodoElPanel();
+            marcarCambiosSinPublicar(`Se limpiaron ${demos.length} anunciantes demo.`);
+        }
+
+        // ======================================================================
+        // OFERTAS, GUÍAS, FAQ, CRM Y RESPALDO
+        // ======================================================================
+        function renderizarListaOfertas() {
+            const cont = document.getElementById("listaOfertasAdmin");
+            cont.innerHTML = catalogoActual.ofertas.map((o, idx) => `
+                <div class="item-row">
+                    <div>
+                        <strong>${escaparHTML(o.titulo || "")}</strong>
+                        <div style="font-size:0.76rem; color:var(--text-soft);">${escaparHTML(o.agencia || "")} &bull; ${escaparHTML(o.precio || "")}</div>
+                    </div>
+                    <button type="button" class="btn-mini btn-del" onclick="eliminarOferta(${idx})">🗑️</button>
+                </div>
+            `).join("");
+        }
+
+        function agregarOfertaLocal() {
+            const titulo = document.getElementById("ofTitulo").value.trim();
+            if (!titulo) return;
+            const wa = document.getElementById("ofWa").value.replace(/\D/g, "");
+            catalogoActual.ofertas.unshift({
+                agencia: document.getElementById("ofAgencia").value.trim(),
+                titulo,
+                precio: document.getElementById("ofPrecio").value.trim(),
+                etiqueta: document.getElementById("ofEtiqueta").value.trim() || "🔥 Promo",
+                detalle: document.getElementById("ofDetalle").value.trim(),
+                whatsappNumero: wa.length === 10 ? "52" + wa : wa,
+                imagen: validarUrlSegura(document.getElementById("ofImg").value),
+                textoBoton: "💬 Solicitar Promoción"
+            });
+            ["ofAgencia","ofTitulo","ofPrecio","ofDetalle","ofWa","ofImg"].forEach(id => document.getElementById(id).value = "");
+            hidratarTodoElPanel();
+            marcarCambiosSinPublicar("Promoción agregada.");
+        }
+
+        function eliminarOferta(idx) {
+            catalogoActual.ofertas.splice(idx, 1);
+            hidratarTodoElPanel();
+            marcarCambiosSinPublicar("Promoción eliminada.");
+        }
+
+        function renderizarGuiasYFaqAdmin() {
+            document.getElementById("listaGuiasAdmin").innerHTML = catalogoActual.guias.map((g, idx) => `
+                <div class="item-row">
+                    <div><strong>${escaparHTML(g.titulo || "")}</strong> <span class="pill-mini">${escaparHTML(g.categoria || "")}</span></div>
+                    <button type="button" class="btn-mini btn-del" onclick="eliminarGuia(${idx})">🗑️</button>
+                </div>
+            `).join("");
+
+            document.getElementById("listaFaqAdmin").innerHTML = catalogoActual.faq.map((f, idx) => `
+                <div class="item-row">
+                    <div><strong>${escaparHTML(f.pregunta || "")}</strong></div>
+                    <button type="button" class="btn-mini btn-del" onclick="eliminarFaq(${idx})">🗑️</button>
+                </div>
+            `).join("");
+        }
+
+        function agregarGuiaLocal() {
+            const titulo = document.getElementById("guiaTitulo").value.trim();
+            if (!titulo) return;
+            catalogoActual.guias.unshift({
+                categoria: document.getElementById("guiaCat").value.trim() || "Guía",
+                titulo,
+                resumen: document.getElementById("guiaResumen").value.trim(),
+                contenido: document.getElementById("guiaContenido").value.trim()
+            });
+            ["guiaCat","guiaTitulo","guiaResumen","guiaContenido"].forEach(id => document.getElementById(id).value = "");
+            hidratarTodoElPanel();
+            marcarCambiosSinPublicar("Guía editorial agregada.");
+        }
+
+        function eliminarGuia(idx) {
+            catalogoActual.guias.splice(idx, 1);
+            hidratarTodoElPanel();
+            marcarCambiosSinPublicar("Guía eliminada.");
+        }
+
+        function agregarFaqLocal() {
+            const pregunta = document.getElementById("faqPregunta").value.trim();
+            if (!pregunta) return;
+            catalogoActual.faq.push({ pregunta, respuesta: document.getElementById("faqRespuesta").value.trim() });
+            ["faqPregunta","faqRespuesta"].forEach(id => document.getElementById(id).value = "");
+            hidratarTodoElPanel();
+            marcarCambiosSinPublicar("Pregunta frecuente agregada.");
+        }
+
+        function eliminarFaq(idx) {
+            catalogoActual.faq.splice(idx, 1);
+            hidratarTodoElPanel();
+            marcarCambiosSinPublicar("FAQ eliminada.");
+        }
+
+        function renderizarProspectosAdmin() {
+            const lista = JSON.parse(localStorage.getItem("dv_crm_prospectos") || "[]");
+            document.getElementById("countProspectos").textContent = lista.length;
+            const cont = document.getElementById("listaProspectosAdmin");
+            if (!lista.length) {
+                cont.innerHTML = `<p style="font-size:0.84rem; color:var(--text-soft);">Sin prospectos registrados todavía.</p>`;
+                return;
+            }
+            cont.innerHTML = lista.map((p, idx) => `
+                <div class="item-row">
+                    <div>
+                        <strong>${escaparHTML(p.nombre)}</strong> (${escaparHTML(p.giro)})
+                        <div style="font-size:0.76rem; color:var(--text-soft);">+${escaparHTML(p.wa)} &bull; ${escaparHTML(p.estado)}</div>
+                    </div>
+                    <div style="display:flex; gap:0.35rem;">
+                        <select onchange="cambiarEstadoProspecto(${idx}, this.value)" style="padding:0.25rem; font-size:0.76rem; border-radius:0.4rem;">
+                            <option value="Contactado" ${p.estado === "Contactado" ? "selected" : ""}>📩 Contactado</option>
+                            <option value="Media Kit Enviado" ${p.estado === "Media Kit Enviado" ? "selected" : ""}>📄 Media Kit</option>
+                            <option value="Cerrado / Publicado" ${p.estado === "Cerrado / Publicado" ? "selected" : ""}>✅ Cerrado</option>
+                        </select>
+                        <button type="button" class="btn-mini btn-del" onclick="eliminarProspecto(${idx})">🗑️</button>
+                    </div>
+                </div>
+            `).join("");
+        }
+
+        function enviarProspeccionWhatsApp() {
+            const nombre = document.getElementById("prosNombre").value.trim();
+            let wa = document.getElementById("prosWhatsApp").value.replace(/\D/g, "");
+            const giro = document.getElementById("prosGiro").value;
+            if (!nombre || wa.length < 10) { alert("Escribe el nombre del negocio y WhatsApp de 10 dígitos."); return; }
+            if (wa.length === 10) wa = "52" + wa;
+
+            const lista = JSON.parse(localStorage.getItem("dv_crm_prospectos") || "[]");
+            lista.unshift({ nombre, wa, giro, estado: "Contactado", fecha: new Date().toLocaleDateString("es-MX") });
+            localStorage.setItem("dv_crm_prospectos", JSON.stringify(lista));
+            renderizarProspectosAdmin();
+
+            const msg = `Hola equipo de *${nombre}* 👋\n\n` +
+                        `Les escribo de la revista digital *Guías Vayora* (https://guias-vayora.pages.dev/).\n` +
+                        `Estamos sumando proveedores destacados en *${giro}* para promocionar sus fotos, tarifas, duración y promociones directo al WhatsApp del cliente sin comisiones por venta.\n\n` +
+                        `Pueden revisar planes y Media Kit aquí: https://guias-vayora.pages.dev/pages/media-kit.html\n\n` +
+                        `¿Les gustaría aparecer en nuestra edición actual?`;
+            window.open(`https://wa.me/${wa}?text=${encodeURIComponent(msg)}`, "_blank", "noopener,noreferrer");
+        }
+
+        function cambiarEstadoProspecto(idx, est) {
+            const lista = JSON.parse(localStorage.getItem("dv_crm_prospectos") || "[]");
+            if (lista[idx]) { lista[idx].estado = est; localStorage.setItem("dv_crm_prospectos", JSON.stringify(lista)); renderizarProspectosAdmin(); }
+        }
+
+        function eliminarProspecto(idx) {
+            const lista = JSON.parse(localStorage.getItem("dv_crm_prospectos") || "[]");
+            lista.splice(idx, 1); localStorage.setItem("dv_crm_prospectos", JSON.stringify(lista)); renderizarProspectosAdmin();
+        }
+
+        function descargarRespaldo(filename, obj) {
+            const blob = new Blob([JSON.stringify(obj, null, 2)], { type: "application/json" });
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(a.href);
+        }
+
+        // ======================================================================
+        // ARRANQUE INMEDIATO + SINCRONIZACIÓN EN VIVO DE SOLICITUDES
+        // ======================================================================
+        document.addEventListener("DOMContentLoaded", () => {
+            if (localStorage.getItem("dv_dark_mode") === "dark") {
+                document.documentElement.setAttribute("data-theme", "dark");
+                document.getElementById("btnDarkMode").textContent = "☀️";
+            }
+
+            // Cargar solicitudes pendientes inmediatamente antes de conectar token
+            renderizarSolicitudesPendientes();
+            cargarDatosSoloLectura();
+
+            const savedBuzonKey = sessionStorage.getItem("dv_buzon_key_session");
+            if (savedBuzonKey) { buzonAdminKey = savedBuzonKey; document.getElementById("buzonKeyInput").value = savedBuzonKey; }
+            setTimeout(() => sincronizarSolicitudesNube(false), 800);
+            setInterval(() => sincronizarSolicitudesNube(false), 30000);
+            const savedTk = sessionStorage.getItem("dv_gh_token_session");
+            if (savedTk) {
+                document.getElementById("githubTokenInput").value = savedTk;
+                conectarEditorGithub();
+            }
+
+            // Escuchar solicitudes nuevas desde otra pestaña en tiempo real
+            window.addEventListener("storage", (e) => {
+                if (e.key === "dv_solicitudes_pendientes") renderizarSolicitudesPendientes();
+            });
+            window.addEventListener("focus", renderizarSolicitudesPendientes);
+            try {
+                const bc = new BroadcastChannel("dv_solicitudes_channel");
+                bc.onmessage = () => renderizarSolicitudesPendientes();
+            } catch (e) {}
+            setInterval(renderizarSolicitudesPendientes, 2500);
+        });
+    </script>
+    <script src="../js/admin-cloudflare-bridge.js"></script>
+</body>
+</html>

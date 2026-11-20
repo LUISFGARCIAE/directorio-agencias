@@ -58,36 +58,24 @@
 
   function ocultarControlesGithubObsoletos() {
     const ghInput = document.getElementById("githubTokenInput");
-    const pubBtn = document.getElementById("btnPublicarTodo");
     if (ghInput) {
-      let box = ghInput.closest("section, .card, .admin-card, .panel-box") || ghInput.parentElement;
-      if (box && (!pubBtn || !box.contains(pubBtn))) {
-        box.style.display = "none";
-      } else {
-        ghInput.style.display = "none";
-        const btnGh = document.getElementById("btnConectarGithub");
-        if (btnGh) btnGh.style.display = "none";
-      }
-    }
-    const bzInput = document.getElementById("buzonKeyInput");
-    if (bzInput) {
-      let row = bzInput.parentElement;
-      if (row && (!pubBtn || !row.contains(pubBtn))) row.style.display = "none";
+      const card = ghInput.closest("section.admin-card");
+      if (card) card.style.display = "none";
     }
     const cfgBuzon = document.getElementById("cfgBuzonNubeUrl");
     if (cfgBuzon) {
-      cfgBuzon.value = "/api/solicitudes";
+      cfgBuzon.value = location.origin + "/api/solicitudes";
       cfgBuzon.readOnly = true;
-      cfgBuzon.title = "Gestionado automáticamente por Cloudflare D1";
+      cfgBuzon.title = "Conectado automáticamente a Cloudflare D1";
     }
     const stPub = document.getElementById("statusPublicacion");
     if (stPub) {
-      stPub.textContent = "⚡ Conectado a Cloudflare D1: los cambios se publican en vivo al instante (sin tokens de GitHub).";
+      stPub.textContent = "⚡ Conectado en tiempo real a Cloudflare D1: al pulsar Publicar, los cambios se reflejan al instante.";
+      stPub.style.color = "#7dd3fc";
     }
   }
 
   function crearUIAccesoYSeguridad() {
-    // 1. Overlay de Login
     const ov = document.createElement("div");
     ov.id = "cfLoginOverlay";
     ov.innerHTML = `
@@ -106,7 +94,6 @@
     `;
     document.body.appendChild(ov);
 
-    // 2. Modal de Administradores y Auditoria
     const mod = document.createElement("div");
     mod.id = "cfModalSeg";
     mod.innerHTML = `
@@ -142,6 +129,7 @@
     document.body.appendChild(mod);
 
     document.getElementById("cfCerrarModalSeg").onclick = () => { mod.style.display = "none"; };
+
     document.getElementById("cfFormLogin").addEventListener("submit", async (e) => {
       e.preventDefault();
       const errBox = document.getElementById("cfLgnErr");
@@ -181,7 +169,7 @@
           password: document.getElementById("cfAdmPass").value
         })
       });
-      if (res.ok) { e.target.reset(); await hidratarDesdeCloudflare(); alert("✅ Administrador creado."); }
+      if (res.ok) { e.target.reset(); await hidratarDesdeCloudflare(); renderModalSeguridad(); alert("✅ Administrador creado."); }
       else alert("⛔ " + (res.error || "Error"));
     });
   }
@@ -191,15 +179,15 @@
     if (!bar) {
       bar = document.createElement("div");
       bar.id = "cfWelcomeBar";
-      const header = document.querySelector("header, nav");
-      if (header && header.nextSibling) header.parentNode.insertBefore(bar, header.nextSibling);
+      const main = document.querySelector("main.admin-wrap");
+      if (main) main.insertBefore(bar, main.firstChild);
       else document.body.insertBefore(bar, document.body.firstChild);
     }
     const rolTxt = admin.rol === "superadmin" ? "⭐ SUPERADMIN" : "✏️ EDITOR";
     bar.innerHTML = `
       <div>
         <strong style="font-size:1.05rem;">👋 Bienvenido, ${esc(admin.nombre)}</strong>
-        <div style="font-size:0.8rem; opacity:0.8;">${esc(admin.email)} • ${rolTxt} • Guardado instantáneo en Cloudflare D1</div>
+        <div style="font-size:0.8rem; opacity:0.85;">${esc(admin.email)} • ${rolTxt} • Guardado instantáneo en Cloudflare D1</div>
       </div>
       <div style="display:flex; flex-wrap:wrap; gap:0.5rem;">
         <button type="button" class="cf-btn" id="cfBtnAbrirSeg">👥 Admins y Auditoría</button>
@@ -248,9 +236,12 @@
     else alert("⛔ " + (res.error || "Error"));
   };
 
-  // === REEMPLAZO DEL MOTOR GITHUB/GAS POR CLOUDFLARE D1 ===
+  // === REEMPLAZO COMPLETO DEL MOTOR GITHUB/GAS POR CLOUDFLARE D1 ===
   window.guardarArchivoGithub = async function (path, obj, mensaje) {
     const esConfig = /config\.json/i.test(String(path || ""));
+    if (esConfig && obj && typeof obj === "object") {
+      obj.buzonNubeUrl = location.origin + "/api/solicitudes";
+    }
     const payload = esConfig
       ? { accion: "guardar_config", config: obj, detalle: mensaje || "Edición de configuración" }
       : { accion: "guardar_catalogo", catalogo: obj, detalle: mensaje || "Edición de catálogo" };
@@ -265,29 +256,25 @@
 
   window.leerArchivoGithub = async function (path) {
     const data = await cfApi("/api/admin");
-    if (!data.ok) throw new Error(data.error || "Sesión no válida");
-    const contenido = /config\.json/i.test(String(path || "")) ? data.config : data.catalogo;
-    return { sha: "d1-live", data: contenido };
+    if (!data.ok) throw new Error(data.error || "Sesión expirada");
+    return { sha: "d1-live", json: /config\.json/i.test(String(path || "")) ? data.config : data.catalogo };
   };
 
   window.conectarEditorGithub = async function () {
     await hidratarDesdeCloudflare();
   };
 
-  const _origPublicar = window.publicarTodoEnVivo;
-  window.publicarTodoEnVivo = async function () {
-    // Asegura capturar cualquier cambio escrito en portada o tarifas antes de subir a D1
-    try { if (typeof aplicarCambiosRevistaLocal === "function") aplicarCambiosRevistaLocal(true); } catch (e) {}
-    try { if (typeof guardarComercialLocal === "function") guardarComercialLocal(true); } catch (e) {}
-    if (typeof _origPublicar === "function") {
-      await _origPublicar.apply(this, arguments);
-      const st = document.getElementById("statusPublicacion");
-      if (st && !/Error|❌/i.test(st.textContent)) {
-        st.textContent = "✅ Cambios publicados al instante en Guías Vayora (Cloudflare D1).";
+  window.sincronizarSolicitudesNube = async function (mostrarEstado) {
+    try {
+      const data = await cfApi("/api/solicitudes?accion=listar");
+      if (data && data.ok && Array.isArray(data.solicitudes)) {
+        solicitudesNubeCache = data.solicitudes.filter(s => s.estado === "Pendiente");
       }
-      // Refrescar bitacora
-      const fresh = await cfApi("/api/admin").catch(() => null);
-      if (fresh && fresh.ok) { CF_STATE.auditoria = fresh.auditoria || []; CF_STATE.admins = fresh.admins || []; }
+    } catch (e) {}
+    if (typeof renderizarSolicitudesPendientes === "function") renderizarSolicitudesPendientes();
+    if (mostrarEstado) {
+      const st = document.getElementById("statusPublicacion");
+      if (st) st.textContent = `🔄 Bandeja sincronizada (${solicitudesNubeCache.length} solicitudes pendientes en D1).`;
     }
   };
 
@@ -300,6 +287,27 @@
     });
   };
 
+  const _origPublicar = window.publicarTodoEnVivo;
+  window.publicarTodoEnVivo = async function () {
+    editorConectado = true;
+    githubToken = "CLOUDFLARE_D1_SESSION";
+    if (typeof aplicarCambiosRevistaLocal === "function") aplicarCambiosRevistaLocal(true);
+    if (typeof guardarComercialLocal === "function") guardarComercialLocal(true);
+    if (configActual && typeof configActual === "object") {
+      configActual.buzonNubeUrl = location.origin + "/api/solicitudes";
+    }
+    if (typeof _origPublicar === "function") {
+      await _origPublicar.apply(this, arguments);
+      const st = document.getElementById("statusPublicacion");
+      if (st && !/Error|❌/i.test(st.textContent)) {
+        st.textContent = "✅ ¡Publicado al instante en Guías Vayora (Cloudflare D1)! Recarga la portada o Anúnciate para verlo.";
+        st.style.color = "#4ade80";
+      }
+      const fresh = await cfApi("/api/admin").catch(() => null);
+      if (fresh && fresh.ok) { CF_STATE.auditoria = fresh.auditoria || []; CF_STATE.admins = fresh.admins || []; }
+    }
+  };
+
   async function hidratarDesdeCloudflare() {
     const data = await cfApi("/api/admin");
     if (!data.ok) {
@@ -309,18 +317,21 @@
     CF_STATE = data;
     document.getElementById("cfLoginOverlay").style.display = "none";
 
-    try { githubToken = "CLOUDFLARE_D1_SESSION"; } catch (e) {}
-    try { buzonAdminKey = "CLOUDFLARE_D1_SESSION"; } catch (e) {}
-    try {
-      if (data.config && typeof data.config === "object") configActual = data.config;
-      if (data.catalogo && typeof data.catalogo === "object") catalogoActual = data.catalogo;
-    } catch (e) {}
+    // Activar banderas internas del panel original (cero tokens de GitHub)
+    githubToken = "CLOUDFLARE_D1_SESSION";
+    buzonAdminKey = "CLOUDFLARE_D1_SESSION";
+    editorConectado = true;
+
+    if (data.config && typeof data.config === "object") configActual = data.config;
+    if (data.catalogo && typeof data.catalogo === "object") catalogoActual = data.catalogo;
+    if (Array.isArray(data.solicitudes)) {
+      solicitudesNubeCache = data.solicitudes.filter(s => s.estado === "Pendiente");
+    }
 
     mostrarBarraBienvenida(data.admin);
     ocultarControlesGithubObsoletos();
 
-    try { if (typeof hidratarTodoElPanel === "function") hidratarTodoElPanel(); } catch (e) { console.error(e); }
-    try { if (typeof sincronizarSolicitudesNube === "function") sincronizarSolicitudesNube(false); } catch (e) {}
+    if (typeof hidratarTodoElPanel === "function") hidratarTodoElPanel();
   }
 
   async function arrancarPuente() {

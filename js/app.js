@@ -73,7 +73,7 @@ function renderizarSpotlight() {
     const foto = obtenerFotoPrincipal(item);
     const wa = normalizarTelefonoWa(item.whatsappNumero);
     const cobros = Array.isArray(item.tiposCobro) ? item.tiposCobro : ["Transferencia SPEI", "Tarjeta"];
-    const promo = item.promocion || item.cuponBeneficio || "Promoción exclusiva al mencionar Directorio Viajero";
+    const promo = item.promocion || item.cuponBeneficio || "Promoción exclusiva al mencionar Guías Vayora";
 
     cont.innerHTML = `
         <article class="mag-spotlight">
@@ -115,7 +115,7 @@ function renderizarSpotlight() {
                     <button type="button" class="btn-action btn-primary" style="flex:1;" onclick="abrirModalAgencia('${escaparHTML(item.id)}')">
                         📸 Ver Fotos y Ficha Completa
                     </button>
-                    ${wa ? `<a href="https://wa.me/${wa}?text=${encodeURIComponent("Hola " + item.nombre + ", vi su anuncio destacado en la revista Directorio Viajero y quiero más información.")}" target="_blank" rel="noopener noreferrer" class="btn-action btn-whatsapp" style="flex:1;">💬 Contactar Directo</a>` : ""}
+                    ${wa ? `<a href="https://wa.me/${wa}?text=${encodeURIComponent("Hola " + item.nombre + ", vi su anuncio destacado en la revista Guías Vayora y quiero más información.")}" target="_blank" rel="noopener noreferrer" class="btn-action btn-whatsapp" style="flex:1;">💬 Contactar Directo</a>` : ""}
                 </div>
             </div>
         </article>
@@ -201,7 +201,7 @@ function renderizarAgencias(lista) {
                         <button type="button" class="btn-action btn-primary" style="font-size:0.82rem; padding:0.6rem;" onclick="abrirModalAgencia('${escaparHTML(item.id)}')">
                             📸 Ver Fotos y Detalles
                         </button>
-                        ${wa ? `<a href="https://wa.me/${wa}?text=${encodeURIComponent("Hola " + item.nombre + ", vi tu anuncio en Directorio Viajero y me interesa cotizar.")}" target="_blank" rel="noopener noreferrer" class="btn-action btn-whatsapp" style="font-size:0.82rem; padding:0.6rem;">💬 WhatsApp</a>` : `<button type="button" class="btn-action btn-outline" style="font-size:0.82rem; padding:0.6rem;" onclick="abrirModalAgencia('${escaparHTML(item.id)}')">Ver Contacto</button>`}
+                        ${wa ? `<a href="https://wa.me/${wa}?text=${encodeURIComponent("Hola " + item.nombre + ", vi tu anuncio en Guías Vayora y me interesa cotizar.")}" target="_blank" rel="noopener noreferrer" class="btn-action btn-whatsapp" style="font-size:0.82rem; padding:0.6rem;">💬 WhatsApp</a>` : `<button type="button" class="btn-action btn-outline" style="font-size:0.82rem; padding:0.6rem;" onclick="abrirModalAgencia('${escaparHTML(item.id)}')">Ver Contacto</button>`}
                     </div>
 
                     <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border); padding-top:0.5rem; margin-top:0.15rem;">
@@ -349,7 +349,7 @@ function abrirModalAgencia(id) {
         ` : ""}
 
         <div style="display:flex; gap:0.65rem; flex-wrap:wrap; margin-top:1.25rem;">
-            ${wa ? `<a href="https://wa.me/${wa}?text=${encodeURIComponent("Hola " + item.nombre + ", vi su anuncio en la revista Directorio Viajero" + (item.cuponCodigo ? " con el cupón " + item.cuponCodigo : "") + " y deseo cotizar.")}" target="_blank" rel="noopener noreferrer" class="btn-action btn-whatsapp" style="flex:1; padding:0.8rem;">💬 Cotizar Directo por WhatsApp</a>` : ""}
+            ${wa ? `<a href="https://wa.me/${wa}?text=${encodeURIComponent("Hola " + item.nombre + ", vi su anuncio en la revista Guías Vayora" + (item.cuponCodigo ? " con el cupón " + item.cuponCodigo : "") + " y deseo cotizar.")}" target="_blank" rel="noopener noreferrer" class="btn-action btn-whatsapp" style="flex:1; padding:0.8rem;">💬 Cotizar Directo por WhatsApp</a>` : ""}
             ${web ? `<a href="${escaparHTML(web)}" target="_blank" rel="noopener noreferrer" class="btn-action btn-primary" style="flex:1; padding:0.8rem;">🌐 Visitar Sitio Web Oficial</a>` : ""}
         </div>
     `;
@@ -463,7 +463,7 @@ function renderizarOfertas() {
                     <span style="font-size:0.75rem; font-weight:700; color:var(--primary-dark);">${escaparHTML(of.agencia || "")}</span>
                     <h3 class="mag-card-title">${escaparHTML(of.titulo || "")}</h3>
                     <p style="font-size:0.84rem; color:var(--text-soft); margin:0;">${escaparHTML(of.detalle || "")}</p>
-                    ${wa ? `<a href="https://wa.me/${wa}?text=${encodeURIComponent("Hola, me interesa la promoción: " + (of.titulo || "") + " vista en Directorio Viajero.")}" target="_blank" rel="noopener noreferrer" class="btn-action btn-whatsapp" style="margin-top:auto;">${escaparHTML(of.textoBoton || "💬 Solicitar Promoción")}</a>` : ""}
+                    ${wa ? `<a href="https://wa.me/${wa}?text=${encodeURIComponent("Hola, me interesa la promoción: " + (of.titulo || "") + " vista en Guías Vayora.")}" target="_blank" rel="noopener noreferrer" class="btn-action btn-whatsapp" style="margin-top:auto;">${escaparHTML(of.textoBoton || "💬 Solicitar Promoción")}</a>` : ""}
                 </div>
             </article>
         `;
@@ -529,12 +529,12 @@ function abrirModalContacto(e) {
     if (!modal) return;
     const b2b = CONFIG_SITE.comercialB2B || {};
     const waRaw = normalizarTelefonoWa(b2b.whatsappAdmin || CONFIG_SITE.whatsappConcierge || "525652415593");
-    const mailRaw = (b2b.correoAdmin || "contacto@directorioviajero.mx").trim();
+    const mailRaw = (b2b.correoAdmin || "directorioturistico.mx@gmail.com").trim();
 
     document.getElementById("contactoModalWaTxt").textContent = "+" + waRaw;
     document.getElementById("contactoModalMailTxt").textContent = mailRaw;
-    document.getElementById("btnContactoModalWa").href = `https://wa.me/${waRaw}?text=${encodeURIComponent("Hola, me comunico desde la pestaña Contacto de Directorio Viajero.")}`;
-    document.getElementById("btnContactoModalMail").href = `mailto:${encodeURIComponent(mailRaw)}?subject=${encodeURIComponent("Contacto desde Directorio Viajero")}`;
+    document.getElementById("btnContactoModalWa").href = `https://wa.me/${waRaw}?text=${encodeURIComponent("Hola, me comunico desde la pestaña Contacto de Guías Vayora.")}`;
+    document.getElementById("btnContactoModalMail").href = `mailto:${encodeURIComponent(mailRaw)}?subject=${encodeURIComponent("Contacto desde Guías Vayora")}`;
     modal.classList.add("open");
 }
 
