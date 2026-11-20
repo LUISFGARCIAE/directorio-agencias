@@ -11,6 +11,7 @@
   // 2. Candado Anti-Cloning (solo permite dominios autorizados)
   const DOMINIOS_AUTORIZADOS = [
     "luisfgarciae.github.io",
+    "guias-vayora.pages.dev",
     "guiasvayora.com",
     "www.guiasvayora.com",
     "localhost",
