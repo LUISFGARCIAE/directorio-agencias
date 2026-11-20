@@ -1,0 +1,345 @@
+(function () {
+  "use strict";
+
+  const esc = (s) => (window.VayoraSec ? window.VayoraSec.escapeHTML(s) : String(s || ""));
+  let CF_STATE = { admin: null, admins: [], auditoria: [], solicitudes: [] };
+
+  async function cfApi(url, opts = {}) {
+    const res = await fetch(url, Object.assign({ credentials: "same-origin", cache: "no-store" }, opts));
+    return res.json();
+  }
+
+  function inyectarEstilosPuente() {
+    const st = document.createElement("style");
+    st.textContent = `
+      #cfLoginOverlay {
+        position: fixed; inset: 0; z-index: 99999; background: rgba(10, 15, 28, 0.96);
+        backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; padding: 1rem;
+      }
+      #cfLoginCard {
+        width: 100%; max-width: 430px; background: #1e293b; color: #f8fafc;
+        border: 1px solid #334155; border-radius: 1rem; padding: 1.6rem; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        font-family: system-ui, -apple-system, sans-serif;
+      }
+      #cfLoginCard label { display: block; font-size: 0.82rem; font-weight: 700; color: #94a3b8; margin-bottom: 0.35rem; }
+      #cfLoginCard input {
+        width: 100%; padding: 0.7rem 0.85rem; border-radius: 0.6rem; border: 1px solid #334155;
+        background: #0b1220; color: #f8fafc; font-size: 16px; margin-bottom: 0.85rem; box-sizing: border-box;
+      }
+      #cfLoginCard button {
+        width: 100%; padding: 0.78rem; border: none; border-radius: 0.65rem; background: #0ea5e9;
+        color: #082f49; font-weight: 800; font-size: 0.95rem; cursor: pointer;
+      }
+      #cfWelcomeBar {
+        max-width: 1200px; margin: 0.85rem auto; padding: 0.95rem 1.2rem; border-radius: 0.9rem;
+        background: linear-gradient(90deg, rgba(14,165,233,0.16), rgba(16,185,129,0.10));
+        border: 1px solid rgba(14,165,233,0.45); display: flex; flex-wrap: wrap;
+        align-items: center; justify-content: space-between; gap: 0.75rem;
+      }
+      #cfModalSeg {
+        position: fixed; inset: 0; z-index: 99998; background: rgba(2, 6, 23, 0.82);
+        display: none; align-items: center; justify-content: center; padding: 1rem;
+      }
+      #cfModalSegBox {
+        width: 100%; max-width: 960px; max-height: 88vh; overflow-y: auto;
+        background: #0f172a; color: #f8fafc; border: 1px solid #334155; border-radius: 1rem; padding: 1.25rem;
+      }
+      .cf-btn {
+        padding: 0.5rem 0.9rem; border-radius: 0.55rem; border: 1px solid #334155;
+        background: #1e293b; color: #f8fafc; font-weight: 700; font-size: 0.82rem; cursor: pointer;
+      }
+      .cf-btn-ok { background: #10b981; color: #052e16; border-color: #10b981; }
+      .cf-btn-red { background: #ef4444; color: #fff; border-color: #ef4444; }
+      .cf-tbl { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin-top: 0.6rem; }
+      .cf-tbl th, .cf-tbl td { text-align: left; padding: 0.5rem; border-bottom: 1px solid #334155; }
+    `;
+    document.head.appendChild(st);
+  }
+
+  function ocultarControlesGithubObsoletos() {
+    const ghInput = document.getElementById("githubTokenInput");
+    const pubBtn = document.getElementById("btnPublicarTodo");
+    if (ghInput) {
+      let box = ghInput.closest("section, .card, .admin-card, .panel-box") || ghInput.parentElement;
+      if (box && (!pubBtn || !box.contains(pubBtn))) {
+        box.style.display = "none";
+      } else {
+        ghInput.style.display = "none";
+        const btnGh = document.getElementById("btnConectarGithub");
+        if (btnGh) btnGh.style.display = "none";
+      }
+    }
+    const bzInput = document.getElementById("buzonKeyInput");
+    if (bzInput) {
+      let row = bzInput.parentElement;
+      if (row && (!pubBtn || !row.contains(pubBtn))) row.style.display = "none";
+    }
+    const cfgBuzon = document.getElementById("cfgBuzonNubeUrl");
+    if (cfgBuzon) {
+      cfgBuzon.value = "/api/solicitudes";
+      cfgBuzon.readOnly = true;
+      cfgBuzon.title = "Gestionado automáticamente por Cloudflare D1";
+    }
+    const stPub = document.getElementById("statusPublicacion");
+    if (stPub) {
+      stPub.textContent = "⚡ Conectado a Cloudflare D1: los cambios se publican en vivo al instante (sin tokens de GitHub).";
+    }
+  }
+
+  function crearUIAccesoYSeguridad() {
+    // 1. Overlay de Login
+    const ov = document.createElement("div");
+    ov.id = "cfLoginOverlay";
+    ov.innerHTML = `
+      <div id="cfLoginCard">
+        <h2 style="margin:0 0 0.35rem; font-size:1.3rem;">🔑 Guías Vayora — Panel Maestro</h2>
+        <p style="margin:0 0 1.1rem; font-size:0.84rem; color:#94a3b8;">Acceso multi-administrador protegido en Cloudflare D1 (sin tokens de GitHub).</p>
+        <form id="cfFormLogin">
+          <label>Correo o Usuario</label>
+          <input type="text" id="cfLgnEmail" placeholder="Ej. directorioturistico.mx o karim" autocomplete="username" required>
+          <label>Contraseña</label>
+          <input type="password" id="cfLgnPass" autocomplete="current-password" required>
+          <div id="cfLgnErr" style="color:#fca5a5; font-size:0.82rem; margin-bottom:0.7rem; display:none;"></div>
+          <button type="submit" id="cfBtnEntrar">Entrar al Panel Maestro</button>
+        </form>
+      </div>
+    `;
+    document.body.appendChild(ov);
+
+    // 2. Modal de Administradores y Auditoria
+    const mod = document.createElement("div");
+    mod.id = "cfModalSeg";
+    mod.innerHTML = `
+      <div id="cfModalSegBox">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+          <h3 style="margin:0;">👥 Administradores y Bitácora de Auditoría</h3>
+          <button type="button" class="cf-btn cf-btn-red" id="cfCerrarModalSeg">✖ Cerrar</button>
+        </div>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:1rem;">
+          <div>
+            <h4 style="margin-top:0;">Usuarios con Acceso</h4>
+            <form id="cfFormNuevoAdmin" style="display:none; background:#1e293b; padding:0.85rem; border-radius:0.65rem; margin-bottom:0.8rem;">
+              <input id="cfAdmNom" placeholder="Nombre completo" required style="width:100%;margin-bottom:0.45rem;padding:0.5rem;border-radius:0.4rem;border:1px solid #334155;background:#0b1220;color:#fff;box-sizing:border-box;">
+              <input id="cfAdmEmail" type="email" placeholder="correo@guiasvayora.com" required style="width:100%;margin-bottom:0.45rem;padding:0.5rem;border-radius:0.4rem;border:1px solid #334155;background:#0b1220;color:#fff;box-sizing:border-box;">
+              <select id="cfAdmRol" style="width:100%;margin-bottom:0.45rem;padding:0.5rem;border-radius:0.4rem;border:1px solid #334155;background:#0b1220;color:#fff;">
+                <option value="editor">Editor</option>
+                <option value="superadmin">Superadmin</option>
+              </select>
+              <input id="cfAdmPass" type="password" minlength="10" placeholder="Contraseña (mín. 10 caracteres)" required style="width:100%;margin-bottom:0.55rem;padding:0.5rem;border-radius:0.4rem;border:1px solid #334155;background:#0b1220;color:#fff;box-sizing:border-box;">
+              <button type="submit" class="cf-btn cf-btn-ok">➕ Crear Administrador</button>
+            </form>
+            <table class="cf-tbl"><thead><tr><th>Nombre / Correo</th><th>Rol</th><th>Estado</th></tr></thead><tbody id="cfTbodyAdmins"></tbody></table>
+          </div>
+          <div>
+            <h4 style="margin-top:0;">📜 Bitácora de Cambios (Últimos 100)</h4>
+            <div style="max-height:420px; overflow-y:auto;">
+              <table class="cf-tbl"><thead><tr><th>Fecha</th><th>Admin</th><th>Acción</th></tr></thead><tbody id="cfTbodyAud"></tbody></table>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(mod);
+
+    document.getElementById("cfCerrarModalSeg").onclick = () => { mod.style.display = "none"; };
+    document.getElementById("cfFormLogin").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const errBox = document.getElementById("cfLgnErr");
+      errBox.style.display = "none";
+      const btn = document.getElementById("cfBtnEntrar");
+      btn.disabled = true; btn.textContent = "Verificando...";
+      try {
+        const res = await cfApi("/api/auth", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            accion: "login",
+            email: document.getElementById("cfLgnEmail").value.trim(),
+            password: document.getElementById("cfLgnPass").value
+          })
+        });
+        if (!res.ok) throw new Error(res.error || "Credenciales inválidas");
+        await hidratarDesdeCloudflare();
+      } catch (err) {
+        errBox.textContent = "⛔ " + err.message;
+        errBox.style.display = "block";
+      } finally {
+        btn.disabled = false; btn.textContent = "Entrar al Panel Maestro";
+      }
+    });
+
+    document.getElementById("cfFormNuevoAdmin").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const res = await cfApi("/api/admin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          accion: "crear_admin",
+          nombre: document.getElementById("cfAdmNom").value.trim(),
+          email: document.getElementById("cfAdmEmail").value.trim(),
+          rol: document.getElementById("cfAdmRol").value,
+          password: document.getElementById("cfAdmPass").value
+        })
+      });
+      if (res.ok) { e.target.reset(); await hidratarDesdeCloudflare(); alert("✅ Administrador creado."); }
+      else alert("⛔ " + (res.error || "Error"));
+    });
+  }
+
+  function mostrarBarraBienvenida(admin) {
+    let bar = document.getElementById("cfWelcomeBar");
+    if (!bar) {
+      bar = document.createElement("div");
+      bar.id = "cfWelcomeBar";
+      const header = document.querySelector("header, nav");
+      if (header && header.nextSibling) header.parentNode.insertBefore(bar, header.nextSibling);
+      else document.body.insertBefore(bar, document.body.firstChild);
+    }
+    const rolTxt = admin.rol === "superadmin" ? "⭐ SUPERADMIN" : "✏️ EDITOR";
+    bar.innerHTML = `
+      <div>
+        <strong style="font-size:1.05rem;">👋 Bienvenido, ${esc(admin.nombre)}</strong>
+        <div style="font-size:0.8rem; opacity:0.8;">${esc(admin.email)} • ${rolTxt} • Guardado instantáneo en Cloudflare D1</div>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:0.5rem;">
+        <button type="button" class="cf-btn" id="cfBtnAbrirSeg">👥 Admins y Auditoría</button>
+        <button type="button" class="cf-btn cf-btn-red" id="cfBtnLogout">🚪 Cerrar Sesión</button>
+      </div>
+    `;
+    document.getElementById("cfBtnAbrirSeg").onclick = () => {
+      renderModalSeguridad();
+      document.getElementById("cfModalSeg").style.display = "flex";
+    };
+    document.getElementById("cfBtnLogout").onclick = async () => {
+      await cfApi("/api/auth", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ accion: "logout" }) });
+      location.reload();
+    };
+  }
+
+  function renderModalSeguridad() {
+    const esSuper = CF_STATE.admin && CF_STATE.admin.rol === "superadmin";
+    document.getElementById("cfFormNuevoAdmin").style.display = esSuper ? "block" : "none";
+    document.getElementById("cfTbodyAdmins").innerHTML = (CF_STATE.admins || []).map(a => `
+      <tr>
+        <td><strong>${esc(a.nombre)}</strong><br><small style="color:#94a3b8;">${esc(a.email)}</small></td>
+        <td>${esc(a.rol)}</td>
+        <td>${esSuper && a.email !== CF_STATE.admin.email
+          ? `<button type="button" class="cf-btn ${a.activo ? "cf-btn-red" : "cf-btn-ok"}" onclick="window._cfToggleAdmin('${esc(a.email)}',${a.activo ? "false" : "true"})">${a.activo ? "Desactivar" : "Activar"}</button>`
+          : (a.activo ? "🟢 Activo" : "🔴 Inactivo")}
+        </td>
+      </tr>
+    `).join("");
+
+    document.getElementById("cfTbodyAud").innerHTML = (CF_STATE.auditoria || []).map(l => `
+      <tr>
+        <td><small style="color:#94a3b8;">${esc((l.fecha || "").slice(0, 19).replace("T", " "))}</small></td>
+        <td>${esc(l.admin_email)}</td>
+        <td><strong>${esc(l.accion)}</strong><br><small style="color:#94a3b8;">${esc(l.detalle)}</small></td>
+      </tr>
+    `).join("");
+  }
+
+  window._cfToggleAdmin = async (email, activo) => {
+    const res = await cfApi("/api/admin", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ accion: "toggle_admin", email, activo })
+    });
+    if (res.ok) { await hidratarDesdeCloudflare(); renderModalSeguridad(); }
+    else alert("⛔ " + (res.error || "Error"));
+  };
+
+  // === REEMPLAZO DEL MOTOR GITHUB/GAS POR CLOUDFLARE D1 ===
+  window.guardarArchivoGithub = async function (path, obj, mensaje) {
+    const esConfig = /config\.json/i.test(String(path || ""));
+    const payload = esConfig
+      ? { accion: "guardar_config", config: obj, detalle: mensaje || "Edición de configuración" }
+      : { accion: "guardar_catalogo", catalogo: obj, detalle: mensaje || "Edición de catálogo" };
+    const res = await cfApi("/api/admin", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error(res.error || "No se pudo guardar en Cloudflare D1");
+    return res;
+  };
+
+  window.leerArchivoGithub = async function (path) {
+    const data = await cfApi("/api/admin");
+    if (!data.ok) throw new Error(data.error || "Sesión no válida");
+    const contenido = /config\.json/i.test(String(path || "")) ? data.config : data.catalogo;
+    return { sha: "d1-live", data: contenido };
+  };
+
+  window.conectarEditorGithub = async function () {
+    await hidratarDesdeCloudflare();
+  };
+
+  const _origPublicar = window.publicarTodoEnVivo;
+  window.publicarTodoEnVivo = async function () {
+    // Asegura capturar cualquier cambio escrito en portada o tarifas antes de subir a D1
+    try { if (typeof aplicarCambiosRevistaLocal === "function") aplicarCambiosRevistaLocal(true); } catch (e) {}
+    try { if (typeof guardarComercialLocal === "function") guardarComercialLocal(true); } catch (e) {}
+    if (typeof _origPublicar === "function") {
+      await _origPublicar.apply(this, arguments);
+      const st = document.getElementById("statusPublicacion");
+      if (st && !/Error|❌/i.test(st.textContent)) {
+        st.textContent = "✅ Cambios publicados al instante en Guías Vayora (Cloudflare D1).";
+      }
+      // Refrescar bitacora
+      const fresh = await cfApi("/api/admin").catch(() => null);
+      if (fresh && fresh.ok) { CF_STATE.auditoria = fresh.auditoria || []; CF_STATE.admins = fresh.admins || []; }
+    }
+  };
+
+  window.actualizarEstadoSolicitudNube = async function (solicitudId, nuevoEstado) {
+    if (!solicitudId) return;
+    await cfApi("/api/admin", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ accion: "estado_solicitud", solicitudId, estado: nuevoEstado })
+    });
+  };
+
+  async function hidratarDesdeCloudflare() {
+    const data = await cfApi("/api/admin");
+    if (!data.ok) {
+      document.getElementById("cfLoginOverlay").style.display = "flex";
+      return;
+    }
+    CF_STATE = data;
+    document.getElementById("cfLoginOverlay").style.display = "none";
+
+    try { githubToken = "CLOUDFLARE_D1_SESSION"; } catch (e) {}
+    try { buzonAdminKey = "CLOUDFLARE_D1_SESSION"; } catch (e) {}
+    try {
+      if (data.config && typeof data.config === "object") configActual = data.config;
+      if (data.catalogo && typeof data.catalogo === "object") catalogoActual = data.catalogo;
+    } catch (e) {}
+
+    mostrarBarraBienvenida(data.admin);
+    ocultarControlesGithubObsoletos();
+
+    try { if (typeof hidratarTodoElPanel === "function") hidratarTodoElPanel(); } catch (e) { console.error(e); }
+    try { if (typeof sincronizarSolicitudesNube === "function") sincronizarSolicitudesNube(false); } catch (e) {}
+  }
+
+  async function arrancarPuente() {
+    inyectarEstilosPuente();
+    ocultarControlesGithubObsoletos();
+    crearUIAccesoYSeguridad();
+
+    try {
+      const auth = await cfApi("/api/auth");
+      if (auth.ok && auth.autenticado) {
+        await hidratarDesdeCloudflare();
+      } else {
+        document.getElementById("cfLoginOverlay").style.display = "flex";
+      }
+    } catch (e) {
+      document.getElementById("cfLoginOverlay").style.display = "flex";
+    }
+  }
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", arrancarPuente);
+  else arrancarPuente();
+})();

@@ -3,13 +3,24 @@ import {
   leerEstado, limpiarTexto, obtenerSesion, randomHex
 } from "../../_shared/sec.js";
 
+function normalizarCatalogo(cat) {
+  if (Array.isArray(cat)) return { anunciantes: cat, ofertas: [], guias: [], faq: [], opiniones: [] };
+  const obj = (cat && typeof cat === "object") ? Object.assign({}, cat) : {};
+  if (!Array.isArray(obj.anunciantes)) obj.anunciantes = [];
+  if (!Array.isArray(obj.ofertas)) obj.ofertas = [];
+  if (!Array.isArray(obj.guias)) obj.guias = [];
+  if (!Array.isArray(obj.faq)) obj.faq = [];
+  if (!Array.isArray(obj.opiniones)) obj.opiniones = [];
+  return obj;
+}
+
 export async function onRequestGet({ request, env }) {
   try {
     const sesion = await obtenerSesion(request, env);
     if (!sesion) return jsonRes({ ok: false, error: "No autorizado" }, 401);
 
     const config = await leerEstado(env, "config", CONFIG_BASE);
-    const agencias = await leerEstado(env, "agencias", []);
+    const catalogo = normalizarCatalogo(await leerEstado(env, "agencias", {}));
     const solRes = await env.DB.prepare("SELECT * FROM solicitudes ORDER BY fecha DESC LIMIT 200").all();
     const audRes = await env.DB.prepare("SELECT * FROM auditoria ORDER BY id DESC LIMIT 100").all();
     const admRes = await env.DB.prepare("SELECT email, nombre, rol, activo, created_at FROM admins ORDER BY created_at ASC").all();
@@ -17,13 +28,14 @@ export async function onRequestGet({ request, env }) {
     return jsonRes({
       ok: true,
       admin: { email: sesion.email, nombre: sesion.nombre, rol: sesion.rol },
-      config: Object.assign({}, CONFIG_BASE, config),
-      agencias: Array.isArray(agencias) ? agencias : [],
+      config: Object.assign({}, CONFIG_BASE, config, { buzonNubeUrl: "/api/solicitudes" }),
+      catalogo,
+      agencias: catalogo.anunciantes,
       solicitudes: (solRes.results || []).map(r => {
         let extra = {};
         try { extra = JSON.parse(r.datos_json || "{}"); } catch {}
         return Object.assign(extra, {
-          solicitudId: r.id, fecha: r.fecha, estado: r.estado, plan: r.plan,
+          solicitudId: r.id, id: r.id, fecha: r.fecha, estado: r.estado, plan: r.plan,
           metodoPago: r.metodo_pago, referenciaPago: r.referencia_pago,
           monto: r.monto, negocio: r.negocio, whatsapp: r.whatsapp
         });
@@ -46,17 +58,34 @@ export async function onRequestPost({ request, env }) {
 
     if (accion === "guardar_config") {
       const actual = await leerEstado(env, "config", CONFIG_BASE);
-      const fusionado = Object.assign({}, CONFIG_BASE, actual, body.config || {}, { buzonNubeUrl: "/api/solicitudes" });
+      const entrada = (body.config && typeof body.config === "object") ? body.config : {};
+      const fusionado = Object.assign({}, CONFIG_BASE, actual, entrada, {
+        hero: Object.assign({}, CONFIG_BASE.hero, actual.hero || {}, entrada.hero || {}),
+        topBar: Object.assign({}, CONFIG_BASE.topBar, actual.topBar || {}, entrada.topBar || {}),
+        bannerPatrocinado: Object.assign({}, CONFIG_BASE.bannerPatrocinado, actual.bannerPatrocinado || {}, entrada.bannerPatrocinado || {}),
+        comercialB2B: Object.assign({}, CONFIG_BASE.comercialB2B, actual.comercialB2B || {}, entrada.comercialB2B || {}),
+        pagosB2B: Object.assign({}, CONFIG_BASE.pagosB2B, actual.pagosB2B || {}, entrada.pagosB2B || {}),
+        buzonNubeUrl: "/api/solicitudes"
+      });
       await guardarEstado(env, "config", fusionado, sesion.email);
-      await auditar(env, sesion.email, "EDITAR_CONFIG", "Actualizó configuración en vivo");
+      await auditar(env, sesion.email, "EDITAR_CONFIG", body.detalle || "Actualizó configuración en vivo");
       return jsonRes({ ok: true, config: fusionado });
     }
 
-    if (accion === "guardar_agencias") {
-      if (!Array.isArray(body.agencias)) return jsonRes({ ok: false, error: "Formato de agencias inválido" }, 400);
-      await guardarEstado(env, "agencias", body.agencias, sesion.email);
-      await auditar(env, sesion.email, "EDITAR_AGENCIAS", `Total en catálogo: ${body.agencias.length}`);
-      return jsonRes({ ok: true, total: body.agencias.length });
+    if (accion === "guardar_catalogo" || accion === "guardar_agencias") {
+      const rawCat = body.catalogo !== undefined ? body.catalogo : body.agencias;
+      if (!rawCat || typeof rawCat !== "object") {
+        return jsonRes({ ok: false, error: "Formato de catálogo inválido" }, 400);
+      }
+      const catNorm = normalizarCatalogo(rawCat);
+      await guardarEstado(env, "agencias", catNorm, sesion.email);
+      await auditar(
+        env,
+        sesion.email,
+        "EDITAR_CATALOGO",
+        body.detalle || `Anunciantes: ${catNorm.anunciantes.length} | Ofertas: ${catNorm.ofertas.length} | Guías: ${catNorm.guias.length}`
+      );
+      return jsonRes({ ok: true, totalAnunciantes: catNorm.anunciantes.length, catalogo: catNorm });
     }
 
     if (accion === "estado_solicitud") {
@@ -69,26 +98,19 @@ export async function onRequestPost({ request, env }) {
         if (row) {
           const sol = JSON.parse(row.datos_json || "{}");
           const ag = sol.anunciante || {};
-          const lista = await leerEstado(env, "agencias", []);
+          const cat = normalizarCatalogo(await leerEstado(env, "agencias", {}));
           const nuevaAgencia = Object.assign({
             id: "ag-" + Date.now(),
             nombre: ag.nombre || sol.nombre || "Nuevo Anunciante",
             categoria: ag.categoria || "viajes",
             categoriaNombre: ag.categoriaNombre || "Viajes y Turismo",
-            ciudad: ag.ciudad || "México",
-            descripcion: ag.descripcion || "",
-            whatsapp: ag.whatsapp || sol.whatsapp || "",
-            web: ag.web || "",
-            destinos: ag.destinos || [],
             destacada: /destac/i.test(String(sol.plan || "")),
-            verificada: true,
             activa: true
           }, ag);
-          lista.unshift(nuevaAgencia);
-          await guardarEstado(env, "agencias", lista, sesion.email);
+          cat.anunciantes.unshift(nuevaAgencia);
+          await guardarEstado(env, "agencias", cat, sesion.email);
         }
       }
-
       await auditar(env, sesion.email, "SOLICITUD_" + estado.toUpperCase(), `ID: ${id}`);
       return jsonRes({ ok: true, solicitudId: id, estado });
     }
