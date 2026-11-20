@@ -86,14 +86,21 @@
       <h2 style="margin-top:0;">🔑 Acceso de Administradores</h2>
       <p style="font-size:0.85rem; color:var(--soft);">Sesión protegida con cookies cifradas <code>HttpOnly</code>. Sin tokens de GitHub en el navegador.</p>
       <form id="formLogin">
-        <div style="margin-bottom:0.75rem;"><label>Correo Electrónico</label><input type="email" id="lgnEmail" placeholder="directorioturistico.mx@gmail.com" required></div>
+        <div style="margin-bottom:0.75rem;"><label>Correo o Usuario</label><input type="text" id="lgnEmail" placeholder="Ej. karin o karin@guiasvayora.com" autocomplete="username" required></div>
         <div style="margin-bottom:1rem;"><label>Contraseña</label><input type="password" id="lgnPass" required></div>
         <button class="btn btn-primary" style="width:100%;" type="submit">Entrar al Panel en Vivo</button>
       </form>
     </section>
 
     <!-- Vista 3: Panel Principal -->
-    <section id="vistaPanel" class="hidden">
+        <section id="vistaPanel" class="hidden">
+      <div id="bannerBienvenidaAdmin" class="card" style="padding:0.9rem 1.15rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; background:linear-gradient(90deg, rgba(14,165,233,0.14), rgba(16,185,129,0.08)); border-color:rgba(14,165,233,0.45);">
+        <div>
+          <strong id="saludoNombreAdmin" style="font-size:1.08rem;">👋 Bienvenido</strong>
+          <div id="saludoDetalleAdmin" style="font-size:0.8rem; color:var(--soft); margin-top:0.15rem;"></div>
+        </div>
+        <span id="badgeRolAdmin" class="badge b-ok"></span>
+      </div>
       <nav class="tabs">
         <button class="tab-btn active" data-tab="tabIdentidad">🎨 Identidad y Portada</button>
         <button class="tab-btn" data-tab="tabPagos">💳 Planes y Pagos</button>
@@ -295,6 +302,9 @@
       document.getElementById("vistaPanel").classList.remove("hidden");
       document.getElementById("btnLogout").classList.remove("hidden");
       document.getElementById("lblUsuarioActivo").textContent = `👤 ${data.admin.nombre} (${data.admin.rol})`;
+      document.getElementById("saludoNombreAdmin").textContent = `👋 Bienvenido, ${data.admin.nombre}`;
+      document.getElementById("saludoDetalleAdmin").textContent = `Sesión activa: ${data.admin.email} • Todos tus cambios se registran a tu nombre`;
+      document.getElementById("badgeRolAdmin").textContent = data.admin.rol === "superadmin" ? "⭐ SUPERADMIN" : "✏️ EDITOR";
       poblarFormularios();
       renderSolicitudes();
       renderAgencias();

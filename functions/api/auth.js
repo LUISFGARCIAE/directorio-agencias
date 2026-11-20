@@ -58,11 +58,17 @@ export async function onRequestPost({ request, env }) {
     }
 
     if (accion === "login") {
-      const email = limpiarTexto(body.email, 120).toLowerCase();
+      const identificador = limpiarTexto(body.email, 120).toLowerCase();
       const pass = String(body.password || "");
+      if (!identificador || !pass) {
+        return jsonRes({ ok: false, error: "Ingresa tu usuario/correo y contraseña" }, 400);
+      }
       const admin = await env.DB.prepare(
-        "SELECT email, nombre, pass_hash, salt, rol, activo FROM admins WHERE email = ?"
-      ).bind(email).first();
+        `SELECT email, nombre, pass_hash, salt, rol, activo FROM admins
+         WHERE lower(email) = ? OR lower(substr(email, 1, instr(email, '@') - 1)) = ?
+         LIMIT 1`
+      ).bind(identificador, identificador).first();
+      const email = admin ? admin.email : identificador;
 
       if (!admin || admin.activo !== 1) {
         await auditar(env, email || "anonimo", "LOGIN_FALLIDO", "Usuario inexistente o inactivo");
