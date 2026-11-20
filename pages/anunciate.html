@@ -6,7 +6,7 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <title>Anúnciate en Directorio Viajero | Planes y Registro</title>
+    <title>Guías Vayora — El mundo tiene más por descubrir</title>
     <link rel="icon" type="image/svg+xml" href="../assets/logo.svg">
     <link rel="stylesheet" href="../css/styles.css?v=20261119darkonly">
     <style>
@@ -138,7 +138,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
 </head>
 <body>
     <header class="navbar">
-        <a href="../index.html" class="brand"><img src="../assets/logo.svg" alt="Directorio Viajero" class="brand-icon">Directorio <span>Viajero</span></a>
+        <a href="../index.html" class="brand"><img src="../assets/logo.svg" alt="Guías Vayora" class="brand-icon">Directorio <span>Viajero</span></a>
         <nav class="nav-links">
             <a href="../index.html">← Volver al Directorio</a>
             <a href="media-kit.html">📄 Media Kit PDF</a>
@@ -151,7 +151,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
             <span style="display: inline-block; background: var(--primary-soft); color: var(--primary-dark); font-size: 0.78rem; font-weight: 800; padding: 0.3rem 0.85rem; border-radius: 9999px; margin-bottom: 0.65rem;">
                 ESPACIOS PUBLICITARIOS VERIFICADOS
             </span>
-            <h1 style="font-size: 2rem; color: var(--secondary); margin-bottom: 0.5rem;">Anuncia tu Negocio en Directorio Viajero</h1>
+            <h1 style="font-size: 2rem; color: var(--secondary); margin-bottom: 0.5rem;">Anuncia tu Negocio en Guías Vayora</h1>
             <p style="font-size: 0.95rem; color: var(--text-soft); margin-bottom: 1.15rem;">
                 Recibe clientes listos para reservar directo en tu WhatsApp, sin comisiones por venta. Elige tu plan disponible abajo y comienza hoy.
             </p>
@@ -402,7 +402,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
                         <strong>CLABE:</strong> <span id="modalSpeiClabe" style="font-family:monospace; user-select:all;">0000 0000 0000 0000 00</span>
                         <button type="button" id="btnCopiarClabeModal" onclick="copiarClabeSpeiModal(this)" style="margin-left:0.35rem; padding:0.22rem 0.55rem; font-size:0.76rem; font-weight:700; border-radius:0.45rem; border:1px solid #10b981; background:#dcfce7; color:#166534; cursor:pointer;">📋 Copiar CLABE</button>
                     </div>
-                    <div style="margin-top:0.3rem;"><strong>Beneficiario:</strong> <span id="modalSpeiBenef">Directorio Viajero México</span></div>
+                    <div style="margin-top:0.3rem;"><strong>Beneficiario:</strong> <span id="modalSpeiBenef">Guías Vayora</span></div>
                 </div>
 
                 <div style="background:#fef9c3; border:1px solid #facc15; color:#713f12; border-radius:0.7rem; padding:0.65rem 0.75rem; font-size:0.8rem; line-height:1.4; margin-bottom:0.75rem;">
@@ -447,7 +447,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
         </div>
     </div>
     <footer>
-        <p>© 2026 Directorio Viajero México &bull; Plataforma de Proveedores Verificados</p>
+        <p>© 2026 Guías Vayora &bull; Plataforma de Proveedores Verificados</p>
     </footer>
 
     <script>
@@ -473,7 +473,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
         }
 
         // Estado comercial sincronizado desde data/config.json
-        let CORREO_DESTINO = "tu-correo@gmail.com";
+        let CORREO_DESTINO = "directorioturistico.mx@gmail.com";
         let WHATSAPP_ADMIN = "525652415593";
         let PRECIO_ESTANDAR = "$100 MXN / mes";
         let PRECIO_DESTACADO = "$499 MXN / mes";
@@ -557,7 +557,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
             const destinos = limpiarTextoPlano(document.getElementById("destinosAgencia").value, 120);
             const desc = limpiarTextoPlano(document.getElementById("descAgencia").value, 140);
 
-            return `Hola, completé mi pago y envío mi *Solicitud de Alta en Directorio Viajero*:\n\n` +
+            return `Hola, completé mi pago y envío mi *Solicitud de Alta en Guías Vayora*:\n\n` +
                    `• *Folio Pago:* ${FOLIO_AUTORIZADO} (Tarjeta **** ${TERMINACION_TARJETA})\n` +
                    `• *Plan:* ${plan}\n` +
                    `• *Giro:* ${catNombre} (${catId})\n` +
@@ -665,7 +665,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
                         return;
                     }
                     const returnUrl = window.location.href.split("?")[0];
-                    const endpoint = `${apiUrl}?accion=crear_mp&titulo=${encodeURIComponent("Directorio Viajero - " + planNombre)}&precio=${encodeURIComponent(precioNum)}&returnUrl=${encodeURIComponent(returnUrl)}&t=${Date.now()}`;
+                    const endpoint = `${apiUrl}?accion=crear_mp&titulo=${encodeURIComponent("Guías Vayora - " + planNombre)}&precio=${encodeURIComponent(precioNum)}&returnUrl=${encodeURIComponent(returnUrl)}&t=${Date.now()}`;
                     const resp = await fetch(endpoint);
                     const data = await resp.json();
                     if (data && data.ok && data.init_point) {
@@ -687,11 +687,11 @@ html, body { max-width: 100%; overflow-x: hidden; }
                 const wa = String(b2b.whatsappAdmin || "525652415593").replace(/\D/g, "") || "525652415593";
                 if (document.getElementById("modalSpeiBanco")) document.getElementById("modalSpeiBanco").textContent = p.speiBanco || "Mercado Pago / STP";
                 if (document.getElementById("modalSpeiClabe")) document.getElementById("modalSpeiClabe").textContent = p.speiClabe || "0000 0000 0000 0000 00";
-                if (document.getElementById("modalSpeiBenef")) document.getElementById("modalSpeiBenef").textContent = p.speiBeneficiario || "Directorio Viajero México";
+                if (document.getElementById("modalSpeiBenef")) document.getElementById("modalSpeiBenef").textContent = p.speiBeneficiario || "Guías Vayora";
                 if (document.getElementById("enlaceDirectoMP") && p.mpLinkEstandar) document.getElementById("enlaceDirectoMP").href = p.mpLinkEstandar;
                 if (document.getElementById("modalWaNum")) document.getElementById("modalWaNum").textContent = wa;
                 if (document.getElementById("modalBtnWaComprobante")) {
-                    const msg = encodeURIComponent("Hola, realicé el pago de mi anuncio en Directorio Viajero y envío mi comprobante para continuar con la solicitud y el formulario de ingreso.");
+                    const msg = encodeURIComponent("Hola, realicé el pago de mi anuncio en Guías Vayora y envío mi comprobante para continuar con la solicitud y el formulario de ingreso.");
                     document.getElementById("modalBtnWaComprobante").href = `https://wa.me/${wa}?text=${msg}`;
                 }
             }).catch(() => {});
