@@ -3,6 +3,8 @@ import {
   leerEstado, limpiarTexto, obtenerSesion, randomHex
 } from "../../_shared/sec.js";
 
+const PROPIETARIO = "directorioturistico.mx@gmail.com";
+
 function normalizarCatalogo(cat) {
   if (Array.isArray(cat)) return { anunciantes: cat, ofertas: [], guias: [], faq: [], opiniones: [] };
   const obj = (cat && typeof cat === "object") ? Object.assign({}, cat) : {};
@@ -19,6 +21,7 @@ export async function onRequestGet({ request, env }) {
     const sesion = await obtenerSesion(request, env);
     if (!sesion) return jsonRes({ ok: false, error: "No autorizado" }, 401);
 
+    const buzonUrl = new URL("/api/solicitudes", request.url).href;
     const config = await leerEstado(env, "config", CONFIG_BASE);
     const catalogo = normalizarCatalogo(await leerEstado(env, "agencias", {}));
     const solRes = await env.DB.prepare("SELECT * FROM solicitudes ORDER BY fecha DESC LIMIT 200").all();
@@ -28,7 +31,7 @@ export async function onRequestGet({ request, env }) {
     return jsonRes({
       ok: true,
       admin: { email: sesion.email, nombre: sesion.nombre, rol: sesion.rol },
-      config: Object.assign({}, CONFIG_BASE, config, { buzonNubeUrl: new URL("/api/solicitudes", request.url).href }),
+      config: Object.assign({}, CONFIG_BASE, config, { buzonNubeUrl: buzonUrl }),
       catalogo,
       agencias: catalogo.anunciantes,
       solicitudes: (solRes.results || []).map(r => {
@@ -53,6 +56,7 @@ export async function onRequestPost({ request, env }) {
     const sesion = await obtenerSesion(request, env);
     if (!sesion) return jsonRes({ ok: false, error: "Sesión expirada o no autorizada" }, 401);
 
+    const buzonUrl = new URL("/api/solicitudes", request.url).href;
     const body = await request.json().catch(() => ({}));
     const accion = String(body.accion || "");
 
@@ -65,7 +69,7 @@ export async function onRequestPost({ request, env }) {
         bannerPatrocinado: Object.assign({}, CONFIG_BASE.bannerPatrocinado, actual.bannerPatrocinado || {}, entrada.bannerPatrocinado || {}),
         comercialB2B: Object.assign({}, CONFIG_BASE.comercialB2B, actual.comercialB2B || {}, entrada.comercialB2B || {}),
         pagosB2B: Object.assign({}, CONFIG_BASE.pagosB2B, actual.pagosB2B || {}, entrada.pagosB2B || {}),
-        buzonNubeUrl: new URL("/api/solicitudes", request.url).href
+        buzonNubeUrl: buzonUrl
       });
       await guardarEstado(env, "config", fusionado, sesion.email);
       await auditar(env, sesion.email, "EDITAR_CONFIG", body.detalle || "Actualizó configuración en vivo");
@@ -124,6 +128,9 @@ export async function onRequestPost({ request, env }) {
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || pass.length < 10) {
         return jsonRes({ ok: false, error: "Correo inválido o contraseña menor a 10 caracteres" }, 400);
       }
+      if (email === PROPIETARIO && sesion.email !== PROPIETARIO) {
+        return jsonRes({ ok: false, error: "La cuenta propietaria principal está protegida" }, 403);
+      }
       const salt = randomHex(16);
       const passHash = await hashPassword(pass, salt);
       await env.DB.prepare(
@@ -137,11 +144,36 @@ export async function onRequestPost({ request, env }) {
       if (sesion.rol !== "superadmin") return jsonRes({ ok: false, error: "Solo un superadmin puede modificar accesos" }, 403);
       const email = limpiarTexto(body.email, 120).toLowerCase();
       if (email === sesion.email) return jsonRes({ ok: false, error: "No puedes desactivar tu propia cuenta" }, 400);
+      if (email === PROPIETARIO) return jsonRes({ ok: false, error: "La cuenta propietaria principal está protegida" }, 403);
       const activo = body.activo ? 1 : 0;
       await env.DB.prepare("UPDATE admins SET activo = ? WHERE email = ?").bind(activo, email).run();
       if (!activo) await env.DB.prepare("DELETE FROM sesiones WHERE email = ?").bind(email).run();
       await auditar(env, sesion.email, activo ? "ACTIVAR_ADMIN" : "DESACTIVAR_ADMIN", email);
       return jsonRes({ ok: true });
+    }
+
+    if (accion === "cambiar_rol") {
+      if (sesion.rol !== "superadmin") return jsonRes({ ok: false, error: "Solo un superadmin puede cambiar privilegios" }, 403);
+      const email = limpiarTexto(body.email, 120).toLowerCase();
+      if (email === sesion.email) return jsonRes({ ok: false, error: "No puedes cambiar tu propio rol" }, 400);
+      if (email === PROPIETARIO) return jsonRes({ ok: false, error: "La cuenta propietaria principal siempre es superadmin" }, 403);
+      const nuevoRol = body.rol === "superadmin" ? "superadmin" : "editor";
+      await env.DB.prepare("UPDATE admins SET rol = ? WHERE email = ?").bind(nuevoRol, email).run();
+      await env.DB.prepare("UPDATE sesiones SET rol = ? WHERE email = ?").bind(nuevoRol, email).run();
+      await auditar(env, sesion.email, "CAMBIAR_ROL", `${email} -> ${nuevoRol}`);
+      return jsonRes({ ok: true, email, rol: nuevoRol });
+    }
+
+    if (accion === "eliminar_admin") {
+      if (sesion.rol !== "superadmin") return jsonRes({ ok: false, error: "Solo un superadmin puede eliminar usuarios" }, 403);
+      const email = limpiarTexto(body.email, 120).toLowerCase();
+      if (!email) return jsonRes({ ok: false, error: "Correo requerido" }, 400);
+      if (email === sesion.email) return jsonRes({ ok: false, error: "No puedes eliminar tu propia cuenta" }, 400);
+      if (email === PROPIETARIO) return jsonRes({ ok: false, error: "La cuenta propietaria principal no se puede eliminar" }, 403);
+      await env.DB.prepare("DELETE FROM sesiones WHERE email = ?").bind(email).run();
+      await env.DB.prepare("DELETE FROM admins WHERE email = ?").bind(email).run();
+      await auditar(env, sesion.email, "ELIMINAR_ADMIN", email);
+      return jsonRes({ ok: true, email });
     }
 
     return jsonRes({ ok: false, error: "Acción no válida" }, 400);

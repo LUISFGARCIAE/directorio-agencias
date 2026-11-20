@@ -1,6 +1,7 @@
 (function () {
   "use strict";
 
+  const PROPIETARIO = "directorioturistico.mx@gmail.com";
   const esc = (s) => (window.VayoraSec ? window.VayoraSec.escapeHTML(s) : String(s || ""));
   let CF_STATE = { admin: null, admins: [], auditoria: [], solicitudes: [] };
 
@@ -41,17 +42,29 @@
         display: none; align-items: center; justify-content: center; padding: 1rem;
       }
       #cfModalSegBox {
-        width: 100%; max-width: 960px; max-height: 88vh; overflow-y: auto;
+        width: 100%; max-width: 1120px; max-height: 90vh; overflow-y: auto;
         background: #0f172a; color: #f8fafc; border: 1px solid #334155; border-radius: 1rem; padding: 1.25rem;
       }
+      .cf-seg-grid { display: grid; grid-template-columns: 1.25fr 1fr; gap: 1.2rem; }
+      @media (max-width: 820px) { .cf-seg-grid { grid-template-columns: 1fr; } }
       .cf-btn {
-        padding: 0.5rem 0.9rem; border-radius: 0.55rem; border: 1px solid #334155;
-        background: #1e293b; color: #f8fafc; font-weight: 700; font-size: 0.82rem; cursor: pointer;
+        padding: 0.45rem 0.75rem; border-radius: 0.5rem; border: 1px solid #334155;
+        background: #1e293b; color: #f8fafc; font-weight: 700; font-size: 0.78rem; cursor: pointer;
       }
+      .cf-btn:hover { filter: brightness(1.12); }
       .cf-btn-ok { background: #10b981; color: #052e16; border-color: #10b981; }
       .cf-btn-red { background: #ef4444; color: #fff; border-color: #ef4444; }
+      .cf-btn-amber { background: #f59e0b; color: #1c1917; border-color: #f59e0b; }
+      .cf-btn-blue { background: #0ea5e9; color: #082f49; border-color: #0ea5e9; }
+      .cf-btn-ghost-red { background: rgba(239,68,68,0.14); color: #fca5a5; border-color: rgba(239,68,68,0.5); }
+      .cf-actions { display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center; }
+      .cf-pill {
+        display: inline-block; padding: 0.15rem 0.45rem; border-radius: 999px; font-size: 0.72rem; font-weight: 700;
+      }
+      .cf-pill-super { background: rgba(245,158,11,0.2); color: #fcd34d; border: 1px solid rgba(245,158,11,0.45); }
+      .cf-pill-editor { background: rgba(56,189,248,0.16); color: #7dd3fc; border: 1px solid rgba(56,189,248,0.35); }
       .cf-tbl { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin-top: 0.6rem; }
-      .cf-tbl th, .cf-tbl td { text-align: left; padding: 0.5rem; border-bottom: 1px solid #334155; }
+      .cf-tbl th, .cf-tbl td { text-align: left; padding: 0.55rem 0.45rem; border-bottom: 1px solid #334155; vertical-align: middle; }
     `;
     document.head.appendChild(st);
   }
@@ -102,24 +115,27 @@
           <h3 style="margin:0;">👥 Administradores y Bitácora de Auditoría</h3>
           <button type="button" class="cf-btn cf-btn-red" id="cfCerrarModalSeg">✖ Cerrar</button>
         </div>
-        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:1rem;">
+        <div class="cf-seg-grid">
           <div>
             <h4 style="margin-top:0;">Usuarios con Acceso</h4>
             <form id="cfFormNuevoAdmin" style="display:none; background:#1e293b; padding:0.85rem; border-radius:0.65rem; margin-bottom:0.8rem;">
               <input id="cfAdmNom" placeholder="Nombre completo" required style="width:100%;margin-bottom:0.45rem;padding:0.5rem;border-radius:0.4rem;border:1px solid #334155;background:#0b1220;color:#fff;box-sizing:border-box;">
               <input id="cfAdmEmail" type="email" placeholder="correo@guiasvayora.com" required style="width:100%;margin-bottom:0.45rem;padding:0.5rem;border-radius:0.4rem;border:1px solid #334155;background:#0b1220;color:#fff;box-sizing:border-box;">
               <select id="cfAdmRol" style="width:100%;margin-bottom:0.45rem;padding:0.5rem;border-radius:0.4rem;border:1px solid #334155;background:#0b1220;color:#fff;">
-                <option value="editor">Editor</option>
+                <option value="editor">Editor (Admin)</option>
                 <option value="superadmin">Superadmin</option>
               </select>
               <input id="cfAdmPass" type="password" minlength="10" placeholder="Contraseña (mín. 10 caracteres)" required style="width:100%;margin-bottom:0.55rem;padding:0.5rem;border-radius:0.4rem;border:1px solid #334155;background:#0b1220;color:#fff;box-sizing:border-box;">
-              <button type="submit" class="cf-btn cf-btn-ok">➕ Crear Administrador</button>
+              <button type="submit" class="cf-btn cf-btn-ok">➕ Crear / Actualizar Contraseña</button>
             </form>
-            <table class="cf-tbl"><thead><tr><th>Nombre / Correo</th><th>Rol</th><th>Estado</th></tr></thead><tbody id="cfTbodyAdmins"></tbody></table>
+            <table class="cf-tbl">
+              <thead><tr><th>Usuario / Rol</th><th>Acciones y Privilegios</th></tr></thead>
+              <tbody id="cfTbodyAdmins"></tbody>
+            </table>
           </div>
           <div>
             <h4 style="margin-top:0;">📜 Bitácora de Cambios (Últimos 100)</h4>
-            <div style="max-height:420px; overflow-y:auto;">
+            <div style="max-height:480px; overflow-y:auto;">
               <table class="cf-tbl"><thead><tr><th>Fecha</th><th>Admin</th><th>Acción</th></tr></thead><tbody id="cfTbodyAud"></tbody></table>
             </div>
           </div>
@@ -169,7 +185,7 @@
           password: document.getElementById("cfAdmPass").value
         })
       });
-      if (res.ok) { e.target.reset(); await hidratarDesdeCloudflare(); renderModalSeguridad(); alert("✅ Administrador creado."); }
+      if (res.ok) { e.target.reset(); await hidratarDesdeCloudflare(); renderModalSeguridad(); alert("✅ Administrador guardado."); }
       else alert("⛔ " + (res.error || "Error"));
     });
   }
@@ -207,16 +223,40 @@
   function renderModalSeguridad() {
     const esSuper = CF_STATE.admin && CF_STATE.admin.rol === "superadmin";
     document.getElementById("cfFormNuevoAdmin").style.display = esSuper ? "block" : "none";
-    document.getElementById("cfTbodyAdmins").innerHTML = (CF_STATE.admins || []).map(a => `
-      <tr>
-        <td><strong>${esc(a.nombre)}</strong><br><small style="color:#94a3b8;">${esc(a.email)}</small></td>
-        <td>${esc(a.rol)}</td>
-        <td>${esSuper && a.email !== CF_STATE.admin.email
-          ? `<button type="button" class="cf-btn ${a.activo ? "cf-btn-red" : "cf-btn-ok"}" onclick="window._cfToggleAdmin('${esc(a.email)}',${a.activo ? "false" : "true"})">${a.activo ? "Desactivar" : "Activar"}</button>`
-          : (a.activo ? "🟢 Activo" : "🔴 Inactivo")}
-        </td>
-      </tr>
-    `).join("");
+
+    document.getElementById("cfTbodyAdmins").innerHTML = (CF_STATE.admins || []).map(a => {
+      const emailEsc = esc(a.email);
+      const esPropio = a.email === CF_STATE.admin.email;
+      const esOwner = a.email === PROPIETARIO;
+      const pillRol = a.rol === "superadmin"
+        ? `<span class="cf-pill cf-pill-super">⭐ superadmin</span>`
+        : `<span class="cf-pill cf-pill-editor">✏️ editor</span>`;
+      const estadoTxt = a.activo ? "🟢 Activo" : "🔴 Inactivo";
+
+      let accionesHtml = `<span style="color:#94a3b8; font-size:0.78rem;">${estadoTxt}${esOwner ? " • 🔒 Principal" : ""}</span>`;
+      if (esSuper && !esPropio && !esOwner) {
+        const sigRol = a.rol === "superadmin" ? "editor" : "superadmin";
+        const btnRolTxt = a.rol === "superadmin" ? "✏️ Pasar a Editor" : "⭐ Hacer Superadmin";
+        const btnRolCls = a.rol === "superadmin" ? "cf-btn-blue" : "cf-btn-amber";
+        accionesHtml = `
+          <div class="cf-actions">
+            <button type="button" class="cf-btn ${btnRolCls}" onclick="window._cfCambiarRol('${emailEsc}','${sigRol}')">${btnRolTxt}</button>
+            <button type="button" class="cf-btn ${a.activo ? "cf-btn-red" : "cf-btn-ok"}" onclick="window._cfToggleAdmin('${emailEsc}',${a.activo ? "false" : "true"})">${a.activo ? "Desactivar" : "Activar"}</button>
+            <button type="button" class="cf-btn cf-btn-ghost-red" title="Eliminar usuario permanentemente" onclick="window._cfEliminarAdmin('${emailEsc}')">🗑️ Eliminar</button>
+          </div>
+        `;
+      }
+
+      return `
+        <tr>
+          <td>
+            <strong>${esc(a.nombre)}</strong> ${pillRol}<br>
+            <small style="color:#94a3b8;">${emailEsc} • ${estadoTxt}</small>
+          </td>
+          <td>${accionesHtml}</td>
+        </tr>
+      `;
+    }).join("");
 
     document.getElementById("cfTbodyAud").innerHTML = (CF_STATE.auditoria || []).map(l => `
       <tr>
@@ -231,6 +271,27 @@
     const res = await cfApi("/api/admin", {
       method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ accion: "toggle_admin", email, activo })
+    });
+    if (res.ok) { await hidratarDesdeCloudflare(); renderModalSeguridad(); }
+    else alert("⛔ " + (res.error || "Error"));
+  };
+
+  window._cfCambiarRol = async (email, rol) => {
+    const etiqueta = rol === "superadmin" ? "SUPERADMIN (acceso total a usuarios)" : "EDITOR (solo gestión de contenido)";
+    if (!confirm(`¿Cambiar los privilegios de ${email} a ${etiqueta}?`)) return;
+    const res = await cfApi("/api/admin", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ accion: "cambiar_rol", email, rol })
+    });
+    if (res.ok) { await hidratarDesdeCloudflare(); renderModalSeguridad(); }
+    else alert("⛔ " + (res.error || "Error"));
+  };
+
+  window._cfEliminarAdmin = async (email) => {
+    if (!confirm(`⚠️ ¿Eliminar permanentemente al usuario ${email}?\n\nSe cerrará su sesión de inmediato y ya no podrá entrar al panel.`)) return;
+    const res = await cfApi("/api/admin", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ accion: "eliminar_admin", email })
     });
     if (res.ok) { await hidratarDesdeCloudflare(); renderModalSeguridad(); }
     else alert("⛔ " + (res.error || "Error"));
@@ -317,7 +378,6 @@
     CF_STATE = data;
     document.getElementById("cfLoginOverlay").style.display = "none";
 
-    // Activar banderas internas del panel original (cero tokens de GitHub)
     githubToken = "CLOUDFLARE_D1_SESSION";
     buzonAdminKey = "CLOUDFLARE_D1_SESSION";
     editorConectado = true;
