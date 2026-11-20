@@ -584,33 +584,42 @@
       else notificar("⛔ " + res.error, true);
     });
 
-    // Importadores 1-clic para migrar agencias.json y config.json a D1
+    // Importadores inteligentes 1-clic para migrar agencias.json y config.json a D1
     document.getElementById("fileImportAgencias").addEventListener("change", async (e) => {
       const f = e.target.files[0];
+      e.target.value = "";
       if (!f) return;
       try {
-        const arr = JSON.parse(await f.text());
-        if (!Array.isArray(arr)) throw new Error("El archivo debe ser una lista JSON");
+        const raw = (await f.text()).replace(/^\uFEFF/, "").trim();
+        const parsed = JSON.parse(raw);
+        let arr = Array.isArray(parsed) ? parsed : null;
+        if (!arr && parsed && typeof parsed === "object") {
+          arr = parsed.agencias || parsed.directorio || parsed.items || parsed.data || Object.values(parsed).find(v => Array.isArray(v)) || null;
+        }
+        if (!Array.isArray(arr)) throw new Error("No se encontró una lista de agencias dentro del JSON");
         const res = await api("/api/admin", {
           method: "POST", headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ accion: "guardar_agencias", agencias: arr })
         });
         if (res.ok) { notificar(`✅ ${arr.length} agencias importadas a la base de datos en vivo.`); cargarPanel(); }
-        else notificar("⛔ " + res.error, true);
+        else notificar("⛔ " + (res.error || "Error al guardar"), true);
       } catch (err) { notificar("⛔ JSON inválido: " + err.message, true); }
     });
 
     document.getElementById("fileImportConfig").addEventListener("change", async (e) => {
       const f = e.target.files[0];
+      e.target.value = "";
       if (!f) return;
       try {
-        const obj = JSON.parse(await f.text());
+        const raw = (await f.text()).replace(/^\uFEFF/, "").trim();
+        const obj = JSON.parse(raw);
+        if (!obj || typeof obj !== "object" || Array.isArray(obj)) throw new Error("config.json debe ser un objeto JSON");
         const res = await api("/api/admin", {
           method: "POST", headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ accion: "guardar_config", config: obj })
         });
         if (res.ok) { notificar("✅ Configuración importada y publicada."); cargarPanel(); }
-        else notificar("⛔ " + res.error, true);
+        else notificar("⛔ " + (res.error || "Error al guardar"), true);
       } catch (err) { notificar("⛔ JSON inválido: " + err.message, true); }
     });
 
