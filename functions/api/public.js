@@ -14,7 +14,7 @@ export async function onRequestGet({ request, env }) {
     if (tipo === "agencias") {
       const lista = await leerEstado(env, "agencias", []);
       const activas = Array.isArray(lista) ? lista.filter(a => a && a.oculta !== true && a.activa !== false) : [];
-      return jsonRes(activas, 200, { "Cache-Control": "public, max-age=5" });
+      return jsonRes({ "opiniones": activas }, 200, { "Cache-Control": "public, max-age=5" });
     }
 
     const cfg = await leerEstado(env, "config", CONFIG_BASE);
